@@ -1,0 +1,24 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "compilerOptions": {
+    "jsx": "react-jsx", // For React 17+ (recommended)
+    "types": [
+      "vite/client"
+    ],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  }
+}

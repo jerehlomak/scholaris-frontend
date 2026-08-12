@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* ── Home Page Brand Colors ── */
+  --color-brand-teal: var(--color-primary-blue);
+  --color-brand-green: var(--color-primary-green);
+  --color-brand-gray-light: var(--color-bg-light);
+  --color-brand-gray-medium: var(--color-ash);
+  --color-brand-dark: var(--color-text-dark);
+
+  /* ── Dashboard Semantic Tokens ── */
+  --color-dash-primary: var(--color-primary-blue);
+  --color-dash-primary-light: #3d56c4;
+  --color-dash-accent: var(--color-primary-green);
+  --color-dash-danger: #dc2626;
+  --color-dash-danger-bg: #fff0f0;
+  --color-dash-success: var(--color-primary-green);
+  --color-dash-surface: var(--color-white);
+  /* Pink: Desktop Version widget gradient */
+  --color-dash-pink: #e08890;
+  /* Dark: Rich Slate 900 for dashboard texts/borders instead of flat black */
+  --color-dash-dark: #0f172a;
+
+  /* ── Typography ── */
+  --font-primary: 'Outfit', sans-serif;
+  --font-heading: 'Archivo Black', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-dash: 'Poppins', sans-serif;
+}
+
+/* ── Global Theme Variables (Synced with Central Admin) ── */
+:root,
+html.light {
+  /* Skooly Plus Global Theme Palette */
+  --color-primary-blue: #1a2fa0;
+  --color-primary-green: #5cb85c;
+  --color-bg-light: #f0f4ff;
+  --color-text-dark: #111111;
+  --color-text-muted: #6b7280;
+  --color-white: #ffffff;
+  --color-ash: #f5f5f5;
+
+  --bg-primary: var(--color-bg-light);
+  --bg-secondary: var(--color-ash);
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-sidebar: var(--color-white);
+  --bg-hover: rgba(0, 0, 0, 0.04);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --text-primary: var(--color-text-dark);
+  --text-secondary: var(--color-text-muted);
+  --text-muted: #94a3b8;
+  --accent: var(--color-primary-blue);
+  --scrollbar-track: var(--color-ash);
+  --scrollbar-thumb: var(--color-text-muted);
+  --scrollbar-thumb-hover: var(--color-primary-blue);
+}
+
+html.dark {
+  --bg-primary: #0a0f1e;
+  --bg-secondary: #0d1526;
+  --bg-card: rgba(17, 24, 39, 0.85);
+  --bg-sidebar: #080d1a;
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+  --accent: #3b82f6;
+  --scrollbar-track: #0d1526;
+  --scrollbar-thumb: #1e40af;
+  --scrollbar-thumb-hover: #3b82f6;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    @apply text-brand-dark tracking-tight;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* ── Stat Card Water Wave Animation ── */
+.water_wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 0;
+  opacity: 0.15;
+}
+
+.water_wave:after,
+.water_wave:before {
+  content: "";
+  position: absolute;
+  width: 150%;
+  aspect-ratio: 1;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  background: #ffffff;
+}
+
+.water_wave:after {
+  border-radius: 40%;
+  animation: water_wave 15s linear infinite;
+}
+
+.water_wave:before {
+  border-radius: 45%;
+  opacity: 0.8;
+  animation: water_wave 20s linear infinite;
+}
+
+@keyframes water_wave {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* ── Glass card ── */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* ── Print Styles ── */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  /* Reset zoom on the printable card — preview zoom should NOT affect print */
+  #report-card-printable {
+    zoom: 1 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+  }
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: 'Geist Variable', sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
