@@ -63,7 +63,6 @@ import {
   AllSubjects,
   AddSubject,
   EditSubject,
-  ManageSubjects,
   SubjectAllocation
 } from './pages/dashboard/subjects';
 
@@ -366,7 +365,6 @@ function App() {
                               <Route path="all" element={<AllSubjects />} />
                               <Route path="allocation" element={<SubjectAllocation />} />
                               <Route path="add" element={<AddSubject />} />
-                              <Route path="manage" element={<ManageSubjects />} />
                             </Route>
                           </Route>
 

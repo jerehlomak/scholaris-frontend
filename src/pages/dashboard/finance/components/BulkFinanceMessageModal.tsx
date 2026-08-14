@@ -80,7 +80,7 @@ export default function BulkFinanceMessageModal({ onClose, onSent }: Props) {
             <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
                 <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4 shrink-0">
                     <div className="flex items-center gap-2">
-                        <Megaphone className="h-5 w-5 text-indigo-600" />
+                        <Megaphone className="h-5 w-5 text-[#1E4DA6]" />
                         <h2 className="font-bold text-slate-900">Bulk Finance Message</h2>
                     </div>
                     <button onClick={onClose} className="rounded-xl border border-slate-200 p-2 text-slate-500 hover:bg-slate-50">
@@ -114,11 +114,11 @@ export default function BulkFinanceMessageModal({ onClose, onSent }: Props) {
                             <div className="flex items-center justify-between bg-slate-50 px-4 py-2 border-b border-slate-200">
                                 <button onClick={toggleAll} className="flex items-center gap-2 text-xs font-bold text-slate-600">
                                     {selected.size === visibleStudents.length && visibleStudents.length > 0
-                                        ? <CheckSquare className="h-4 w-4 text-indigo-600" />
+                                        ? <CheckSquare className="h-4 w-4 text-[#1E4DA6]" />
                                         : <Square className="h-4 w-4 text-slate-400" />}
                                     Select All ({visibleStudents.length})
                                 </button>
-                                <span className="text-xs font-bold text-indigo-600">{selected.size} selected</span>
+                                <span className="text-xs font-bold text-[#1E4DA6]">{selected.size} selected</span>
                             </div>
                             <div className="max-h-48 overflow-y-auto divide-y divide-slate-100">
                                 {loadingStudents ? (
@@ -138,7 +138,7 @@ export default function BulkFinanceMessageModal({ onClose, onSent }: Props) {
                                                 <p className="text-sm font-medium text-slate-800">{s.name}</p>
                                                 <p className="text-[11px] text-slate-400">{s.admissionNo} • ₦{(s.totalOutstanding || 0).toLocaleString()} outstanding</p>
                                             </div>
-                                            {selected.has(s.id) ? <CheckSquare className="h-4 w-4 text-indigo-600 shrink-0" /> : <Square className="h-4 w-4 text-slate-300 shrink-0" />}
+                                            {selected.has(s.id) ? <CheckSquare className="h-4 w-4 text-[#1E4DA6] shrink-0" /> : <Square className="h-4 w-4 text-slate-300 shrink-0" />}
                                         </button>
                                     ))
                                 )}
@@ -173,7 +173,7 @@ export default function BulkFinanceMessageModal({ onClose, onSent }: Props) {
                     <button
                         onClick={handleSend}
                         disabled={sending || selected.size === 0}
-                        className="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white hover:bg-indigo-700 disabled:opacity-50"
+                        className="flex items-center gap-2 rounded-xl bg-[#1E4DA6] px-4 py-2 text-sm font-bold text-white hover:bg-[#173F8C] disabled:opacity-50"
                     >
                         {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                         Send to {selected.size || ''} Parent{selected.size === 1 ? '' : 's'}

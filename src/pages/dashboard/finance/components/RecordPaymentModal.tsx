@@ -79,7 +79,7 @@ export default function RecordPaymentModal({ inv, onClose, onSuccess }: { inv: a
                     <p className="text-slate-500 mb-8">The payment of ₦{Number(amount).toLocaleString()} has been securely recorded.</p>
                     
                     <div className="flex flex-col gap-3 w-full">
-                        <Button onClick={() => setShowPrintModal(true)} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold h-12 rounded-xl">
+                        <Button onClick={() => setShowPrintModal(true)} className="w-full bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold h-12 rounded-xl">
                             <Printer className="mr-2 h-5 w-5" /> Print Receipt
                         </Button>
                         <Button onClick={onSuccess} variant="outline" className="w-full h-12 rounded-xl font-bold text-slate-600">

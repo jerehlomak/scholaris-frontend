@@ -1,23 +1,28 @@
 import { useState, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
-    Lock, ShieldCheck,
-    User, GraduationCap, UserCog, CheckCircle2, Users, ArrowRight, Building2, KeyRound
+    Lock, ShieldCheck, Eye, EyeOff,
+    User, GraduationCap, UserCog, Users, ArrowRight, Building2, KeyRound, LifeBuoy
 } from 'lucide-react';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
+import { Label } from '../../components/ui/label';
+import { Card } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
 import { cn } from '../../lib/utils';
-import logo from '../../assets/SkcoolyPlus.png';
+import { SkcoolyWordmark } from '../../components/shared/SkcoolyWordmark';
+import { BrandGraphic } from '../../components/shared/BrandGraphic';
 import { toast } from 'sonner';
 import axios from 'axios';
 
 type Role = 'ADMIN' | 'TEACHER' | 'STUDENT' | 'PARENT';
 
-const roles: { id: Role; label: string; icon: ReactNode; desc: string }[] = [
-    { id: 'ADMIN', label: 'School Admin', icon: <ShieldCheck size={24} />, desc: 'Full system control' },
-    { id: 'TEACHER', label: 'Staff', icon: <UserCog size={24} />, desc: 'Manage classes & grades' },
-    { id: 'STUDENT', label: 'Student', icon: <GraduationCap size={24} />, desc: 'View portal & results' },
-    { id: 'PARENT', label: 'Parent', icon: <Users size={24} />, desc: 'Track child progress' },
+const roles: { id: Role; label: string; icon: ReactNode }[] = [
+    { id: 'ADMIN', label: 'School Admin', icon: <ShieldCheck size={20} /> },
+    { id: 'TEACHER', label: 'Staff', icon: <UserCog size={20} /> },
+    { id: 'STUDENT', label: 'Student', icon: <GraduationCap size={20} /> },
+    { id: 'PARENT', label: 'Parent', icon: <Users size={20} /> },
 ];
 
 export default function PortalRecover() {
@@ -61,74 +66,72 @@ export default function PortalRecover() {
     };
 
     return (
-        <div className="min-h-screen bg-brand-gray-light flex font-poppins">
-            {/* ── LEFT PANEL (Form) ── */}
-            <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-20 xl:px-28 bg-white relative z-10 w-full lg:w-1/2 lg:flex-none xl:w-[45%] shadow-2xl">
+        <div className="min-h-screen flex bg-[#FDF6E3]">
 
-                <div className="w-full max-w-md mx-auto">
-                    {/* Logo & Header */}
-                    <div className="mb-6 mt-4">
-                        <Link to="/" className="inline-block mb-8 transition-transform hover:scale-105">
-                            <img src={logo} alt="SkcoolyPlus Logo" className="h-auto w-32 md:w-40 object-contain" />
+            {/* ── LEFT PANEL — form ── */}
+            <div className="flex-1 flex flex-col justify-center items-center px-6 sm:px-10 lg:px-0 bg-white relative z-10 w-full lg:w-1/2 lg:flex-none xl:w-[46%]">
+
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#15316B] to-[#F5B800]" />
+
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    className="w-full max-w-[450px] py-12 px-2"
+                >
+
+                    {/* Logo */}
+                    <div className="mb-10">
+                        <Link to="/" className="inline-block transition-opacity hover:opacity-80">
+                            <SkcoolyWordmark size="lg" />
                         </Link>
-                        <h1 className="text-3xl font-heading text-brand-dark mb-2 tracking-tight">
-                            Account Recovery
+                    </div>
+
+                    {/* Header */}
+                    <div className="mb-8">
+                        <h1 className="text-[28px] font-heading font-bold tracking-tight leading-tight mb-2 text-[#15316B]">
+                            Account recovery
                         </h1>
-                        <p className="text-gray-500 font-medium text-sm">
+                        <p className="text-[14px] text-gray-400 leading-relaxed">
                             Use the 6-digit recovery key provided by your school to reset your password.
                         </p>
                     </div>
 
-                    {/* Role Selection */}
-                    <div className="mb-8">
-                        <p className="text-sm font-semibold text-brand-teal mb-4 uppercase tracking-wider">Account Type</p>
-                        <div className="grid grid-cols-2 gap-3">
-                            {roles.map(role => (
-                                <button
-                                    key={role.id}
-                                    type="button"
-                                    onClick={() => setSelectedRole(role.id)}
-                                    className={cn(
-                                        "relative flex flex-col items-center justify-center p-3 rounded-xl border transition-all duration-300 group overflow-hidden",
-                                        selectedRole === role.id
-                                            ? "border-brand-green bg-brand-green/5 shadow-[0_4px_20px_-4px_rgba(6,147,6,0.15)] ring-1 ring-brand-green"
-                                            : "border-gray-200 bg-white hover:border-brand-green/30 hover:bg-brand-gray-light"
-                                    )}
-                                >
-                                    {selectedRole === role.id && (
-                                        <div className="absolute top-1.5 right-1.5">
-                                            <CheckCircle2 className="w-3.5 h-3.5 text-brand-green" />
-                                        </div>
-                                    )}
-                                    <div className={cn(
-                                        "mb-2 transition-colors duration-300",
-                                        selectedRole === role.id ? "text-brand-green" : "text-gray-400 group-hover:text-brand-green"
-                                    )}>
-                                        {role.icon}
-                                    </div>
-                                    <span className={cn(
-                                        "text-xs font-bold",
-                                        selectedRole === role.id ? "text-brand-dark" : "text-gray-600"
-                                    )}>{role.label}</span>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+                    {/* Role Selector */}
+                    <Card className="mb-8 flex flex-row gap-1.5 p-1 bg-gray-100/80 border-gray-200/60 shadow-none">
+                        {roles.map(role => (
+                            <button
+                                key={role.id}
+                                type="button"
+                                onClick={() => setSelectedRole(role.id)}
+                                className={cn(
+                                    "relative flex-1 flex flex-col items-center gap-1 py-2.5 px-1 rounded-lg text-[11px] font-semibold transition-colors duration-200",
+                                    selectedRole === role.id ? "text-[#15316B] bg-white shadow-sm border border-gray-200" : "text-gray-400 hover:text-gray-600"
+                                )}
+                            >
+                                <span className="relative">{role.icon}</span>
+                                <span className="relative">{role.label}</span>
+                            </button>
+                        ))}
+                    </Card>
 
                     {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {/* School ID */}
                             <div className="space-y-1.5">
-                                <label className="text-sm font-semibold text-brand-teal">School ID</label>
+                                <Label htmlFor="recoverSchoolCode" className="text-[12px] font-semibold text-gray-500 uppercase tracking-wider">
+                                    School ID
+                                </Label>
                                 <div className="relative">
-                                    <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" strokeWidth={1.5} />
+                                    <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-[15px] h-[15px] text-gray-300 pointer-events-none" strokeWidth={1.5} />
                                     <Input
+                                        id="recoverSchoolCode"
                                         type="text"
                                         value={schoolCode}
                                         onChange={(e) => setSchoolCode(e.target.value.toUpperCase())}
                                         placeholder="038290"
-                                        className="pl-11 h-12 bg-gray-50/50 border-gray-200 text-[15px] focus-visible:ring-brand-green focus-visible:border-brand-green font-mono font-semibold tracking-widest transition-all uppercase"
+                                        className="pl-10 h-11 bg-gray-50 border-gray-200 text-[14px] focus-visible:ring-[#15316B] rounded-xl transition-all placeholder:text-gray-300 font-mono font-semibold tracking-widest uppercase"
                                         required
                                         disabled={isSubmitting}
                                     />
@@ -137,14 +140,15 @@ export default function PortalRecover() {
 
                             {/* Login ID */}
                             <div className="space-y-1.5">
-                                <label className="text-sm font-semibold text-brand-teal">
+                                <Label htmlFor="recoverLoginId" className="text-[12px] font-semibold text-gray-500 uppercase tracking-wider">
                                     {selectedRole === 'ADMIN' ? 'Email Address' :
                                         selectedRole === 'STUDENT' ? 'Admission No' :
                                             selectedRole === 'TEACHER' ? 'Staff ID' : 'Parent ID'}
-                                </label>
+                                </Label>
                                 <div className="relative">
-                                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-400 pointer-events-none" strokeWidth={1.5} />
+                                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-[15px] h-[15px] text-gray-300 pointer-events-none" strokeWidth={1.5} />
                                     <Input
+                                        id="recoverLoginId"
                                         type={selectedRole === 'ADMIN' ? 'email' : 'text'}
                                         value={loginId}
                                         onChange={(e) => setLoginId(e.target.value)}
@@ -153,7 +157,7 @@ export default function PortalRecover() {
                                                 selectedRole === 'STUDENT' ? 'SKL-YYYY-XXXX' :
                                                     selectedRole === 'TEACHER' ? 'TCH-YYYY-XXXX' : 'PRT-YYYY-XXXX'
                                         }
-                                        className="pl-11 h-12 bg-gray-50/50 border-gray-200 text-[15px] focus-visible:ring-brand-green focus-visible:border-brand-green font-medium transition-all"
+                                        className="pl-10 h-11 bg-gray-50 border-gray-200 text-[14px] focus-visible:ring-[#15316B] rounded-xl transition-all placeholder:text-gray-300"
                                         required
                                         disabled={isSubmitting}
                                     />
@@ -162,16 +166,19 @@ export default function PortalRecover() {
                         </div>
 
                         {/* Recovery Key */}
-                        <div className="space-y-1.5 pt-2">
-                            <label className="text-sm font-semibold text-brand-teal">6-Digit Recovery Key</label>
+                        <div className="space-y-1.5">
+                            <Label htmlFor="recoveryKey" className="text-[12px] font-semibold text-gray-500 uppercase tracking-wider">
+                                6-digit recovery key
+                            </Label>
                             <div className="relative">
-                                <KeyRound className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-400 pointer-events-none" strokeWidth={1.5} />
+                                <KeyRound className="absolute left-3.5 top-1/2 -translate-y-1/2 w-[15px] h-[15px] text-gray-300 pointer-events-none" strokeWidth={1.5} />
                                 <Input
+                                    id="recoveryKey"
                                     type="text"
                                     value={recoveryKey}
                                     onChange={(e) => setRecoveryKey(e.target.value)}
                                     placeholder="e.g. 123456"
-                                    className="pl-11 h-12 bg-gray-50/50 border-gray-200 text-[15px] focus-visible:ring-brand-green focus-visible:border-brand-green font-mono font-bold tracking-[0.25em] transition-all"
+                                    className="pl-10 h-11 bg-gray-50 border-gray-200 text-[14px] focus-visible:ring-[#15316B] rounded-xl transition-all placeholder:text-gray-300 font-mono font-semibold tracking-[0.25em]"
                                     required
                                     maxLength={6}
                                     disabled={isSubmitting}
@@ -180,82 +187,134 @@ export default function PortalRecover() {
                         </div>
 
                         {/* New Password */}
-                        <div className="space-y-1.5 pt-2">
-                            <label className="text-sm font-semibold text-brand-teal">New Password</label>
+                        <div className="space-y-1.5">
+                            <Label htmlFor="newPassword" className="text-[12px] font-semibold text-gray-500 uppercase tracking-wider">
+                                New password
+                            </Label>
                             <div className="relative">
-                                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-400 pointer-events-none" strokeWidth={1.5} />
+                                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-[15px] h-[15px] text-gray-300 pointer-events-none" strokeWidth={1.5} />
                                 <Input
+                                    id="newPassword"
                                     type={showPassword ? 'text' : 'password'}
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="pl-11 pr-12 h-12 bg-gray-50/50 border-gray-200 text-[15px] focus-visible:ring-brand-green focus-visible:border-brand-green font-medium transition-all shadow-sm"
+                                    className="pl-10 pr-11 h-11 bg-gray-50 border-gray-200 text-[14px] focus-visible:ring-[#15316B] rounded-xl transition-all placeholder:text-gray-300"
                                     required
                                     disabled={isSubmitting}
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(p => !p)}
-                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-green transition-colors p-1"
+                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-300 transition-colors hover:text-[#15316B]"
                                 >
-                                    {showPassword ? (
-                                        <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 4.411m0 0L21 21" /></svg>
-                                    ) : (
-                                        <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                                    )}
+                                    {showPassword ? <EyeOff className="w-4 h-4" strokeWidth={1.5} /> : <Eye className="w-4 h-4" strokeWidth={1.5} />}
                                 </button>
                             </div>
                         </div>
 
+                        {/* Submit */}
                         <Button
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full h-12 bg-brand-green hover:bg-brand-teal text-white font-bold rounded-xl shadow-lg shadow-brand-green/20 transition-all flex items-center justify-center gap-2 mt-4 text-[15px] group overflow-hidden relative disabled:opacity-70"
+                            className="w-full h-11 bg-[#15316B] hover:bg-[#0E2450] text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 mt-2 text-[14px] group shadow-lg shadow-[#15316B]/25 disabled:opacity-60"
                         >
-                            <span className="relative z-10 flex items-center gap-2">
-                                {isSubmitting ? (
-                                    <div className="w-4 h-4 rounded-full border-2 border-white/20 border-t-white animate-spin"></div>
-                                ) : (
-                                    <CheckCircle2 className="w-4 h-4 group-hover:scale-110 transition-transform" strokeWidth={2.5} />
-                                )}
-                                {isSubmitting ? 'Resetting Password...' : 'Reset Password'}
-                            </span>
+                            {isSubmitting ? (
+                                <>
+                                    <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                                    <span>Resetting password…</span>
+                                </>
+                            ) : (
+                                <>
+                                    Reset password
+                                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={2} />
+                                </>
+                            )}
                         </Button>
                     </form>
 
-                    <div className="mt-8 text-center">
-                        <Link to="/portal/login" className="text-sm font-semibold text-gray-500 hover:text-brand-green transition-colors">
-                            &larr; Back to Login
+                    {/* Back to login */}
+                    <div className="mt-8 flex items-center gap-3">
+                        <div className="flex-1 h-px bg-gray-100" />
+                        <Link
+                            to="/portal/login"
+                            className="text-[12px] font-semibold text-gray-500 hover:text-[#15316B] transition-colors whitespace-nowrap"
+                        >
+                            &larr; Back to login
                         </Link>
+                        <div className="flex-1 h-px bg-gray-100" />
                     </div>
 
-                </div>
+                    {/* Footer */}
+                    <p className="mt-10 text-center text-[11px] text-gray-300">
+                        &copy; {new Date().getFullYear()} Skcooly. All rights reserved.
+                    </p>
+                </motion.div>
             </div>
 
-            {/* ── RIGHT PANEL (Image Background) ── */}
-            <div className="hidden lg:block relative flex-1 bg-brand-dark overflow-hidden">
-                <img
-                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop"
-                    alt="Students on campus"
-                    className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay"
+            {/* ── RIGHT PANEL — brand ── */}
+            <div className="hidden lg:flex relative flex-1 overflow-hidden flex-col">
+
+                {/* Base navy gradient (no stock photo — abstract graphic instead) */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#15316B] via-[#0E2450] to-[#081434]" />
+
+                <BrandGraphic />
+
+                {/* Subtle grid pattern */}
+                <div
+                    className="absolute inset-0 opacity-[0.05]"
+                    style={{
+                        backgroundImage: 'linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)',
+                        backgroundSize: '48px 48px',
+                    }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/90 via-brand-green/80 to-[#046e04]/90 backdrop-blur-[2px]"></div>
 
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-12 text-center">
-                    <div className="max-w-xl">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-8">
-                            <ShieldCheck className="w-4 h-4 text-brand-yellow" />
-                            <span className="text-sm font-semibold tracking-wide text-white/90">Safe & Secure Recovery</span>
-                        </div>
+                {/* Content */}
+                <div className="relative z-10 flex flex-col justify-between h-full p-12 xl:p-16">
 
-                        <h2 className="text-4xl xl:text-5xl text-white font-heading mb-6 leading-[1.1]">
-                            Regain access to your portal instantly.
+                    {/* Top badge */}
+                    <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+                        <Badge className="gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/5 backdrop-blur-sm text-white/70 font-semibold tracking-wide text-[12px]">
+                            <ShieldCheck className="w-3.5 h-3.5 text-[#FFC72C]" />
+                            Safe & secure recovery
+                        </Badge>
+                    </motion.div>
+
+                    {/* Central copy */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+                        className="max-w-md"
+                    >
+                        <h2 className="font-heading text-[42px] xl:text-[52px] text-white leading-[1.08] tracking-tight mb-6">
+                            Regain access,<br />
+                            <span className="text-[#FFC72C]">in minutes</span>,<br />
+                            not days.
                         </h2>
-
-                        <p className="text-lg text-white/90 font-secondary leading-relaxed mb-10">
-                            Lost your password? Request a secure 6-digit recovery key from your school administrator to securely reset your password.
+                        <p className="text-[16px] text-white/50 leading-relaxed mb-10 max-w-[340px]">
+                            Request a secure recovery key from your school administrator, then use it here to set a fresh password — no waiting on IT.
                         </p>
-                    </div>
+                    </motion.div>
+
+                    {/* Bottom help card */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+                    >
+                        <Card className="rounded-2xl border-white/8 bg-white/5 backdrop-blur-md p-5 shadow-none gap-0">
+                            <div className="flex items-start gap-3.5">
+                                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 text-[#FFC72C]">
+                                    <LifeBuoy className="w-4 h-4" />
+                                </div>
+                                <div>
+                                    <p className="text-[13px] font-bold text-white/90 mb-1">Don't have a recovery key?</p>
+                                    <p className="text-[12px] text-white/45 leading-relaxed">Ask your school administrator to generate one from their dashboard — it's a one-time 6-digit code tied to your account.</p>
+                                </div>
+                            </div>
+                        </Card>
+                    </motion.div>
                 </div>
             </div>
 
