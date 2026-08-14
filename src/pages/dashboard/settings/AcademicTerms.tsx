@@ -42,7 +42,7 @@ export function AcademicTerms() {
     };
 
     if (isLoading) {
-        return <div className="flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-blue-600" /></div>;
+        return <div className="flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" /></div>;
     }
 
     return (
@@ -65,7 +65,7 @@ export function AcademicTerms() {
                         'flex items-center gap-2 rounded-xl border-2 border-dashed px-5 py-2.5 text-sm font-semibold transition-all',
                         isAdding
                             ? 'border-red-200 bg-red-50 text-red-600 hover:bg-red-100'
-                            : 'border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100'
+                            : 'border-[#1E4DA6]/20 bg-[#1E4DA6]/5 text-[#1E4DA6] hover:bg-[#1E4DA6]/10'
                     )}
                 >
                     {isAdding ? <><X className="h-4 w-4" /> Cancel</> : <><Plus className="h-4 w-4" /> Add New Term</>}
@@ -76,7 +76,7 @@ export function AcademicTerms() {
             {isAdding && (
                 <form
                     onSubmit={handleAddTerm}
-                    className="mb-8 rounded-2xl border border-blue-100 bg-blue-50/50 p-6 space-y-4"
+                    className="mb-8 rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-6 space-y-4"
                 >
                     <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">
                         Create Academic Term
@@ -90,7 +90,7 @@ export function AcademicTerms() {
                                 required
                                 value={newSessionId}
                                 onChange={e => setNewSessionId(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             >
                                 <option value="" disabled>Select a session</option>
                                 {sessions.map(s => (
@@ -107,7 +107,7 @@ export function AcademicTerms() {
                                 value={newTermName}
                                 onChange={e => setNewTermName(e.target.value)}
                                 placeholder="e.g. First Term"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             />
                         </div>
                         <div className="space-y-1.5">
@@ -116,7 +116,7 @@ export function AcademicTerms() {
                                 type="date"
                                 value={newStartDate}
                                 onChange={e => setNewStartDate(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             />
                         </div>
                         <div className="space-y-1.5">
@@ -125,7 +125,7 @@ export function AcademicTerms() {
                                 type="date"
                                 value={newEndDate}
                                 onChange={e => setNewEndDate(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             />
                         </div>
                         <div className="sm:col-span-2 flex items-center gap-3">
@@ -134,7 +134,7 @@ export function AcademicTerms() {
                                 id="makeActive"
                                 checked={makeActive}
                                 onChange={e => setMakeActive(e.target.checked)}
-                                className="h-4 w-4 accent-blue-600"
+                                className="h-4 w-4 accent-[#1E4DA6]"
                             />
                             <label htmlFor="makeActive" className="text-sm font-semibold text-slate-700 cursor-pointer">
                                 Set as active term immediately
@@ -144,7 +144,7 @@ export function AcademicTerms() {
                     <div className="flex justify-end pt-2">
                         <button
                             type="submit"
-                            className="rounded-xl bg-blue-700 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 transition-colors"
+                            className="rounded-xl bg-[#173F8C] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69] transition-colors"
                         >
                             Create Term
                         </button>
@@ -197,7 +197,7 @@ export function AcademicTerms() {
                                                 'rounded-lg px-3 py-1.5 text-xs font-bold transition-all',
                                                 term.isActive
                                                     ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                                                    : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                                                    : 'bg-[#1E4DA6]/5 text-[#173F8C] hover:bg-[#1E4DA6]/10'
                                             )}
                                         >
                                             {term.isActive ? 'Activated' : 'Make Active'}

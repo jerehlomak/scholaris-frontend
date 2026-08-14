@@ -137,19 +137,19 @@ export function MarksGrading() {
             ) : (
                 <>
                     {/* Global Pass Mark */}
-                    <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-blue-100 bg-blue-50/60 p-5">
+                    <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-5">
                 <div>
-                    <h3 className="font-bold text-blue-800 text-sm">Global Passing Score</h3>
-                    <p className="text-xs text-blue-600/70 mt-0.5">The minimum percentage required to pass a subject school-wide.</p>
+                    <h3 className="font-bold text-[#122F69] text-sm">Global Passing Score</h3>
+                    <p className="text-xs text-[#1E4DA6]/70 mt-0.5">The minimum percentage required to pass a subject school-wide.</p>
                 </div>
-                <div className="flex items-center gap-2 rounded-xl border border-blue-200 bg-white px-3 py-2">
+                <div className="flex items-center gap-2 rounded-xl border border-[#1E4DA6]/20 bg-white px-3 py-2">
                     <span className="text-sm font-bold text-slate-600">Pass Mark</span>
                     <div className="relative w-20">
                         <input
                             type="number"
                             value={passMark}
                             onChange={e => setPassMark(e.target.value)}
-                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 pr-6 text-center text-sm font-black text-slate-800 outline-none focus:border-blue-400"
+                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 pr-6 text-center text-sm font-black text-slate-800 outline-none focus:border-[#1E4DA6]/60"
                         />
                         <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">%</span>
                     </div>
@@ -175,27 +175,27 @@ export function MarksGrading() {
                                     value={g.grade}
                                     onChange={e => handleUpdate(g.id, 'grade', e.target.value.toUpperCase())}
                                     placeholder="A+"
-                                    className="w-full rounded-xl border border-slate-200 bg-white px-2 py-2.5 text-center text-lg font-black text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                    className="w-full rounded-xl border border-slate-200 bg-white px-2 py-2.5 text-center text-lg font-black text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                                 />
                             </div>
                             <div className="col-span-2">
                                 <div className="relative">
                                     <input type="number" value={g.minScore} onChange={e => handleUpdate(g.id, 'minScore', e.target.value)}
-                                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 pr-7 text-center text-sm font-semibold outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 pr-7 text-center text-sm font-semibold outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10" />
                                     <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400">%</span>
                                 </div>
                             </div>
                             <div className="col-span-2">
                                 <div className="relative">
                                     <input type="number" value={g.maxScore} onChange={e => handleUpdate(g.id, 'maxScore', e.target.value)}
-                                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 pr-7 text-center text-sm font-semibold outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 pr-7 text-center text-sm font-semibold outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10" />
                                     <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400">%</span>
                                 </div>
                             </div>
                             <div className="col-span-3">
                                 <input value={(g as any).remark || ''} onChange={e => handleUpdate(g.id, 'remark' as keyof GradeScale, e.target.value)}
                                     placeholder="e.g. Excellent"
-                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10" />
                             </div>
                             <div className="col-span-2">
                                 <button
@@ -222,7 +222,7 @@ export function MarksGrading() {
 
             <button
                 onClick={handleAdd}
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-blue-200 py-4 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-[#1E4DA6]/20 py-4 text-sm font-semibold text-[#1E4DA6] hover:bg-[#1E4DA6]/5 transition-colors"
             >
                 <Plus className="h-4 w-4" /> Add Grade Range
             </button>

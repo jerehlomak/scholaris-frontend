@@ -40,7 +40,7 @@ export const CommentBasedReportCard: React.FC<ReportCardPreviewProps & { comment
                     مدرسة البينة الأساسية / التحفيظ
                 </h1>
                 
-                <h2 className="text-3xl font-extrabold uppercase tracking-wide mb-1" style={{ color: '#0036a1' }}>
+                <h2 className="text-3xl font-extrabold uppercase tracking-wide mb-1" style={{ color: '#1E4DA6' }}>
                     {school.schoolName}
                 </h2>
                 

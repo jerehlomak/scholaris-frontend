@@ -9,7 +9,7 @@ import useSWR from 'swr';
 import { fetcher } from '../../utils/fetcher';
 import {
     Users, BookOpen, ChevronDown,
-    Calendar, CheckCircle2, Clock, Radio, Search, Loader2, Key
+    Calendar, CheckCircle2, Clock, Search, Loader2, Key
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '../../components/ui/card';
@@ -39,7 +39,7 @@ interface TeacherClass {
 }
 
 const CLASS_THEMES = [
-    { color: 'text-blue-700', bg: 'bg-blue-50', border: 'border-l-blue-500' },
+    { color: 'text-[#173F8C]', bg: 'bg-[#1E4DA6]/5', border: 'border-l-[#1E4DA6]' },
     { color: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-l-emerald-500' },
     { color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-l-amber-500' },
     { color: 'text-violet-700', bg: 'bg-violet-50', border: 'border-l-violet-500' },
@@ -82,7 +82,7 @@ export default function TeacherClasses() {
     if (loading) {
         return (
             <div className="py-20 flex justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" />
             </div>
         );
     }
@@ -101,7 +101,7 @@ export default function TeacherClasses() {
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                         placeholder="Search students..."
-                        className="pl-9 pr-4 w-full sm:w-56 border-slate-200 focus:border-blue-400"
+                        className="pl-9 pr-4 w-full sm:w-56 border-slate-200 focus:border-[#1E4DA6]/60"
                     />
                 </div>
             </div>
@@ -109,7 +109,7 @@ export default function TeacherClasses() {
             {/* ── KPI Cards ── */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 {[
-                    { icon: BookOpen, label: 'My Classes', value: myClasses.length, color: 'text-blue-600', bg: 'bg-blue-50' },
+                    { icon: BookOpen, label: 'My Classes', value: myClasses.length, color: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5' },
                     { icon: Users, label: 'Total Students', value: totalStudents, color: 'text-emerald-600', bg: 'bg-emerald-50' },
                     { icon: CheckCircle2, label: 'Avg. Attendance', value: `${avgAttendance}%`, color: 'text-violet-600', bg: 'bg-violet-50' },
                     { icon: Calendar, label: 'Next Lesson', value: 'Today 10AM', color: 'text-amber-600', bg: 'bg-amber-50' },
@@ -164,7 +164,7 @@ export default function TeacherClasses() {
                                 <div className="flex items-center gap-5">
                                     <div className="hidden sm:flex gap-5 text-sm text-slate-500">
                                         <div className="flex items-center gap-1.5">
-                                            <Users size={14} className="text-blue-500" />
+                                            <Users size={14} className="text-[#1E4DA6]" />
                                             <span className="font-semibold text-slate-700">{cls.studentCount}</span>
                                             <span>students</span>
                                         </div>
@@ -177,8 +177,8 @@ export default function TeacherClasses() {
                                             <span className="font-semibold">{cls.attendanceRate}%</span>
                                         </div>
                                     </div>
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${isOpen ? 'bg-blue-50' : 'bg-slate-100'}`}>
-                                        <ChevronDown size={16} className={`transition-transform text-slate-400 ${isOpen ? 'rotate-180 text-blue-600' : ''}`} />
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${isOpen ? 'bg-[#1E4DA6]/5' : 'bg-slate-100'}`}>
+                                        <ChevronDown size={16} className={`transition-transform text-slate-400 ${isOpen ? 'rotate-180 text-[#1E4DA6]' : ''}`} />
                                     </div>
                                 </div>
                             </button>
@@ -196,13 +196,8 @@ export default function TeacherClasses() {
                                         {/* Quick actions */}
                                         <div className="px-5 py-3 bg-slate-50 flex flex-wrap gap-2">
                                             <Link to="/teacher/attendance">
-                                                <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs h-8 gap-1.5">
+                                                <Button size="sm" className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white text-xs h-8 gap-1.5">
                                                     <CheckCircle2 size={13} /> Mark Attendance
-                                                </Button>
-                                            </Link>
-                                            <Link to="/teacher/live-class">
-                                                <Button size="sm" variant="outline" className="text-xs h-8 gap-1.5 border-slate-300">
-                                                    <Radio size={13} /> Start Live Class
                                                 </Button>
                                             </Link>
                                             <Link to="/teacher/cbt/create">
@@ -244,7 +239,7 @@ export default function TeacherClasses() {
                                                             <td className="px-5 py-3 text-right">
                                                                 <button
                                                                     onClick={() => setEditCredTarget(s)}
-                                                                    className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                                    className="p-1.5 text-slate-400 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded-lg transition-colors"
                                                                     title="Edit Credentials"
                                                                 >
                                                                     <Key size={14} />
@@ -278,7 +273,7 @@ export default function TeacherClasses() {
                                                     </div>
                                                     <button
                                                         onClick={() => setEditCredTarget(s)}
-                                                        className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                        className="p-1.5 text-slate-400 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded-lg transition-colors"
                                                     >
                                                         <Key size={14} />
                                                     </button>

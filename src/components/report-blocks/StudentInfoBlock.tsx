@@ -3,7 +3,11 @@ import React from 'react';
 export default function StudentInfoBlock({ data, config, toggles, masterConfig }: { data: any, config?: any, toggles?: any, masterConfig?: any }) {
     // Only use the explicitly ordered fields from config (or fallback)
     const DEFAULT_FIELDS = ['Student Name', 'Class', 'Academic Year', 'Student ID', 'Term', 'Date Issued', 'Next Term Begins', 'Term Ends', 'Age', 'Gender', 'Club & Society'];
-    let fields: string[] = masterConfig?.studentFields || config?.studentFields || data?.studentFields || DEFAULT_FIELDS;
+    // `studentFields` is typed `any` upstream and several call sites default it to `{}`
+    // (an empty object, not an array) when no real field config exists yet — guard against
+    // that shape here rather than assuming every caller passes a real string array.
+    const resolved = masterConfig?.studentFields || config?.studentFields || data?.studentFields;
+    let fields: string[] = Array.isArray(resolved) ? [...resolved] : [...DEFAULT_FIELDS];
     const s = data?.student || {};
     const t = toggles || {};
 

@@ -60,11 +60,11 @@ export function StudentAttendanceHistory({ classLevel }: Props) {
                                         );
                                     })}
                                     <td className="px-4 py-3 text-center">
-                                        <span className={`text-xs font-bold px-2 py-1 rounded-full ${stats.rate >= 80 ? 'bg-[#6bc048]/10 text-[#3a7a1f]' : stats.rate >= 60 ? 'bg-[#ff9800]/10 text-[#b86000]' : 'bg-red-50 text-red-600'}`}>
+                                        <span className={`text-xs font-bold px-2 py-1 rounded-full ${stats.rate >= 80 ? 'bg-[#10b981]/10 text-[#3a7a1f]' : stats.rate >= 60 ? 'bg-[#ff9800]/10 text-[#b86000]' : 'bg-red-50 text-red-600'}`}>
                                             {stats.rate}%
                                         </span>
                                     </td>
-                                    <td className="px-4 py-3 text-center text-[#6bc048] font-bold">{stats.present}</td>
+                                    <td className="px-4 py-3 text-center text-[#10b981] font-bold">{stats.present}</td>
                                     <td className="px-4 py-3 text-center text-red-500 font-bold">{stats.absent}</td>
                                     <td className="px-4 py-3 text-center text-[#ff9800] font-bold">{stats.late}</td>
                                 </tr>

@@ -102,7 +102,7 @@ export function AccountRecovery() {
                         className={cn(
                             'flex items-center gap-2 px-4 py-2 rounded-t-xl text-sm font-bold transition-all border-b-2 shrink-0',
                             activeRole === role.id
-                                ? 'text-blue-700 border-blue-700 bg-blue-50/50'
+                                ? 'text-[#173F8C] border-[#173F8C] bg-[#1E4DA6]/8'
                                 : 'text-slate-500 border-transparent hover:text-slate-700 hover:bg-slate-50'
                         )}
                     >
@@ -121,7 +121,7 @@ export function AccountRecovery() {
                             placeholder={`Search ${activeRole.toLowerCase()}s by name or ID...`}
                             value={search}
                             onChange={e => handleSearch(e.target.value)}
-                            className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white transition-all"
+                            className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 bg-white transition-all"
                         />
                     </div>
                     {!isLoading && filteredItems.length > 0 && (
@@ -143,7 +143,7 @@ export function AccountRecovery() {
                         </thead>
                         <tbody className="divide-y divide-slate-50">
                             {isLoading ? (
-                                <tr><td colSpan={4} className="py-12 text-center"><Loader2 className="h-8 w-8 animate-spin mx-auto text-blue-600" /></td></tr>
+                                <tr><td colSpan={4} className="py-12 text-center"><Loader2 className="h-8 w-8 animate-spin mx-auto text-[#1E4DA6]" /></td></tr>
                             ) : displayedItems.length === 0 ? (
                                 <tr><td colSpan={4} className="py-10 text-center text-slate-400 text-sm">No users found.</td></tr>
                             ) : displayedItems.map((item: any) => {
@@ -203,7 +203,7 @@ export function AccountRecovery() {
                                         className={cn(
                                             'h-8 w-8 flex items-center justify-center rounded-lg text-xs font-bold transition-colors',
                                             currentPage === pageNum
-                                                ? 'bg-blue-700 text-white shadow-sm'
+                                                ? 'bg-[#173F8C] text-white shadow-sm'
                                                 : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100'
                                         )}
                                     >
@@ -254,7 +254,7 @@ export function AccountRecovery() {
                         <button
                             type="button"
                             onClick={() => setGeneratedKeyData(null)}
-                            className="w-full sm:w-auto px-6 py-2.5 bg-blue-700 text-white rounded-xl font-bold hover:bg-blue-800 transition-colors"
+                            className="w-full sm:w-auto px-6 py-2.5 bg-[#173F8C] text-white rounded-xl font-bold hover:bg-[#122F69] transition-colors"
                         >
                             Done
                         </button>

@@ -30,11 +30,11 @@ interface StaffData {
 }
 
 const DEPT_COLORS: Record<string, string> = {
-    'Science': 'bg-blue-100 text-blue-700', 'Mathematics': 'bg-purple-100 text-purple-700',
+    'Science': 'bg-[#1E4DA6]/10 text-[#173F8C]', 'Mathematics': 'bg-[#1E4DA6]/10 text-[#173F8C]',
     'Arts': 'bg-pink-100 text-pink-700', 'Commerce': 'bg-orange-100 text-orange-700',
     'Languages': 'bg-teal-100 text-teal-700', 'Social Science': 'bg-indigo-100 text-indigo-700', 'ICT': 'bg-green-100 text-green-700',
 };
-const AVATAR_COLORS = ['bg-blue-700', 'bg-emerald-600', 'bg-purple-600', 'bg-orange-500', 'bg-teal-600', 'bg-indigo-600', 'bg-pink-600', 'bg-slate-600'];
+const AVATAR_COLORS = ['bg-[#173F8C]', 'bg-emerald-600', 'bg-[#1E4DA6]', 'bg-orange-500', 'bg-teal-600', 'bg-indigo-600', 'bg-pink-600', 'bg-slate-600'];
 
 function ReassignStaffModal({ staff, onSuccess }: { staff: StaffData; onSuccess: () => void }) {
     const [open, setOpen] = useState(false);
@@ -67,7 +67,7 @@ function ReassignStaffModal({ staff, onSuccess }: { staff: StaffData; onSuccess:
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <button className="p-1.5 text-slate-400 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors" title="Reassign Staff">
+                <button className="p-1.5 text-slate-400 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded-lg transition-colors" title="Reassign Staff">
                     <ArrowRightLeft className="h-4 w-4" />
                 </button>
             </DialogTrigger>
@@ -102,12 +102,12 @@ function ReassignStaffModal({ staff, onSuccess }: { staff: StaffData; onSuccess:
                             {classes.map((c: any) => <option key={c.id} value={c.id}>{c.name}</option>)}
                         </select>
                         <p className="text-[11px] text-slate-500 mt-1">
-                            Use the <Link to="/dashboard/academics/assignments" className="text-blue-600 hover:underline">Teacher Assignments</Link> page for advanced subject and class assignments.
+                            Use the <Link to="/dashboard/academics/assignments" className="text-[#1E4DA6] hover:underline">Teacher Assignments</Link> page for advanced subject and class assignments.
                         </p>
                     </div>
                     <div className="flex justify-end gap-2 mt-6">
                         <button onClick={() => setOpen(false)} className="px-4 py-2 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200">Cancel</button>
-                        <button onClick={handleReassign} disabled={loading} className="px-4 py-2 text-sm font-bold text-white bg-blue-600 rounded-xl hover:bg-blue-700 flex items-center gap-2">
+                        <button onClick={handleReassign} disabled={loading} className="px-4 py-2 text-sm font-bold text-white bg-[#1E4DA6] rounded-xl hover:bg-[#173F8C] flex items-center gap-2">
                             {loading && <Loader2 className="h-4 w-4 animate-spin" />} Reassign
                         </button>
                     </div>
@@ -156,32 +156,32 @@ export default function AllStaffs() {
     return (
         <SettingsShell breadcrumbParent="Employees" breadcrumbCurrent="All Staff" tabLabel="All Staff" tabIcon={<Users className="h-3.5 w-3.5" />}>
             {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-6 border-b border-slate-200">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-800">All Staffs</h1>
-                    <p className="text-sm text-slate-500 mt-1">Manage teaching staff and their profiles.</p>
+                    <h1 className="font-heading text-[32px] font-medium tracking-tight text-[#1C2333]">All Staffs</h1>
+                    <p className="text-sm text-slate-500 mt-1.5">Manage teaching staff and their profiles.</p>
                 </div>
-                <div className="flex flex-col md:flex-row gap-4 items-center shrink-0">
+                <div className="flex flex-col md:flex-row gap-3 items-center shrink-0">
                     <button onClick={() => setShowBulkRestrict('restrict')}
-                        className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-bold text-red-700 hover:bg-red-100 transition-colors">
+                        className="flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-700 hover:bg-rose-100 transition-colors">
                         <ShieldOff className="h-4 w-4" /> Bulk Restrict
                     </button>
                     <Link to="/dashboard/employees/add"
-                        className="flex items-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 transition-colors">
+                        className="flex items-center gap-2 rounded-full bg-[#1E4DA6] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#173F8C] transition-colors">
                         <Plus className="h-4 w-4" /> Add Staff
                     </Link>
                 </div>
             </div>
 
             {/* Data Panel */}
-            <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+            <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
                 {/* Toolbar */}
                 <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row justify-between gap-3 items-center">
                     <div className="relative flex-1 max-w-sm w-full">
                         <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                         <input type="text" placeholder="Search by name, ID, email, or dept..."
                             value={search} onChange={e => setSearch(e.target.value)}
-                            className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                            className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10" />
                     </div>
                     <div className="flex gap-2 w-full sm:w-auto">
                         <ViewToggle view={view} onChange={setView} />
@@ -189,7 +189,7 @@ export default function AllStaffs() {
                 </div>
 
                 {isLoading ? (
-                    <div className="py-20 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>
+                    <div className="py-20 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>
                 ) : Staffs.length === 0 ? (
                     <div className="py-16 text-center">
                         <Briefcase className="mx-auto h-12 w-12 text-slate-200 mb-3" />
@@ -201,7 +201,7 @@ export default function AllStaffs() {
                         {view === 'table' && (
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm whitespace-nowrap">
-                                    <thead className="bg-slate-50 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    <thead className="text-[11px] font-semibold text-slate-400 uppercase tracking-[0.1em] border-b border-slate-200">
                                         <tr>
                                             <th className="px-6 py-3 text-left">Staff Member</th>
                                             <th className="px-4 py-3 text-left">Department</th>
@@ -238,8 +238,8 @@ export default function AllStaffs() {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <a href={`mailto:${staff.user.email}`} className="flex items-center gap-1 text-xs text-slate-500 hover:text-blue-600"><Mail className="h-3 w-3" />{staff.user.email}</a>
-                                                    {staff.phone && <a href={`tel:${staff.phone}`} className="flex items-center gap-1 text-xs text-slate-400 hover:text-blue-600 mt-0.5"><Phone className="h-3 w-3" />{staff.phone}</a>}
+                                                    <a href={`mailto:${staff.user.email}`} className="flex items-center gap-1 text-xs text-slate-500 hover:text-[#1E4DA6]"><Mail className="h-3 w-3" />{staff.user.email}</a>
+                                                    {staff.phone && <a href={`tel:${staff.phone}`} className="flex items-center gap-1 text-xs text-slate-400 hover:text-[#1E4DA6] mt-0.5"><Phone className="h-3 w-3" />{staff.phone}</a>}
                                                 </td>
                                                 <td className="px-4 py-3">
                                                     <span className={cn('inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full',
@@ -250,10 +250,10 @@ export default function AllStaffs() {
                                                 </td>
                                                 <td className="px-4 py-3 text-right">
                                                     <div className="flex items-center justify-end gap-1">
-                                                        <button onClick={() => setSelectedStaff(staff)} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View Profile"><Eye className="h-4 w-4" /></button>
+                                                        <button onClick={() => setSelectedStaff(staff)} className="p-1.5 text-slate-400 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded-lg transition-colors" title="View Profile"><Eye className="h-4 w-4" /></button>
                                                         <ReassignStaffModal staff={staff} onSuccess={mutate} />
                                                         <Link to={`/dashboard/employees/edit/${staff.user.id}`} className="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Edit"><Edit3 className="h-4 w-4" /></Link>
-                                                        <button onClick={() => setEditCredTarget(staff)} className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="Edit Credentials"><Key className="h-4 w-4" /></button>
+                                                        <button onClick={() => setEditCredTarget(staff)} className="p-1.5 text-slate-400 hover:text-[#0F766E] hover:bg-[#0F766E]/10 rounded-lg transition-colors" title="Edit Credentials"><Key className="h-4 w-4" /></button>
                                                         <button onClick={() => setRestrictTarget(staff)}
                                                             title={staff.user.isRestricted ? 'Lift restriction' : 'Restrict account'}
                                                             className={cn('p-1.5 rounded-lg transition-colors', staff.user.isRestricted ? 'text-amber-600 bg-amber-50 hover:bg-amber-100' : 'text-slate-400 hover:text-amber-600 hover:bg-amber-50')}>
@@ -305,8 +305,8 @@ export default function AllStaffs() {
                                             <span className={cn('px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider inline-block mb-1', DEPT_COLORS[staff.department] || 'bg-slate-100 text-slate-600')}>
                                                 {staff.department}
                                             </span>
-                                            <a href={`mailto:${staff.user.email}`} className="flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600"><Mail className="h-3.5 w-3.5" />{staff.user.email}</a>
-                                            {staff.phone && <a href={`tel:${staff.phone}`} className="flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600"><Phone className="h-3.5 w-3.5" />{staff.phone}</a>}
+                                            <a href={`mailto:${staff.user.email}`} className="flex items-center gap-2 text-xs text-slate-500 hover:text-[#1E4DA6]"><Mail className="h-3.5 w-3.5" />{staff.user.email}</a>
+                                            {staff.phone && <a href={`tel:${staff.phone}`} className="flex items-center gap-2 text-xs text-slate-500 hover:text-[#1E4DA6]"><Phone className="h-3.5 w-3.5" />{staff.phone}</a>}
                                         </div>
                                         <div className="flex flex-col gap-3 mt-auto pt-3 border-t border-slate-50">
                                             <div>
@@ -317,9 +317,9 @@ export default function AllStaffs() {
                                             </div>
                                             <div className="flex flex-wrap items-center justify-end gap-1 transition-opacity shrink-0 w-full">
                                                 <div className="flex flex-wrap items-center justify-end gap-1">
-                                                    <button onClick={() => setSelectedStaff(staff)} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg"><Eye className="h-3.5 w-3.5" /></button>
+                                                    <button onClick={() => setSelectedStaff(staff)} className="p-1.5 text-slate-400 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded-lg"><Eye className="h-3.5 w-3.5" /></button>
                                                     <Link to={`/dashboard/employees/edit/${staff.user.id}`} className="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg"><Edit3 className="h-3.5 w-3.5" /></Link>
-                                                    <button onClick={() => setEditCredTarget(staff)} className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg"><Key className="h-3.5 w-3.5" /></button>
+                                                    <button onClick={() => setEditCredTarget(staff)} className="p-1.5 text-slate-400 hover:text-[#0F766E] hover:bg-[#0F766E]/10 rounded-lg"><Key className="h-3.5 w-3.5" /></button>
                                                     <button onClick={() => setRestrictTarget(staff)}
                                                         title={staff.user.isRestricted ? 'Lift restriction' : 'Restrict account'}
                                                         className={cn('p-1.5 rounded-lg transition-colors', staff.user.isRestricted ? 'text-amber-600 bg-amber-50 hover:bg-amber-100' : 'text-slate-400 hover:text-amber-600 hover:bg-amber-50')}>
@@ -405,7 +405,7 @@ export default function AllStaffs() {
                                 </div>
                             </div>
                             <div className="p-4 border-t border-slate-100 bg-slate-50 flex justify-end shrink-0">
-                                <Link to={`/dashboard/employees/edit/${selectedStaff.user.id}`} onClick={() => setSelectedStaff(null)} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700">
+                                <Link to={`/dashboard/employees/edit/${selectedStaff.user.id}`} onClick={() => setSelectedStaff(null)} className="flex items-center gap-2 px-4 py-2 bg-[#1E4DA6] text-white rounded-xl text-sm font-bold hover:bg-[#173F8C]">
                                     <Edit3 className="h-4 w-4" /> Edit Profile
                                 </Link>
                             </div>

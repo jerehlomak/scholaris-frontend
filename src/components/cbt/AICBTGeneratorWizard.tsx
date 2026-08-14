@@ -44,9 +44,9 @@ export function AICBTGeneratorWizard({ onClose, onQuestionsGenerated, subjectNam
                 className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-xl overflow-hidden flex flex-col max-h-[90vh] border border-white/20"
             >
                 {/* Header */}
-                <div className="flex items-center justify-between p-8 bg-gradient-to-br from-[#0036a1] to-[#001c52] text-white">
+                <div className="flex items-center justify-between p-8 bg-gradient-to-br from-[#1E4DA6] to-[#001c52] text-white">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-xl flex items-center justify-center border border-white/20 shadow-inner">
+                        <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center border border-white/20 shadow-inner">
                             <BrainCircuit className="w-7 h-7 text-white" />
                         </div>
                         <div>
@@ -67,12 +67,12 @@ export function AICBTGeneratorWizard({ onClose, onQuestionsGenerated, subjectNam
                                 <motion.div
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                                    className="absolute inset-0 rounded-full border-4 border-[#0036a1]/10 border-t-[#0036a1]"
+                                    className="absolute inset-0 rounded-full border-4 border-[#1E4DA6]/10 border-t-[#1E4DA6]"
                                 />
                                 <motion.div
                                     animate={{ scale: [1, 1.2, 1] }}
                                     transition={{ duration: 2, repeat: Infinity }}
-                                    className="w-20 h-20 bg-gradient-to-br from-[#0036a1] to-[#010c29] rounded-[2rem] flex items-center justify-center shadow-xl"
+                                    className="w-20 h-20 bg-gradient-to-br from-[#1E4DA6] to-[#010c29] rounded-[2rem] flex items-center justify-center shadow-xl"
                                 >
                                     <Sparkles className="w-10 h-10 text-white animate-pulse" />
                                 </motion.div>
@@ -80,7 +80,7 @@ export function AICBTGeneratorWizard({ onClose, onQuestionsGenerated, subjectNam
                             <div className="space-y-4">
                                 <h3 className="text-2xl font-black text-gray-900 leading-tight">Thinking deeply...</h3>
                                 <p className="text-gray-500 max-w-xs mx-auto text-sm font-medium">
-                                    Our AI is analyzing {config.subject} pedagogy to craft high-quality {config.difficulty} questions on <span className="text-[#0036a1] font-bold">"{config.topic}"</span>.
+                                    Our AI is analyzing {config.subject} pedagogy to craft high-quality {config.difficulty} questions on <span className="text-[#1E4DA6] font-bold">"{config.topic}"</span>.
                                 </p>
                             </div>
                             <div className="w-full max-w-xs bg-gray-50 p-2 rounded-2xl border border-gray-100 flex items-center gap-3">
@@ -107,7 +107,7 @@ export function AICBTGeneratorWizard({ onClose, onQuestionsGenerated, subjectNam
                                         placeholder="e.g. Photosynthesis, Trigonometry..."
                                         value={config.topic}
                                         onChange={e => setConfig({ ...config, topic: e.target.value })}
-                                        className="w-full bg-white border-2 border-gray-100 rounded-2xl px-5 py-4 text-sm font-bold text-gray-900 focus:border-[#0036a1] focus:ring-4 focus:ring-[#0036a1]/5 outline-none transition-all placeholder:text-gray-300"
+                                        className="w-full bg-white border-2 border-gray-100 rounded-2xl px-5 py-4 text-sm font-bold text-gray-900 focus:border-[#1E4DA6] focus:ring-4 focus:ring-[#1E4DA6]/5 outline-none transition-all placeholder:text-gray-300"
                                     />
                                 </div>
 
@@ -117,7 +117,7 @@ export function AICBTGeneratorWizard({ onClose, onQuestionsGenerated, subjectNam
                                         <select
                                             value={config.count}
                                             onChange={e => setConfig({ ...config, count: parseInt(e.target.value) })}
-                                            className="w-full bg-white border-2 border-gray-100 rounded-2xl px-5 py-4 text-sm font-bold text-gray-900 focus:border-[#0036a1] outline-none transition-all"
+                                            className="w-full bg-white border-2 border-gray-100 rounded-2xl px-5 py-4 text-sm font-bold text-gray-900 focus:border-[#1E4DA6] outline-none transition-all"
                                         >
                                             {[5, 10, 15, 20].map(c => <option key={c} value={c}>{c} Questions</option>)}
                                         </select>
@@ -127,7 +127,7 @@ export function AICBTGeneratorWizard({ onClose, onQuestionsGenerated, subjectNam
                                         <select
                                             value={config.difficulty}
                                             onChange={e => setConfig({ ...config, difficulty: e.target.value as any })}
-                                            className="w-full bg-white border-2 border-gray-100 rounded-2xl px-5 py-4 text-sm font-bold text-gray-900 focus:border-[#0036a1] outline-none transition-all"
+                                            className="w-full bg-white border-2 border-gray-100 rounded-2xl px-5 py-4 text-sm font-bold text-gray-900 focus:border-[#1E4DA6] outline-none transition-all"
                                         >
                                             {['Easy', 'Medium', 'Hard'].map(d => <option key={d} value={d}>{d}</option>)}
                                         </select>
@@ -138,7 +138,7 @@ export function AICBTGeneratorWizard({ onClose, onQuestionsGenerated, subjectNam
                             <Button
                                 onClick={handleGenerate}
                                 disabled={!config.topic}
-                                className="w-full h-16 bg-[#0036a1] hover:bg-[#001761] text-white rounded-[1.5rem] font-black text-sm uppercase tracking-widest shadow-xl shadow-[#0036a1]/20 transition-all active:scale-95 disabled:opacity-50 flex items-center gap-3"
+                                className="w-full h-16 bg-[#1E4DA6] hover:bg-[#173F8C] text-white rounded-[1.5rem] font-black text-sm uppercase tracking-widest shadow-xl shadow-[#1E4DA6]/20 transition-all active:scale-95 disabled:opacity-50 flex items-center gap-3"
                             >
                                 <BrainCircuit className="w-5 h-5 shadow-inner" /> 
                                 Draft with AI

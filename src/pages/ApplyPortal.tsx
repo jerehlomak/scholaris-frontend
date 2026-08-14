@@ -117,13 +117,13 @@ export default function ApplyPortal() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-[#FBF9F5] flex flex-col">
             <div className={showPrintView ? "print:hidden" : "flex flex-col flex-grow"}>
                 <Header />
 
             <div className="flex-grow flex flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-[#1a2fa0] font-heading">
+                    <h2 className="mt-6 text-center text-3xl font-medium text-[#15316B] font-heading tracking-tight">
                         Application Portal
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
@@ -132,18 +132,18 @@ export default function ApplyPortal() {
                 </div>
 
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">
-                    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                    <div className="bg-white py-8 px-4 border border-[#EEEAE0] shadow-sm sm:rounded-2xl sm:px-10">
                         {step === 1 ? (
                             <form className="space-y-6" onSubmit={handleValidatePin}>
                                 <div>
                                     <label htmlFor="action" className="block text-sm font-medium text-gray-700">What do you want to do?</label>
                                     <div className="mt-1 flex gap-4">
                                         <label className="flex items-center gap-2 cursor-pointer border rounded-lg p-3 flex-1 hover:bg-gray-50 border-gray-300">
-                                            <input type="radio" name="action" value="APPLY" checked={action === 'APPLY'} onChange={() => setAction('APPLY')} className="w-4 h-4 text-[#1a2fa0] focus:ring-[#1a2fa0]" />
+                                            <input type="radio" name="action" value="APPLY" checked={action === 'APPLY'} onChange={() => setAction('APPLY')} className="w-4 h-4 text-[#1E4DA6] focus:ring-[#1E4DA6]" />
                                             <span className="text-sm font-medium text-gray-700">Start New Application</span>
                                         </label>
                                         <label className="flex items-center gap-2 cursor-pointer border rounded-lg p-3 flex-1 hover:bg-gray-50 border-gray-300">
-                                            <input type="radio" name="action" value="CHECK_STATUS" checked={action === 'CHECK_STATUS'} onChange={() => setAction('CHECK_STATUS')} className="w-4 h-4 text-[#1a2fa0] focus:ring-[#1a2fa0]" />
+                                            <input type="radio" name="action" value="CHECK_STATUS" checked={action === 'CHECK_STATUS'} onChange={() => setAction('CHECK_STATUS')} className="w-4 h-4 text-[#1E4DA6] focus:ring-[#1E4DA6]" />
                                             <span className="text-sm font-medium text-gray-700">Check Status</span>
                                         </label>
                                     </div>
@@ -156,7 +156,7 @@ export default function ApplyPortal() {
                                             id="applicationType"
                                             value={applicationType}
                                             onChange={(e) => setApplicationType(e.target.value)}
-                                            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                         >
                                             <option value="ADMISSION_APPLICATION">Student Admission</option>
                                             <option value="EMPLOYMENT">Employment Application</option>
@@ -174,13 +174,13 @@ export default function ApplyPortal() {
                                             value={pinCode}
                                             onChange={(e) => setPinCode(e.target.value.toUpperCase())}
                                             placeholder="e.g. 1A2B-3C4D-5E6F"
-                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm font-mono tracking-widest uppercase text-center text-lg"
+                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm font-mono tracking-widest uppercase text-center text-lg"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <Button type="submit" disabled={isSubmitting || !pinCode} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1a2fa0] hover:bg-[#121f6e]">
+                                    <Button type="submit" disabled={isSubmitting || !pinCode} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1E4DA6] hover:bg-[#173F8C]">
                                         {isSubmitting ? 'Validating...' : 'Validate PIN & Continue'}
                                     </Button>
                                 </div>
@@ -216,7 +216,7 @@ export default function ApplyPortal() {
                                                                             required={field.isRequired}
                                                                             value={formData[field.id] || ''}
                                                                             onChange={handleDynamicFormChange}
-                                                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                                                             rows={3}
                                                                         />
                                                                     ) : field.type === 'Dropdown' ? (
@@ -225,7 +225,7 @@ export default function ApplyPortal() {
                                                                             required={field.isRequired}
                                                                             value={formData[field.id] || ''}
                                                                             onChange={handleDynamicFormChange}
-                                                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm bg-white"
+                                                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm bg-white"
                                                                         >
                                                                             <option value="">Select option</option>
                                                                             {field.options && field.options.length > 0 ? (
@@ -255,11 +255,11 @@ export default function ApplyPortal() {
                                                                             )}
                                                                         </select>
                                                                     ) : field.type === 'Image' ? (
-                                                                        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-[#1a2fa0] transition-colors cursor-pointer bg-slate-50/50">
+                                                                        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-[#1E4DA6] transition-colors cursor-pointer bg-slate-50/50">
                                                                             <div className="space-y-1 text-center">
                                                                                 <UploadCloud className="mx-auto h-8 w-8 text-slate-400" />
                                                                                 <div className="flex text-sm text-slate-600 justify-center">
-                                                                                    <label className="relative cursor-pointer rounded-md font-medium text-[#1a2fa0] hover:text-[#13227a]">
+                                                                                    <label className="relative cursor-pointer rounded-md font-medium text-[#1E4DA6] hover:text-[#13227a]">
                                                                                         <span>Upload a file</span>
                                                                                         <input type="file" name={field.id} required={field.isRequired} className="sr-only" accept="image/*,application/pdf,.doc,.docx" onChange={handleDynamicFileChange} />
                                                                                     </label>
@@ -276,7 +276,7 @@ export default function ApplyPortal() {
                                                                             required={field.isRequired}
                                                                             value={formData[field.id] || ''}
                                                                             onChange={handleDynamicFormChange}
-                                                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                                                         />
                                                                     )}
                                                                 </div>
@@ -294,13 +294,13 @@ export default function ApplyPortal() {
                                                     <div>
                                                         <label className="block text-sm font-medium text-gray-700">Class Applied For *</label>
                                                         <div className="mt-1">
-                                                            <input type="text" name="classAppliedFor" required value={formData.classAppliedFor || ''} onChange={handleDynamicFormChange} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm" />
+                                                            <input type="text" name="classAppliedFor" required value={formData.classAppliedFor || ''} onChange={handleDynamicFormChange} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm" />
                                                         </div>
                                                     </div>
                                                     <div>
                                                         <label className="block text-sm font-medium text-gray-700">Previous School</label>
                                                         <div className="mt-1">
-                                                            <input type="text" name="previousSchool" value={formData.previousSchool || ''} onChange={handleDynamicFormChange} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm" />
+                                                            <input type="text" name="previousSchool" value={formData.previousSchool || ''} onChange={handleDynamicFormChange} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -311,19 +311,19 @@ export default function ApplyPortal() {
                                                     <div>
                                                         <label className="block text-sm font-medium text-gray-700">Position Applied For *</label>
                                                         <div className="mt-1">
-                                                            <input type="text" name="position" required value={formData.position || ''} onChange={handleDynamicFormChange} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm" />
+                                                            <input type="text" name="position" required value={formData.position || ''} onChange={handleDynamicFormChange} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm" />
                                                         </div>
                                                     </div>
                                                     <div>
                                                         <label className="block text-sm font-medium text-gray-700">Years of Experience</label>
                                                         <div className="mt-1">
-                                                            <input type="number" name="experience" value={formData.experience || ''} onChange={handleDynamicFormChange} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm" />
+                                                            <input type="number" name="experience" value={formData.experience || ''} onChange={handleDynamicFormChange} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm" />
                                                         </div>
                                                     </div>
                                                     <div className="md:col-span-2">
                                                         <label className="block text-sm font-medium text-gray-700">Portfolio / Resume Link</label>
                                                         <div className="mt-1">
-                                                            <input type="url" name="resumeUrl" value={formData.resumeUrl || ''} onChange={handleDynamicFormChange} placeholder="Google Drive, Dropbox, or LinkedIn URL" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm" />
+                                                            <input type="url" name="resumeUrl" value={formData.resumeUrl || ''} onChange={handleDynamicFormChange} placeholder="Google Drive, Dropbox, or LinkedIn URL" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -353,7 +353,7 @@ export default function ApplyPortal() {
                                     <h3 className="text-xl font-bold text-gray-900 mb-2">Hello, {applicationStatus?.applicantName || 'Applicant'}</h3>
                                     <p className="text-sm text-gray-600 mb-6">Your application is currently being reviewed.</p>
                                     
-                                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm tracking-wider uppercase bg-blue-100 text-blue-800">
+                                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm tracking-wider uppercase bg-[#1E4DA6]/10 text-[#122F69]">
                                         Status: {applicationStatus?.status || 'PENDING'}
                                     </div>
                                     
@@ -364,12 +364,12 @@ export default function ApplyPortal() {
                                                     <p className="text-green-600 font-medium mb-4">Congratulations! Your application was successful.</p>
                                                     
                                                     {(applicationStatus.interviewDate || applicationStatus.interviewTime || applicationStatus.interviewLocation) && (
-                                                        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 text-left">
-                                                            <h4 className="font-bold text-blue-900 mb-3 flex items-center gap-2">
+                                                        <div className="bg-[#1E4DA6]/5 border border-[#1E4DA6]/20 rounded-xl p-4 mb-6 text-left">
+                                                            <h4 className="font-bold text-[#0E2450] mb-3 flex items-center gap-2">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                                                                 Interview Scheduled
                                                             </h4>
-                                                            <div className="space-y-2 text-sm text-blue-800">
+                                                            <div className="space-y-2 text-sm text-[#122F69]">
                                                                 <p><strong className="font-semibold">Date:</strong> {applicationStatus.interviewDate || 'TBD'}</p>
                                                                 <p><strong className="font-semibold">Time:</strong> {applicationStatus.interviewTime || 'TBD'}</p>
                                                                 <p><strong className="font-semibold">Location:</strong> {applicationStatus.interviewLocation || 'TBD'}</p>
@@ -380,7 +380,7 @@ export default function ApplyPortal() {
                                                     {letterTemplate ? (
                                                         <Button 
                                                             onClick={() => setShowPrintView(true)}
-                                                            className="w-full bg-[#1a2fa0] hover:bg-[#121f6e] text-white"
+                                                            className="w-full bg-[#1E4DA6] hover:bg-[#173F8C] text-white"
                                                         >
                                                             Download {applicationType === 'EMPLOYMENT' ? 'Employment' : 'Admission'} Letter
                                                         </Button>
@@ -413,7 +413,7 @@ export default function ApplyPortal() {
                     <div className="bg-white mx-auto relative print:shadow-none shadow-2xl w-full max-w-4xl my-10 print:my-0 flex flex-col" id="print-letter-container" style={{ minHeight: '297mm' }}>
                         
                         <div className="absolute top-4 right-4 flex gap-2 print:hidden z-10">
-                            <Button onClick={() => { window.print(); setShowPrintView(false); }} variant="outline" className="bg-blue-600 hover:bg-blue-700 text-white border-0 font-bold shadow-sm">
+                            <Button onClick={() => { window.print(); setShowPrintView(false); }} variant="outline" className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white border-0 font-bold shadow-sm">
                                 Print / Save PDF
                             </Button>
                             <Button onClick={() => setShowPrintView(false)} variant="destructive" className="font-bold">
@@ -433,7 +433,7 @@ export default function ApplyPortal() {
 
                             <div className="relative z-10 flex-grow flex flex-col">
                                 {/* Professional Header */}
-                                <div className="flex items-center justify-between mb-10 pb-6 border-b-[3px] border-[#1a2fa0]">
+                                <div className="flex items-center justify-between mb-10 pb-6 border-b-[3px] border-[#1E4DA6]">
                                     {/* Logo */}
                                     <div className="flex-shrink-0 w-28">
                                         {schoolInfo?.logoUrl ? (
@@ -445,7 +445,7 @@ export default function ApplyPortal() {
                                     
                                     {/* School Name & Info */}
                                     <div className="flex-grow text-right pl-6">
-                                        <h1 className="text-3xl font-black text-[#1a2fa0] uppercase tracking-wider font-heading leading-tight mb-2">
+                                        <h1 className="text-3xl font-black text-[#1E4DA6] uppercase tracking-wider font-heading leading-tight mb-2">
                                             {schoolInfo?.name || 'School Name'}
                                         </h1>
                                         <div className="text-xs text-slate-600 uppercase tracking-widest font-semibold flex flex-col gap-0.5">

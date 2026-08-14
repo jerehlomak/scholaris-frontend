@@ -109,14 +109,14 @@ export function EditSubjectModal({ subjectId, onClose, onSuccess }: EditSubjectM
                 </DialogHeader>
 
                 {isLoading ? (
-                    <div className="p-20 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#0036a1]" /></div>
+                    <div className="p-20 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" /></div>
                 ) : (
                     <form className="flex flex-col gap-6 p-6" onSubmit={handleSubmit}>
                         {/* Section 1: Subject Info */}
                         <div className="bg-slate-50/50 rounded-2xl border border-gray-100 p-5">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1.5">
-                                    <Label className="font-semibold">Subject Name <span className="text-[#0036a1]">*</span></Label>
+                                    <Label className="font-semibold">Subject Name <span className="text-[#1E4DA6]">*</span></Label>
                                     <Input value={form.name} onChange={e => set('name', e.target.value)}
                                         className={inputCls} placeholder="e.g. Mathematics" />
                                 </div>
@@ -141,7 +141,7 @@ export function EditSubjectModal({ subjectId, onClose, onSuccess }: EditSubjectM
                                 </div>
 
                                 <div className="space-y-1.5">
-                                    <Label className="font-semibold text-gray-900">Subject Type <span className="text-[#0036a1]">*</span></Label>
+                                    <Label className="font-semibold text-gray-900">Subject Type <span className="text-[#1E4DA6]">*</span></Label>
                                     <Select value={form.type} onValueChange={val => set('type', val)}>
                                         <SelectTrigger className={inputCls}><SelectValue /></SelectTrigger>
                                         <SelectContent>
@@ -192,7 +192,7 @@ export function EditSubjectModal({ subjectId, onClose, onSuccess }: EditSubjectM
                                     <Label className="font-semibold block">Assign to Classes</Label>
                                     <button type="button" 
                                         onClick={() => setSelectedClassIds(selectedClassIds.length === classes.length ? [] : classes.map(c => c.id))}
-                                        className="text-xs font-bold text-blue-600 hover:text-blue-800">
+                                        className="text-xs font-bold text-[#1E4DA6] hover:text-[#122F69]">
                                         {selectedClassIds.length === classes.length ? 'Deselect All' : 'Select All'}
                                     </button>
                                 </div>
@@ -203,7 +203,7 @@ export function EditSubjectModal({ subjectId, onClose, onSuccess }: EditSubjectM
                                             <div className="flex flex-wrap gap-2">
                                                 {classes.filter(c => c.level === level).map(cls => (
                                                     <button key={cls.id} type="button" onClick={() => toggleClass(cls.id)}
-                                                        className={`px-3 py-1.5 rounded-xl text-xs font-bold border-2 transition-all ${selectedClassIds.includes(cls.id) ? 'bg-[#0036a1] text-white border-[#0036a1]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#0036a1]/40'}`}>
+                                                        className={`px-3 py-1.5 rounded-xl text-xs font-bold border-2 transition-all ${selectedClassIds.includes(cls.id) ? 'bg-[#1E4DA6] text-white border-[#1E4DA6]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#1E4DA6]/40'}`}>
                                                         {cls.name}
                                                     </button>
                                                 ))}
@@ -218,7 +218,7 @@ export function EditSubjectModal({ subjectId, onClose, onSuccess }: EditSubjectM
                             <Button type="button" variant="outline" onClick={onClose} className="h-10 px-6 rounded-xl font-semibold">
                                 Cancel
                             </Button>
-                            <Button type="submit" disabled={isSubmitting} className="h-10 px-8 rounded-xl bg-[#0036a1] hover:bg-[#001761] text-white font-bold flex items-center gap-2">
+                            <Button type="submit" disabled={isSubmitting} className="h-10 px-8 rounded-xl bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold flex items-center gap-2">
                                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                                 {isSubmitting ? 'Saving...' : 'Update Subject'}
                             </Button>

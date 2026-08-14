@@ -7,31 +7,32 @@ const a4Css = `
     .receipt-print-wrapper, .receipt-print-wrapper * {box-sizing:border-box;margin:0;padding:0}
     .receipt-print-wrapper {font-family:'Segoe UI',sans-serif;color:#1e293b;background:#fff;padding:40px;text-align:left;}
     @media print{@page{size:A4 portrait;margin:10mm} body{width:100%} .receipt-print-wrapper{padding:0;width:100%}}
-    .receipt-print-wrapper .hdr{background:#1e40af;color:#fff;padding:24px 32px;border-radius:12px 12px 0 0;text-align:center;}
+    .receipt-print-wrapper .hdr{background:linear-gradient(135deg,#0B1F4E,#122B5C);color:#fff;padding:24px 32px;border-radius:12px 12px 0 0;text-align:center;border-bottom:3px solid #F5B800;}
     .receipt-print-wrapper .hdr h1{font-size:24px;font-weight:800;margin-bottom:8px;color:#ffffff}
-    .receipt-print-wrapper .hdr p{font-size:14px;opacity:.8}
+    .receipt-print-wrapper .hdr p{font-size:14px;opacity:.85;color:#FFC72C;text-transform:uppercase;letter-spacing:0.05em;font-weight:700}
     .receipt-print-wrapper .bdy{padding:32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px}
-    .receipt-print-wrapper .meta{display:flex;justify-content:space-between;margin-bottom:32px;border-bottom:2px solid #f1f5f9;padding-bottom:24px}
+    .receipt-print-wrapper .meta{display:flex;justify-content:space-between;margin-bottom:32px;border-bottom:2px solid #FDF6E3;padding-bottom:24px}
     .receipt-print-wrapper .meta-col{display:flex;flex-direction:column;gap:12px}
     .receipt-print-wrapper .meta-col.right{text-align:right}
     .receipt-print-wrapper .meta-block{flex:1}
     .receipt-print-wrapper .meta-label{font-size:11px;color:#64748b;text-transform:uppercase;font-weight:700;letter-spacing:0.05em;margin-bottom:4px}
-    .receipt-print-wrapper .meta-val{font-size:16px;font-weight:700;color:#0f172a}
+    .receipt-print-wrapper .meta-val{font-size:16px;font-weight:700;color:#0B1F4E}
     .receipt-print-wrapper .meta-sub{font-size:13px;color:#64748b;margin-top:2px}
-    
-    .receipt-print-wrapper .details-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;background:#f8fafc;padding:24px;border-radius:12px}
+
+    .receipt-print-wrapper .details-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;background:#FDF6E3;padding:24px;border-radius:12px}
     .receipt-print-wrapper .detail-item{display:flex;flex-direction:column;gap:4px}
     .receipt-print-wrapper .detail-label{font-size:11px;color:#64748b;text-transform:uppercase;font-weight:600}
     .receipt-print-wrapper .detail-val{font-size:15px;font-weight:600;color:#1e293b}
-    
+
     .receipt-print-wrapper .amount-box{background:#f0fdf4;border:1px solid #bbf7d0;padding:24px;border-radius:12px;text-align:center}
     .receipt-print-wrapper .amount-label{color:#166534;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
     .receipt-print-wrapper .amount-val{color:#15803d;font-size:36px;font-weight:800}
-    
+
     .receipt-print-wrapper .breakdown-table{width:100%;border-collapse:collapse;margin-bottom:32px;font-size:13px}
-    .receipt-print-wrapper .breakdown-table th{background:#f8fafc;padding:12px;text-align:left;font-weight:600;color:#64748b;border-bottom:2px solid #e2e8f0;text-transform:uppercase;font-size:11px;letter-spacing:0.05em}
+    .receipt-print-wrapper .breakdown-table th{background:#0B1F4E;color:#fff;padding:12px;text-align:left;font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:0.05em}
     .receipt-print-wrapper .breakdown-table td{padding:12px;border-bottom:1px solid #f1f5f9;color:#1e293b}
-    
+    .receipt-print-wrapper .breakdown-table tr:nth-child(even) td{background:#FDF6E3}
+
     .receipt-print-wrapper .footer{margin-top:40px;text-align:center;font-size:12px;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:24px}
 `;
 
@@ -135,7 +136,7 @@ export default function ReceiptPrintModal({ tx, settings, onClose, onSuccess }: 
                             </button>
                         </div>
                         <button onClick={handlePrint}
-                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 py-2 text-sm font-bold text-white hover:bg-blue-800 shrink-0 whitespace-nowrap">
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-[#0B1F4E] px-4 py-2 text-sm font-bold text-white hover:bg-[#122B5C] shrink-0 whitespace-nowrap">
                             <Printer className="h-4 w-4 shrink-0" /> Print / Save
                         </button>
                         <button onClick={onClose}

@@ -93,7 +93,7 @@ export function TeacherAssignments() {
         setExpanded(prev => ({ ...prev, [classId]: !prev[classId] }));
 
     if (loading) {
-        return <div className="py-20 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#0036a1]" /></div>;
+        return <div className="py-20 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" /></div>;
     }
 
     return (
@@ -112,7 +112,7 @@ export function TeacherAssignments() {
                 <button
                     onClick={() => setActiveTab('matrix')}
                     className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all ${activeTab === 'matrix'
-                        ? 'bg-white text-[#0036a1] shadow-sm ring-1 ring-gray-200'
+                        ? 'bg-white text-[#1E4DA6] shadow-sm ring-1 ring-gray-200'
                         : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'
                         }`}
                 >
@@ -121,7 +121,7 @@ export function TeacherAssignments() {
                 <button
                     onClick={() => setActiveTab('form')}
                     className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all ${activeTab === 'form'
-                        ? 'bg-white text-[#0036a1] shadow-sm ring-1 ring-gray-200'
+                        ? 'bg-white text-[#1E4DA6] shadow-sm ring-1 ring-gray-200'
                         : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'
                         }`}
                 >
@@ -149,7 +149,7 @@ export function TeacherAssignments() {
                                         </div>
                                         <div className="md:hidden">
                                             {isAssigned ? (
-                                                <span className="text-[11px] font-semibold bg-[#6bc048]/15 text-[#4a8a2f] px-2 py-0.5 rounded-full">
+                                                <span className="text-[11px] font-semibold bg-[#10b981]/15 text-[#4a8a2f] px-2 py-0.5 rounded-full">
                                                     Assigned
                                                 </span>
                                             ) : (
@@ -162,7 +162,7 @@ export function TeacherAssignments() {
                                     <div className="w-full md:max-w-sm mt-1 md:mt-0">
                                         <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1.5 md:hidden">Assigned Teacher</label>
                                         <select
-                                            className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 md:bg-white outline-none focus:border-[#0036a1] w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 md:bg-white outline-none focus:border-[#1E4DA6] w-full disabled:opacity-50 disabled:cursor-not-allowed"
                                             value={c.formTeacherId || ''}
                                             disabled={savingRecord === c.id}
                                             onChange={(e) => handleAssignFormTeacher(c.id, e.target.value)}
@@ -177,7 +177,7 @@ export function TeacherAssignments() {
                                     </div>
                                     <div className="hidden md:flex justify-end pr-2">
                                         {isAssigned ? (
-                                            <span className="text-[11px] font-semibold bg-[#6bc048]/15 text-[#4a8a2f] px-2 py-0.5 rounded-full">
+                                            <span className="text-[11px] font-semibold bg-[#10b981]/15 text-[#4a8a2f] px-2 py-0.5 rounded-full">
                                                 Assigned
                                             </span>
                                         ) : (
@@ -210,10 +210,10 @@ export function TeacherAssignments() {
                             >
                                 <div className="flex flex-wrap items-center gap-2 md:gap-3 w-full md:w-auto">
                                     {expanded[cls.id]
-                                        ? <ChevronDown className="w-4 h-4 text-[#0036a1] shrink-0" />
+                                        ? <ChevronDown className="w-4 h-4 text-[#1E4DA6] shrink-0" />
                                         : <ChevronRight className="w-4 h-4 text-gray-400 shrink-0" />
                                     }
-                                    <span className="font-bold text-[#0036a1] text-base">{cls.name}</span>
+                                    <span className="font-bold text-[#1E4DA6] text-base">{cls.name}</span>
                                     <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{cls.level}</span>
                                     {cls.subjects.length > 0 && (
                                         <span className="text-xs text-gray-400">
@@ -256,7 +256,7 @@ export function TeacherAssignments() {
                                                                 </span>
                                                                 <div className="md:hidden">
                                                                     {isAssigned ? (
-                                                                        <span className="text-[11px] font-semibold bg-[#6bc048]/15 text-[#4a8a2f] px-2 py-0.5 rounded-full">
+                                                                        <span className="text-[11px] font-semibold bg-[#10b981]/15 text-[#4a8a2f] px-2 py-0.5 rounded-full">
                                                                             Assigned
                                                                         </span>
                                                                     ) : (
@@ -270,7 +270,7 @@ export function TeacherAssignments() {
                                                             <div className="w-full md:max-w-sm mt-1 md:mt-0">
                                                                 <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1.5 md:hidden">Assigned Teacher</label>
                                                                 <select
-                                                                    className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 md:bg-white outline-none focus:border-[#0036a1] w-full md:max-w-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                                                                    className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 md:bg-white outline-none focus:border-[#1E4DA6] w-full md:max-w-sm disabled:opacity-50 disabled:cursor-not-allowed"
                                                                     value={cs.teacherId || ''}
                                                                     disabled={savingRecord === `${cls.id}-${cs.subjectId}`}
                                                                     onChange={(e) => handleAssignSubjectTeacher(cls.id, cs.subjectId, e.target.value)}
@@ -285,7 +285,7 @@ export function TeacherAssignments() {
                                                             </div>
                                                             <div className="hidden md:flex justify-end pr-2">
                                                                 {isAssigned ? (
-                                                                    <span className="text-[11px] font-semibold bg-[#6bc048]/15 text-[#4a8a2f] px-2 py-0.5 rounded-full">
+                                                                    <span className="text-[11px] font-semibold bg-[#10b981]/15 text-[#4a8a2f] px-2 py-0.5 rounded-full">
                                                                         Assigned
                                                                     </span>
                                                                 ) : (

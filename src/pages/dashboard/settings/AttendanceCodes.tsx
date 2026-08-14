@@ -15,14 +15,14 @@ interface AttendanceCode {
 }
 
 const DEFAULT_CODES: AttendanceCode[] = [
-    { id: 'c1', code: 'P', description: 'Present', color: '#6bc048', countsAsPresent: true, isSystemDefault: true },
+    { id: 'c1', code: 'P', description: 'Present', color: '#10b981', countsAsPresent: true, isSystemDefault: true },
     { id: 'c2', code: 'A', description: 'Absent', color: '#ef4444', countsAsPresent: false, isSystemDefault: true },
     { id: 'c3', code: 'L', description: 'Late', color: '#ff9800', countsAsPresent: true, isSystemDefault: false },
     { id: 'c4', code: 'E', description: 'Excused', color: '#0ea5e9', countsAsPresent: false, isSystemDefault: false },
     { id: 'c5', code: 'H', description: 'Half Day', color: '#a855f7', countsAsPresent: true, isSystemDefault: false },
 ];
 
-const COLOR_OPTIONS = ['#6bc048', '#ef4444', '#ff9800', '#0ea5e9', '#a855f7', '#0036a1', '#ec4899', '#14b8a6', '#64748b', '#84cc16'];
+const COLOR_OPTIONS = ['#10b981', '#ef4444', '#ff9800', '#0ea5e9', '#a855f7', '#1E4DA6', '#ec4899', '#14b8a6', '#64748b', '#84cc16'];
 
 export function AttendanceCodes() {
     const [codes, setCodes] = useState<AttendanceCode[]>(DEFAULT_CODES);
@@ -82,7 +82,7 @@ export function AttendanceCodes() {
                         key={item.id}
                         className={cn(
                             'grid grid-cols-12 gap-3 items-center rounded-2xl border p-4 transition-all',
-                            item.isSystemDefault ? 'border-slate-100 bg-slate-50/60' : 'border-slate-100 bg-white hover:border-blue-100 hover:shadow-sm'
+                            item.isSystemDefault ? 'border-slate-100 bg-slate-50/60' : 'border-slate-100 bg-white hover:border-[#1E4DA6]/10 hover:shadow-sm'
                         )}
                     >
                         {/* Code */}
@@ -93,7 +93,7 @@ export function AttendanceCodes() {
                                 placeholder="L"
                                 disabled={item.isSystemDefault}
                                 className={cn(
-                                    'w-full rounded-xl border px-3 py-2.5 text-center text-sm font-black tracking-widest outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100',
+                                    'w-full rounded-xl border px-3 py-2.5 text-center text-sm font-black tracking-widest outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10',
                                     item.isSystemDefault ? 'border-slate-200 bg-slate-100 text-slate-500 cursor-not-allowed' : 'border-slate-200 bg-white text-slate-800'
                                 )}
                             />
@@ -108,7 +108,7 @@ export function AttendanceCodes() {
                                 value={item.description}
                                 onChange={e => handleUpdate(item.id, 'description', e.target.value)}
                                 placeholder="e.g. Late Arrival"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-700 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             />
                         </div>
 
@@ -154,7 +154,7 @@ export function AttendanceCodes() {
 
                 <button
                     onClick={handleAdd}
-                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-blue-200 py-4 text-sm font-semibold text-blue-600 transition-colors hover:bg-blue-50"
+                    className="mt-2 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-[#1E4DA6]/20 py-4 text-sm font-semibold text-[#1E4DA6] transition-colors hover:bg-[#1E4DA6]/5"
                 >
                     <Plus className="h-4 w-4" /> Add Custom Code
                 </button>

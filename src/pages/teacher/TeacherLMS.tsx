@@ -78,7 +78,7 @@ export default function TeacherLMS() {
                     <h1 className="text-2xl font-bold text-slate-900">LMS — Learning Hub</h1>
                     <p className="text-sm text-slate-500 mt-0.5">Post assignments and share lesson resources with students</p>
                 </div>
-                <Button onClick={() => setShowForm(true)} className="bg-blue-600 hover:bg-blue-700 text-white gap-1.5">
+                <Button onClick={() => setShowForm(true)} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white gap-1.5">
                     <Plus size={16} /> Post Assignment
                 </Button>
             </div>
@@ -86,7 +86,7 @@ export default function TeacherLMS() {
             {/* Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                 {[
-                    { icon: BookOpen, label: 'Assignments', value: assignments.length, color: 'text-blue-600', bg: 'bg-blue-50' },
+                    { icon: BookOpen, label: 'Assignments', value: assignments.length, color: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5' },
                     { icon: Users, label: 'Resources', value: lessons.length, color: 'text-violet-600', bg: 'bg-violet-50' },
                     { icon: Clock, label: 'Due Soon', value: assignments.filter((a: any) => a.dueDate && !isOverdue(a.dueDate)).length, color: 'text-amber-600', bg: 'bg-amber-50' },
                     { icon: Star, label: 'Overdue', value: assignments.filter((a: any) => isOverdue(a.dueDate)).length, color: 'text-red-600', bg: 'bg-red-50' },
@@ -109,8 +109,8 @@ export default function TeacherLMS() {
             <div className="mb-5">
                 <Tabs value={tab} onValueChange={(v) => { setTab(v as Tab); setCurrentPage(1); }}>
                     <TabsList className="bg-slate-100 p-1 h-10">
-                        <TabsTrigger value="assignments" className="text-sm data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm">Assignments</TabsTrigger>
-                        <TabsTrigger value="resources" className="text-sm data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm">Lesson Resources</TabsTrigger>
+                        <TabsTrigger value="assignments" className="text-sm data-[state=active]:bg-white data-[state=active]:text-[#173F8C] data-[state=active]:shadow-sm">Assignments</TabsTrigger>
+                        <TabsTrigger value="resources" className="text-sm data-[state=active]:bg-white data-[state=active]:text-[#173F8C] data-[state=active]:shadow-sm">Lesson Resources</TabsTrigger>
                     </TabsList>
                 </Tabs>
             </div>
@@ -128,7 +128,7 @@ export default function TeacherLMS() {
                         <motion.div key={a.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
                             <Card className="p-5 bg-white border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:shadow-md transition-shadow">
                                 <div className="flex gap-4 items-start">
-                                    <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                                    <div className="w-10 h-10 rounded-xl bg-[#1E4DA6]/5 text-[#1E4DA6] flex items-center justify-center shrink-0">
                                         <BookOpen size={18} />
                                     </div>
                                     <div>
@@ -255,7 +255,7 @@ export default function TeacherLMS() {
                     <Separator />
                     <div className="flex gap-3 justify-end pt-1">
                         <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-                        <Button onClick={handleCreateAssignment} disabled={saving} className="bg-blue-600 hover:bg-blue-700 text-white">
+                        <Button onClick={handleCreateAssignment} disabled={saving} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
                             {saving ? 'Posting...' : 'Post Assignment'}
                         </Button>
                     </div>

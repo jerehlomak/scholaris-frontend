@@ -46,10 +46,10 @@ const getRatingColor = (val: string, opts: string[]) => {
     const index = opts.indexOf(val);
     if (index === 0) return 'bg-green-600 text-white border-green-700 font-bold shadow-md';
     if (index === 1) return 'bg-emerald-500 text-white border-emerald-600 font-bold shadow-md';
-    if (index === 2) return 'bg-blue-500 text-white border-blue-600 font-bold shadow-md';
+    if (index === 2) return 'bg-[#1E4DA6] text-white border-[#1E4DA6] font-bold shadow-md';
     if (index === 3) return 'bg-yellow-500 text-white border-yellow-600 font-bold shadow-md';
     if (index >= 4) return 'bg-red-500 text-white border-red-600 font-bold shadow-md';
-    return 'bg-purple-500 text-white border-purple-600 font-bold shadow-md';
+    return 'bg-[#1E4DA6] text-white border-[#1E4DA6] font-bold shadow-md';
 };
 
 const TeacherWrapper = ({ children }: { children: React.ReactNode }) => <>{children}</>;
@@ -693,7 +693,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
             placeholder={`Search ${view === 'CLASS_GRID' ? 'classes' : view === 'SUBJECT_LIST' ? 'subjects' : 'students'}...`}
             value={searchTerm}
             onChange={e => { setSearchTerm(e.target.value); setCurrentPage(1); }}
-            className="w-full sm:w-72 bg-white border border-gray-200 rounded-xl px-4 py-2 text-sm outline-none focus:border-[#0036a1]"
+            className="w-full sm:w-72 bg-white border border-gray-200 rounded-xl px-4 py-2 text-sm outline-none focus:border-[#1E4DA6]"
           />
         </div>
 
@@ -717,10 +717,10 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                 }
 
                 return (
-                <button key={cls.id} onClick={() => loadSubjects(cls)} className="group text-left bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-[#0036a1]/30 hover:-translate-y-0.5 transition-all duration-200">
+                <button key={cls.id} onClick={() => loadSubjects(cls)} className="group text-left bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-[#1E4DA6]/30 hover:-translate-y-0.5 transition-all duration-200">
                   <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#0036a1]/10 flex items-center justify-center group-hover:bg-[#0036a1]/20 transition-colors">
-                      <Users className="w-5 h-5 text-[#0036a1]" />
+                    <div className="w-10 h-10 rounded-xl bg-[#1E4DA6]/10 flex items-center justify-center group-hover:bg-[#1E4DA6]/20 transition-colors">
+                      <Users className="w-5 h-5 text-[#1E4DA6]" />
                     </div>
                     {statusBadge(cStatus)}
                   </div>
@@ -752,7 +752,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                   {subjects.filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase())).map(sub => {
                     const es = entryStatuses[sub.id];
                     return (
-                      <button key={sub.id} onClick={() => loadScoreSheet(sub)} className="w-full text-left flex flex-col md:flex-row gap-4 items-start md:items-center justify-between px-6 py-4 hover:bg-blue-50/30 transition-colors group">
+                      <button key={sub.id} onClick={() => loadScoreSheet(sub)} className="w-full text-left flex flex-col md:flex-row gap-4 items-start md:items-center justify-between px-6 py-4 hover:bg-[#1E4DA6]/8 transition-colors group">
                         <div className="flex  items-center gap-3">
                           <div className="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 transition-colors">
                             <BookOpen className="w-4 h-4 text-indigo-600" />
@@ -879,7 +879,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                               <div className="text-[10px] text-gray-400 font-normal">Max: {p.weight}</div>
                             </th>
                           ))}
-                          <th className="text-center px-4 py-3 text-xs font-bold text-[#0036a1] uppercase bg-blue-50/50 border-r">Total</th>
+                          <th className="text-center px-4 py-3 text-xs font-bold text-[#1E4DA6] uppercase bg-[#1E4DA6]/8 border-r">Total</th>
                           <th className="text-center px-4 py-3 text-xs font-bold text-gray-500 uppercase border-r">Grade</th>
                           <th className="text-center px-4 py-3 text-xs font-bold text-gray-500 uppercase ">Remark</th>
                           <th className="text-center px-2 py-3 text-xs font-bold text-gray-500 uppercase border-l">Action</th>
@@ -895,9 +895,9 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                           });
                           const { grade, remark } = getGradeInfo(total, true);
                           return (
-                            <tr key={s.studentProfileId} className={cn('hover:bg-blue-50/20 transition-colors group', hasError && 'bg-red-50/30')}>
+                            <tr key={s.studentProfileId} className={cn('hover:bg-[#1E4DA6]/20 transition-colors group', hasError && 'bg-red-50/30')}>
                               <td className="px-4 py-3 text-xs text-gray-400 font-mono border-r">{rowIdx + 1}</td>
-                              <td className="px-4 py-3 sm:left-0 bg-white group-hover:bg-blue-50/20 sm:z-10 border-r transition-colors">
+                              <td className="px-4 py-3 sm:left-0 bg-white group-hover:bg-[#1E4DA6]/20 sm:z-10 border-r transition-colors">
                                 <div className="flex items-center gap-2">
                                   <div>
                                     <div className="font-semibold text-gray-900 text-sm leading-tight">{s.name}</div>
@@ -917,13 +917,13 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                           onChange={e => handleScoreChange(s.studentProfileId, p.name, e.target.value)}
                                           onKeyDown={e => handleKeyNav(e, rowIdx, colIdx)}
                                           disabled={isSubmitted}
-                                          className={cn('w-16 text-center rounded-lg border py-1.5 px-1 text-sm outline-none transition-all', over ? 'border-red-400 bg-red-50 focus:ring-red-200' : 'border-gray-200 focus:border-[#0036a1] focus:ring-1 focus:ring-blue-200', isSubmitted && 'bg-gray-50 cursor-not-allowed')}
+                                          className={cn('w-16 text-center rounded-lg border py-1.5 px-1 text-sm outline-none transition-all', over ? 'border-red-400 bg-red-50 focus:ring-red-200' : 'border-gray-200 focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6]/20', isSubmitted && 'bg-gray-50 cursor-not-allowed')}
                                           min="0" max={p.weight} placeholder="–" onWheel={e => e.currentTarget.blur()} />
                                       </td>
                                     );
                                   })}
-                                  <td className="px-4 py-2 text-center font-bold text-gray-900 bg-blue-50/20 border-r">{total || '—'}</td>
-                                  <td className="px-4 py-2 text-center text-sm font-bold text-[#0036a1] border-r">{grade}</td>
+                                  <td className="px-4 py-2 text-center font-bold text-gray-900 bg-[#1E4DA6]/20 border-r">{total || '—'}</td>
+                                  <td className="px-4 py-2 text-center text-sm font-bold text-[#1E4DA6] border-r">{grade}</td>
                                   <td className="px-4 py-2 text-center text-xs text-gray-500 border-r">{remark}</td>
                                   <td className="px-2 py-3 border-l border-gray-50 text-center">
                                     <button type="button" onClick={() => clearScore(s.studentProfileId)} disabled={isSubmitted} className={cn("p-1.5 rounded-lg transition-colors", isSubmitted ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-red-500 hover:bg-red-50")} title="Clear scores">
@@ -953,7 +953,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                       <div key={s.studentProfileId} className={cn("bg-white border rounded-2xl p-4 shadow-sm relative", hasError && entryMode === 'NUMERIC' ? "border-red-300" : "border-gray-200")}>
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm">
+                            <div className="w-10 h-10 rounded-full bg-[#1E4DA6]/10 flex items-center justify-center text-[#173F8C] font-bold text-sm">
                               {s.name.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase()}
                             </div>
                             <div>
@@ -977,7 +977,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                 </label>
                                 <input type="number" value={val}
                                   onChange={e => handleScoreChange(s.studentProfileId, p.name, e.target.value)} disabled={isSubmitted}
-                                  className={cn('w-full rounded-lg border px-3 py-2 text-sm outline-none transition-all', over ? 'border-red-400 bg-red-50 focus:ring-red-200' : 'border-gray-200 focus:border-[#0036a1]', isSubmitted && 'bg-gray-50 cursor-not-allowed')}
+                                  className={cn('w-full rounded-lg border px-3 py-2 text-sm outline-none transition-all', over ? 'border-red-400 bg-red-50 focus:ring-red-200' : 'border-gray-200 focus:border-[#1E4DA6]', isSubmitted && 'bg-gray-50 cursor-not-allowed')}
                                   placeholder="–" />
                               </div>
                             );
@@ -1076,7 +1076,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                         value={traitRatings[st.studentProfileId]?.[trait] || ''}
                                         onChange={e => handleTraitChange(st.studentProfileId, trait, e.target.value)}
                                         className={cn(
-                                            "rounded-lg p-1.5 text-sm outline-none focus:ring-2 focus:ring-[#0036a1] mx-auto min-w-[4rem] transition-colors appearance-none text-center cursor-pointer",
+                                            "rounded-lg p-1.5 text-sm outline-none focus:ring-2 focus:ring-[#1E4DA6] mx-auto min-w-[4rem] transition-colors appearance-none text-center cursor-pointer",
                                             getRatingColor(traitRatings[st.studentProfileId]?.[trait], opts)
                                         )}>
                                         <option value="">-</option>
@@ -1115,7 +1115,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                                          value={traitRatings[st.studentProfileId]?.[trait] || ''}
                                                          onChange={e => handleTraitChange(st.studentProfileId, trait, e.target.value)}
                                                          className={cn(
-                                                             "w-full rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-[#0036a1] transition-colors appearance-none cursor-pointer",
+                                                             "w-full rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-[#1E4DA6] transition-colors appearance-none cursor-pointer",
                                                              getRatingColor(traitRatings[st.studentProfileId]?.[trait], opts)
                                                          )}>
                                                          <option value="">-</option>
@@ -1133,7 +1133,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                         <div className="mt-4 border-t border-gray-100 pt-4">
                             <Pagination currentPage={currentPage} totalPages={Math.ceil(filteredStudents.length / limit)} totalRecords={filteredStudents.length} onPageChange={setCurrentPage} />
                             <div className="p-4 bg-gray-50 flex items-center justify-end border border-gray-200 rounded-xl mt-4">
-                            <Button onClick={handleSaveTraits} disabled={savingTraits} className="w-full sm:w-auto bg-[#0036a1] hover:bg-[#001761] text-white gap-2">
+                            <Button onClick={handleSaveTraits} disabled={savingTraits} className="w-full sm:w-auto bg-[#1E4DA6] hover:bg-[#173F8C] text-white gap-2">
                                 {savingTraits ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Save {selectedDomain} Ratings
                             </Button>
                             </div>
@@ -1167,7 +1167,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                     <td className="px-4 py-3 text-sm text-gray-500">{s.admissionNo}</td>
                                     <td className="px-4 py-3 text-center text-sm font-bold text-gray-900">{s.totalScore || '0.0'}</td>
                                     <td className="px-4 py-3 text-right">
-                                        <Button size="sm" variant="outline" onClick={() => openRemarksModal(s)} className="rounded-xl border-gray-200 text-gray-600 hover:text-blue-600 hover:bg-blue-50">
+                                        <Button size="sm" variant="outline" onClick={() => openRemarksModal(s)} className="rounded-xl border-gray-200 text-gray-600 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5">
                                             {remarksModalType === 'REMARKS' ? 'Edit Remarks' : 'Edit Results'}
                                         </Button>
                                     </td>
@@ -1187,7 +1187,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                     <div className="font-bold text-gray-900 text-sm">{s.name}</div>
                                 </div>
                             </div>
-                            <Button size="sm" variant="outline" onClick={() => openRemarksModal(s)} className="w-full rounded-xl border-gray-200 text-gray-600 hover:text-blue-600 hover:bg-blue-50">
+                            <Button size="sm" variant="outline" onClick={() => openRemarksModal(s)} className="w-full rounded-xl border-gray-200 text-gray-600 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5">
                                 {remarksModalType === 'REMARKS' ? 'Edit Remarks' : 'Edit Results'}
                             </Button>
                         </div>
@@ -1226,7 +1226,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                     <div className="p-5 overflow-y-auto space-y-4">
                         {loadingRemarks ? (
                             <div className="flex flex-col items-center justify-center py-12 text-gray-400">
-                                <Loader2 className="w-8 h-8 animate-spin mb-3 text-blue-600" />
+                                <Loader2 className="w-8 h-8 animate-spin mb-3 text-[#1E4DA6]" />
                                 <p className="text-sm">Loading data...</p>
                             </div>
                         ) : (
@@ -1260,7 +1260,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
             <div key={index}>
                 <label className="text-xs font-bold text-gray-500 uppercase">{roleName} Comment</label>
                 <textarea 
-                    className="w-full text-sm border border-gray-200 bg-gray-50/50 p-3 rounded-xl mt-1 outline-none focus:border-blue-500 focus:bg-white transition-colors min-h-[80px]" 
+                    className="w-full text-sm border border-gray-200 bg-gray-50/50 p-3 rounded-xl mt-1 outline-none focus:border-[#1E4DA6] focus:bg-white transition-colors min-h-[80px]" 
                     placeholder={`Enter ${roleName.toLowerCase()} remark here...`}
                     value={remarksForm.narrativeComments[roleName] || ''} 
                     onChange={e => setRemarksForm({...remarksForm, narrativeComments: {...remarksForm.narrativeComments, [roleName]: e.target.value}})} 
@@ -1275,7 +1275,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                                 <div>
                                                     <label className="text-xs font-bold text-gray-500 uppercase">Days Present 
                                                     {attendanceConfig.required && <span className="text-red-500 ml-1">*</span>}</label>
-                                                    <input type="number" className="w-full text-sm border border-gray-200 p-2.5 rounded-xl mt-1 outline-none focus:border-blue-500" value={remarksForm.present} 
+                                                    <input type="number" className="w-full text-sm border border-gray-200 p-2.5 rounded-xl mt-1 outline-none focus:border-[#1E4DA6]" value={remarksForm.present} 
                                                         onChange={e => {
                                                             const present = e.target.value;
                                                             let absent = remarksForm.absent;
@@ -1289,7 +1289,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                                 </div>
                                                 <div>
                                                     <label className="text-xs font-bold text-gray-500 uppercase">Days Absent</label>
-                                                    <input type="number" className="w-full text-sm border border-gray-200 p-2.5 rounded-xl mt-1 outline-none focus:border-blue-500 bg-gray-100 cursor-not-allowed" value={remarksForm.absent} 
+                                                    <input type="number" className="w-full text-sm border border-gray-200 p-2.5 rounded-xl mt-1 outline-none focus:border-[#1E4DA6] bg-gray-100 cursor-not-allowed" value={remarksForm.absent} 
                                                         readOnly />
                                                 </div>
                                             </div>
@@ -1301,7 +1301,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                     <>
                                         {commentBasedSettings?.categories?.length > 0 && (
                                             <div className="mb-4">
-                                                <h4 className="text-xs font-bold text-gray-500 uppercase mb-3 text-blue-600">Skills Rating</h4>
+                                                <h4 className="text-xs font-bold text-gray-500 uppercase mb-3 text-[#1E4DA6]">Skills Rating</h4>
                                                 <div className="space-y-4">
                                                     {commentBasedSettings.categories.map((cat: any) => (
                                                         <div key={cat.id} className="bg-gray-50 p-3 rounded-xl border border-gray-100">
@@ -1326,13 +1326,13 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                                         )}
                                         {commentBasedSettings?.narrativeTopics?.length > 0 && (
                                             <div className="mt-4 pt-4 border-t border-gray-100">
-                                                <h4 className="text-xs font-bold text-gray-500 uppercase mb-3 text-blue-600">Narrative Comments</h4>
+                                                <h4 className="text-xs font-bold text-gray-500 uppercase mb-3 text-[#1E4DA6]">Narrative Comments</h4>
                                                 <div className="space-y-3">
                                                     {commentBasedSettings.narrativeTopics.map((topic: any) => (
                                                         <div key={topic.id}>
                                                             <label className="text-[10px] font-bold text-gray-400 uppercase">{topic.name}</label>
                                                             <textarea 
-                                                                className="w-full text-sm border border-gray-200 bg-gray-50/50 p-3 rounded-xl mt-1 outline-none focus:border-blue-500 focus:bg-white transition-colors min-h-[60px]" 
+                                                                className="w-full text-sm border border-gray-200 bg-gray-50/50 p-3 rounded-xl mt-1 outline-none focus:border-[#1E4DA6] focus:bg-white transition-colors min-h-[60px]" 
                                                                 placeholder={`Enter ${topic.name} comment...`} 
                                                                 value={remarksForm.narrativeComments[topic.name] || ''} 
                                                                 onChange={e => setRemarksForm({...remarksForm, narrativeComments: {...remarksForm.narrativeComments, [topic.name]: e.target.value}})} 
@@ -1349,7 +1349,7 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
                     </div>
                     <div className="p-5 border-t border-gray-100 flex justify-end gap-3 bg-gray-50 rounded-b-3xl">
                         <Button variant="outline" className="border-gray-200 rounded-xl" onClick={() => setRemarksModalOpen(false)}>Cancel</Button>
-                        <Button onClick={handleSaveRemarks} disabled={savingRemarks || loadingRemarks} className="bg-blue-700 hover:bg-blue-800 text-white rounded-xl gap-2 shadow-sm">
+                        <Button onClick={handleSaveRemarks} disabled={savingRemarks || loadingRemarks} className="bg-[#173F8C] hover:bg-[#122F69] text-white rounded-xl gap-2 shadow-sm">
                             {savingRemarks ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Save
                         </Button>
                     </div>

@@ -286,7 +286,7 @@ export default function ProfitLoss() {
     if (loading) {
         return (
             <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3">
-                <Loader2 className="h-9 w-9 animate-spin text-blue-600" />
+                <Loader2 className="h-9 w-9 animate-spin text-[#1E4DA6]" />
                 <p className="text-sm font-medium text-slate-500">Generating Profit & Loss statement...</p>
             </div>
         );
@@ -299,23 +299,23 @@ export default function ProfitLoss() {
     const isProfitable = netProfit >= 0;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-3 pb-24 pt-6 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-[#FBF9F5] px-3 pb-24 pt-6 sm:px-6 lg:px-8">
             <div className="relative z-10 mx-auto max-w-6xl space-y-5 sm:space-y-6">
                 {/* Breadcrumbs */}
-                <div className={cn('flex flex-wrap items-center gap-1.5 transition-all duration-500', pageVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0')}>
+                <div className={cn('flex flex-wrap items-center gap-1.5 transition-all duration-500', pageVisible ? 'opacity-100' : '-translate-y-2 opacity-0')}>
                     <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                     <ChevronRight className="h-3 w-3 text-slate-400" />
                     <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Income & Expenses</span>
                     <ChevronRight className="h-3 w-3 text-slate-400" />
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Profit & Loss</span>
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Profit & Loss</span>
                 </div>
 
                 {/* Header Banner */}
-                <div className={cn('overflow-hidden rounded-2xl border border-blue-200/80 bg-white/90 shadow-xl shadow-blue-900/5 backdrop-blur-xl transition-all duration-500', pageVisible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0')}>
+                <div className={cn('overflow-hidden rounded-2xl border border-[#1E4DA6]/80 bg-white transition-all duration-500', pageVisible ? 'opacity-100' : 'translate-y-3 opacity-0')}>
                     <div className="p-4 sm:p-8">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex items-start gap-3 sm:gap-4">
-                                <div className="relative flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-200 text-white">
+                                <div className="relative flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1E4DA6] to-indigo-600 shadow-lg shadow-[#1E4DA6]/20 text-white">
                                     <BarChart2 className="h-5 w-5 sm:h-7 sm:w-7" />
                                 </div>
                                 <div className="min-w-0">
@@ -337,7 +337,7 @@ export default function ProfitLoss() {
                                 <Button
                                     onClick={fetchReport}
                                     disabled={refreshing}
-                                    className="h-9 sm:h-10 flex-1 sm:flex-initial gap-1.5 rounded-xl bg-blue-600 px-3 sm:px-4 text-xs font-bold text-white shadow-md shadow-blue-200 hover:bg-blue-700 transition-all"
+                                    className="h-9 sm:h-10 flex-1 sm:flex-initial gap-1.5 rounded-xl bg-[#1E4DA6] px-3 sm:px-4 text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#173F8C] transition-all"
                                 >
                                     <RefreshCw className={cn('h-3.5 w-3.5', refreshing && 'animate-spin')} />
                                     <span>{refreshing ? 'Updating...' : 'Refresh'}</span>
@@ -381,22 +381,22 @@ export default function ProfitLoss() {
                             <div className={cn(
                                 'rounded-2xl border p-4 sm:p-5 shadow-sm transition-all',
                                 isProfitable
-                                    ? 'border-blue-100 bg-gradient-to-br from-blue-500/10 via-blue-50/50 to-white'
+                                    ? 'border-[#1E4DA6]/10 bg-gradient-to-br from-[#1E4DA6]/10 via-[#1E4DA6]/50 to-white'
                                     : 'border-red-100 bg-gradient-to-br from-red-500/10 via-red-50/50 to-white'
                             )}>
                                 <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-blue-900">
-                                        {isProfitable ? <ArrowUpRight className="h-3.5 w-3.5 text-blue-600" /> : <ArrowDownRight className="h-3.5 w-3.5 text-red-600" />}
+                                    <div className="flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-[#0E2450]">
+                                        {isProfitable ? <ArrowUpRight className="h-3.5 w-3.5 text-[#1E4DA6]" /> : <ArrowDownRight className="h-3.5 w-3.5 text-red-600" />}
                                         <span>Net Surplus / Deficit</span>
                                     </div>
                                     <span className={cn(
                                         'rounded-md px-2 py-0.5 font-mono text-[10px] font-bold',
-                                        isProfitable ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'
+                                        isProfitable ? 'bg-[#1E4DA6]/10 text-[#122F69]' : 'bg-red-100 text-red-800'
                                     )}>
                                         {profitMargin.toFixed(1)}% margin
                                     </span>
                                 </div>
-                                <p className={cn('mt-1.5 sm:mt-2 text-xl sm:text-2xl font-black truncate', isProfitable ? 'text-blue-950' : 'text-red-600')} title={isProfitable ? fmt(netProfit) : `-${fmt(Math.abs(netProfit))}`}>
+                                <p className={cn('mt-1.5 sm:mt-2 text-xl sm:text-2xl font-black truncate', isProfitable ? 'text-[#081634]' : 'text-red-600')} title={isProfitable ? fmt(netProfit) : `-${fmt(Math.abs(netProfit))}`}>
                                     {isProfitable ? fmt(netProfit) : `-${fmt(Math.abs(netProfit))}`}
                                 </p>
                                 <p className="mt-0.5 text-xs text-slate-500">
@@ -428,7 +428,7 @@ export default function ProfitLoss() {
                                 className={cn(
                                     'rounded-xl px-3 py-1.5 text-xs font-bold transition-all',
                                     filterType === 'SESSION'
-                                        ? 'bg-blue-600 text-white shadow-sm'
+                                        ? 'bg-[#1E4DA6] text-white shadow-sm'
                                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                 )}
                             >
@@ -439,7 +439,7 @@ export default function ProfitLoss() {
                                 className={cn(
                                     'rounded-xl px-3 py-1.5 text-xs font-bold transition-all',
                                     filterType === 'TERM'
-                                        ? 'bg-blue-600 text-white shadow-sm'
+                                        ? 'bg-[#1E4DA6] text-white shadow-sm'
                                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                 )}
                             >
@@ -450,7 +450,7 @@ export default function ProfitLoss() {
                                 className={cn(
                                     'rounded-xl px-3 py-1.5 text-xs font-bold transition-all',
                                     filterType === 'MONTH'
-                                        ? 'bg-blue-600 text-white shadow-sm'
+                                        ? 'bg-[#1E4DA6] text-white shadow-sm'
                                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                 )}
                             >
@@ -461,7 +461,7 @@ export default function ProfitLoss() {
                                 className={cn(
                                     'rounded-xl px-3 py-1.5 text-xs font-bold transition-all',
                                     filterType === 'CUSTOM'
-                                        ? 'bg-blue-600 text-white shadow-sm'
+                                        ? 'bg-[#1E4DA6] text-white shadow-sm'
                                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                 )}
                             >
@@ -477,7 +477,7 @@ export default function ProfitLoss() {
                                 value={searchQuery}
                                 onChange={e => setSearchQuery(e.target.value)}
                                 placeholder="Search category, item, student, staff..."
-                                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-9 pr-8 py-2 text-xs font-medium text-slate-800 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-9 pr-8 py-2 text-xs font-medium text-slate-800 outline-none transition-all focus:border-[#1E4DA6] focus:bg-white focus:ring-2 focus:ring-[#1E4DA6]/10"
                             />
                             {searchQuery && (
                                 <button
@@ -503,7 +503,7 @@ export default function ProfitLoss() {
                                 <select
                                     value={selectedSessionId}
                                     onChange={e => setSelectedSessionId(e.target.value)}
-                                    className="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-500"
+                                    className="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]"
                                 >
                                     <option value="">All / Current Session</option>
                                     {sessions.map(s => (
@@ -533,7 +533,7 @@ export default function ProfitLoss() {
                                                 if (!isValid) setSelectedTermId('');
                                             }
                                         }}
-                                        className="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-500"
+                                        className="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]"
                                     >
                                         <option value="">All Sessions</option>
                                         {sessions.map(s => (
@@ -547,7 +547,7 @@ export default function ProfitLoss() {
                                     <select
                                         value={selectedTermId}
                                         onChange={e => setSelectedTermId(e.target.value)}
-                                        className="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-500"
+                                        className="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]"
                                     >
                                         <option value="">All Terms {selectedSessionId ? 'in Session' : ''}</option>
                                         {availableTerms.map(t => {
@@ -575,7 +575,7 @@ export default function ProfitLoss() {
                                     type="month"
                                     value={selectedMonth}
                                     onChange={e => setSelectedMonth(e.target.value)}
-                                    className="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-500"
+                                    className="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]"
                                 />
                             </motion.div>
                         )}
@@ -593,7 +593,7 @@ export default function ProfitLoss() {
                                         type="date"
                                         value={fromDate}
                                         onChange={e => setFromDate(e.target.value)}
-                                        className="flex-1 sm:flex-initial rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium outline-none focus:border-blue-500"
+                                        className="flex-1 sm:flex-initial rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium outline-none focus:border-[#1E4DA6]"
                                     />
                                 </div>
                                 <div className="flex items-center gap-2">
@@ -602,7 +602,7 @@ export default function ProfitLoss() {
                                         type="date"
                                         value={toDate}
                                         onChange={e => setToDate(e.target.value)}
-                                        className="flex-1 sm:flex-initial rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium outline-none focus:border-blue-500"
+                                        className="flex-1 sm:flex-initial rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium outline-none focus:border-[#1E4DA6]"
                                     />
                                 </div>
                             </motion.div>
@@ -766,7 +766,7 @@ export default function ProfitLoss() {
                                                                                 <Sparkles className="h-2.5 w-2.5" /> AUTO
                                                                             </span>
                                                                         ) : (
-                                                                            <span className="inline-flex items-center gap-1 rounded bg-blue-50 px-1.5 py-0.2 font-mono text-[9px] font-bold text-blue-700">
+                                                                            <span className="inline-flex items-center gap-1 rounded bg-[#1E4DA6]/5 px-1.5 py-0.2 font-mono text-[9px] font-bold text-[#173F8C]">
                                                                                 <User className="h-2.5 w-2.5" /> MANUAL
                                                                             </span>
                                                                         )}
@@ -879,7 +879,7 @@ export default function ProfitLoss() {
                                                                                 <Sparkles className="h-2.5 w-2.5" /> AUTO
                                                                             </span>
                                                                         ) : (
-                                                                            <span className="inline-flex items-center gap-1 rounded bg-blue-50 px-1.5 py-0.2 font-mono text-[9px] font-bold text-blue-700">
+                                                                            <span className="inline-flex items-center gap-1 rounded bg-[#1E4DA6]/5 px-1.5 py-0.2 font-mono text-[9px] font-bold text-[#173F8C]">
                                                                                 <User className="h-2.5 w-2.5" /> MANUAL
                                                                             </span>
                                                                         )}

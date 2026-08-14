@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     DollarSign, Activity, FileText, Wallet, Loader2,
-    ChevronDown, ChevronUp, ChevronRight, Users,
+    ChevronDown, ChevronUp, Users,
     CheckCircle2, Clock, AlertTriangle,
     CreditCard, Banknote, Smartphone, ArrowRight, PieChart as PieChartIcon, BarChart2, MessageCircle, Bell, X
 } from 'lucide-react';
@@ -10,17 +10,18 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { SettingsShell } from '../settings/shared/SettingsShell';
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 function fmt(n: number) { return '₦' + (n || 0).toLocaleString('en-NG'); }
 
-const METHOD_CONFIG: Record<string, { label: string; color: string; bg: string; icon: any }> = {
-    PAYSTACK:          { label: 'Paystack',      color: 'text-indigo-600', bg: 'bg-indigo-50',  icon: Smartphone },
-    CASH:              { label: 'Cash',          color: 'text-green-600',  bg: 'bg-green-50',   icon: Banknote },
-    POS:               { label: 'POS',           color: 'text-teal-600',   bg: 'bg-teal-50',    icon: CreditCard },
-    BANK_TRANSFER:     { label: 'Bank Transfer', color: 'text-blue-600',   bg: 'bg-blue-50',    icon: Banknote },
-    WALLET:            { label: 'Wallet',        color: 'text-purple-600', bg: 'bg-purple-50',  icon: Wallet },
-    MANUAL_ADJUSTMENT: { label: 'Manual Adj.',   color: 'text-slate-600',  bg: 'bg-slate-50',   icon: DollarSign },
+const METHOD_CONFIG: Record<string, { label: string; color: string; bg: string; hex: string; icon: any }> = {
+    PAYSTACK:          { label: 'Paystack',      color: 'text-[#7C3559]',  bg: 'bg-[#7C3559]/10', hex: '#7C3559', icon: Smartphone },
+    CASH:              { label: 'Cash',          color: 'text-emerald-600', bg: 'bg-emerald-50',  hex: '#059669', icon: Banknote },
+    POS:               { label: 'POS',           color: 'text-teal-600',   bg: 'bg-teal-50',      hex: '#0d9488', icon: CreditCard },
+    BANK_TRANSFER:     { label: 'Bank Transfer', color: 'text-[#1E4DA6]',  bg: 'bg-[#1E4DA6]/10', hex: '#1E4DA6', icon: Banknote },
+    WALLET:            { label: 'Wallet',        color: 'text-[#B8860B]',  bg: 'bg-[#B8860B]/10', hex: '#B8860B', icon: Wallet },
+    MANUAL_ADJUSTMENT: { label: 'Manual Adj.',   color: 'text-slate-600',  bg: 'bg-slate-50',     hex: '#64748b', icon: DollarSign },
 };
 
 const STATUS_COLORS: Record<string, string> = {
@@ -162,29 +163,19 @@ export default function FinanceDashboard() {
     ];
 
     const COLOR_MAP: Record<string, string> = {
-        blue:   'bg-blue-50   text-blue-600',
-        emerald:'bg-emerald-50 text-emerald-600',
-        amber:  'bg-amber-50  text-amber-600',
-        purple: 'bg-purple-50 text-purple-600',
+        blue:    'bg-[#1E4DA6]/10 text-[#1E4DA6]',
+        emerald: 'bg-emerald-50 text-emerald-600',
+        amber:   'bg-amber-50  text-amber-600',
+        purple:  'bg-[#7C3559]/10 text-[#7C3559]',
+        slate:   'bg-slate-100 text-slate-500',
     };
 
     return (
-        <>
-            {/* ── Fonts (same as FeesSetup) ───────────────────────────────── */}
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root,.fd-root *{font-family:'Plus Jakarta Sans',sans-serif!important} .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+        <SettingsShell breadcrumbParent="Finance" breadcrumbCurrent="Dashboard" tabLabel="Dashboard" tabIcon={<Activity className="h-3.5 w-3.5" />}>
+            <div className="mono-scope">
+                <style>{`.mono-scope .mono{font-family:'DM Mono',monospace}`}</style>
 
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                {/* Dot pattern */}
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
-
-                <div className="relative z-10 mx-auto max-w-6xl">
-
-                    {/* Breadcrumb */}
-                    <div className="mb-5 flex items-center gap-1.5">
-                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
-                        <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Dashboard</span>
-                    </div>
+                <div className="relative z-10">
 
                     {/* New Activity Alert Banner */}
                     <AnimatePresence>
@@ -193,7 +184,7 @@ export default function FinanceDashboard() {
                                 initial={{ opacity: 0, y: -10 }} 
                                 animate={{ opacity: 1, y: 0 }} 
                                 exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-                                className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-900/20"
+                                className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-[#1E4DA6] to-[#173F8C] shadow-lg shadow-[#0E2450]/20"
                             >
                                 <div className="flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                                     <div className="flex items-start gap-3 sm:items-center sm:gap-4">
@@ -202,7 +193,7 @@ export default function FinanceDashboard() {
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-bold text-white sm:text-base">New Activity Detected</h3>
-                                            <p className="text-xs text-blue-100 sm:text-sm">
+                                            <p className="text-xs text-white/80 sm:text-sm">
                                                 There {newTransactionsCount === 1 ? 'is' : 'are'} {newTransactionsCount} new {newTransactionsCount === 1 ? 'transaction' : 'transactions'} since you last checked.
                                             </p>
                                         </div>
@@ -210,13 +201,13 @@ export default function FinanceDashboard() {
                                     <div className="flex items-center justify-between gap-3 sm:justify-end">
                                         <Link
                                             to="/dashboard/finance/payments"
-                                            className="rounded-xl bg-white px-4 py-2 text-xs font-bold text-blue-700 shadow-sm transition-colors hover:bg-blue-50 sm:text-sm"
+                                            className="rounded-xl bg-white px-4 py-2 text-xs font-bold text-[#173F8C] shadow-sm transition-colors hover:bg-[#1E4DA6]/5 sm:text-sm"
                                         >
                                             View List
                                         </Link>
                                         <button
                                             onClick={() => setAlertDismissed(true)}
-                                            className="rounded-xl p-2 text-blue-200 transition-colors hover:bg-white/10 hover:text-white"
+                                            className="rounded-xl p-2 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
                                         >
                                             <X className="h-5 w-5" />
                                         </button>
@@ -227,15 +218,10 @@ export default function FinanceDashboard() {
                     </AnimatePresence>
 
                     {/* Header */}
-                    <div className="mb-8 flex flex-col md:flex-row items-start justify-between gap-4">
-                        <div className="flex items-center gap-4">
-                            <div className="flex h-14 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-500 shadow-lg shadow-blue-200">
-                                <Activity className="h-7 w-7 text-white" />
-                            </div>
-                            <div >
-                                <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">Finance Overview</h1>
-                                <p className="mt-0.5 text-sm text-slate-500">School-wide collection stats, class breakdown, and recent activity.</p>
-                            </div>
+                    <div className="mb-8 flex flex-col md:flex-row items-start justify-between gap-4 pb-6 border-b border-slate-200">
+                        <div>
+                            <h1 className="font-heading text-[32px] font-medium tracking-tight text-[#1C2333]">Finance Overview</h1>
+                            <p className="mt-1.5 text-sm text-slate-500">School-wide collection stats, class breakdown, and recent activity.</p>
                         </div>
 
                         {/* Filters */}
@@ -243,7 +229,7 @@ export default function FinanceDashboard() {
                             <select
                                 value={filters.term}
                                 onChange={e => setFilters(f => ({ ...f, term: e.target.value }))}
-                                className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             >
                                 <option value="">All Terms</option>
                                 {Array.from(new Set(terms.map(t => t.name))).map(name => (
@@ -253,7 +239,7 @@ export default function FinanceDashboard() {
                             <select
                                 value={filters.academicYear}
                                 onChange={e => setFilters(f => ({ ...f, academicYear: e.target.value }))}
-                                className="h-9 w-36 rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="h-9 w-36 rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             >
                                 <option value="">All Sessions</option>
                                 {sessions.map(s => <option key={s.id} value={s.name}>{s.name}</option>)}
@@ -261,7 +247,7 @@ export default function FinanceDashboard() {
                             <select
                                 value={filters.paymentMethod}
                                 onChange={e => setFilters(f => ({ ...f, paymentMethod: e.target.value }))}
-                                className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             >
                                 <option value="">All Methods</option>
                                 {Object.keys(METHOD_CONFIG).map(k => <option key={k} value={k}>{METHOD_CONFIG[k].label}</option>)}
@@ -275,7 +261,7 @@ export default function FinanceDashboard() {
                             ? [...Array(4)].map((_, i) => <Skeleton key={i} className="h-24" />)
                             : statCards.map((s, i) => (
                                 <motion.div key={s.label} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }}
-                                    className="min-w-0 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
+                                    className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4">
                                     <div className={`mb-2 flex h-8 w-8 items-center justify-center rounded-lg ${COLOR_MAP[s.c]}`}>{s.icon}</div>
                                     <p className="mono wrap-break-word text-base font-black leading-tight text-slate-900 sm:text-xl lg:text-2xl" title={s.value}>{s.value}</p>
                                     <p className="mono mt-0.5 text-[10px] font-bold uppercase tracking-widest text-slate-400">{s.label}</p>
@@ -286,7 +272,7 @@ export default function FinanceDashboard() {
 
                     {/* Collection Rate Card */}
                     {!loading && stats.collectionRate !== undefined && (
-                        <div className="mb-8 overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl">
+                        <div className="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white">
                             <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
                                 <h2 className="font-bold text-slate-800">Collection Rate</h2>
                                 <div className="flex gap-5 text-xs text-slate-500">
@@ -304,9 +290,9 @@ export default function FinanceDashboard() {
                     {/* Charts Section */}
                     <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
                         {/* Outstanding by Class Bar Chart */}
-                        <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl p-6">
+                        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-6">
                             <div className="mb-6 flex items-center justify-between">
-                                <h2 className="font-bold text-slate-800 flex items-center gap-2"><BarChart2 className="h-5 w-5 text-indigo-500" /> Outstanding Balances by Class</h2>
+                                <h2 className="font-bold text-slate-800 flex items-center gap-2"><BarChart2 className="h-5 w-5 text-[#1E4DA6]" /> Outstanding Balances by Class</h2>
                             </div>
                             <div className="h-64">
                                 {classes.length > 0 ? (
@@ -325,7 +311,7 @@ export default function FinanceDashboard() {
                         </div>
 
                         {/* Payment Method Distribution */}
-                        <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl p-6">
+                        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-6">
                             <div className="mb-6 flex items-center justify-between">
                                 <h2 className="font-bold text-slate-800 flex items-center gap-2"><PieChartIcon className="h-5 w-5 text-emerald-500" /> Payment Methods</h2>
                             </div>
@@ -334,20 +320,13 @@ export default function FinanceDashboard() {
                                     <ResponsiveContainer width="100%" height="100%">
                                         <PieChart>
                                             <Pie
-                                                data={methodBreakdown.map(m => ({ name: METHOD_CONFIG[m.method]?.label || m.method, value: m.total, color: METHOD_CONFIG[m.method]?.color.replace('text-', 'bg-').split('-')[1] || '#94a3b8' }))}
+                                                data={methodBreakdown.map(m => ({ name: METHOD_CONFIG[m.method]?.label || m.method, value: m.total }))}
                                                 cx="50%" cy="50%" innerRadius={60} outerRadius={80}
                                                 paddingAngle={5} dataKey="value"
                                             >
-                                                {methodBreakdown.map((m, index) => {
-                                                    const colorClass = METHOD_CONFIG[m.method]?.color || 'text-slate-500';
-                                                    let hex = '#94a3b8'; // slate-400 default
-                                                    if (colorClass.includes('indigo')) hex = '#6366f1';
-                                                    if (colorClass.includes('green')) hex = '#22c55e';
-                                                    if (colorClass.includes('teal')) hex = '#14b8a6';
-                                                    if (colorClass.includes('blue')) hex = '#3b82f6';
-                                                    if (colorClass.includes('purple')) hex = '#a855f7';
-                                                    return <Cell key={`cell-${index}`} fill={hex} />
-                                                })}
+                                                {methodBreakdown.map((m, index) => (
+                                                    <Cell key={`cell-${index}`} fill={METHOD_CONFIG[m.method]?.hex || '#94a3b8'} />
+                                                ))}
                                             </Pie>
                                             <Tooltip formatter={(value: any) => [fmt(Number(value)), 'Collected']} />
                                             <Legend verticalAlign="bottom" height={36}/>
@@ -365,7 +344,7 @@ export default function FinanceDashboard() {
 
                         {/* Class Breakdown — 2/3 width */}
                         <div className="lg:col-span-2">
-                            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl">
+                            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
                                 <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
                                     <h2 className="font-bold text-slate-800">Class-Level Breakdown</h2>
                                     <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-400">{classes.length} classes</span>
@@ -382,7 +361,7 @@ export default function FinanceDashboard() {
                                 ) : (
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-sm text-left whitespace-nowrap min-w-[700px] border-collapse border border-slate-200 [&_th]:border [&_th]:border-slate-200 [&_td]:border [&_td]:border-slate-200">
-                                            <thead className="bg-slate-50/60 border-b border-slate-50">
+                                            <thead className="border-b border-slate-200">
                                                 <tr>
                                                     {['Class', 'Students', 'Expected', 'Paid', 'Outstanding', ''].map(h => (
                                                         <th key={h} className={`px-6 py-2.5 mono text-[9px] font-bold uppercase tracking-widest text-slate-400 ${['Expected','Paid','Outstanding'].includes(h) ? 'text-right' : ''}`}>{h}</th>
@@ -437,7 +416,7 @@ export default function FinanceDashboard() {
                                                                                 ) : (
                                                                                     <div className="overflow-x-auto">
                                                                                         <table className="w-full text-xs text-left border-collapse border border-slate-200 [&_th]:border [&_th]:border-slate-200 [&_td]:border [&_td]:border-slate-200">
-                                                                                            <thead className="bg-slate-100/50">
+                                                                                            <thead className="border-b border-slate-200">
                                                                                                 <tr>
                                                                                                     {['Student', 'Status', 'Expected', 'Paid', 'Balance'].map(h => (
                                                                                                         <th key={h} className={`px-8 py-2.5 mono text-[9px] font-bold uppercase tracking-widest text-slate-400 ${['Expected','Paid','Balance'].includes(h) ? 'text-right' : ''}`}>{h}</th>
@@ -484,7 +463,7 @@ export default function FinanceDashboard() {
                         <div className="space-y-5">
 
                             {/* By Payment Method */}
-                            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl">
+                            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
                                 <div className="border-b border-slate-100 px-5 py-4">
                                     <h2 className="font-bold text-slate-800">By Payment Method</h2>
                                 </div>
@@ -495,7 +474,7 @@ export default function FinanceDashboard() {
                                 ) : (
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-sm text-left border-collapse border border-slate-200 [&_th]:border [&_th]:border-slate-200 [&_td]:border [&_td]:border-slate-200">
-                                            <thead className="bg-slate-50/60 border-b border-slate-50">
+                                            <thead className="border-b border-slate-200">
                                                 <tr>
                                                     <th className="px-5 py-2.5 mono text-[9px] font-bold uppercase tracking-widest text-slate-400">Method</th>
                                                     <th className="px-5 py-2.5 mono text-[9px] font-bold uppercase tracking-widest text-slate-400 text-right">Amount</th>
@@ -531,7 +510,7 @@ export default function FinanceDashboard() {
                             </div>
 
                             {/* Recent Collections */}
-                            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl">
+                            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
                                 <div className="border-b border-slate-100 px-5 py-4">
                                     <h2 className="font-bold text-slate-800">Recent Collections</h2>
                                 </div>
@@ -543,7 +522,7 @@ export default function FinanceDashboard() {
                                     <>
                                         <div className="overflow-x-auto">
                                             <table className="w-full text-sm text-left border-collapse border border-slate-200 [&_th]:border [&_th]:border-slate-200 [&_td]:border [&_td]:border-slate-200">
-                                                <thead className="bg-slate-50/60 border-b border-slate-50">
+                                                <thead className="border-b border-slate-200">
                                                     <tr>
                                                         <th className="px-5 py-2.5 mono text-[9px] font-bold uppercase tracking-widest text-slate-400">Transaction</th>
                                                         <th className="px-5 py-2.5 mono text-[9px] font-bold uppercase tracking-widest text-slate-400 text-right">Amount</th>
@@ -579,7 +558,7 @@ export default function FinanceDashboard() {
                                             </table>
                                         </div>
                                         <div className="flex justify-end border-t border-slate-50 px-5 py-3">
-                                            <a href="/dashboard/finance/payment-records" className="flex items-center gap-1 text-xs font-bold text-blue-600 hover:underline">
+                                            <a href="/dashboard/finance/payment-records" className="flex items-center gap-1 text-xs font-bold text-[#1E4DA6] hover:underline">
                                                 View all <ArrowRight className="h-3 w-3" />
                                             </a>
                                         </div>
@@ -588,7 +567,7 @@ export default function FinanceDashboard() {
                             </div>
 
                             {/* Activity Feed */}
-                            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl">
+                            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
                                 <div className="border-b border-slate-100 px-5 py-4">
                                     <h2 className="font-bold text-slate-800">Activity Feed</h2>
                                 </div>
@@ -603,7 +582,7 @@ export default function FinanceDashboard() {
                                                 const isPayment = act.type === 'PAYMENT';
                                                 const isMessage = act.type === 'MESSAGE_SENT';
                                                 const Icon = isPayment ? DollarSign : isMessage ? MessageCircle : Bell;
-                                                const color = isPayment ? 'text-emerald-600 bg-emerald-50' : isMessage ? 'text-blue-600 bg-blue-50' : 'text-amber-600 bg-amber-50';
+                                                const color = isPayment ? 'text-emerald-600 bg-emerald-50' : isMessage ? 'text-[#1E4DA6] bg-[#1E4DA6]/5' : 'text-amber-600 bg-amber-50';
                                                 return (
                                                     <div key={act.id} className="flex gap-3 items-start">
                                                         <div className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-full mt-0.5", color)}>
@@ -626,6 +605,6 @@ export default function FinanceDashboard() {
                     </div>
                 </div>
             </div>
-        </>
+        </SettingsShell>
     );
 }

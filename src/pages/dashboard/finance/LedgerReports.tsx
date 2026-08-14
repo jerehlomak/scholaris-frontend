@@ -437,17 +437,17 @@ export default function LedgerReports() {
     if (loading) {
         return (
             <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3">
-                <Loader2 className="h-9 w-9 animate-spin text-blue-600" />
+                <Loader2 className="h-9 w-9 animate-spin text-[#1E4DA6]" />
                 <p className="text-sm font-medium text-slate-500">Loading ledger reports engine...</p>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-3 pb-24 pt-6 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-[#FBF9F5] px-3 pb-24 pt-6 sm:px-6 lg:px-8">
             <div className="relative z-10 mx-auto max-w-6xl space-y-5 sm:space-y-6">
                 {/* Breadcrumbs */}
-                <div className={cn('flex flex-wrap items-center gap-1.5 transition-all duration-500', pageVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0')}>
+                <div className={cn('flex flex-wrap items-center gap-1.5 transition-all duration-500', pageVisible ? 'opacity-100' : '-translate-y-2 opacity-0')}>
                     <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                     <ChevronRight className="h-3 w-3 text-slate-400" />
                     <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Income & Expenses</span>
@@ -456,11 +456,11 @@ export default function LedgerReports() {
                 </div>
 
                 {/* Header Banner */}
-                <div className={cn('overflow-hidden rounded-2xl border border-indigo-200/80 bg-white/90 shadow-xl shadow-indigo-900/5 backdrop-blur-xl transition-all duration-500', pageVisible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0')}>
+                <div className={cn('overflow-hidden rounded-2xl border border-indigo-200/80 bg-white/90 shadow-xl shadow-indigo-900/5 transition-all duration-500', pageVisible ? 'opacity-100' : 'translate-y-3 opacity-0')}>
                     <div className="p-4 sm:p-8">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex items-start gap-3 sm:gap-4">
-                                <div className="relative flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-600 shadow-lg shadow-indigo-200 text-white">
+                                <div className="relative flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-[#1E4DA6] shadow-lg shadow-indigo-200 text-white">
                                     <FileText className="h-5 w-5 sm:h-7 sm:w-7" />
                                 </div>
                                 <div className="min-w-0">
@@ -864,7 +864,7 @@ export default function LedgerReports() {
                                                         <Sparkles className="h-2.5 w-2.5" /> AUTO
                                                     </span>
                                                 ) : (
-                                                    <span className="inline-flex items-center gap-1 rounded bg-blue-50 px-1.5 py-0.5 font-mono text-[9px] font-bold text-blue-700">
+                                                    <span className="inline-flex items-center gap-1 rounded bg-[#1E4DA6]/5 px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#173F8C]">
                                                         <User className="h-2.5 w-2.5" /> MANUAL
                                                     </span>
                                                 )}
@@ -912,7 +912,7 @@ export default function LedgerReports() {
                                                     <Sparkles className="h-2.5 w-2.5" /> AUTO
                                                 </span>
                                             ) : (
-                                                <span className="inline-flex items-center gap-1 rounded bg-blue-50 px-1.5 py-0.5 font-mono text-[9px] font-bold text-blue-700">
+                                                <span className="inline-flex items-center gap-1 rounded bg-[#1E4DA6]/5 px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#173F8C]">
                                                     <User className="h-2.5 w-2.5" /> MANUAL
                                                 </span>
                                             )}

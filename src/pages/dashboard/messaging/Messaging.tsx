@@ -161,7 +161,7 @@ export default function Messaging() {
                             <RefreshCw className="w-4 h-4" />
                         </Button>
                         <Button size="sm" onClick={() => { setIsComposing(true); setActiveThread(null); }}
-                            className="h-8 bg-[#0036a1] text-white text-xs px-3 flex items-center gap-1">
+                            className="h-8 bg-[#1E4DA6] text-white text-xs px-3 flex items-center gap-1">
                             <Plus className="w-3.5 h-3.5" /> New
                         </Button>
                     </div>
@@ -172,14 +172,14 @@ export default function Messaging() {
                         <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                         <input value={search} onChange={e => setSearch(e.target.value)}
                             placeholder="Search messages..."
-                            className="w-full pl-8 pr-3 py-2 bg-gray-50 rounded-lg text-sm outline-none focus:bg-white focus:ring-1 focus:ring-[#0036a1]/20 transition-all border border-transparent focus:border-gray-200" />
+                            className="w-full pl-8 pr-3 py-2 bg-gray-50 rounded-lg text-sm outline-none focus:bg-white focus:ring-1 focus:ring-[#1E4DA6]/20 transition-all border border-transparent focus:border-gray-200" />
                     </div>
                 </div>
 
                 <div className="flex-1 overflow-y-auto min-h-0">
                     {loading ? (
                         <div className="flex items-center justify-center py-16">
-                            <Loader2 className="w-6 h-6 animate-spin text-[#0036a1]" />
+                            <Loader2 className="w-6 h-6 animate-spin text-[#1E4DA6]" />
                         </div>
                     ) : filtered.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-16 text-center px-4">
@@ -192,7 +192,7 @@ export default function Messaging() {
                                 <button key={thread.id} onClick={() => openThread(thread)}
                                     className={cn(
                                         'w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all hover:bg-gray-50',
-                                        activeThread?.id === thread.id && 'bg-[#0036a1]/5 border border-[#0036a1]/10'
+                                        activeThread?.id === thread.id && 'bg-[#1E4DA6]/5 border border-[#1E4DA6]/10'
                                     )}>
                                     <Avatar name={thread.isOwn ? composeTo : thread.senderName} size="md" />
                                     <div className="flex-1 min-w-0">
@@ -203,7 +203,7 @@ export default function Messaging() {
                                         <p className="text-xs text-gray-500 truncate mt-0.5">{thread.lastMessage}</p>
                                     </div>
                                     {thread.unreadCount > 0 && (
-                                        <span className="shrink-0 w-5 h-5 bg-[#0036a1] text-white text-[10px] font-bold flex items-center justify-center rounded-full">
+                                        <span className="shrink-0 w-5 h-5 bg-[#1E4DA6] text-white text-[10px] font-bold flex items-center justify-center rounded-full">
                                             {thread.unreadCount}
                                         </span>
                                     )}
@@ -222,14 +222,14 @@ export default function Messaging() {
                     {!activeThread && !isComposing && (
                         <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                             className="flex-1 flex flex-col items-center justify-center p-10 text-center bg-gray-50/50">
-                            <div className="w-20 h-20 rounded-full bg-[#0036a1]/5 flex items-center justify-center mb-5">
-                                <MessageSquare className="w-9 h-9 text-[#0036a1]/40" />
+                            <div className="w-20 h-20 rounded-full bg-[#1E4DA6]/5 flex items-center justify-center mb-5">
+                                <MessageSquare className="w-9 h-9 text-[#1E4DA6]/40" />
                             </div>
                             <h2 className="text-2xl font-bold text-gray-800 mb-2">Stay Connected</h2>
                             <p className="text-sm text-gray-500 max-w-sm mb-6">
                                 Communicate instantly with teachers, students, parents, and staff. All messages are stored securely.
                             </p>
-                            <Button onClick={() => setIsComposing(true)} className="bg-[#0036a1] text-white">
+                            <Button onClick={() => setIsComposing(true)} className="bg-[#1E4DA6] text-white">
                                 <Plus className="w-4 h-4 mr-2" /> New Message
                             </Button>
                         </motion.div>
@@ -241,7 +241,7 @@ export default function Messaging() {
                             className="flex-1 flex flex-col">
                             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                                 <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                                    <Plus className="w-4 h-4 text-[#0036a1]" /> New Message
+                                    <Plus className="w-4 h-4 text-[#1E4DA6]" /> New Message
                                 </h3>
                                 <Button size="sm" variant="ghost" onClick={() => setIsComposing(false)} className="w-8 h-8 p-0">
                                     <X className="w-4 h-4" />
@@ -252,7 +252,7 @@ export default function Messaging() {
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-1.5">Send To *</label>
                                         <select value={composeTo} onChange={e => setComposeTo(e.target.value)}
-                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0036a1] transition-colors bg-white">
+                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#1E4DA6] transition-colors bg-white">
                                             {GROUPS.map(g => <option key={g.id} value={g.id}>{g.label}</option>)}
                                         </select>
                                     </div>
@@ -260,21 +260,21 @@ export default function Messaging() {
                                         <label className="block text-sm font-semibold text-gray-700 mb-1.5">Subject <span className="text-gray-400 font-normal">(optional)</span></label>
                                         <input value={composeSubject} onChange={e => setComposeSubject(e.target.value)}
                                             placeholder="e.g. Examination Schedule Update"
-                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0036a1] transition-colors" />
+                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#1E4DA6] transition-colors" />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-1.5">Message *</label>
                                         <div className="relative">
                                             <textarea value={composeBody} onChange={e => setComposeBody(e.target.value)}
                                                 rows={6} placeholder="Write your message here..."
-                                                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0036a1] transition-colors resize-none" />
+                                                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#1E4DA6] transition-colors resize-none" />
                                             <span className="absolute bottom-3 right-3 text-xs text-gray-400">{composeBody.length}</span>
                                         </div>
                                     </div>
                                     <div className="flex justify-end gap-3 pt-2">
                                         <Button variant="outline" onClick={() => setIsComposing(false)}>Cancel</Button>
                                         <Button onClick={handleSend} disabled={!composeBody.trim() || sending}
-                                            className="bg-[#0036a1] text-white min-w-[120px]">
+                                            className="bg-[#1E4DA6] text-white min-w-[120px]">
                                             {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Send className="w-4 h-4 mr-2" />Send</>}
                                         </Button>
                                     </div>
@@ -292,7 +292,7 @@ export default function Messaging() {
                                 <div className="flex-1 min-w-0">
                                     <h3 className="font-bold text-gray-900">{activeThread.senderName}</h3>
                                     <p className="text-xs text-gray-500">
-                                        To: <span className="font-semibold text-[#0036a1] capitalize">{activeThread.recipientGroup}</span>
+                                        To: <span className="font-semibold text-[#1E4DA6] capitalize">{activeThread.recipientGroup}</span>
                                     </p>
                                 </div>
                                 <Button size="sm" variant="ghost" onClick={() => setActiveThread(null)} className="w-8 h-8 p-0">
@@ -303,7 +303,7 @@ export default function Messaging() {
                             <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-gray-50/30">
                                 {threadLoading ? (
                                     <div className="flex items-center justify-center py-10">
-                                        <Loader2 className="w-6 h-6 animate-spin text-[#0036a1]" />
+                                        <Loader2 className="w-6 h-6 animate-spin text-[#1E4DA6]" />
                                     </div>
                                 ) : messages.length === 0 ? (
                                     <div className="text-center py-10 text-sm text-gray-400">No messages in this thread.</div>
@@ -314,7 +314,7 @@ export default function Messaging() {
                                             <div className="flex items-center gap-2 mb-1">
                                                 <span className="text-xs font-bold text-gray-800">{msg.senderName}</span>
                                                 <span className="text-[10px] text-gray-400">{formatTime(msg.createdAt)}</span>
-                                                {msg.subject && <span className="text-[10px] bg-[#0036a1]/10 text-[#0036a1] px-1.5 py-0.5 rounded-full font-medium">{msg.subject}</span>}
+                                                {msg.subject && <span className="text-[10px] bg-[#1E4DA6]/10 text-[#1E4DA6] px-1.5 py-0.5 rounded-full font-medium">{msg.subject}</span>}
                                             </div>
                                             <div className="bg-white rounded-xl rounded-tl-sm px-4 py-3 shadow-sm border border-gray-100 text-sm text-gray-700 leading-relaxed relative">
                                                 {msg.body}

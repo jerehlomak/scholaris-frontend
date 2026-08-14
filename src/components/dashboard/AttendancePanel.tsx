@@ -15,10 +15,10 @@ export function AttendancePanel({ title, titleColorClass }: AttendancePanelProps
 
     // Convert color class to a background color for the indicator dot
     const isDanger = titleColorClass.includes('danger') || titleColorClass.includes('red');
-    const indicatorClass = isDanger ? 'bg-red-500' : 'bg-[#0036a1]';
+    const indicatorClass = isDanger ? 'bg-red-500' : 'bg-[#1E4DA6]';
 
     return (
-        <Card className="mb-4 overflow-hidden rounded-2xl bg-white/90 backdrop-blur-xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+        <Card className="mb-4 overflow-hidden rounded-2xl bg-white/90 border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
             <Button
                 variant="ghost"
                 onClick={() => setIsOpen(!isOpen)}

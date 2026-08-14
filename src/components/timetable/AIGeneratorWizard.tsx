@@ -39,9 +39,9 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                 className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]"
             >
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-[#0036a1]/5 to-transparent">
+                <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-[#1E4DA6]/5 to-transparent">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-[#0036a1]/10 flex items-center justify-center text-[#0036a1]">
+                        <div className="w-10 h-10 rounded-xl bg-[#1E4DA6]/10 flex items-center justify-center text-[#1E4DA6]">
                             <BrainCircuit className="w-6 h-6" />
                         </div>
                         <div>
@@ -63,15 +63,15 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                                 <motion.div
                                     animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
                                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                                    className="absolute inset-0 rounded-full border-2 border-[#0036a1]/30"
+                                    className="absolute inset-0 rounded-full border-2 border-[#1E4DA6]/30"
                                 />
                                 <motion.div
                                     animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0, 0.3] }}
                                     transition={{ duration: 2, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
-                                    className="absolute inset-0 rounded-full border-2 border-[#6bc048]/30"
+                                    className="absolute inset-0 rounded-full border-2 border-[#10b981]/30"
                                 />
                                 {/* Center brain */}
-                                <div className="w-16 h-16 bg-[#0036a1] rounded-full flex items-center justify-center shadow-lg relative z-10">
+                                <div className="w-16 h-16 bg-[#1E4DA6] rounded-full flex items-center justify-center shadow-lg relative z-10">
                                     <BrainCircuit className="w-8 h-8 text-white animate-pulse" />
                                 </div>
                             </div>
@@ -88,7 +88,7 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: 0.5 }}
-                                    className="flex items-center gap-2 text-sm text-[#0036a1]"
+                                    className="flex items-center gap-2 text-sm text-[#1E4DA6]"
                                 >
                                     <CheckCircle2 className="w-4 h-4" /> Mapping {config.classes.length} distinct classes
                                 </motion.div>
@@ -96,7 +96,7 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: 1.5 }}
-                                    className="flex items-center gap-2 text-sm text-[#0036a1]"
+                                    className="flex items-center gap-2 text-sm text-[#1E4DA6]"
                                 >
                                     <CheckCircle2 className="w-4 h-4" /> Evaluating teacher workloads
                                 </motion.div>
@@ -106,7 +106,7 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                                     transition={{ delay: 2.5 }}
                                     className="flex items-center gap-2 text-sm text-gray-500"
                                 >
-                                    <div className="w-4 h-4 rounded-full border-2 border-gray-300 border-t-[#6bc048] animate-spin" /> Finalizing grid placement
+                                    <div className="w-4 h-4 rounded-full border-2 border-gray-300 border-t-[#10b981] animate-spin" /> Finalizing grid placement
                                 </motion.div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                             <div className="flex items-center justify-between relative mb-8">
                                 <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-gray-100 -z-10" />
                                 {[1, 2, 3].map((num) => (
-                                    <div key={num} className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold border-4 border-white ${step >= num ? 'bg-[#0036a1] text-white' : 'bg-gray-200 text-gray-500'}`}>
+                                    <div key={num} className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold border-4 border-white ${step >= num ? 'bg-[#1E4DA6] text-white' : 'bg-gray-200 text-gray-500'}`}>
                                         {num}
                                     </div>
                                 ))}
@@ -126,7 +126,7 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                             {step === 1 && (
                                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
                                     <h3 className="text-lg font-bold text-[#1e2230] mb-4 flex items-center gap-2">
-                                        <Settings className="w-5 h-5 text-[#0036a1]" /> Basic Configuration
+                                        <Settings className="w-5 h-5 text-[#1E4DA6]" /> Basic Configuration
                                     </h3>
                                     <div className="space-y-4">
                                         <div>
@@ -141,7 +141,7 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                                                                 : [...config.days, day];
                                                             setConfig({ ...config, days: newDays });
                                                         }}
-                                                        className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${config.days.includes(day) ? 'bg-[#0036a1]/10 border-[#0036a1]/30 text-[#0036a1]' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+                                                        className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${config.days.includes(day) ? 'bg-[#1E4DA6]/10 border-[#1E4DA6]/30 text-[#1E4DA6]' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
                                                     >
                                                         {day}
                                                     </button>
@@ -155,7 +155,7 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                                                     type="number"
                                                     value={config.periodsPerDay}
                                                     onChange={e => setConfig({ ...config, periodsPerDay: parseInt(e.target.value) || 8 })}
-                                                    className="w-full border border-gray-200 rounded-md p-2 text-sm focus:ring-1 focus:ring-[#0036a1] focus:border-[#0036a1] outline-none"
+                                                    className="w-full border border-gray-200 rounded-md p-2 text-sm focus:ring-1 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] outline-none"
                                                 />
                                             </div>
                                             <div>
@@ -163,7 +163,7 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                                                 <select
                                                     value={config.breakAfterPeriod}
                                                     onChange={e => setConfig({ ...config, breakAfterPeriod: parseInt(e.target.value) || 4 })}
-                                                    className="w-full border border-gray-200 rounded-md p-2 text-sm focus:ring-1 focus:ring-[#0036a1] focus:border-[#0036a1] outline-none"
+                                                    className="w-full border border-gray-200 rounded-md p-2 text-sm focus:ring-1 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] outline-none"
                                                 >
                                                     {[2, 3, 4, 5].map(p => <option key={p} value={p}>Period {p}</option>)}
                                                 </select>
@@ -189,12 +189,12 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                                                     setConfig({ ...config, classes: newClasses });
                                                 }}
                                                 className={`p-3 rounded-lg border-2 cursor-pointer transition-all flex items-center justify-between ${config.classes.includes(cls)
-                                                        ? 'border-[#6bc048] bg-[#6bc048]/5'
+                                                        ? 'border-[#10b981] bg-[#10b981]/5'
                                                         : 'border-gray-100 hover:border-gray-200'
                                                     }`}
                                             >
                                                 <span className="font-semibold text-gray-700">{cls}</span>
-                                                {config.classes.includes(cls) && <CheckCircle2 className="w-5 h-5 text-[#6bc048]" />}
+                                                {config.classes.includes(cls) && <CheckCircle2 className="w-5 h-5 text-[#10b981]" />}
                                             </div>
                                         ))}
                                     </div>
@@ -204,7 +204,7 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                             {step === 3 && (
                                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="text-center py-6">
                                     <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <BrainCircuit className="w-10 h-10 text-[#6bc048]" />
+                                        <BrainCircuit className="w-10 h-10 text-[#10b981]" />
                                     </div>
                                     <h3 className="text-2xl font-bold text-[#1e2230] mb-2">Ready to Generate</h3>
                                     <p className="text-gray-500 max-w-md mx-auto mb-6">
@@ -244,14 +244,14 @@ export function AIGeneratorWizard({ onClose, onGenerate }: AIGeneratorWizardProp
                         {step < 3 ? (
                             <Button
                                 onClick={() => setStep(step + 1)}
-                                className="bg-[#0036a1] hover:bg-[#001761] text-white flex items-center gap-2"
+                                className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white flex items-center gap-2"
                             >
                                 Continue <ChevronRight className="w-4 h-4" />
                             </Button>
                         ) : (
                             <Button
                                 onClick={handleGenerate}
-                                className="bg-gradient-to-r from-[#0036a1] to-[#0033cc] hover:from-[#001761] hover:to-[#0036a1] text-white flex items-center gap-2 px-6 shadow-md"
+                                className="bg-gradient-to-r from-[#1E4DA6] to-[#0033cc] hover:from-[#173F8C] hover:to-[#1E4DA6] text-white flex items-center gap-2 px-6 shadow-md"
                             >
                                 <BrainCircuit className="w-4 h-4" /> Generate Timetable
                             </Button>

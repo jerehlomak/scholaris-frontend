@@ -34,14 +34,14 @@ const STATUS_CFG: Record<Status, {
 }> = {
     active: { label: 'Active', textColor: 'text-emerald-600', bgColor: 'bg-emerald-50', borderColor: 'border-emerald-100', barColor: 'bg-emerald-500', icon: <CheckCircle2 className="h-3.5 w-3.5" /> },
     overdue: { label: 'Overdue', textColor: 'text-red-600', bgColor: 'bg-red-50', borderColor: 'border-red-100', barColor: 'bg-red-500', icon: <XCircle className="h-3.5 w-3.5" /> },
-    graded: { label: 'Graded', textColor: 'text-blue-600', bgColor: 'bg-blue-50', borderColor: 'border-blue-100', barColor: 'bg-blue-500', icon: <FileText className="h-3.5 w-3.5" /> },
+    graded: { label: 'Graded', textColor: 'text-[#1E4DA6]', bgColor: 'bg-[#1E4DA6]/5', borderColor: 'border-[#1E4DA6]/10', barColor: 'bg-[#1E4DA6]', icon: <FileText className="h-3.5 w-3.5" /> },
 };
 
 const STAT_KEYS = [
-    { key: 'all', label: 'Total', icon: <FileText className="h-5 w-5" />, iconBg: 'bg-blue-50', iconText: 'text-blue-600' },
+    { key: 'all', label: 'Total', icon: <FileText className="h-5 w-5" />, iconBg: 'bg-[#1E4DA6]/5', iconText: 'text-[#1E4DA6]' },
     { key: 'active', label: 'Active', icon: <CheckCircle2 className="h-5 w-5" />, iconBg: 'bg-emerald-50', iconText: 'text-emerald-600' },
     { key: 'overdue', label: 'Overdue', icon: <Clock className="h-5 w-5" />, iconBg: 'bg-red-50', iconText: 'text-red-600' },
-    { key: 'graded', label: 'Graded', icon: <BookOpen className="h-5 w-5" />, iconBg: 'bg-purple-50', iconText: 'text-purple-600' },
+    { key: 'graded', label: 'Graded', icon: <BookOpen className="h-5 w-5" />, iconBg: 'bg-[#1E4DA6]/5', iconText: 'text-[#1E4DA6]' },
 ] as const;
 
 // ─────────────────────────────────────────────
@@ -64,14 +64,14 @@ function StatCard({
                 'group relative flex items-center gap-3 rounded-2xl border p-4 text-left transition-all duration-300',
                 'hover:shadow-md hover:-translate-y-0.5',
                 active
-                    ? 'border-blue-300 bg-blue-50/60 shadow-md shadow-blue-100 ring-1 ring-blue-200'
+                    ? 'border-[#1E4DA6]/35 bg-[#1E4DA6]/8 shadow-md shadow-[#1E4DA6]/10 ring-1 ring-[#1E4DA6]/20'
                     : 'border-slate-100 bg-white shadow-sm hover:border-slate-200',
-                visible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0',
+                visible ? 'opacity-100' : 'translate-y-3 opacity-0',
                 'transition-all duration-500'
             )}
         >
             {active && (
-                <motion.div layoutId="hwStatActive" className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full bg-blue-500" />
+                <motion.div layoutId="hwStatActive" className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full bg-[#1E4DA6]" />
             )}
             <div className={cn('flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-110', iconBg, iconText)}>
                 {icon}
@@ -123,7 +123,7 @@ function TableRow({ hw, delay }: { hw: Homework; delay: number }) {
         >
             {/* Assignment */}
             <td className="px-5 py-4">
-                <p className="font-bold text-slate-900 group-hover:text-blue-700 transition-colors">{hw.title}</p>
+                <p className="font-bold text-slate-900 group-hover:text-[#173F8C] transition-colors">{hw.title}</p>
                 <p className="mt-0.5 flex items-center gap-1 font-mono text-[11px] text-slate-400">
                     <BookOpen className="h-3 w-3" />{hw.subject}
                 </p>
@@ -183,7 +183,7 @@ function MobileCard({ hw, delay }: { hw: Homework; delay: number }) {
                 <div className={cn('h-1 w-full', {
                     'bg-emerald-400': hw.status === 'active',
                     'bg-red-400': hw.status === 'overdue',
-                    'bg-blue-400': hw.status === 'graded',
+                    'bg-[#1E4DA6]/8': hw.status === 'graded',
                 })} />
                 <CardContent className="p-4">
                     <div className="mb-2 flex items-start justify-between gap-2">
@@ -239,7 +239,6 @@ export default function Homework() {
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');
-                .hw-root, .hw-root * { font-family: 'Plus Jakarta Sans', sans-serif !important; }
                 .hw-root .font-mono  { font-family: 'DM Mono', monospace !important; }
                 @keyframes hw-float      { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
                 @keyframes hw-pulse-ring { 0%{transform:scale(0.9);opacity:.4} 100%{transform:scale(1.5);opacity:0} }
@@ -247,32 +246,30 @@ export default function Homework() {
                 .hw-pulse-ring { animation: hw-pulse-ring 2.4s ease-out infinite; }
             `}</style>
 
-            <div className="hw-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+            <div className="hw-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
 
                 {/* Dot grid */}
-                <div className="pointer-events-none fixed inset-0 opacity-[0.25]"
-                    style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
 
                 <div className="relative z-10 mx-auto max-w-6xl">
 
                     {/* Breadcrumb */}
                     <div className={cn('mb-6 flex items-center gap-1.5 transition-all duration-500',
-                        pageVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0')}>
+                        pageVisible ? 'opacity-100' : '-translate-y-2 opacity-0')}>
                         <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Academics</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Homework & Assignments</span>
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Homework & Assignments</span>
                     </div>
 
                     {/* Main panel */}
                     <div className={cn(
-                        'overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl transition-all duration-500',
-                        pageVisible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+                        'overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-all duration-500',
+                        pageVisible ? 'opacity-100' : 'translate-y-3 opacity-0'
                     )}>
                         {/* Tab bar */}
                         <div className="border-b border-slate-100 bg-slate-50/80 px-6">
-                            <div className="inline-flex items-center gap-2 border-b-2 border-blue-600 pb-3 pt-3.5">
-                                <BookOpen className="h-3.5 w-3.5 text-blue-600" />
-                                <span className="text-xs font-bold tracking-tight text-blue-600">Assignment Tracker</span>
+                            <div className="inline-flex items-center gap-2 border-b-2 border-[#1E4DA6] pb-3 pt-3.5">
+                                <BookOpen className="h-3.5 w-3.5 text-[#1E4DA6]" />
+                                <span className="text-xs font-bold tracking-tight text-[#1E4DA6]">Assignment Tracker</span>
                             </div>
                         </div>
 
@@ -281,8 +278,8 @@ export default function Homework() {
                             {/* Hero */}
                             <div className="mb-10 flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left sm:gap-6">
                                 <div className="hw-float relative mb-5 h-16 w-16 shrink-0 sm:mb-0">
-                                    <div className="hw-pulse-ring absolute inset-0 rounded-2xl bg-blue-400/25" />
-                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 shadow-lg shadow-blue-200">
+                                    <div className="hw-pulse-ring absolute inset-0 rounded-2xl bg-[#1E4DA6]/8" />
+                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-[#1E4DA6] shadow-lg shadow-[#1E4DA6]/20">
                                         <BookOpen className="h-7 w-7 text-white" />
                                     </div>
                                 </div>
@@ -294,7 +291,7 @@ export default function Homework() {
                                         School-wide assignment management, tracking, and submission monitoring.
                                     </p>
                                 </div>
-                                <Button className="mt-4 h-10 gap-2 rounded-xl bg-blue-700 px-5 text-xs font-bold text-white shadow-md shadow-blue-200 transition-all hover:scale-[1.02] hover:bg-blue-800 sm:mt-0 sm:self-start">
+                                <Button className="mt-4 h-10 gap-2 rounded-xl bg-[#173F8C] px-5 text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 transition-all hover:scale-[1.02] hover:bg-[#122F69] sm:mt-0 sm:self-start">
                                     <Plus className="h-4 w-4" /> New Homework
                                 </Button>
                             </div>
@@ -324,7 +321,7 @@ export default function Homework() {
                                         value={search}
                                         onChange={e => setSearch(e.target.value)}
                                         placeholder="Search by title or subject…"
-                                        className="h-10 border-slate-200 bg-white pl-9 text-sm shadow-sm transition-all focus-visible:border-blue-400 focus-visible:ring-2 focus-visible:ring-blue-100"
+                                        className="h-10 border-slate-200 bg-white pl-9 text-sm shadow-sm transition-all focus-visible:border-[#1E4DA6]/60 focus-visible:ring-2 focus-visible:ring-[#1E4DA6]/10"
                                     />
                                 </div>
                                 <div className="flex gap-1.5 rounded-xl border border-slate-200 bg-slate-50 p-1">
@@ -335,7 +332,7 @@ export default function Homework() {
                                             className={cn(
                                                 'rounded-lg px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider transition-all capitalize',
                                                 filter === s
-                                                    ? 'bg-white text-blue-700 shadow-sm ring-1 ring-slate-200'
+                                                    ? 'bg-white text-[#173F8C] shadow-sm ring-1 ring-slate-200'
                                                     : 'text-slate-400 hover:text-slate-600'
                                             )}
                                         >{s}</button>

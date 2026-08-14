@@ -43,7 +43,7 @@ export function ManualQuestionForm({ onClose, onAdd }: ManualQuestionFormProps) 
                 {/* Header */}
                 <div className="flex items-center justify-between p-8 bg-gray-50 border-b border-gray-100">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-[#0036a1] flex items-center justify-center shadow-lg shadow-[#0036a1]/20">
+                        <div className="w-12 h-12 rounded-2xl bg-[#1E4DA6] flex items-center justify-center shadow-lg shadow-[#1E4DA6]/20">
                             <Plus className="w-7 h-7 text-white" />
                         </div>
                         <div>
@@ -65,7 +65,7 @@ export function ManualQuestionForm({ onClose, onAdd }: ManualQuestionFormProps) 
                             placeholder="Type your question prompt here..."
                             value={formData.questionText}
                             onChange={e => setFormData({ ...formData, questionText: e.target.value })}
-                            className="w-full bg-gray-50 border-2 border-gray-50 rounded-2xl px-5 py-4 text-sm font-bold text-gray-900 focus:bg-white focus:border-[#0036a1] focus:ring-4 focus:ring-[#0036a1]/5 outline-none transition-all placeholder:text-gray-300 resize-none"
+                            className="w-full bg-gray-50 border-2 border-gray-50 rounded-2xl px-5 py-4 text-sm font-bold text-gray-900 focus:bg-white focus:border-[#1E4DA6] focus:ring-4 focus:ring-[#1E4DA6]/5 outline-none transition-all placeholder:text-gray-300 resize-none"
                         />
                     </div>
 
@@ -88,7 +88,7 @@ export function ManualQuestionForm({ onClose, onAdd }: ManualQuestionFormProps) 
                                         />
                                         <button
                                             onClick={() => setFormData({ ...formData, correctAnswer: opt })}
-                                            className={`h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${isCorrect ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-white text-gray-300 hover:text-[#0036a1]'}`}
+                                            className={`h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${isCorrect ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-white text-gray-300 hover:text-[#1E4DA6]'}`}
                                         >
                                             {isCorrect ? <CheckCircle2 size={16} /> : 'Correct?'}
                                         </button>
@@ -105,7 +105,7 @@ export function ManualQuestionForm({ onClose, onAdd }: ManualQuestionFormProps) 
                                 <button
                                     key={m}
                                     onClick={() => setFormData({ ...formData, marks: m })}
-                                    className={`flex-1 h-14 rounded-2xl font-black text-sm transition-all border-2 ${formData.marks === m ? 'bg-[#0036a1] text-white border-[#0036a1] shadow-lg shadow-[#0036a1]/10' : 'bg-gray-50 text-gray-400 border-gray-50 hover:border-gray-100 hover:bg-gray-100'}`}
+                                    className={`flex-1 h-14 rounded-2xl font-black text-sm transition-all border-2 ${formData.marks === m ? 'bg-[#1E4DA6] text-white border-[#1E4DA6] shadow-lg shadow-[#1E4DA6]/10' : 'bg-gray-50 text-gray-400 border-gray-50 hover:border-gray-100 hover:bg-gray-100'}`}
                                 >
                                     {m} Pt{m > 1 ? 's' : ''}
                                 </button>

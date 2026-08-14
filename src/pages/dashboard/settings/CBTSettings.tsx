@@ -18,7 +18,7 @@ const INITIAL_POLICIES: CBTPolicy[] = [
     { id: 'p1', title: 'Strict Full-Screen Lockdown', description: 'Forces the exam to run in full-screen mode. Automatically submits if the student switches tabs or minimizes the browser.', icon: <MonitorPlay className="h-5 w-5 text-indigo-500" />, enabled: true, category: 'security' },
     { id: 'p2', title: 'Disable Copy & Paste', description: 'Prevents students from copying text from the exam or pasting external answers into essay boxes.', icon: <ShieldAlert className="h-5 w-5 text-red-500" />, enabled: true, category: 'security' },
     { id: 'p3', title: 'Webcam Proctor Snapshot', description: 'Periodically takes silent webcam photos during the exam to verify the identity of the person taking it.', icon: <Camera className="h-5 w-5 text-emerald-500" />, enabled: false, category: 'security' },
-    { id: 'p4', title: 'Randomize/Shuffle Questions', description: 'Questions and multi-choice options appear in a different order for every student to deter side-by-side cheating.', icon: <RefreshCcw className="h-5 w-5 text-blue-500" />, enabled: true, category: 'experience' },
+    { id: 'p4', title: 'Randomize/Shuffle Questions', description: 'Questions and multi-choice options appear in a different order for every student to deter side-by-side cheating.', icon: <RefreshCcw className="h-5 w-5 text-[#1E4DA6]" />, enabled: true, category: 'experience' },
     { id: 'p5', title: 'Hide Overall Result Until Published', description: "Prevents students from seeing their final score immediately after submission until a teacher officially releases it.", icon: <EyeOff className="h-5 w-5 text-slate-500" />, enabled: true, category: 'grading' },
     { id: 'p6', title: 'Auto-Submit on Timer Expiration', description: 'Instantly collects whatever answers have been selected the moment the countdown timer hits zero.', icon: <Clock className="h-5 w-5 text-orange-500" />, enabled: true, category: 'experience' },
 ];
@@ -27,7 +27,7 @@ function PolicyCard({ policy, onToggle }: { policy: CBTPolicy; onToggle: () => v
     return (
         <div className={cn(
             'group relative flex flex-col md:flex-row gap-4 rounded-2xl border-2 bg-white p-5 transition-all duration-200',
-            policy.enabled ? 'border-blue-100 shadow-sm hover:border-blue-200 hover:shadow-md' : 'border-slate-100 opacity-70'
+            policy.enabled ? 'border-[#1E4DA6]/10 shadow-sm hover:border-[#1E4DA6]/20 hover:shadow-md' : 'border-slate-100 opacity-70'
         )}>
             <div className={cn('flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border shadow-sm', policy.enabled ? 'bg-white border-slate-100' : 'bg-slate-50 border-slate-100')}>
                 {policy.icon}
@@ -40,7 +40,7 @@ function PolicyCard({ policy, onToggle }: { policy: CBTPolicy; onToggle: () => v
                         onClick={onToggle}
                         className={cn(
                             'relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors',
-                            policy.enabled ? 'bg-blue-600' : 'bg-slate-200'
+                            policy.enabled ? 'bg-[#1E4DA6]' : 'bg-slate-200'
                         )}
                     >
                         <span className={cn('pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-md transition-transform', policy.enabled ? 'translate-x-4' : 'translate-x-0')} />

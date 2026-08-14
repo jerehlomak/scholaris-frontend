@@ -9,7 +9,7 @@ import { SettingsHero } from '../settings/shared/SettingsHero';
 import { cn } from '../../../lib/utils';
 
 const API = '/api/v1';
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 const labelCls = 'font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1.5 block';
 
 interface StudentOption { id: string; name: string; admissionNo: string; classLevel: string; className?: string; classId?: string; }
@@ -18,7 +18,7 @@ interface ClassObj { id: string; name: string; }
 const SectionCard = ({ icon, title, sub, children }: { icon: React.ReactNode; title: string; sub?: string; children: React.ReactNode }) => (
     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-3 rounded-t-2xl">
-            <div className="h-8 w-8 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600">{icon}</div>
+            <div className="h-8 w-8 bg-[#1E4DA6]/10 rounded-xl flex items-center justify-center text-[#1E4DA6]">{icon}</div>
             <div><h2 className="font-bold text-slate-800">{title}</h2>{sub && <p className="text-xs text-slate-400">{sub}</p>}</div>
         </div>
         <div className="py-6 px-3">{children}</div>
@@ -119,7 +119,7 @@ export default function AddParent() {
         } finally { setIsSubmitting(false); }
     };
 
-    if (isFetching) return <div className="flex items-center justify-center min-h-64"><Loader2 className="h-10 w-10 animate-spin text-blue-600" /></div>;
+    if (isFetching) return <div className="flex items-center justify-center min-h-64"><Loader2 className="h-10 w-10 animate-spin text-[#1E4DA6]" /></div>;
 
     if (submitted && createdCredentials) {
         return (
@@ -132,11 +132,11 @@ export default function AddParent() {
                         {[{ label: 'Parent ID', val: createdCredentials.parentId }, { label: 'System Login Email', val: createdCredentials.loginEmail }, { label: 'Generated Password', val: createdCredentials.generatedPassword }].map(c => (
                             <div key={c.label}>
                                 <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">{c.label}</p>
-                                <p className="font-mono text-base font-black text-blue-700 bg-blue-50 px-4 py-2.5 rounded-xl border border-blue-100 break-all">{c.val}</p>
+                                <p className="font-mono text-base font-black text-[#173F8C] bg-[#1E4DA6]/5 px-4 py-2.5 rounded-xl border border-[#1E4DA6]/10 break-all">{c.val}</p>
                             </div>
                         ))}
                     </div>
-                    <button onClick={() => navigate('/dashboard/parents/all')} className="mt-8 px-6 py-3 bg-blue-700 text-white rounded-xl font-bold hover:bg-blue-800 transition-colors">Return to Parents List</button>
+                    <button onClick={() => navigate('/dashboard/parents/all')} className="mt-8 px-6 py-3 bg-[#173F8C] text-white rounded-xl font-bold hover:bg-[#122F69] transition-colors">Return to Parents List</button>
                 </div>
             </SettingsShell>
         );
@@ -146,7 +146,7 @@ export default function AddParent() {
 
     const fieldRow = (name: string, label: string, type = 'text', required = false) => (
         <div className="space-y-2">
-            <label className={labelCls}>{label} {required && <span className="text-blue-600">*</span>}</label>
+            <label className={labelCls}>{label} {required && <span className="text-[#1E4DA6]">*</span>}</label>
             <input type={type} name={name} value={(formData as Record<string, string>)[name]}
                 onChange={handleChange} className={inputCls} placeholder={`Enter ${label.toLowerCase()}`} />
         </div>
@@ -154,7 +154,7 @@ export default function AddParent() {
 
     return (
         <SettingsShell breadcrumbParent="Parents" breadcrumbCurrent="Add Parent" tabLabel="Add Parent" tabIcon={<Users className="h-3.5 w-3.5" />}>
-            <Link to="/dashboard/parents/all" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600 mb-6 transition-colors">
+            <Link to="/dashboard/parents/all" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[#1E4DA6] mb-6 transition-colors">
                 <ArrowLeft className="h-4 w-4" /> Back to All Parents
             </Link>
             <div className="mb-6">
@@ -168,7 +168,7 @@ export default function AddParent() {
                     {selectedStudents.length > 0 && (
                         <div className="flex flex-wrap gap-2 mb-4">
                             {selectedStudents.map(s => (
-                                <span key={s.id} className="inline-flex items-center gap-1.5 bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1.5 rounded-full">
+                                <span key={s.id} className="inline-flex items-center gap-1.5 bg-[#1E4DA6]/10 text-[#173F8C] text-xs font-bold px-3 py-1.5 rounded-full">
                                     {s.name} ({s.classLevel})
                                     <button type="button" onClick={() => removeStudent(s.id)} className="hover:text-red-500 transition-colors ml-1"><X className="h-3 w-3" /></button>
                                 </span>
@@ -249,7 +249,7 @@ export default function AddParent() {
                 <div className="flex items-center justify-end gap-3 pt-2">
                     <button type="button" onClick={() => navigate('/dashboard/parents/all')} className={cn('px-5 py-2.5 text-sm font-bold text-slate-600 bg-white hover:bg-slate-50 rounded-xl border border-slate-200 transition-colors')}>Cancel</button>
                     <button type="submit" disabled={isSubmitting}
-                        className="px-5 py-2.5 text-sm font-bold text-white bg-blue-700 hover:bg-blue-800 rounded-xl transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                        className="px-5 py-2.5 text-sm font-bold text-white bg-[#173F8C] hover:bg-[#122F69] rounded-xl transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
                         {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
                         {isSubmitting ? 'Saving...' : isEditMode ? 'Update Parent' : 'Save Parent'}
                     </button>

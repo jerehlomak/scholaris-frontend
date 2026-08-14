@@ -10,7 +10,7 @@ export default function StudentMessaging() {
                     <h1 className="text-2xl font-bold text-slate-900">Chat & Messaging</h1>
                     <div className="flex items-center text-xs text-slate-400 gap-1 mt-1">
                         <HomeIcon size={12} />
-                        <Link to="/student" className="hover:text-blue-600 transition-colors">Home</Link>
+                        <Link to="/student" className="hover:text-[#1E4DA6] transition-colors">Home</Link>
                         <ChevronRight size={12} className="opacity-50" />
                         <span>Messaging</span>
                     </div>

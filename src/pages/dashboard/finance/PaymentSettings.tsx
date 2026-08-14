@@ -262,29 +262,28 @@ export default function PaymentSettings() {
     const currentOrigin = typeof window !== 'undefined' ? window.location.origin : (import.meta.env.VITE_API_BASE_URL || '');
 
     if (loading) return (
-        <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 flex items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <div className="fd-root min-h-screen bg-[#FBF9F5] flex items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
         </div>
     );
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root,.fd-root *{font-family:'Plus Jakarta Sans',sans-serif!important} .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="fd-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-6xl space-y-6">
 
                     {/* Breadcrumb */}
                     <div className="flex items-center gap-1.5">
                         <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Payment Settings (Phase 13)</span>
+                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Payment Settings (Phase 13)</span>
                     </div>
 
                     {/* Header */}
                     <div className="flex flex-col md:flex-row items-start justify-between gap-4">
                         <div className="flex items-center gap-4">
-                            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-600 shadow-lg shadow-indigo-200">
+                            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-indigo-600 shadow-lg shadow-indigo-200">
                                 <Settings className="h-7 w-7 text-white" />
                             </div>
                             <div>
@@ -295,7 +294,7 @@ export default function PaymentSettings() {
                         <button
                             onClick={handleSaveSettings}
                             disabled={saving}
-                            className="flex items-center gap-2 rounded-xl bg-blue-700 px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-200 transition-all hover:bg-blue-800 hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-60"
+                            className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#1E4DA6]/20 transition-all hover:bg-[#122F69] hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-60"
                         >
                             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
                             Save All Settings
@@ -308,7 +307,7 @@ export default function PaymentSettings() {
                             onClick={() => setActiveTab('gateways')}
                             className={`flex shrink-0 items-center gap-2 whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-lg transition-all ${
                                 activeTab === 'gateways'
-                                    ? 'bg-blue-600 text-white shadow-sm'
+                                    ? 'bg-[#1E4DA6] text-white shadow-sm'
                                     : 'text-slate-600 hover:bg-slate-100'
                             }`}
                         >
@@ -319,7 +318,7 @@ export default function PaymentSettings() {
                             onClick={() => setActiveTab('accounts')}
                             className={`flex shrink-0 items-center gap-2 whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-lg transition-all ${
                                 activeTab === 'accounts'
-                                    ? 'bg-blue-600 text-white shadow-sm'
+                                    ? 'bg-[#1E4DA6] text-white shadow-sm'
                                     : 'text-slate-600 hover:bg-slate-100'
                             }`}
                         >
@@ -330,7 +329,7 @@ export default function PaymentSettings() {
                             onClick={() => setActiveTab('rules')}
                             className={`flex shrink-0 items-center gap-2 whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-lg transition-all ${
                                 activeTab === 'rules'
-                                    ? 'bg-blue-600 text-white shadow-sm'
+                                    ? 'bg-[#1E4DA6] text-white shadow-sm'
                                     : 'text-slate-600 hover:bg-slate-100'
                             }`}
                         >
@@ -342,7 +341,7 @@ export default function PaymentSettings() {
                     {activeTab === 'gateways' && (
                         <div className="space-y-6">
                             {/* Active Gateway Selection */}
-                            <Card className="border-blue-100 bg-gradient-to-r from-blue-50/50 via-indigo-50/30 to-slate-50 shadow-sm">
+                            <Card className="border-[#1E4DA6]/10 bg-gradient-to-r from-[#1E4DA6]/50 via-indigo-50/30 to-slate-50 shadow-sm">
                                 <CardContent className="p-6">
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                                         <div>
@@ -365,14 +364,14 @@ export default function PaymentSettings() {
                                                         onClick={() => setSettings(s => ({ ...s, activeGateway: gw.id }))}
                                                         className={`relative flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all ${
                                                             isSelected
-                                                                ? 'border-blue-600 bg-white ring-2 ring-blue-500/20 shadow-md'
+                                                                ? 'border-[#1E4DA6] bg-white ring-2 ring-[#1E4DA6]/20 shadow-md'
                                                                 : 'border-slate-200 bg-white/70 hover:bg-white'
                                                         }`}
                                                     >
                                                         <span className="text-xs font-extrabold text-slate-800">{gw.label}</span>
                                                         <span className="text-[10px] font-medium text-slate-400 mt-0.5">{gw.tag}</span>
                                                         {isSelected && (
-                                                            <div className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-blue-600 flex items-center justify-center text-white shadow">
+                                                            <div className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-[#1E4DA6] flex items-center justify-center text-white shadow">
                                                                 <Check className="h-3 w-3" />
                                                             </div>
                                                         )}
@@ -663,15 +662,15 @@ export default function PaymentSettings() {
 
                             {/* ─── MONNIFY CONFIG ────────────────────────────────────────── */}
                             <Card className="border-slate-200 shadow-sm overflow-hidden">
-                                <div className="flex items-center justify-between bg-gradient-to-r from-blue-600/10 to-indigo-600/10 px-6 py-4 border-b border-slate-100">
+                                <div className="flex items-center justify-between bg-gradient-to-r from-[#1E4DA6]/10 to-indigo-600/10 px-6 py-4 border-b border-slate-100">
                                     <div className="flex items-center gap-3">
-                                        <div className="h-9 w-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-sm shadow">
+                                        <div className="h-9 w-9 rounded-xl bg-[#1E4DA6] text-white flex items-center justify-center font-black text-sm shadow">
                                             MNF
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-2">
                                                 <h2 className="font-bold text-slate-900">Monnify</h2>
-                                                <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                                                <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full bg-[#1E4DA6]/10 text-[#122F69] border border-[#1E4DA6]/20">
                                                     Dedicated Virtual Accounts
                                                 </span>
                                             </div>
@@ -746,18 +745,18 @@ export default function PaymentSettings() {
                                     </div>
 
                                     {/* Webhook details & tester */}
-                                    <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4 space-y-3">
+                                    <div className="rounded-xl border border-[#1E4DA6]/20 bg-[#1E4DA6]/8 p-4 space-y-3">
                                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                             <div>
-                                                <p className="text-xs font-bold text-blue-900">Monnify Webhook URL</p>
-                                                <p className="mono text-[11px] text-blue-700 break-all">{currentOrigin}/api/v1/webhooks/monnify</p>
+                                                <p className="text-xs font-bold text-[#0E2450]">Monnify Webhook URL</p>
+                                                <p className="mono text-[11px] text-[#173F8C] break-all">{currentOrigin}/api/v1/webhooks/monnify</p>
                                             </div>
                                             <Button
                                                 type="button"
                                                 variant="outline"
                                                 size="sm"
                                                 onClick={() => copyToClipboard(`${currentOrigin}/api/v1/webhooks/monnify`, 'mnf-wh')}
-                                                className="border-blue-300 text-blue-800 hover:bg-blue-100 text-xs shrink-0"
+                                                className="border-[#1E4DA6]/35 text-[#122F69] hover:bg-[#1E4DA6]/10 text-xs shrink-0"
                                             >
                                                 {copiedUrl === 'mnf-wh' ? <Check className="h-3.5 w-3.5 mr-1" /> : <Copy className="h-3.5 w-3.5 mr-1" />}
                                                 Copy Webhook URL
@@ -771,7 +770,7 @@ export default function PaymentSettings() {
                                             variant="outline"
                                             onClick={() => handleTestGateway('MONNIFY')}
                                             disabled={testingGateway === 'MONNIFY'}
-                                            className="text-xs font-bold text-blue-800 border-blue-300 hover:bg-blue-50"
+                                            className="text-xs font-bold text-[#122F69] border-[#1E4DA6]/35 hover:bg-[#1E4DA6]/5"
                                         >
                                             {testingGateway === 'MONNIFY' ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : <Zap className="h-3.5 w-3.5 mr-1" />}
                                             Test Monnify Connection
@@ -843,14 +842,14 @@ export default function PaymentSettings() {
                                         <div>
                                             <Label className="text-xs">Payment Instructions for Parents</Label>
                                             <textarea
-                                                className="w-full h-20 rounded-md border border-input bg-background px-3 py-2 text-xs resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                className="w-full h-20 rounded-md border border-input bg-background px-3 py-2 text-xs resize-none focus:outline-none focus:ring-2 focus:ring-[#1E4DA6]"
                                                 placeholder="Specify narration guidelines (e.g. 'Use Student Full Name as transfer remark') and proof upload instructions."
                                                 value={newAccount.displayInstructions}
                                                 onChange={e => setNewAccount(s => ({ ...s, displayInstructions: e.target.value }))}
                                             />
                                         </div>
                                         <div className="flex gap-2">
-                                            <Button onClick={handleAddAccount} className="bg-blue-600 hover:bg-blue-700 text-xs">Save Account</Button>
+                                            <Button onClick={handleAddAccount} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-xs">Save Account</Button>
                                             <Button variant="outline" onClick={() => setAddingAccount(false)} className="text-xs">Cancel</Button>
                                         </div>
                                     </div>
@@ -896,7 +895,7 @@ export default function PaymentSettings() {
                     )}
 
                     <div className="flex justify-end">
-                        <Button onClick={handleSaveSettings} disabled={saving} className="bg-blue-700 hover:bg-blue-800 shadow-md shadow-blue-200">
+                        <Button onClick={handleSaveSettings} disabled={saving} className="bg-[#173F8C] hover:bg-[#122F69] shadow-md shadow-[#1E4DA6]/20">
                             {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Save All Payment Settings
                         </Button>

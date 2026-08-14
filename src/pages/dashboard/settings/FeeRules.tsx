@@ -117,9 +117,9 @@ export function FeeRules() {
         }
     };
 
-    if (loading) return <div className="flex justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-blue-500" /></div>;
+    if (loading) return <div className="flex justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>;
 
-    const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100';
+    const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10';
 
     return (
         <SettingsShell breadcrumbParent="Finance" breadcrumbCurrent="Custom Fee Rules" tabLabel="Special Fees & Discounts" tabIcon={<Coins className="h-3.5 w-3.5" />}>
@@ -143,7 +143,7 @@ export function FeeRules() {
                             <p className="text-sm text-slate-500">
                                 Applies to: <span className="font-semibold text-slate-700">{CONDITION_LABELS[r.conditionType] || r.conditionType} {r.conditionValue && `(${r.conditionValue})`}</span> 
                                 {' '} on {' '}
-                                <span className="font-semibold text-blue-600">{r.targetFeeId ? (fees.find(f => f.id === r.targetFeeId)?.name || 'Unknown Fee') : 'Invoice Total'}</span>
+                                <span className="font-semibold text-[#1E4DA6]">{r.targetFeeId ? (fees.find(f => f.id === r.targetFeeId)?.name || 'Unknown Fee') : 'Invoice Total'}</span>
                             </p>
                             <p className="font-mono text-xs text-slate-400 mt-1">
                                 Action: {ACTION_LABELS[r.actionType]} of {r.actionValue}
@@ -153,7 +153,7 @@ export function FeeRules() {
                             <button onClick={() => {
                                 setForm({ ...r, isNew: false });
                                 setShowForm(true);
-                            }} className="text-sm font-semibold text-blue-600 hover:text-blue-800 px-3 py-1">Edit</button>
+                            }} className="text-sm font-semibold text-[#1E4DA6] hover:text-[#122F69] px-3 py-1">Edit</button>
                             <button onClick={() => handleDelete(r.id, r.name)} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500">
                                 <Trash2 className="h-4 w-4" />
                             </button>
@@ -166,14 +166,14 @@ export function FeeRules() {
                 <button onClick={() => {
                     setForm({ isNew: true, name: '', targetFeeId: '', conditionType: 'ALL', conditionValue: '', actionType: 'SURCHARGE_FLAT', actionValue: 0, isActive: true });
                     setShowForm(true);
-                }} className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-blue-200 py-4 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors">
+                }} className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-[#1E4DA6]/20 py-4 text-sm font-semibold text-[#1E4DA6] hover:bg-[#1E4DA6]/5 transition-colors">
                     <Plus className="h-4 w-4" /> Create New Rule
                 </button>
             )}
 
             {showForm && (
-                <form onSubmit={handleSaveRule} className="rounded-2xl border border-blue-100 bg-blue-50/30 p-6 space-y-5">
-                    <div className="flex justify-between items-center mb-2 border-b border-blue-100 pb-2">
+                <form onSubmit={handleSaveRule} className="rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-6 space-y-5">
+                    <div className="flex justify-between items-center mb-2 border-b border-[#1E4DA6]/10 pb-2">
                         <h3 className="font-bold text-slate-800">{form.isNew ? 'Create New Rule' : 'Edit Rule'}</h3>
                         <button type="button" onClick={() => setShowForm(false)} className="text-xs font-semibold text-slate-500 hover:text-slate-800">Cancel</button>
                     </div>

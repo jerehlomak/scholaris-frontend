@@ -13,7 +13,7 @@ export default function PaymentCancel() {
             <p className="text-gray-500 mb-8">
                 Your payment process was cancelled and no charges were made. You can attempt the payment again from your fees dashboard.
             </p>
-            <button onClick={() => navigate('/parent/fees')} className="bg-[#0036a1] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#00287a] transition-all">
+            <button onClick={() => navigate('/parent/fees')} className="bg-[#1E4DA6] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#00287a] transition-all">
                 Return to Fees
             </button>
         </div>

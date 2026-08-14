@@ -60,7 +60,7 @@ export function GroupEditorModal({ isOpen, onClose, onSave, initialGroup }: Grou
                 </div>
                 <DialogFooter>
                     <Button variant="outline" onClick={onClose}>Cancel</Button>
-                    <Button onClick={handleSave} className="bg-[#1a2fa0] hover:bg-[#13227a]">Save</Button>
+                    <Button onClick={handleSave} className="bg-[#1E4DA6] hover:bg-[#13227a]">Save</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

@@ -60,7 +60,7 @@ export function PayslipDocument({
             <Button
               onClick={handlePrint}
               size="sm"
-              className="h-8 gap-1.5 rounded-lg bg-indigo-600 px-3 text-xs font-semibold text-white shadow-sm hover:bg-indigo-700 active:scale-95"
+              className="h-8 gap-1.5 rounded-lg bg-[#0B1F4E] px-3 text-xs font-semibold text-white shadow-sm hover:bg-[#122B5C] active:scale-95"
             >
               <Printer className="h-3.5 w-3.5" />
               Print Payslip
@@ -75,7 +75,7 @@ export function PayslipDocument({
         className="mx-auto w-full max-w-[780px] bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-xl print:m-0 print:w-full print:max-w-none print:border-none print:shadow-none print:p-4 text-slate-800"
       >
         {/* Header */}
-        <div className="flex items-start justify-between border-b-2 border-indigo-600 pb-5 mb-6 gap-4">
+        <div className="flex items-start justify-between border-b-2 border-[#0B1F4E] pb-5 mb-6 gap-4">
           <div className="flex items-center gap-4">
             {payslip.school.logoUrl ? (
               <img
@@ -84,7 +84,7 @@ export function PayslipDocument({
                 className="h-16 w-16 object-contain rounded-lg border border-slate-100 p-1"
               />
             ) : (
-              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-700">
+              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#0B1F4E]/5 border border-[#0B1F4E]/15 text-[#0B1F4E]">
                 <Building2 className="h-7 w-7" />
               </div>
             )}
@@ -102,7 +102,7 @@ export function PayslipDocument({
           </div>
 
           <div className="text-right">
-            <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-extrabold uppercase tracking-wider border border-indigo-100">
+            <span className="inline-block px-3 py-1 bg-[#FFC72C] text-[#0B1F4E] rounded-lg text-xs font-extrabold uppercase tracking-wider border border-[#F5B800]">
               PAYSLIP
             </span>
             <p className="text-base font-extrabold text-slate-900 mt-1.5">{payslip.period.label}</p>
@@ -120,7 +120,7 @@ export function PayslipDocument({
         </div>
 
         {/* Staff Information Grid */}
-        <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100 mb-6">
+        <div className="bg-[#FDF6E3]/50 rounded-xl p-4 border border-[#F5B800]/20 mb-6">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-4 text-xs">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
@@ -132,7 +132,7 @@ export function PayslipDocument({
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
                 Employee ID
               </span>
-              <span className="font-mono font-bold text-indigo-700">
+              <span className="font-mono font-bold text-[#0B1F4E]">
                 {payslip.staff.employeeId || 'N/A'}
               </span>
             </div>
@@ -230,12 +230,12 @@ export function PayslipDocument({
         </div>
 
         {/* Net Pay Banner */}
-        <div className="bg-gradient-to-r from-indigo-900 via-blue-900 to-indigo-950 text-white rounded-xl p-5 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
+        <div className="bg-gradient-to-r from-[#0B1F4E] to-[#122B5C] text-white rounded-xl p-5 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md border-b-2 border-[#F5B800]">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-widest text-indigo-200 block mb-0.5">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-[#FFC72C] block mb-0.5">
               Total Net Take-Home Pay
             </span>
-            <p className="text-xs text-indigo-300">
+            <p className="text-xs text-slate-300">
               Transferred directly to staff bank account
             </p>
           </div>
@@ -279,7 +279,7 @@ export function PayslipDocument({
                 This is a computer-generated document and is valid with authorized digital verification.
               </p>
               <p className="text-[10px] text-slate-400 mt-1">
-                Generated via Skooly Payroll Management System.
+                Generated via {payslip.school.name || 'School'}'s Payroll Management System.
               </p>
             </div>
             <div className="flex flex-col items-end justify-end">

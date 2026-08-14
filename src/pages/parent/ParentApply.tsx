@@ -136,7 +136,7 @@ export default function ParentApply() {
                 </div>
             ) : step === 1 ? (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 text-center max-w-md mx-auto mt-12">
-                    <ClipboardList className="h-16 w-16 text-blue-600 mx-auto mb-4" />
+                    <ClipboardList className="h-16 w-16 text-[#1E4DA6] mx-auto mb-4" />
                     <h2 className="text-xl font-bold text-slate-800 mb-2">Enter Application PIN</h2>
                     <p className="text-sm text-slate-500 mb-6">You need a valid admission PIN to start the application process.</p>
                     
@@ -149,10 +149,10 @@ export default function ParentApply() {
                                 value={pinCode}
                                 onChange={(e) => setPinCode(e.target.value.toUpperCase())}
                                 placeholder="e.g. 1A2B-3C4D-5E6F"
-                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm font-mono tracking-widest uppercase text-center text-lg"
+                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm font-mono tracking-widest uppercase text-center text-lg"
                             />
                         </div>
-                        <Button type="submit" disabled={isSubmitting || !pinCode} className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-sm font-bold transition-all">
+                        <Button type="submit" disabled={isSubmitting || !pinCode} className="w-full bg-[#1E4DA6] hover:bg-[#173F8C] text-white py-3 rounded-xl text-sm font-bold transition-all">
                             {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Validating...</> : 'Validate PIN & Continue'}
                         </Button>
                     </form>
@@ -195,7 +195,7 @@ export default function ParentApply() {
                                                     required={field.isRequired}
                                                     value={formData[field.id] || ''}
                                                     onChange={handleDynamicFormChange}
-                                                    className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm bg-white"
+                                                    className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm bg-white"
                                                 >
                                                     <option value="">Select option</option>
                                                     {field.options && field.options.length > 0 ? (
@@ -231,14 +231,14 @@ export default function ParentApply() {
                                                     value={formData[field.id] || ''}
                                                     onChange={handleDynamicFormChange}
                                                     rows={3}
-                                                    className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
+                                                    className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                                 />
                                             ) : field.type === 'Image' ? (
-                                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-blue-600 transition-colors cursor-pointer bg-slate-50/50">
+                                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-[#1E4DA6] transition-colors cursor-pointer bg-slate-50/50">
                                                     <div className="space-y-1 text-center">
                                                         <UploadCloud className="mx-auto h-8 w-8 text-slate-400" />
                                                         <div className="flex text-sm text-slate-600 justify-center">
-                                                            <label className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-700">
+                                                            <label className="relative cursor-pointer rounded-md font-medium text-[#1E4DA6] hover:text-[#173F8C]">
                                                                 <span>Upload a file</span>
                                                                 <input type="file" name={field.id} required={field.isRequired} className="sr-only" accept="image/*" onChange={handleDynamicFileChange} />
                                                             </label>
@@ -255,7 +255,7 @@ export default function ParentApply() {
                                                     required={field.isRequired}
                                                     value={formData[field.id] || ''}
                                                     onChange={handleDynamicFormChange}
-                                                    className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
+                                                    className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                                 />
                                             )}
                                         </div>
@@ -270,7 +270,7 @@ export default function ParentApply() {
                                     Cancel
                                 </Button>
                             )}
-                            <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8">
+                            <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto bg-[#1E4DA6] hover:bg-[#173F8C] text-white px-8">
                                 {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</> : "Submit Application"}
                             </Button>
                         </div>

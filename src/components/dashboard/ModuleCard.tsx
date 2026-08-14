@@ -17,12 +17,12 @@ export function ModuleCard({ title, value, subtitle, icon: Icon, colorTheme = 'p
     const getThemeColors = () => {
         switch (colorTheme) {
             case 'accent': return { from: 'from-emerald-400', to: 'to-emerald-600', text: 'text-emerald-600', bg: 'bg-emerald-50' };
-            case 'purple': return { from: 'from-purple-400', to: 'to-purple-600', text: 'text-purple-600', bg: 'bg-purple-50' };
+            case 'purple': return { from: 'from-[#1E4DA6]/60', to: 'to-[#1E4DA6]', text: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5' };
             case 'orange': return { from: 'from-orange-400', to: 'to-orange-600', text: 'text-orange-600', bg: 'bg-orange-50' };
             case 'teal': return { from: 'from-teal-400', to: 'to-teal-600', text: 'text-teal-600', bg: 'bg-teal-50' };
-            case 'blue': return { from: 'from-blue-400', to: 'to-blue-600', text: 'text-blue-600', bg: 'bg-blue-50' };
+            case 'blue': return { from: 'from-[#1E4DA6]/60', to: 'to-[#1E4DA6]', text: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5' };
             case 'primary':
-            default: return { from: 'from-[#0036a1]', to: 'to-blue-600', text: 'text-[#0036a1]', bg: 'bg-blue-50' };
+            default: return { from: 'from-[#1E4DA6]', to: 'to-[#1E4DA6]', text: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5' };
         }
     };
 
@@ -37,7 +37,7 @@ export function ModuleCard({ title, value, subtitle, icon: Icon, colorTheme = 'p
             whileHover={{ y: -4, scale: 1.02 }}
             className="h-full"
         >
-            <Card className="relative overflow-hidden bg-white/90 backdrop-blur-xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 rounded-2xl p-6 h-full flex flex-col justify-between group cursor-pointer">
+            <Card className="relative overflow-hidden bg-white/90 border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 rounded-2xl p-6 h-full flex flex-col justify-between group cursor-pointer">
 
                 {/* Decorative background gradient orb */}
                 <div className={cn(

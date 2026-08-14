@@ -4,7 +4,7 @@ import axios from 'axios';
 import {
     Menu, Settings,
     LayoutDashboard, CreditCard, BookOpen,
-    FileText, Home as HomeIcon, Video, MessageSquare, LayoutTemplate,
+    FileText, Home as HomeIcon, MessageSquare, LayoutTemplate,
     LogOut, QrCode, GraduationCap, X, Calendar
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
@@ -22,7 +22,6 @@ const NAV_GROUPS = [
             { title: 'Courses & Subjects', path: '/student/course', icon: BookOpen },
             { title: 'LMS Hub', path: '/student/lms', icon: LayoutTemplate },
             { title: 'CBT Assessments', path: '/student/cbt', icon: FileText },
-            { title: 'Live Class', path: '/student/live-class', icon: Video },
             { title: 'Results', path: '/student/result', icon: GraduationCap },
             { title: 'ID & Attendance', path: '/student/attendance', icon: QrCode, exact: true },
         ]
@@ -43,7 +42,6 @@ const ROUTE_TITLES: Record<string, string> = {
     '/student/course': 'Courses & Subjects',
     '/student/lms': 'LMS Hub',
     '/student/cbt': 'CBT Assessments',
-    '/student/live-class': 'Live Class',
     '/student/result': 'Results & Transcripts',
     '/student/attendance': 'ID & Attendance',
     '/student/payment': 'Fee Payments',
@@ -68,7 +66,7 @@ function NavItem({ item, isActive }: { item: typeof NAV_GROUPS[0]['items'][0]; i
             className={cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group',
                 isActive
-                    ? 'bg-blue-50 text-blue-700'
+                    ? 'bg-[#1E4DA6]/5 text-[#173F8C]'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             )}
         >
@@ -76,12 +74,12 @@ function NavItem({ item, isActive }: { item: typeof NAV_GROUPS[0]['items'][0]; i
                 size={16}
                 className={cn(
                     'shrink-0 transition-colors',
-                    isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'
+                    isActive ? 'text-[#1E4DA6]' : 'text-slate-400 group-hover:text-slate-600'
                 )}
             />
             <span className="truncate">{item.title}</span>
             {isActive && (
-                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#1E4DA6] shrink-0" />
             )}
         </Link>
     );
@@ -135,7 +133,7 @@ function Sidebar({
                 <div className="p-4 shrink-0">
                     <div className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100 rounded-xl">
                         <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 shadow-sm flex items-center justify-center shrink-0">
-                            <GraduationCap className="w-5 h-5 text-blue-600" />
+                            <GraduationCap className="w-5 h-5 text-[#1E4DA6]" />
                         </div>
                         <div className="min-w-0 flex-1">
                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Connected School</p>

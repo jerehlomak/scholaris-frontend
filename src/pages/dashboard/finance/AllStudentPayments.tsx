@@ -37,12 +37,12 @@ const STATUS_CFG: Record<PaymentStatus, { label: string; textColor: string; bgCo
     unpaid: { label: 'Unpaid', textColor: 'text-red-600', bgColor: 'bg-red-50', borderColor: 'border-red-100', icon: <AlertCircle className="h-3.5 w-3.5" /> },
 };
 
-const AVATAR_COLORS = ['bg-blue-500', 'bg-purple-500', 'bg-pink-500', 'bg-orange-500', 'bg-teal-500', 'bg-indigo-500'];
+const AVATAR_COLORS = ['bg-[#1E4DA6]', 'bg-[#1E4DA6]', 'bg-pink-500', 'bg-orange-500', 'bg-teal-500', 'bg-indigo-500'];
 const avatarColor = (name: string) => AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];
 
 function fmt(n: number) { return '₦' + (n || 0).toLocaleString('en-NG'); }
 
-const fieldCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 shadow-sm transition-all outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 placeholder:text-slate-400';
+const fieldCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 shadow-sm transition-all outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 placeholder:text-slate-400';
 
 // ─── Progress bar ─────────────────────────────────────────────────────────────
 function ProgressBar({ value, max, className }: { value: number; max: number; className?: string }) {
@@ -53,7 +53,7 @@ function ProgressBar({ value, max, className }: { value: number; max: number; cl
                 initial={{ width: 0 }}
                 animate={{ width: `${pct}%` }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-                className={cn('h-full rounded-full', pct === 100 ? 'bg-emerald-500' : 'bg-blue-500')}
+                className={cn('h-full rounded-full', pct === 100 ? 'bg-emerald-500' : 'bg-[#1E4DA6]')}
             />
         </div>
     );
@@ -161,7 +161,7 @@ function CollectModal({ student, onClose, onSave }: CollectModalProps) {
             <div className="flex shrink-0 gap-2 border-t border-slate-100 bg-slate-50/50 px-6 py-4">
                 <Button variant="outline" onClick={onClose} className="flex-1 rounded-xl text-xs font-semibold">Cancel</Button>
                 <Button onClick={handleSave} disabled={amount <= 0 || processing}
-                    className="flex-1 gap-2 rounded-xl bg-blue-700 text-xs font-bold text-white shadow-md shadow-blue-200 hover:bg-blue-800 disabled:opacity-50">
+                    className="flex-1 gap-2 rounded-xl bg-[#173F8C] text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#122F69] disabled:opacity-50">
                     {processing && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                     {processing ? 'Processing…' : `Collect ${fmt(amount)}`}
                 </Button>
@@ -263,9 +263,9 @@ function GenerateModal({ onClose, onSave, termsList, sessionsList }: { onClose: 
                         {TARGET_MODES.map(m => (
                             <button key={m.value} onClick={() => setTargetMode(m.value)}
                                 className={cn('rounded-xl border-2 p-3 text-left transition-all',
-                                    targetMode === m.value ? 'border-blue-500 bg-blue-50/60 shadow-sm' : 'border-slate-100 hover:border-slate-200'
+                                    targetMode === m.value ? 'border-[#1E4DA6] bg-[#1E4DA6]/8 shadow-sm' : 'border-slate-100 hover:border-slate-200'
                                 )}>
-                                <p className={cn('text-xs font-bold', targetMode === m.value ? 'text-blue-700' : 'text-slate-800')}>{m.label}</p>
+                                <p className={cn('text-xs font-bold', targetMode === m.value ? 'text-[#173F8C]' : 'text-slate-800')}>{m.label}</p>
                                 <p className="mt-0.5 font-mono text-[10px] leading-tight text-slate-400">{m.desc}</p>
                             </button>
                         ))}
@@ -298,7 +298,7 @@ function GenerateModal({ onClose, onSave, termsList, sessionsList }: { onClose: 
                     </div>
                 )}
                 {targetMode === 'new_students' && (
-                    <div className="flex gap-2 rounded-xl border border-blue-100 bg-blue-50 p-3 text-xs text-blue-700">
+                    <div className="flex gap-2 rounded-xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/5 p-3 text-xs text-[#173F8C]">
                         <span className="shrink-0">ℹ️</span>
                         Fees will be assigned to all students whose enrollment date is within the last 30 days.
                     </div>
@@ -307,7 +307,7 @@ function GenerateModal({ onClose, onSave, termsList, sessionsList }: { onClose: 
                 <div>
                     <div className="mb-2 flex items-center justify-between">
                         <Label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Fee Items to Assign <span className="text-rose-500">*</span></Label>
-                        <button onClick={() => setSelectedFees(feeParticulars.map(f => f.id))} className="font-mono text-[10px] font-bold text-blue-600 hover:underline">Select All</button>
+                        <button onClick={() => setSelectedFees(feeParticulars.map(f => f.id))} className="font-mono text-[10px] font-bold text-[#1E4DA6] hover:underline">Select All</button>
                     </div>
                     {feeParticulars.length === 0 ? (
                         <div className="rounded-xl border-2 border-dashed border-slate-200 p-6 text-center text-sm text-slate-400">
@@ -318,10 +318,10 @@ function GenerateModal({ onClose, onSave, termsList, sessionsList }: { onClose: 
                             {feeParticulars.map(fee => (
                                 <label key={fee.id} className={cn(
                                     'flex cursor-pointer items-center justify-between rounded-xl border-2 p-3 transition-all',
-                                    selectedFees.includes(fee.id) ? 'border-blue-400 bg-blue-50/60' : 'border-slate-100 hover:border-slate-200'
+                                    selectedFees.includes(fee.id) ? 'border-[#1E4DA6]/60 bg-[#1E4DA6]/8' : 'border-slate-100 hover:border-slate-200'
                                 )}>
                                     <div className="flex items-center gap-3">
-                                        <input type="checkbox" checked={selectedFees.includes(fee.id)} onChange={() => toggleFee(fee.id)} className="h-4 w-4 accent-blue-600" />
+                                        <input type="checkbox" checked={selectedFees.includes(fee.id)} onChange={() => toggleFee(fee.id)} className="h-4 w-4 accent-[#1E4DA6]" />
                                         <div>
                                             <span className="text-sm font-semibold text-slate-700">{fee.label}</span>
                                             {fee.isRequired && <span className="ml-2 rounded-full bg-red-50 px-1.5 py-0.5 font-mono text-[9px] font-bold text-red-600">Required</span>}
@@ -333,9 +333,9 @@ function GenerateModal({ onClose, onSave, termsList, sessionsList }: { onClose: 
                         </div>
                     )}
                     {selectedFees.length > 0 && (
-                        <div className="mt-2 flex items-center justify-between rounded-xl border border-blue-100 bg-blue-50 px-4 py-2">
+                        <div className="mt-2 flex items-center justify-between rounded-xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/5 px-4 py-2">
                             <span className="font-mono text-xs text-slate-500">{selectedFees.length} item{selectedFees.length > 1 ? 's' : ''} selected</span>
-                            <span className="font-mono text-sm font-black text-blue-700">{fmt(totalSelected)}</span>
+                            <span className="font-mono text-sm font-black text-[#173F8C]">{fmt(totalSelected)}</span>
                         </div>
                     )}
                 </div>
@@ -343,7 +343,7 @@ function GenerateModal({ onClose, onSave, termsList, sessionsList }: { onClose: 
             <div className="flex shrink-0 gap-2 border-t border-slate-100 bg-slate-50/50 px-6 py-4">
                 <Button variant="outline" onClick={onClose} className="flex-1 rounded-xl text-xs font-semibold">Cancel</Button>
                 <Button onClick={handleSaveWrapper} disabled={processing}
-                    className="flex-1 gap-2 rounded-xl bg-blue-700 text-xs font-bold text-white shadow-md shadow-blue-200 hover:bg-blue-800 disabled:opacity-50">
+                    className="flex-1 gap-2 rounded-xl bg-[#173F8C] text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#122F69] disabled:opacity-50">
                     {processing && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                     {processing ? 'Assigning…' : 'Assign Fees'}
                 </Button>
@@ -518,7 +518,7 @@ export default function AllStudentPayments() {
     if (loading) return (
         <div className="flex min-h-[60vh] items-center justify-center">
             <div className="flex flex-col items-center gap-3">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
                 <span className="font-mono text-xs font-semibold uppercase tracking-widest text-slate-400">Loading fees…</span>
             </div>
         </div>
@@ -528,7 +528,6 @@ export default function AllStudentPayments() {
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');
-                .fees-root, .fees-root * { font-family: 'Plus Jakarta Sans', sans-serif !important; }
                 .fees-root .font-mono    { font-family: 'DM Mono', monospace !important; }
                 @keyframes fees-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
                 @keyframes fees-pulse { 0%{transform:scale(0.9);opacity:.4} 100%{transform:scale(1.5);opacity:0} }
@@ -536,26 +535,24 @@ export default function AllStudentPayments() {
                 .fees-pulse { animation: fees-pulse 2.4s ease-out infinite; }
             `}</style>
 
-            <div className="fees-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8 print:bg-white print:p-0">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.25] print:hidden"
-                    style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <div className="fees-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8 print:bg-white print:p-0">
 
                 <div className="relative z-10 mx-auto max-w-6xl">
                     {/* Breadcrumb */}
-                    <div className={cn('mb-6 flex items-center gap-1.5 transition-all duration-500 print:hidden', pageVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0')}>
+                    <div className={cn('mb-6 flex items-center gap-1.5 transition-all duration-500 print:hidden', pageVisible ? 'opacity-100' : '-translate-y-2 opacity-0')}>
                         <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-blue-600">All Student Payments</span>
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">All Student Payments</span>
                     </div>
 
                     {/* Main panel */}
-                    <div className={cn('overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl transition-all duration-500',
-                        pageVisible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0')}>
+                    <div className={cn('overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-all duration-500',
+                        pageVisible ? 'opacity-100' : 'translate-y-3 opacity-0')}>
                         {/* Tab bar */}
                         <div className="border-b border-slate-100 bg-slate-50/80 px-6 print:hidden">
-                            <div className="inline-flex items-center gap-2 border-b-2 border-blue-600 pb-3 pt-3.5">
-                                <DollarSign className="h-3.5 w-3.5 text-blue-600" />
-                                <span className="text-xs font-bold tracking-tight text-blue-600">Fee Collection</span>
+                            <div className="inline-flex items-center gap-2 border-b-2 border-[#1E4DA6] pb-3 pt-3.5">
+                                <DollarSign className="h-3.5 w-3.5 text-[#1E4DA6]" />
+                                <span className="text-xs font-bold tracking-tight text-[#1E4DA6]">Fee Collection</span>
                             </div>
                         </div>
 
@@ -563,21 +560,21 @@ export default function AllStudentPayments() {
                             {/* Hero + actions */}
                             <div className="mb-10 flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left sm:gap-6">
                                 <div className="fees-float relative mb-5 h-16 w-16 shrink-0 sm:mb-0">
-                                    <div className="fees-pulse absolute inset-0 rounded-2xl bg-blue-400/25" />
-                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 shadow-lg shadow-blue-200">
+                                    <div className="fees-pulse absolute inset-0 rounded-2xl bg-[#1E4DA6]/8" />
+                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-[#1E4DA6] shadow-lg shadow-[#1E4DA6]/20">
                                         <DollarSign className="h-7 w-7 text-white" />
                                     </div>
                                 </div>
                                 <div className="flex-1">
                                     <h2 className="flex items-center gap-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
                                         All Student Payments
-                                        {isFetching && <Loader2 className="h-5 w-5 animate-spin text-blue-600" />}
+                                        {isFetching && <Loader2 className="h-5 w-5 animate-spin text-[#1E4DA6]" />}
                                     </h2>
                                     <p className="mt-1 max-w-md text-sm leading-relaxed text-slate-500">Collect payments, generate invoices, send reminders and track outstanding balances.</p>
                                 </div>
                                 <div className="mt-4 flex flex-wrap gap-2 sm:mt-0 sm:self-start print:hidden">
                                     <Button variant="outline" onClick={() => setShowGenerate(true)}
-                                        className="h-9 gap-1.5 rounded-xl border-blue-200 text-xs font-bold text-blue-700 hover:bg-blue-50">
+                                        className="h-9 gap-1.5 rounded-xl border-[#1E4DA6]/20 text-xs font-bold text-[#173F8C] hover:bg-[#1E4DA6]/5">
                                         <Play className="h-3.5 w-3.5" /> Assign Fees
                                     </Button>
                                     <Button variant="outline" onClick={() => window.print()}
@@ -595,7 +592,7 @@ export default function AllStudentPayments() {
                                         value={search}
                                         onChange={e => setSearch(e.target.value)}
                                         placeholder="Search students…"
-                                        className="h-9 w-full rounded-xl border border-slate-200 bg-white pl-8 pr-3 font-mono text-xs font-semibold text-slate-700 shadow-sm placeholder:font-normal placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"
+                                        className="h-9 w-full rounded-xl border border-slate-200 bg-white pl-8 pr-3 font-mono text-xs font-semibold text-slate-700 shadow-sm placeholder:font-normal placeholder:text-slate-400 focus:border-[#1E4DA6]/60 focus:outline-none"
                                     />
                                 </div>
                                 <div className="flex flex-wrap gap-2 items-center">
@@ -603,16 +600,16 @@ export default function AllStudentPayments() {
                                         {(['all', 'paid', 'partial', 'unpaid'] as const).map(s => (
                                             <button key={s} onClick={() => setFilterStatus(s)}
                                                 className={cn('rounded-lg px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wide capitalize transition-all',
-                                                    filterStatus === s ? 'bg-white text-blue-700 shadow-sm ring-1 ring-slate-200' : 'text-slate-400 hover:text-slate-600')}>
+                                                    filterStatus === s ? 'bg-white text-[#173F8C] shadow-sm ring-1 ring-slate-200' : 'text-slate-400 hover:text-slate-600')}>
                                                 {s}
                                             </button>
                                         ))}
                                     </div>
                                     <Button variant="outline" size="sm" onClick={() => setShowFilters(!showFilters)}
-                                        className={cn("h-9 gap-2 rounded-xl border-slate-200 text-xs font-semibold hover:bg-slate-50 transition-all", showFilters ? 'bg-slate-100 text-blue-700 border-blue-200' : 'bg-white text-slate-700')}>
+                                        className={cn("h-9 gap-2 rounded-xl border-slate-200 text-xs font-semibold hover:bg-slate-50 transition-all", showFilters ? 'bg-slate-100 text-[#173F8C] border-[#1E4DA6]/20' : 'bg-white text-slate-700')}>
                                         <Filter className="h-4 w-4" /> Filters
                                         {(filterClass !== 'all' || filterTerm !== '' || filterYear !== '' || filterDispatched !== 'all') && (
-                                            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 font-mono text-[10px] font-bold text-white shadow-sm">
+                                            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1E4DA6] font-mono text-[10px] font-bold text-white shadow-sm">
                                                 {[filterClass !== 'all', filterTerm !== '', filterYear !== '', filterDispatched !== 'all'].filter(Boolean).length}
                                             </span>
                                         )}
@@ -640,14 +637,14 @@ export default function AllStudentPayments() {
                                             <div>
                                                 <Label className="mb-1.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Class</Label>
                                                 <select value={filterClass} onChange={e => setFilterClass(e.target.value)}
-                                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-xs font-semibold text-slate-700 shadow-sm focus:border-blue-400 focus:outline-none">
+                                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-xs font-semibold text-slate-700 shadow-sm focus:border-[#1E4DA6]/60 focus:outline-none">
                                                     {classes.map(c => <option key={c} value={c}>{c === 'all' ? 'All Classes' : c}</option>)}
                                                 </select>
                                             </div>
                                             <div>
                                                 <Label className="mb-1.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Academic Year</Label>
                                                 <select value={filterYear} onChange={e => { setFilterYear(e.target.value); setFilterTerm(''); }}
-                                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-xs font-semibold text-slate-700 shadow-sm focus:border-blue-400 focus:outline-none">
+                                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-xs font-semibold text-slate-700 shadow-sm focus:border-[#1E4DA6]/60 focus:outline-none">
                                                     <option value="">All Years</option>
                                                     {sessionsList.map(s => <option key={s.id} value={s.name}>{s.name}</option>)}
                                                 </select>
@@ -655,7 +652,7 @@ export default function AllStudentPayments() {
                                             <div>
                                                 <Label className="mb-1.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Term</Label>
                                                 <select value={filterTerm} onChange={e => setFilterTerm(e.target.value)} disabled={!filterYear}
-                                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-xs font-semibold text-slate-700 shadow-sm focus:border-blue-400 focus:outline-none disabled:opacity-50 disabled:bg-slate-50 disabled:cursor-not-allowed">
+                                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-xs font-semibold text-slate-700 shadow-sm focus:border-[#1E4DA6]/60 focus:outline-none disabled:opacity-50 disabled:bg-slate-50 disabled:cursor-not-allowed">
                                                     <option value="">{filterYear ? 'All Terms' : 'Select a Year First'}</option>
                                                     {availableTerms.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
                                                 </select>
@@ -663,7 +660,7 @@ export default function AllStudentPayments() {
                                             <div>
                                                 <Label className="mb-1.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Dispatch Status</Label>
                                                 <select value={filterDispatched} onChange={e => setFilterDispatched(e.target.value)}
-                                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-xs font-semibold text-slate-700 shadow-sm focus:border-blue-400 focus:outline-none">
+                                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-xs font-semibold text-slate-700 shadow-sm focus:border-[#1E4DA6]/60 focus:outline-none">
                                                     <option value="all">All Documents</option>
                                                     <option value="unsent">Unsent</option>
                                                     <option value="unprinted">Unprinted</option>
@@ -707,7 +704,7 @@ export default function AllStudentPayments() {
                                             className="flex w-full items-center gap-2 border-b border-slate-100 bg-slate-50/80 px-4 py-2.5 font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400"
                                         >
                                             {selectedStudentRows.length === displayed.length && displayed.length > 0
-                                                ? <CheckSquare className="h-3.5 w-3.5 text-blue-600" />
+                                                ? <CheckSquare className="h-3.5 w-3.5 text-[#1E4DA6]" />
                                                 : <Square className="h-3.5 w-3.5 text-slate-400" />}
                                             Select All
                                         </button>
@@ -730,7 +727,7 @@ export default function AllStudentPayments() {
                                                                 prev.includes(s.id) ? prev.filter(id => id !== s.id) : [...prev, s.id]
                                                             )} className="shrink-0">
                                                                 {selectedStudentRows.includes(s.id)
-                                                                    ? <CheckSquare className="h-4 w-4 text-blue-600" />
+                                                                    ? <CheckSquare className="h-4 w-4 text-[#1E4DA6]" />
                                                                     : <Square className="h-4 w-4 text-slate-300" />}
                                                             </button>
                                                             <div className={cn('flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white shadow-sm', s.avatarColor || avatarColor(s.name))}>
@@ -770,14 +767,14 @@ export default function AllStudentPayments() {
                                                                     <Bell className="h-2.5 w-2.5" /> DISPUTED
                                                                 </span>
                                                             )}
-                                                            {s.isSent && <span className="inline-flex items-center rounded-full bg-blue-100 px-1.5 py-0.5 text-[9px] font-bold text-blue-700">SENT</span>}
+                                                            {s.isSent && <span className="inline-flex items-center rounded-full bg-[#1E4DA6]/10 px-1.5 py-0.5 text-[9px] font-bold text-[#173F8C]">SENT</span>}
                                                             {s.isPrinted && <span className="inline-flex items-center rounded-full bg-slate-100 px-1.5 py-0.5 text-[9px] font-bold text-slate-600">PRINTED</span>}
                                                         </div>
                                                     )}
 
                                                     {s.status !== 'paid' && (
                                                         <Button size="sm" onClick={() => setCollecting(s)}
-                                                            className="mt-3 h-8 w-full gap-1.5 rounded-xl bg-blue-600 text-xs font-bold text-white shadow-sm shadow-blue-200 hover:bg-blue-700">
+                                                            className="mt-3 h-8 w-full gap-1.5 rounded-xl bg-[#1E4DA6] text-xs font-bold text-white shadow-sm shadow-[#1E4DA6]/20 hover:bg-[#173F8C]">
                                                             <Plus className="h-3 w-3" /> Collect
                                                         </Button>
                                                     )}
@@ -797,7 +794,7 @@ export default function AllStudentPayments() {
                                                             selectedStudentRows.length === displayed.length ? [] : displayed.map(s => s.id)
                                                         )}>
                                                             {selectedStudentRows.length === displayed.length && displayed.length > 0
-                                                                ? <CheckSquare className="h-4 w-4 text-blue-600 mx-auto" />
+                                                                ? <CheckSquare className="h-4 w-4 text-[#1E4DA6] mx-auto" />
                                                                 : <Square className="h-4 w-4 text-slate-400 mx-auto" />}
                                                         </button>
                                                     </th>
@@ -827,7 +824,7 @@ export default function AllStudentPayments() {
                                                                     prev.includes(s.id) ? prev.filter(id => id !== s.id) : [...prev, s.id]
                                                                 )}>
                                                                     {selectedStudentRows.includes(s.id)
-                                                                        ? <CheckSquare className="h-4 w-4 text-blue-600 mx-auto" />
+                                                                        ? <CheckSquare className="h-4 w-4 text-[#1E4DA6] mx-auto" />
                                                                         : <Square className="h-4 w-4 text-slate-300 mx-auto" />}
                                                                 </button>
                                                             </td>
@@ -857,7 +854,7 @@ export default function AllStudentPayments() {
                                                                             <Bell className="h-2.5 w-2.5" /> DISPUTED
                                                                         </span>
                                                                     )}
-                                                                    {s.isSent && <span className="inline-flex w-fit items-center rounded-full bg-blue-100 px-1.5 py-0.5 text-[9px] font-bold text-blue-700">SENT</span>}
+                                                                    {s.isSent && <span className="inline-flex w-fit items-center rounded-full bg-[#1E4DA6]/10 px-1.5 py-0.5 text-[9px] font-bold text-[#173F8C]">SENT</span>}
                                                                     {s.isPrinted && <span className="inline-flex w-fit items-center rounded-full bg-slate-100 px-1.5 py-0.5 text-[9px] font-bold text-slate-600">PRINTED</span>}
                                                                 </div>
                                                             </td>
@@ -865,7 +862,7 @@ export default function AllStudentPayments() {
                                                             <td className="px-5 py-4 print:hidden">
                                                                 {s.status !== 'paid' && (
                                                                     <Button size="sm" onClick={() => setCollecting(s)}
-                                                                        className="h-8 gap-1.5 rounded-xl bg-blue-600 text-xs font-bold text-white shadow-sm shadow-blue-200 hover:bg-blue-700">
+                                                                        className="h-8 gap-1.5 rounded-xl bg-[#1E4DA6] text-xs font-bold text-white shadow-sm shadow-[#1E4DA6]/20 hover:bg-[#173F8C]">
                                                                         <Plus className="h-3 w-3" /> Collect
                                                                     </Button>
                                                                 )}
@@ -936,12 +933,12 @@ export default function AllStudentPayments() {
                     <Modal onClose={() => setIsMessageModalOpen(false)}>
                         <ModalHeader title="Send Reminder" subtitle={`Send a custom reminder to ${selectedStudentRows.length} selected student(s).`} onClose={() => setIsMessageModalOpen(false)} />
                         <div className="space-y-4 overflow-y-auto p-5">
-                            <div className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-xs text-blue-700">
-                                <strong>Tip:</strong> Use <code className="bg-blue-100 px-1 rounded font-mono">{'{PAYMENT_LINK}'}</code> in your message body to auto-insert a payment link for each student's invoice.
+                            <div className="rounded-xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/5 px-4 py-3 text-xs text-[#173F8C]">
+                                <strong>Tip:</strong> Use <code className="bg-[#1E4DA6]/10 px-1 rounded font-mono">{'{PAYMENT_LINK}'}</code> in your message body to auto-insert a payment link for each student's invoice.
                             </div>
                             <div className="space-y-1.5">
                                 <Label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Channel</Label>
-                                <select className="flex h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none"
+                                <select className="flex h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-[#1E4DA6] focus:outline-none"
                                     value={customMessageChannel} onChange={e => setCustomMessageChannel(e.target.value)}>
                                     <option value="sms">SMS</option>
                                     <option value="whatsapp">WhatsApp</option>
@@ -954,7 +951,7 @@ export default function AllStudentPayments() {
                             <div className="space-y-1.5">
                                 <Label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Message</Label>
                                 <textarea value={customMessageBody} onChange={e => setCustomMessageBody(e.target.value)}
-                                    className="flex min-h-[100px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none"
+                                    className="flex min-h-[100px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-[#1E4DA6] focus:outline-none"
                                     placeholder="Dear Parent, this is a reminder to pay fees. Click here: {PAYMENT_LINK}" />
                             </div>
                         </div>

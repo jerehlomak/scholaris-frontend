@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '../../../components/ui/button';
 import { Printer, Loader2, Download } from 'lucide-react';
 import axios from 'axios';
+import { mobileSafePrint } from '../../../lib/printUtils';
 
 interface TranscriptSheetProps {
     studentId: string;
@@ -29,33 +30,15 @@ export default function TranscriptSheet({ studentId, API, onClose }: TranscriptS
     }, [studentId, API]);
 
     const handlePrint = () => {
-        const content = document.getElementById('transcript-printable');
-        if (!content) return;
-        const win = window.open('', '_blank', 'width=1000,height=800');
-        
-        const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
-            .map(el => el.outerHTML)
-            .join('\\n');
-
-        win?.document.write(`
-            <html><head><title>Student Transcript</title>
-            ${styles}
-            <style>
-                @media print { 
-                    @page { size: portrait; margin: 10mm; } 
-                    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-                }
-                .transcript-table th, .transcript-table td { border: 1px solid #d1d5db; padding: 6px; text-align: center; font-size: 11px; }
-                .transcript-table th { background-color: #f3f4f6; font-weight: bold; }
-                .transcript-table td.subject-name { text-align: left; font-weight: 600; background-color: #f9fafb; }
-            </style>
-            </head><body class="p-0 bg-white" style="font-family: Arial, sans-serif;">
-            ${content.outerHTML}
-            </body></html>
+        mobileSafePrint('transcript-printable', `
+            @media print {
+                @page { size: portrait; margin: 10mm; }
+                body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            }
+            .transcript-table th, .transcript-table td { border: 1px solid #d1d5db; padding: 6px; text-align: center; font-size: 11px; }
+            .transcript-table th { background-color: #f3f4f6; font-weight: bold; }
+            .transcript-table td.subject-name { text-align: left; font-weight: 600; background-color: #f9fafb; }
         `);
-        win?.document.close();
-        win?.focus();
-        setTimeout(() => { win?.print(); win?.close(); }, 500);
     };
 
     const handleDownloadPDF = () => {
@@ -65,7 +48,7 @@ export default function TranscriptSheet({ studentId, API, onClose }: TranscriptS
     if (loading) {
         return (
             <div className="flex flex-col items-center justify-center py-20 text-gray-500 bg-white border border-gray-200 rounded-2xl shadow-sm">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600 mb-4" />
+                <Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6] mb-4" />
                 <p>Loading Transcript...</p>
             </div>
         );
@@ -95,7 +78,7 @@ export default function TranscriptSheet({ studentId, API, onClose }: TranscriptS
                 <h3 className="font-bold text-gray-800">Student Transcript</h3>
                 <div className="flex gap-2">
                     {onClose && <Button variant="outline" size="sm" onClick={onClose}>Close</Button>}
-                    <Button variant="outline" size="sm" onClick={handlePrint} className="gap-2 text-[#0036a1] border-[#0036a1]/30">
+                    <Button variant="outline" size="sm" onClick={handlePrint} className="gap-2 text-[#1E4DA6] border-[#1E4DA6]/30">
                         <Printer className="w-4 h-4" /> Print
                     </Button>
                 </div>
@@ -154,7 +137,7 @@ export default function TranscriptSheet({ studentId, API, onClose }: TranscriptS
                                             <td key={sIdx}>{score !== null ? score : '-'}</td>
                                         ))}
                                         <td className="font-bold">{subj.total > 0 ? subj.total : '-'}</td>
-                                        <td className="font-bold text-[#0036a1]">{subj.avg}</td>
+                                        <td className="font-bold text-[#1E4DA6]">{subj.avg}</td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -92,7 +92,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdate
                                     <dt className="text-xs text-gray-500">{formatKey(key)}</dt>
                                     <dd className="text-sm font-medium text-gray-900">
                                         {isCloudinaryUrl(value) ? (
-                                            <a href={String(value)} target="_blank" rel="noopener noreferrer" className="text-[#1a2fa0] hover:underline flex items-center gap-1 mt-1">
+                                            <a href={String(value)} target="_blank" rel="noopener noreferrer" className="text-[#1E4DA6] hover:underline flex items-center gap-1 mt-1">
                                                 <ExternalLink className="w-3.5 h-3.5" /> View Document
                                             </a>
                                         ) : (
@@ -117,7 +117,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdate
                                         type="date" 
                                         value={interviewDate}
                                         onChange={(e) => setInterviewDate(e.target.value)}
-                                        className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none"
+                                        className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-[#1E4DA6]/10 focus:border-[#1E4DA6]/60 outline-none"
                                     />
                                 </div>
                             </div>
@@ -129,7 +129,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdate
                                         type="time" 
                                         value={interviewTime}
                                         onChange={(e) => setInterviewTime(e.target.value)}
-                                        className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none"
+                                        className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-[#1E4DA6]/10 focus:border-[#1E4DA6]/60 outline-none"
                                     />
                                 </div>
                             </div>
@@ -142,7 +142,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdate
                                         placeholder="e.g. Main Campus, Online Zoom, etc."
                                         value={interviewLocation}
                                         onChange={(e) => setInterviewLocation(e.target.value)}
-                                        className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none"
+                                        className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-[#1E4DA6]/10 focus:border-[#1E4DA6]/60 outline-none"
                                     />
                                 </div>
                             </div>
@@ -185,7 +185,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdate
                     </Button>
                     
                     {application.status === 'APPROVED' && application.applicationType === 'ADMISSION_APPLICATION' && (
-                        <Button type="button" onClick={onPrintLetter} className="mt-3 w-full sm:mt-0 sm:w-auto bg-[#1a2fa0] hover:bg-[#121f6e] text-white">
+                        <Button type="button" onClick={onPrintLetter} className="mt-3 w-full sm:mt-0 sm:w-auto bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
                             Print Admission Letter
                         </Button>
                     )}

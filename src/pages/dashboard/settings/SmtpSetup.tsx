@@ -76,7 +76,7 @@ export default function SmtpSetup() {
     if (isLoading) {
         return (
             <div className="p-12 flex justify-center items-center">
-                <Loader2 className="w-8 h-8 text-[#1a2fa0] animate-spin" />
+                <Loader2 className="w-8 h-8 text-[#1E4DA6] animate-spin" />
             </div>
         );
     }
@@ -105,7 +105,7 @@ export default function SmtpSetup() {
                                         value={smtpHost}
                                         onChange={(e) => setSmtpHost(e.target.value)}
                                         placeholder="e.g. smtp.gmail.com"
-                                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] outline-none"
+                                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] outline-none"
                                     />
                                 </div>
                             </div>
@@ -117,7 +117,7 @@ export default function SmtpSetup() {
                                     value={smtpPort}
                                     onChange={(e) => setSmtpPort(e.target.value)}
                                     placeholder="e.g. 587 or 465"
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] outline-none"
+                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] outline-none"
                                 />
                             </div>
                         </div>
@@ -133,7 +133,7 @@ export default function SmtpSetup() {
                                         value={smtpUser}
                                         onChange={(e) => setSmtpUser(e.target.value)}
                                         placeholder="e.g. admissions@school.edu"
-                                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] outline-none"
+                                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] outline-none"
                                     />
                                 </div>
                             </div>
@@ -147,7 +147,7 @@ export default function SmtpSetup() {
                                         value={smtpPass}
                                         onChange={(e) => setSmtpPass(e.target.value)}
                                         placeholder="App password or standard password"
-                                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] outline-none"
+                                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] outline-none"
                                     />
                                 </div>
                             </div>
@@ -161,7 +161,7 @@ export default function SmtpSetup() {
                                 value={smtpFrom}
                                 onChange={(e) => setSmtpFrom(e.target.value)}
                                 placeholder='e.g. "Springfield Admissions" <admissions@springfield.edu>'
-                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] outline-none"
+                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] outline-none"
                             />
                             <p className="mt-1 text-xs text-slate-500">This is what recipients will see as the sender name and email.</p>
                         </div>
@@ -192,12 +192,12 @@ export default function SmtpSetup() {
                 </form>
             </div>
             
-                <div className="bg-blue-50/50 border border-blue-200/60 rounded-xl p-5 text-sm text-blue-800 flex items-start gap-3">
-                    <div className="mt-0.5"><Mail className="w-5 h-5 text-blue-500" /></div>
+                <div className="bg-[#1E4DA6]/8 border border-[#1E4DA6]/60 rounded-xl p-5 text-sm text-[#122F69] flex items-start gap-3">
+                    <div className="mt-0.5"><Mail className="w-5 h-5 text-[#1E4DA6]" /></div>
                     <div>
                         <p className="font-medium mb-1">Configuration Note</p>
-                        <p className="text-blue-700/80 mb-2">If you use Gmail, you must enable 2-Step Verification and generate an <strong>App Password</strong>. Do not use your standard login password.</p>
-                        <p className="text-blue-700/80">If you leave these settings blank or they fail to authenticate, the system will seamlessly fall back to the global SaaS SMTP configuration to ensure your emails are always delivered.</p>
+                        <p className="text-[#173F8C]/80 mb-2">If you use Gmail, you must enable 2-Step Verification and generate an <strong>App Password</strong>. Do not use your standard login password.</p>
+                        <p className="text-[#173F8C]/80">If you leave these settings blank or they fail to authenticate, the system will seamlessly fall back to the global SaaS SMTP configuration to ensure your emails are always delivered.</p>
                     </div>
                 </div>
             </div>

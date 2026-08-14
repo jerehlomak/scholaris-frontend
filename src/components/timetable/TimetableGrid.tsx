@@ -33,7 +33,7 @@ export function TimetableGrid({ routine }: TimetableGridProps) {
                     <select
                         value={selectedClass}
                         onChange={(e) => setSelectedClass(e.target.value)}
-                        className="w-full sm:w-48 bg-white border border-gray-200 text-gray-800 text-sm rounded-md px-3 py-2 focus:ring-1 focus:ring-[#0036a1] focus:border-[#0036a1] outline-none font-medium shadow-sm transition-shadow appearance-none"
+                        className="w-full sm:w-48 bg-white border border-gray-200 text-gray-800 text-sm rounded-md px-3 py-2 focus:ring-1 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] outline-none font-medium shadow-sm transition-shadow appearance-none"
                         style={{
                             backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
                             backgroundRepeat: 'no-repeat',
@@ -53,7 +53,7 @@ export function TimetableGrid({ routine }: TimetableGridProps) {
                         <input
                             type="text"
                             placeholder="Find subject..."
-                            className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#0036a1] focus:border-[#0036a1] transition-colors shadow-sm"
+                            className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] transition-colors shadow-sm"
                         />
                     </div>
                     <button className="p-2 text-gray-600 bg-white border border-gray-200 hover:bg-gray-50 rounded-md transition-colors shadow-sm" title="Filter options">
@@ -62,7 +62,7 @@ export function TimetableGrid({ routine }: TimetableGridProps) {
                     <button className="p-2 text-gray-600 bg-white border border-gray-200 hover:bg-gray-50 rounded-md transition-colors shadow-sm hidden sm:block" title="Share via Email">
                         <Share2 className="w-4 h-4" />
                     </button>
-                    <button className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-[#0036a1] bg-[#0036a1]/10 hover:bg-[#0036a1]/20 border border-transparent rounded-md transition-colors shadow-sm whitespace-nowrap">
+                    <button className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-[#1E4DA6] bg-[#1E4DA6]/10 hover:bg-[#1E4DA6]/20 border border-transparent rounded-md transition-colors shadow-sm whitespace-nowrap">
                         <Download className="w-4 h-4" /> Export PDF
                     </button>
                 </div>
@@ -99,9 +99,9 @@ export function TimetableGrid({ routine }: TimetableGridProps) {
                                                 <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Break</span>
                                             </div>
                                         ) : (
-                                            <div className="bg-[#0036a1]/5 border border-[#0036a1]/10 rounded-lg p-3 hover:bg-[#0036a1]/10 transition-colors cursor-pointer group/slot relative overflow-hidden">
+                                            <div className="bg-[#1E4DA6]/5 border border-[#1E4DA6]/10 rounded-lg p-3 hover:bg-[#1E4DA6]/10 transition-colors cursor-pointer group/slot relative overflow-hidden">
                                                 {/* Subject Color Indicator Strip */}
-                                                <div className="absolute top-0 bottom-0 left-0 w-1 bg-[#0036a1] opacity-80" />
+                                                <div className="absolute top-0 bottom-0 left-0 w-1 bg-[#1E4DA6] opacity-80" />
 
                                                 <p className="font-semibold text-[#1e2230] text-[13px] mb-1 truncate leading-tight">
                                                     {slot.subject}
@@ -111,8 +111,8 @@ export function TimetableGrid({ routine }: TimetableGridProps) {
                                                 </p>
 
                                                 {/* Hover Edit Overlay */}
-                                                <div className="absolute inset-0 bg-[#0036a1]/90 flex items-center justify-center opacity-0 group-hover/slot:opacity-100 transition-opacity backdrop-blur-[1px]">
-                                                    <span className="text-white text-xs font-bold bg-white/20 px-3 py-1 rounded-full cursor-pointer hover:bg-white hover:text-[#0036a1] transition-colors shadow-sm">
+                                                <div className="absolute inset-0 bg-[#1E4DA6]/90 flex items-center justify-center opacity-0 group-hover/slot:opacity-100 transition-opacity backdrop-blur-[1px]">
+                                                    <span className="text-white text-xs font-bold bg-white/20 px-3 py-1 rounded-full cursor-pointer hover:bg-white hover:text-[#1E4DA6] transition-colors shadow-sm">
                                                         Re-assign
                                                     </span>
                                                 </div>
@@ -130,8 +130,8 @@ export function TimetableGrid({ routine }: TimetableGridProps) {
             <div className="p-3 border-t border-gray-100 bg-[#f8fafc] flex justify-between items-center text-xs text-gray-500">
                 <p>Generated by SkcoolyPlus Smart Scheduler</p>
                 <div className="flex gap-4">
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#0036a1]"></span> Subjects: {maxPeriods - 1}</span>
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#6bc048]"></span> Fully Allocated</span>
+                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#1E4DA6]"></span> Subjects: {maxPeriods - 1}</span>
+                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#10b981]"></span> Fully Allocated</span>
                 </div>
             </div>
         </div>

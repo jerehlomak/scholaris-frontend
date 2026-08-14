@@ -163,7 +163,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                     <div className="flex gap-2 items-center flex-wrap">
                         {allSubjects.length > 0 && (
                             <select 
-                                className="border border-gray-300 rounded-md px-3 py-1.5 text-sm outline-none focus:border-[#0036a1] transition-colors"
+                                className="border border-gray-300 rounded-md px-3 py-1.5 text-sm outline-none focus:border-[#1E4DA6] transition-colors"
                                 value={selectedSubjectId}
                                 onChange={(e) => {
                                     setSelectedSubjectId(e.target.value);
@@ -181,7 +181,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                                 variant={printMode === 'FILLED' ? 'default' : 'ghost'} 
                                 size="sm" 
                                 onClick={() => setPrintMode('FILLED')} 
-                                className={`gap-2 h-8 ${printMode === 'FILLED' ? 'bg-white text-[#0036a1] shadow-sm' : 'text-gray-500'}`}
+                                className={`gap-2 h-8 ${printMode === 'FILLED' ? 'bg-white text-[#1E4DA6] shadow-sm' : 'text-gray-500'}`}
                             >
                                 <Eye className="w-4 h-4" /> Score
                             </Button>
@@ -189,7 +189,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                                 variant={printMode === 'EMPTY' ? 'default' : 'ghost'} 
                                 size="sm" 
                                 onClick={() => setPrintMode('EMPTY')} 
-                                className={`gap-2 h-8 ${printMode === 'EMPTY' ? 'bg-white text-[#0036a1] shadow-sm' : 'text-gray-500'}`}
+                                className={`gap-2 h-8 ${printMode === 'EMPTY' ? 'bg-white text-[#1E4DA6] shadow-sm' : 'text-gray-500'}`}
                             >
                                 <EyeOff className="w-4 h-4" /> Empty
                             </Button>
@@ -202,7 +202,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                         <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
                             <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider shrink-0">Format:</span>
                             <select 
-                                className="flex-1 sm:flex-none border border-gray-300 bg-white rounded px-2 py-1 text-xs outline-none focus:border-[#0036a1] min-w-[140px]"
+                                className="flex-1 sm:flex-none border border-gray-300 bg-white rounded px-2 py-1 text-xs outline-none focus:border-[#1E4DA6] min-w-[140px]"
                                 value={printTypeFilter}
                                 onChange={(e) => setPrintTypeFilter(e.target.value as any)}
                             >
@@ -213,7 +213,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                         <div className="flex items-center gap-2 sm:border-l border-gray-300 sm:pl-3 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-200 flex-wrap">
                             <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider shrink-0">Size:</span>
                             <select 
-                                className="flex-1 sm:flex-none border border-gray-300 bg-white rounded px-2 py-1 text-xs outline-none focus:border-[#0036a1] min-w-[80px]"
+                                className="flex-1 sm:flex-none border border-gray-300 bg-white rounded px-2 py-1 text-xs outline-none focus:border-[#1E4DA6] min-w-[80px]"
                                 value={paperSize}
                                 onChange={(e) => setPaperSize(e.target.value as any)}
                             >
@@ -221,7 +221,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                                 <option value="A3">A3 (For many subjects)</option>
                             </select>
                             <select 
-                                className="flex-1 sm:flex-none border border-gray-300 bg-white rounded px-2 py-1 text-xs outline-none focus:border-[#0036a1] min-w-[100px]"
+                                className="flex-1 sm:flex-none border border-gray-300 bg-white rounded px-2 py-1 text-xs outline-none focus:border-[#1E4DA6] min-w-[100px]"
                                 value={orientation}
                                 onChange={(e) => setOrientation(e.target.value as any)}
                             >
@@ -231,10 +231,10 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                         </div>
                     </div>
                     <div className="flex justify-center lg:justify-end gap-2 w-full lg:w-auto mt-2 lg:mt-0 pt-3 lg:pt-0 border-t border-gray-200 lg:border-t-0">
-                        <Button variant="outline" size="sm" onClick={handleSharePDF} className="gap-2 text-[#0036a1] border-[#0036a1]/30 bg-white">
+                        <Button variant="outline" size="sm" onClick={handleSharePDF} className="gap-2 text-[#1E4DA6] border-[#1E4DA6]/30 bg-white">
                             <Share2 className="w-4 h-4" /> Share PDF
                         </Button>
-                        <Button variant="default" size="sm" onClick={handlePrint} className="gap-2 bg-[#0036a1] hover:bg-[#001761]">
+                        <Button variant="default" size="sm" onClick={handlePrint} className="gap-2 bg-[#1E4DA6] hover:bg-[#173F8C]">
                             <Printer className="w-4 h-4" /> Print View
                         </Button>
                     </div>
@@ -252,9 +252,9 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                         #broadsheet-printable .border-gray-300 { border-color: #d1d5db !important; }
                         #broadsheet-printable .bg-gray-200 { background-color: #e5e7eb !important; }
                         #broadsheet-printable .bg-gray-100 { background-color: #f3f4f6 !important; }
-                        #broadsheet-printable .bg-blue-50\\/50 { background-color: rgba(239, 246, 255, 0.5) !important; }
-                        #broadsheet-printable .bg-blue-100\\/50 { background-color: rgba(219, 234, 254, 0.5) !important; }
-                        #broadsheet-printable .text-blue-900 { color: #1e3a8a !important; }
+                        #broadsheet-printable .bg-[#1E4DA6]/5\\/50 { background-color: rgba(239, 246, 255, 0.5) !important; }
+                        #broadsheet-printable .bg-[#1E4DA6]/10\\/50 { background-color: rgba(219, 234, 254, 0.5) !important; }
+                        #broadsheet-printable .text-[#0E2450] { color: #1e3a8a !important; }
                     `}</style>
                     <div className="header text-center mb-6 mt-2">
                         {data?.school?.logoUrl && <img src={data.school.logoUrl} alt="School Logo" className="h-16 mx-auto mb-2 object-contain" />}
@@ -291,7 +291,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                                                 {cs.name}
                                             </th>
                                         ))}
-                                        {showTotalCol && <th className="border border-gray-300 p-1 text-center bg-blue-50 text-[10px] font-bold text-blue-800">Total</th>}
+                                        {showTotalCol && <th className="border border-gray-300 p-1 text-center bg-[#1E4DA6]/5 text-[10px] font-bold text-[#122F69]">Total</th>}
                                     </React.Fragment>
                                 ))}
                             </tr>
@@ -316,7 +316,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                                                         </td>
                                                     ))}
                                                     {showTotalCol && (
-                                                        <td className="border border-gray-300 p-1 text-center font-bold bg-blue-50/50" style={{ color: (sc && typeof sc.score === 'number' && sc.score < passMark) ? '#dc2626' : 'inherit' }}>
+                                                        <td className="border border-gray-300 p-1 text-center font-bold bg-[#1E4DA6]/8" style={{ color: (sc && typeof sc.score === 'number' && sc.score < passMark) ? '#dc2626' : 'inherit' }}>
                                                             {printMode === 'EMPTY' ? '' : (sc ? sc.score : '-')}
                                                         </td>
                                                     )}
@@ -330,7 +330,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                                     );
                                 })}
                                 <td className="border border-gray-300 p-2 text-center font-bold bg-gray-100">{printMode === 'EMPTY' ? '' : st.overallTotal}</td>
-                                <td className="border border-gray-300 p-2 text-center font-bold text-[#0036a1] bg-gray-100">{printMode === 'EMPTY' ? '' : st.averageStr}</td>
+                                <td className="border border-gray-300 p-2 text-center font-bold text-[#1E4DA6] bg-gray-100">{printMode === 'EMPTY' ? '' : st.averageStr}</td>
                                 <td className="border border-gray-300 p-2 text-center font-bold bg-gray-100">{printMode === 'EMPTY' ? '' : st.position}</td>
                             </tr>
                         ))}
@@ -358,7 +358,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                                                     );
                                                 })}
                                                 {showTotalCol && (
-                                                    <td className="border border-gray-300 p-1 text-center bg-blue-100/50 text-blue-900">
+                                                    <td className="border border-gray-300 p-1 text-center bg-[#1E4DA6]/8 text-[#0E2450]">
                                                         {printMode === 'EMPTY' ? '' : (() => {
                                                             let sum = 0;
                                                             students.forEach((st: any) => {
@@ -397,7 +397,7 @@ export default function BroadsheetView({ classId, term, year, categoryId, API, c
                                     return Math.round(sum * 10) / 10;
                                 })()}
                             </td>
-                            <td className="border border-gray-300 p-2 text-center text-[#0036a1]">
+                            <td className="border border-gray-300 p-2 text-center text-[#1E4DA6]">
                                 {printMode === 'EMPTY' ? '' : (() => {
                                     let sum = 0;
                                     students.forEach((st: any) => sum += parseFloat(st.averageStr || '0'));

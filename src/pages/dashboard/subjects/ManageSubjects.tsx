@@ -32,8 +32,8 @@ export function ManageSubjects() {
                 <h1 className="text-3xl font-heading text-dash-dark mb-2">Manage Class Subjects</h1>
                 <div className="flex items-center justify-center gap-5 text-sm">
                     <div className="flex items-center gap-2">
-                        <div className="w-5 h-1.5 rounded bg-[#0036a1]"></div>
-                        <span className="text-[#0036a1] font-semibold">Required*</span>
+                        <div className="w-5 h-1.5 rounded bg-[#1E4DA6]"></div>
+                        <span className="text-[#1E4DA6] font-semibold">Required*</span>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@ export function ManageSubjects() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-7 border-b border-gray-200 pb-12">
                         <div className="space-y-1.5 border border-transparent">
-                            <Label className="text-dash-dark font-semibold">Target Class <span className="text-[#0036a1]">*</span></Label>
+                            <Label className="text-dash-dark font-semibold">Target Class <span className="text-[#1E4DA6]">*</span></Label>
                             <Select defaultValue="jss1a">
                                 <SelectTrigger className="bg-white border-brand-teal/20 h-11 shadow-sm">
                                     <SelectValue placeholder="Select Class" />
@@ -71,7 +71,7 @@ export function ManageSubjects() {
                             <div className="w-6 h-6 rounded-full bg-dash-dark text-white flex items-center justify-center text-sm font-bold">2</div>
                             <h2 className="text-lg font-bold text-dash-dark">Core Subjects for JSS1A</h2>
                         </div>
-                        <Button type="button" variant="outline" className="text-[#0036a1] border-[#0036a1] hover:bg-[#0036a1]/10 rounded-full h-8 px-4 text-xs font-bold gap-2">
+                        <Button type="button" variant="outline" className="text-[#1E4DA6] border-[#1E4DA6] hover:bg-[#1E4DA6]/10 rounded-full h-8 px-4 text-xs font-bold gap-2">
                             <Copy className="w-3 h-3" /> Copy from another class
                         </Button>
                     </div>
@@ -105,7 +105,7 @@ export function ManageSubjects() {
                                     </SelectContent>
                                 </Select>
                             </div>
-                            <Button type="button" className="h-10 px-6 rounded-md bg-[#0036a1] hover:bg-[#7b8dee] text-white font-bold whitespace-nowrap w-full md:w-auto">
+                            <Button type="button" className="h-10 px-6 rounded-md bg-[#1E4DA6] hover:bg-[#7b8dee] text-white font-bold whitespace-nowrap w-full md:w-auto">
                                 Add Core Subject
                             </Button>
                         </div>
@@ -119,9 +119,9 @@ export function ManageSubjects() {
                         <h2 className="text-lg font-bold text-dash-dark">Optional Subjects for JSS1A</h2>
                     </div>
 
-                    <div className="bg-purple-50/50 border border-purple-100 rounded-xl p-6 md:p-8 mb-12">
+                    <div className="bg-[#1E4DA6]/8 border border-[#1E4DA6]/10 rounded-xl p-6 md:p-8 mb-12">
 
-                        <div className="bg-white rounded-lg p-6 border border-purple-100 shadow-sm mb-6 relative">
+                        <div className="bg-white rounded-lg p-6 border border-[#1E4DA6]/10 shadow-sm mb-6 relative">
                             <div className="absolute right-4 top-4">
                                 <Button variant="outline" size="sm" className="h-7 text-xs bg-red-500 hover:bg-red-600 text-white border-none rounded-md px-3 font-semibold shadow-sm transition-colors">
                                     Remove Group
@@ -137,11 +137,11 @@ export function ManageSubjects() {
                                 </div>
                             </div>
 
-                            <div className="flex flex-col md:flex-row gap-4 items-end border-t border-purple-50 pt-5 mt-2">
+                            <div className="flex flex-col md:flex-row gap-4 items-end border-t border-[#1E4DA6]/5 pt-5 mt-2">
                                 <div className="space-y-1.5 flex-1 w-full">
-                                    <Label className="text-gray-700 font-semibold text-xs text-purple-800">Add Subject to Group</Label>
+                                    <Label className="text-gray-700 font-semibold text-xs text-[#122F69]">Add Subject to Group</Label>
                                     <Select>
-                                        <SelectTrigger className="bg-white border-purple-100/50 h-10 shadow-sm">
+                                        <SelectTrigger className="bg-white border-[#1E4DA6]/50 h-10 shadow-sm">
                                             <SelectValue placeholder="Select a course" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -158,10 +158,10 @@ export function ManageSubjects() {
                         </div>
 
                         {/* Add new optional group */}
-                        <div className="flex flex-col md:flex-row items-end gap-4 bg-white/60 p-5 rounded-lg border border-purple-100 mt-8">
+                        <div className="flex flex-col md:flex-row items-end gap-4 bg-white/60 p-5 rounded-lg border border-[#1E4DA6]/10 mt-8">
                             <div className="space-y-1.5 flex-1 w-full">
-                                <Label className="text-purple-800 font-semibold text-xs">New Optional Subject Group Name</Label>
-                                <Input className="bg-white border-purple-100 h-10 shadow-sm" placeholder="e.g. Electives, Arts & Crafts" />
+                                <Label className="text-[#122F69] font-semibold text-xs">New Optional Subject Group Name</Label>
+                                <Input className="bg-white border-[#1E4DA6]/10 h-10 shadow-sm" placeholder="e.g. Electives, Arts & Crafts" />
                             </div>
                             <Button type="button" className="h-10 px-6 rounded-md bg-[#67b8e8] hover:bg-[#818CF8] text-indigo-900 font-bold whitespace-nowrap w-full md:w-auto transition-colors">
                                 Add New Group
@@ -175,7 +175,7 @@ export function ManageSubjects() {
                     <Button type="button" variant="outline" className="h-12 px-8 rounded-full border-2 border-gray-200 text-gray-600 hover:bg-gray-50 font-bold transition-all w-full md:w-48">
                         Cancel
                     </Button>
-                    <Button type="submit" className="h-12 px-8 rounded-full bg-[#0036a1] hover:bg-[#3d5be8] text-white font-bold inline-flex items-center gap-2 shadow-md hover:shadow-lg transition-all w-full md:w-64">
+                    <Button type="submit" className="h-12 px-8 rounded-full bg-[#1E4DA6] hover:bg-[#3d5be8] text-white font-bold inline-flex items-center gap-2 shadow-md hover:shadow-lg transition-all w-full md:w-64">
                         Save All Subjects
                         <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center ml-2 shrink-0">
                             <Check className="w-4 h-4" />

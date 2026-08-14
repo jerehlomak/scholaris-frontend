@@ -179,7 +179,7 @@ export default function CreateExam() {
         }
     };
 
-    if (loading) return <div className="p-20 text-center"><Loader2 className="w-8 h-8 animate-spin mx-auto text-[#0036a1]" /></div>;
+    if (loading) return <div className="p-20 text-center"><Loader2 className="w-8 h-8 animate-spin mx-auto text-[#1E4DA6]" /></div>;
 
     return (
         <div className="max-w-[1000px] mx-auto w-full font-dash pb-20">
@@ -198,7 +198,7 @@ export default function CreateExam() {
                     <Button variant="outline" onClick={() => handleSubmit(false)} disabled={submitting} className="h-10">
                         <Save className="w-4 h-4 mr-2" /> {isEdit ? 'Update' : 'Save Draft'}
                     </Button>
-                    <Button onClick={() => handleSubmit(true)} disabled={submitting} className="h-10 bg-[#0036a1] hover:bg-[#001761]">
+                    <Button onClick={() => handleSubmit(true)} disabled={submitting} className="h-10 bg-[#1E4DA6] hover:bg-[#173F8C]">
                         <CheckCircle className="w-4 h-4 mr-2" /> {isEdit && formData.status === 'PUBLISHED' ? 'Update & Sync' : 'Publish to Students'}
                     </Button>
                 </div>
@@ -209,7 +209,7 @@ export default function CreateExam() {
                 <div className="lg:col-span-1 space-y-6">
                     <Card className="p-6 bg-white border border-gray-100 shadow-sm space-y-5">
                         <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                            <Plus className="w-4 h-4 text-[#0036a1]" /> Basic Configuration
+                            <Plus className="w-4 h-4 text-[#1E4DA6]" /> Basic Configuration
                         </h3>
                         
                         <div className="space-y-4">
@@ -220,7 +220,7 @@ export default function CreateExam() {
                                     placeholder="e.g. Mid-Term Genetics Test"
                                     value={formData.title}
                                     onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#0036a1] transition-all"
+                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#1E4DA6] transition-all"
                                 />
                             </div>
 
@@ -229,7 +229,7 @@ export default function CreateExam() {
                                 <select 
                                     value={formData.classId}
                                     onChange={e => handleClassChange(e.target.value)}
-                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#0036a1] cursor-pointer"
+                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#1E4DA6] cursor-pointer"
                                 >
                                     <option value="">Select Class</option>
                                     {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -242,7 +242,7 @@ export default function CreateExam() {
                                     value={formData.subjectId}
                                     onChange={e => setFormData(prev => ({ ...prev, subjectId: e.target.value }))}
                                     disabled={!formData.classId}
-                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#0036a1] cursor-pointer disabled:opacity-50"
+                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#1E4DA6] cursor-pointer disabled:opacity-50"
                                 >
                                     <option value="">Select Subject</option>
                                     {assignedSubjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
@@ -263,7 +263,7 @@ export default function CreateExam() {
                                     type="number" 
                                     value={formData.durationMinutes}
                                     onChange={e => setFormData(prev => ({ ...prev, durationMinutes: parseInt(e.target.value) }))}
-                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#0036a1]"
+                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#1E4DA6]"
                                 />
                             </div>
                             <div className="space-y-1.5">
@@ -272,7 +272,7 @@ export default function CreateExam() {
                                     type="number" 
                                     value={formData.passingMarks}
                                     onChange={e => setFormData(prev => ({ ...prev, passingMarks: parseInt(e.target.value) }))}
-                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#0036a1]"
+                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#1E4DA6]"
                                 />
                             </div>
                         </div>
@@ -280,14 +280,14 @@ export default function CreateExam() {
 
                     <Card className="p-6 bg-white border border-gray-100 shadow-sm space-y-4">
                          <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                            <FileText className="w-4 h-4 text-purple-600" /> Instructions
+                            <FileText className="w-4 h-4 text-[#1E4DA6]" /> Instructions
                         </h3>
                         <textarea 
                             rows={4}
                             placeholder="Provide exam rules or instructions here..."
                             value={formData.instructions}
                             onChange={e => setFormData(prev => ({ ...prev, instructions: e.target.value }))}
-                            className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#0036a1] resize-none transition-all placeholder:text-gray-300"
+                            className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-[#1E4DA6] resize-none transition-all placeholder:text-gray-300"
                         />
                     </Card>
                 </div>
@@ -300,10 +300,10 @@ export default function CreateExam() {
                             <p className="text-xs text-gray-400">Add questions from bank or create new ones</p>
                         </div>
                         <div className="flex gap-2">
-                            <Button onClick={fetchQuestionBank} variant="outline" className="h-9 gap-2 border-[#0036a1] text-[#0036a1] hover:bg-[#0036a1]/5">
+                            <Button onClick={fetchQuestionBank} variant="outline" className="h-9 gap-2 border-[#1E4DA6] text-[#1E4DA6] hover:bg-[#1E4DA6]/5">
                                 <Search className="w-4 h-4" /> Import from Bank
                             </Button>
-                            <Button onClick={() => setShowAIWizard(true)} variant="outline" className="h-9 gap-2 border-purple-600 text-purple-600 hover:bg-purple-50">
+                            <Button onClick={() => setShowAIWizard(true)} variant="outline" className="h-9 gap-2 border-[#1E4DA6] text-[#1E4DA6] hover:bg-[#1E4DA6]/5">
                                 <Sparkles className="w-4 h-4" /> AI Draft
                             </Button>
                             <Button onClick={() => setShowManualForm(true)} variant="outline" className="h-9 gap-2">
@@ -322,7 +322,7 @@ export default function CreateExam() {
                         ) : (
                             selectedQuestions.map((q, idx) => (
                                 <Card key={q.id} className="p-5 border border-gray-100 shadow-sm relative group overflow-hidden">
-                                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-100 group-hover:bg-[#0036a1] transition-colors" />
+                                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-100 group-hover:bg-[#1E4DA6] transition-colors" />
                                      <div className="flex gap-4">
                                         <div className="shrink-0 pt-1">
                                             <div className="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center font-bold text-xs">{idx + 1}</div>
@@ -371,7 +371,7 @@ export default function CreateExam() {
                                     placeholder="Search by keyword..."
                                     value={searchQuery}
                                     onChange={e => setSearchQuery(e.target.value)}
-                                    className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-xl text-sm outline-none focus:border-[#0036a1]"
+                                    className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-xl text-sm outline-none focus:border-[#1E4DA6]"
                                 />
                              </div>
                         </div>
@@ -380,9 +380,9 @@ export default function CreateExam() {
                             {questionBank.filter(q => q.questionText.toLowerCase().includes(searchQuery.toLowerCase())).map(q => {
                                 const isSelected = selectedQuestions.some(sq => sq.id === q.id);
                                 return (
-                                    <div key={q.id} onClick={() => toggleQuestion(q)} className={`p-4 rounded-2xl border transition-all cursor-pointer group ${isSelected ? 'border-[#0036a1] bg-[#0036a1]/5' : 'border-gray-100 hover:border-gray-200 bg-white'}`}>
+                                    <div key={q.id} onClick={() => toggleQuestion(q)} className={`p-4 rounded-2xl border transition-all cursor-pointer group ${isSelected ? 'border-[#1E4DA6] bg-[#1E4DA6]/5' : 'border-gray-100 hover:border-gray-200 bg-white'}`}>
                                         <div className="flex items-start gap-3">
-                                            <div className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${isSelected ? 'bg-[#0036a1] border-[#0036a1]' : 'border-gray-300'}`}>
+                                            <div className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${isSelected ? 'bg-[#1E4DA6] border-[#1E4DA6]' : 'border-gray-300'}`}>
                                                 {isSelected && <CheckCircle className="w-3 h-3 text-white" />}
                                             </div>
                                             <div>
@@ -401,7 +401,7 @@ export default function CreateExam() {
 
                         <div className="p-6 border-t border-gray-100 flex justify-between items-center bg-gray-50/30">
                             <p className="text-sm text-gray-500 font-medium">{selectedQuestions.length} Selected</p>
-                            <Button onClick={() => setShowBank(false)} className="bg-[#0036a1] hover:bg-[#001761]">Done Selecting</Button>
+                            <Button onClick={() => setShowBank(false)} className="bg-[#1E4DA6] hover:bg-[#173F8C]">Done Selecting</Button>
                         </div>
                     </Card>
                 </div>

@@ -227,19 +227,19 @@ function PaymentModal({
 
                     {/* Wallet Notice if available */}
                     {hasWalletCredit && (
-                        <div className="bg-purple-50 border border-purple-200 rounded-xl p-3.5 flex items-center justify-between">
+                        <div className="bg-[#1E4DA6]/5 border border-[#1E4DA6]/20 rounded-xl p-3.5 flex items-center justify-between">
                             <div>
-                                <p className="text-xs font-bold text-purple-900">Available Wallet Balance</p>
-                                <p className="text-sm font-extrabold text-purple-700">{fmt(studentWalletBal)} {studentWalletBal > 0 ? '(Student)' : ''}</p>
+                                <p className="text-xs font-bold text-[#0E2450]">Available Wallet Balance</p>
+                                <p className="text-sm font-extrabold text-[#173F8C]">{fmt(studentWalletBal)} {studentWalletBal > 0 ? '(Student)' : ''}</p>
                                 {siblingWallets.length > 0 && (
-                                    <p className="text-[11px] text-purple-600 mt-0.5">+ {siblingWallets.length} sibling wallet(s) available for sharing</p>
+                                    <p className="text-[11px] text-[#1E4DA6] mt-0.5">+ {siblingWallets.length} sibling wallet(s) available for sharing</p>
                                 )}
                             </div>
                             <Button 
                                 type="button"
                                 size="sm" 
                                 variant={gateway === 'WALLET' ? 'default' : 'outline'}
-                                className={gateway === 'WALLET' ? 'bg-purple-600 hover:bg-purple-700 text-white text-xs' : 'border-purple-300 text-purple-700 text-xs hover:bg-purple-100'}
+                                className={gateway === 'WALLET' ? 'bg-[#1E4DA6] hover:bg-[#173F8C] text-white text-xs' : 'border-[#1E4DA6]/35 text-[#173F8C] text-xs hover:bg-[#1E4DA6]/10'}
                                 onClick={() => {
                                     setGateway('WALLET');
                                     setTopupMode(false);
@@ -264,12 +264,12 @@ function PaymentModal({
                                     max={gateway === 'WALLET' ? activeWalletBal : (policy.allowOverpayment ? undefined : outstanding)}
                                     value={paymentAmount}
                                     onChange={(e) => setPaymentAmount(e.target.value)}
-                                    className="h-11 text-base font-bold text-slate-900 bg-white border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                                    className="h-11 text-base font-bold text-slate-900 bg-white border-slate-300 focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6]"
                                     placeholder="Enter amount"
                                 />
                                 <div className="flex justify-between items-center text-[11px] pt-1">
                                     {gateway === 'WALLET' ? (
-                                        <span className="text-purple-700 font-medium">
+                                        <span className="text-[#173F8C] font-medium">
                                             Wallet balance after payment: <strong>{fmt(Math.max(0, activeWalletBal - numAmount))}</strong>
                                         </span>
                                     ) : isOverpayment ? (
@@ -302,7 +302,7 @@ function PaymentModal({
                                     setPaymentAmount(String(maxWalletApplicable || outstanding));
                                 }
                             }} 
-                            className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm bg-white outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                            className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm bg-white outline-none focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6]"
                         >
                             {hasWalletCredit && <option value="WALLET">💳 Student / Family Wallet Credit</option>}
                             {methods.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
@@ -311,10 +311,10 @@ function PaymentModal({
 
                     {/* Sibling wallet selector when WALLET is selected */}
                     {gateway === 'WALLET' && (
-                        <div className="space-y-3 p-3.5 bg-purple-50/70 border border-purple-200 rounded-xl">
+                        <div className="space-y-3 p-3.5 bg-[#1E4DA6]/8 border border-[#1E4DA6]/20 rounded-xl">
                             {siblingWallets.length > 0 && (
                                 <div>
-                                    <label className="text-xs font-bold text-purple-900 block mb-1">Deduct Credit From:</label>
+                                    <label className="text-xs font-bold text-[#0E2450] block mb-1">Deduct Credit From:</label>
                                     <select 
                                         value={selectedWalletStudentId} 
                                         onChange={(e) => {
@@ -323,7 +323,7 @@ function PaymentModal({
                                             const bal = Number(owner?.walletBalance || 0);
                                             setPaymentAmount(String(Math.min(outstanding, bal)));
                                         }}
-                                        className="w-full border border-purple-200 rounded-lg p-2 text-xs bg-white text-purple-950 font-medium"
+                                        className="w-full border border-[#1E4DA6]/20 rounded-lg p-2 text-xs bg-white text-[#081634] font-medium"
                                     >
                                         <option value={invoice.studentId}>
                                             {invoice.name}'s Wallet (₦{studentWalletBal.toLocaleString()} available)
@@ -336,12 +336,12 @@ function PaymentModal({
                                     </select>
                                 </div>
                             )}
-                            <div className="flex justify-between items-center text-xs text-purple-800">
+                            <div className="flex justify-between items-center text-xs text-[#122F69]">
                                 <span>Available Credit: <strong>{fmt(activeWalletBal)}</strong></span>
                                 <button 
                                     type="button" 
                                     onClick={() => setPaymentAmount(String(maxWalletApplicable))}
-                                    className="font-bold underline text-purple-700 hover:text-purple-900"
+                                    className="font-bold underline text-[#173F8C] hover:text-[#0E2450]"
                                 >
                                     Use Maximum ({fmt(maxWalletApplicable)})
                                 </button>
@@ -355,7 +355,7 @@ function PaymentModal({
                             <button
                                 type="button"
                                 onClick={() => setTopupMode((t: boolean) => !t)}
-                                className="text-xs text-blue-600 font-semibold underline hover:text-blue-700"
+                                className="text-xs text-[#1E4DA6] font-semibold underline hover:text-[#173F8C]"
                             >
                                 {topupMode ? 'Pay invoice directly instead' : 'Top-up wallet first (pay later)'}
                             </button>
@@ -368,7 +368,7 @@ function PaymentModal({
                                         value={topupAmount}
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTopupAmount(e.target.value)}
                                         placeholder="e.g. 50000"
-                                        className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                                        className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6]"
                                     />
                                     <p className="text-[10px] text-slate-400 mt-1">Funds will be credited to the student's wallet via Paystack.</p>
                                 </div>
@@ -379,13 +379,13 @@ function PaymentModal({
                     {gateway === 'BANK_TRANSFER' && (
                         bankAccounts.length > 0 ? (
                             <div className="space-y-4 mt-2 border-t pt-2">
-                                <div className="p-3 bg-blue-50 border border-blue-100 rounded-lg">
-                                    <label className="text-xs font-bold text-blue-900 block mb-1">Pay Into School Bank Account:</label>
-                                    <select value={selectedBankAcc} onChange={e => setSelectedBankAcc(e.target.value)} className="w-full text-xs p-2 rounded border-blue-200 bg-white mb-2">
+                                <div className="p-3 bg-[#1E4DA6]/5 border border-[#1E4DA6]/10 rounded-lg">
+                                    <label className="text-xs font-bold text-[#0E2450] block mb-1">Pay Into School Bank Account:</label>
+                                    <select value={selectedBankAcc} onChange={e => setSelectedBankAcc(e.target.value)} className="w-full text-xs p-2 rounded border-[#1E4DA6]/20 bg-white mb-2">
                                         {bankAccounts.map(b => <option key={b.id} value={b.id}>{b.bankName} - {b.accountNumber} ({b.accountName})</option>)}
                                     </select>
                                     {bankAccounts.find(b => b.id === selectedBankAcc)?.displayInstructions && (
-                                        <p className="text-[10px] text-blue-800 italic">{bankAccounts.find(b => b.id === selectedBankAcc)?.displayInstructions}</p>
+                                        <p className="text-[10px] text-[#122F69] italic">{bankAccounts.find(b => b.id === selectedBankAcc)?.displayInstructions}</p>
                                     )}
                                 </div>
                                 
@@ -414,7 +414,7 @@ function PaymentModal({
                     <Button 
                         onClick={handlePay} 
                         disabled={processing || (!hasWalletCredit && methods.length === 0)} 
-                        className={`flex-1 text-white ${gateway === 'WALLET' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-blue-600 hover:bg-blue-700'}`}
+                        className={`flex-1 text-white ${gateway === 'WALLET' ? 'bg-[#1E4DA6] hover:bg-[#173F8C]' : 'bg-[#1E4DA6] hover:bg-[#173F8C]'}`}
                     >
                         {processing ? <Loader2 className="w-4 h-4 animate-spin" /> : (gateway === 'WALLET' ? `Pay ${fmt(numAmount)} from Wallet` : 'Confirm Payment')}
                     </Button>
@@ -532,7 +532,7 @@ export default function ParentFees() {
         }
     };
 
-    if (loading) return <div className="flex items-center justify-center p-20 w-full"><Loader2 className="w-8 h-8 animate-spin text-blue-600" /></div>;
+    if (loading) return <div className="flex items-center justify-center p-20 w-full"><Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" /></div>;
 
     const uniqueChildren = childrenList.map((c: any) => ({
         id: c.id, 
@@ -558,7 +558,7 @@ export default function ParentFees() {
                 </div>
                 {uniqueChildren.length > 0 && (
                     <div className="flex gap-2">
-                        <select value={selectedChildId} onChange={e => setSelectedChildId(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600">
+                        <select value={selectedChildId} onChange={e => setSelectedChildId(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6]">
                             {uniqueChildren.map(c => <option key={c.id} value={c.id}>{c.name} ({c.class})</option>)}
                         </select>
                     </div>
@@ -590,23 +590,23 @@ export default function ParentFees() {
                         </Card>
                         <Card className="p-4 bg-white border border-slate-200 shadow-sm">
                             <p className="text-xs text-slate-500 mb-1">Wallet Credit</p>
-                            <p className="text-2xl font-black text-purple-600">{fmt(walletBalance)}</p>
+                            <p className="text-2xl font-black text-[#1E4DA6]">{fmt(walletBalance)}</p>
                         </Card>
                     </div>
 
                     {/* Notice if wallet credit is available and there is outstanding fee */}
                     {walletBalance > 0 && outstanding > 0 && studentInvoices.some(i => (i.totalFee - i.amountPaid) > 0) && (
-                        <div className="p-4 rounded-xl bg-purple-50 border border-purple-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div className="p-4 rounded-xl bg-[#1E4DA6]/5 border border-[#1E4DA6]/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                             <div className="flex items-center gap-3">
-                                <div className="w-9 h-9 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-lg">₦</div>
+                                <div className="w-9 h-9 rounded-lg bg-[#1E4DA6] text-white flex items-center justify-center font-bold text-lg">₦</div>
                                 <div>
-                                    <h4 className="text-sm font-bold text-purple-950">You have {fmt(walletBalance)} available in credit</h4>
-                                    <p className="text-xs text-purple-700">You can apply your wallet credit directly to settle outstanding invoices without debiting your bank card.</p>
+                                    <h4 className="text-sm font-bold text-[#081634]">You have {fmt(walletBalance)} available in credit</h4>
+                                    <p className="text-xs text-[#173F8C]">You can apply your wallet credit directly to settle outstanding invoices without debiting your bank card.</p>
                                 </div>
                             </div>
                             <Button 
                                 size="sm" 
-                                className="bg-purple-600 hover:bg-purple-700 text-white shrink-0 text-xs"
+                                className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white shrink-0 text-xs"
                                 onClick={() => {
                                     const openInv = studentInvoices.find(i => (i.totalFee - i.amountPaid) > 0);
                                     if (openInv) setPayingInvoice(openInv);
@@ -629,7 +629,7 @@ export default function ParentFees() {
                                 <Card key={invoice.id} className="overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                                     <div className="p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white">
                                         <div className="flex items-start gap-4">
-                                            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                                            <div className="w-12 h-12 rounded-xl bg-[#1E4DA6]/5 text-[#1E4DA6] flex items-center justify-center shrink-0">
                                                 <FileText className="w-6 h-6" />
                                             </div>
                                             <div>
@@ -674,7 +674,7 @@ export default function ParentFees() {
                                                     <Button 
                                                         size="sm" 
                                                         onClick={() => setPayingInvoice(invoice)}
-                                                        className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4"
+                                                        className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white text-xs font-semibold px-4"
                                                     >
                                                         Pay Now
                                                     </Button>

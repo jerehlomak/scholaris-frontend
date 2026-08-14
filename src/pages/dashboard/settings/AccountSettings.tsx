@@ -7,7 +7,7 @@ import { SettingsShell } from './shared/SettingsShell';
 import { SettingsHero } from './shared/SettingsHero';
 import { fetcher } from '../../../utils/fetcher';
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
 export function AccountSettings() {
     const [saved, setSaved] = useState(false);
@@ -160,7 +160,7 @@ export function AccountSettings() {
                         <button
                             onClick={handleUpdate}
                             disabled={isLoading}
-                            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-700 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-200 hover:bg-blue-800 hover:scale-[1.01] transition-all disabled:opacity-50"
+                            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#173F8C] py-3.5 text-sm font-bold text-white shadow-lg shadow-[#1E4DA6]/20 hover:bg-[#122F69] hover:scale-[1.01] transition-all disabled:opacity-50"
                         >
                             {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />} 
                             Update Settings
@@ -170,7 +170,7 @@ export function AccountSettings() {
 
                 {/* Right: info card */}
                 <div className="w-full lg:w-96">
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 p-7 text-white shadow-xl shadow-blue-200 min-h-[300px] flex flex-col justify-center">
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#173F8C] to-[#1E4DA6] p-7 text-white shadow-xl shadow-[#1E4DA6]/20 min-h-[300px] flex flex-col justify-center">
                         {/* Decorative blobs */}
                         <div className="pointer-events-none absolute -top-6 -right-6 h-32 w-32 rounded-full bg-white/10" />
                         <div className="pointer-events-none absolute -bottom-8 -left-8 h-44 w-44 rounded-full bg-white/5" />
@@ -190,7 +190,7 @@ export function AccountSettings() {
                                     { label: 'Expiry', value: 'Never' },
                                 ].map(row => (
                                     <div key={row.label} className="flex items-center justify-between text-sm">
-                                        <span className="text-blue-100/70">{row.label}:</span>
+                                        <span className="text-[#1E4DA6]/70">{row.label}:</span>
                                         <span className={`font-semibold text-white ${(row as { mono?: boolean }).mono ? 'font-mono tracking-widest' : ''}`}>{row.value}</span>
                                     </div>
                                 ))}

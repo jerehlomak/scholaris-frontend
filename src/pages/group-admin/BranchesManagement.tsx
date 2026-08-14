@@ -80,7 +80,7 @@ export default function BranchesManagement() {
     if (isLoading) {
         return (
             <div className="flex h-[60vh] items-center justify-center">
-                <div className="w-8 h-8 rounded-full border-2 border-blue-500/30 border-t-blue-500 animate-spin" />
+                <div className="w-8 h-8 rounded-full border-2 border-[#1E4DA6]/30 border-t-[#1E4DA6] animate-spin" />
             </div>
         );
     }
@@ -108,7 +108,7 @@ export default function BranchesManagement() {
                                     <div className="min-w-0">
                                         <p className="font-bold text-base truncate" style={{ color: T.textPrimary }}>{school.name}</p>
                                         <div className="flex items-center gap-2 mt-0.5">
-                                            <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-500 font-semibold uppercase tracking-wide">
+                                            <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-[#1E4DA6]/10 text-[#1E4DA6] font-semibold uppercase tracking-wide">
                                                 {school.schoolCode || 'No Code'}
                                             </span>
                                             {school.status === 'ACTIVE' ? (
@@ -165,7 +165,7 @@ export default function BranchesManagement() {
                                             setSelectedSchool(school);
                                             setIsAddAdminOpen(true);
                                         }}
-                                        className="h-9 px-4 text-xs font-bold shadow-md shadow-blue-500/20"
+                                        className="h-9 px-4 text-xs font-bold shadow-md shadow-[#1E4DA6]/20"
                                     >
                                         <UserPlus className="w-4 h-4 mr-1.5" />
                                         Create School Admin

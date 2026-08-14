@@ -60,20 +60,20 @@ export default function LedgerSettings() {
         } catch (e: any) { toast.error(e.response?.data?.msg || 'Failed to delete category'); } finally { setCatLoading(false); }
     };
 
-    if (loading) return <div className="flex min-h-[60vh] items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>;
+    if (loading) return <div className="flex min-h-[60vh] items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
             <div className="relative z-10 mx-auto max-w-4xl">
-                <div className={`mb-6 flex items-center gap-1.5 transition-all duration-500 ${pageVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'}`}>
+                <div className={`mb-6 flex items-center gap-1.5 transition-all duration-500 ${pageVisible ? 'opacity-100' : '-translate-y-2 opacity-0'}`}>
                     <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                     <ChevronRight className="h-3 w-3 text-slate-400" />
                     <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Income & Expenses</span>
                     <ChevronRight className="h-3 w-3 text-slate-400" />
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Ledger Settings</span>
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Ledger Settings</span>
                 </div>
 
-                <div className={`overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl transition-all duration-500 mb-6 ${pageVisible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'}`}>
+                <div className={`overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-all duration-500 mb-6 ${pageVisible ? 'opacity-100' : 'translate-y-3 opacity-0'}`}>
                     <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/60 px-6 py-4">
                         <div className="flex items-center gap-2">
                             <Settings2 className="h-5 w-5 text-slate-700" />
@@ -97,7 +97,7 @@ export default function LedgerSettings() {
                                     </select>
                                 </div>
                                 <div className="flex items-end">
-                                    <Button onClick={handleAddCategory} disabled={catLoading || !newCatName} className="w-full sm:w-auto h-9 bg-blue-600 hover:bg-blue-700 text-white">
+                                    <Button onClick={handleAddCategory} disabled={catLoading || !newCatName} className="w-full sm:w-auto h-9 bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
                                         {catLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4 mr-1" />} Add
                                     </Button>
                                 </div>
@@ -122,7 +122,7 @@ export default function LedgerSettings() {
                                                 <>
                                                     <span className="font-semibold text-slate-700 text-sm">{cat.name}</span>
                                                     <div className="flex items-center gap-1">
-                                                        <button onClick={() => { setEditingCatId(cat.id); setEditCatName(cat.name); }} className="p-1.5 text-slate-400 hover:bg-slate-100 hover:text-blue-600 rounded-md"><Edit2 className="w-3.5 h-3.5" /></button>
+                                                        <button onClick={() => { setEditingCatId(cat.id); setEditCatName(cat.name); }} className="p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#1E4DA6] rounded-md"><Edit2 className="w-3.5 h-3.5" /></button>
                                                         <button onClick={() => handleDeleteCategory(cat.id)} className="p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 rounded-md"><Trash2 className="w-3.5 h-3.5" /></button>
                                                     </div>
                                                 </>
@@ -150,7 +150,7 @@ export default function LedgerSettings() {
                                                 <>
                                                     <span className="font-semibold text-slate-700 text-sm">{cat.name}</span>
                                                     <div className="flex items-center gap-1">
-                                                        <button onClick={() => { setEditingCatId(cat.id); setEditCatName(cat.name); }} className="p-1.5 text-slate-400 hover:bg-slate-100 hover:text-blue-600 rounded-md"><Edit2 className="w-3.5 h-3.5" /></button>
+                                                        <button onClick={() => { setEditingCatId(cat.id); setEditCatName(cat.name); }} className="p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#1E4DA6] rounded-md"><Edit2 className="w-3.5 h-3.5" /></button>
                                                         <button onClick={() => handleDeleteCategory(cat.id)} className="p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 rounded-md"><Trash2 className="w-3.5 h-3.5" /></button>
                                                     </div>
                                                 </>

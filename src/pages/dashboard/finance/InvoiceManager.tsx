@@ -21,7 +21,7 @@ function Skeleton({ className }: { className?: string }) {
 
 const STATUS_STYLES: Record<string, { bg: string; text: string; icon: React.ReactNode }> = {
     DRAFT:          { bg: 'bg-slate-100',  text: 'text-slate-600',   icon: <Clock className="h-3 w-3" /> },
-    OPEN:           { bg: 'bg-blue-50',    text: 'text-blue-700',    icon: <AlertCircle className="h-3 w-3" /> },
+    OPEN:           { bg: 'bg-[#1E4DA6]/5',    text: 'text-[#173F8C]',    icon: <AlertCircle className="h-3 w-3" /> },
     SENT:           { bg: 'bg-indigo-50',  text: 'text-indigo-700',  icon: <Send className="h-3 w-3" /> },
     PARTIALLY_PAID: { bg: 'bg-amber-50',   text: 'text-amber-700',   icon: <Clock className="h-3 w-3" /> },
     PAID:           { bg: 'bg-emerald-50', text: 'text-emerald-700', icon: <CheckCircle2 className="h-3 w-3" /> },
@@ -46,11 +46,21 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
 
     const handlePrint = () => {
         const content = printRef.current?.innerHTML;
-        const win = window.open('', '_blank');
-        if (!win || !content) {
-            // Most likely a mobile/desktop popup blocker silently ate window.open() — say so
-            // instead of the button doing nothing with zero feedback.
-            toast.error('Could not open the print preview. Please allow pop-ups for this site and try again.');
+        if (!content) return;
+
+        // Hidden iframe instead of window.open() — popups get blocked on many
+        // mobile/desktop browsers, and window.open()-based printing crashes
+        // the print spooler on Android Chrome. See src/lib/printUtils.ts for
+        // the shared version of this fix; this modal builds its own HTML
+        // string (thermal vs A4 stylesheets) so it can't reuse that helper
+        // directly, but uses the same iframe technique.
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        const win = iframe.contentWindow;
+        if (!win) {
+            document.body.removeChild(iframe);
+            toast.error('Could not prepare the print preview. Please try again.');
             return;
         }
 
@@ -84,22 +94,23 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
                     @page{size:A4 portrait;margin:10mm}
                     body{padding:0;width:100%}
                 }
-                .hdr{background:#1e40af;color:#fff;padding:24px 32px;border-radius:12px 12px 0 0}
+                .hdr{background:linear-gradient(135deg,#0B1F4E,#122B5C);color:#fff;padding:24px 32px;border-radius:12px 12px 0 0;border-bottom:3px solid #F5B800}
                 .hdr h1{font-size:20px;font-weight:800}
-                .hdr p{font-size:12px;opacity:.7;margin-top:4px}
+                .hdr p{font-size:12px;opacity:.85;margin-top:4px;color:#FFC72C;text-transform:uppercase;letter-spacing:0.05em;font-weight:700}
                 .bdy{padding:24px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px}
                 .meta{display:flex;justify-content:space-between;margin-bottom:20px}
                 .meta-label{font-size:10px;color:#64748b;text-transform:uppercase;font-weight:700}
                 .meta-val{font-weight:700;margin-top:4px}
                 .meta-sub{font-size:12px;color:#64748b}
                 table{width:100%;border-collapse:collapse;margin:16px 0;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden}
-                thead{background:#f8fafc}
-                th{padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;color:#64748b;font-weight:700}
+                thead{background:#0B1F4E}
+                th{padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;color:#fff;font-weight:700}
                 td{padding:10px 14px;border-top:1px solid #f1f5f9;font-size:13px}
                 td:last-child{text-align:right;font-weight:600}
+                tbody tr:nth-child(even){background:#FDF6E3}
                 .totals{margin-top:16px;padding-top:16px;border-top:2px solid #e2e8f0}
                 .trow{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
-                .trow.grand{font-size:18px;font-weight:800;color:#1e40af;border-top:2px solid #1e40af;padding-top:10px;margin-top:8px}
+                .trow.grand{font-size:18px;font-weight:800;color:#0B1F4E;border-top:2px solid #F5B800;padding-top:10px;margin-top:8px}
                 .trow.disc{color:#15803d}
                 .trow.bal{color:#dc2626;font-weight:700}
                 .footer{margin-top:28px;text-align:center;font-size:11px;color:#94a3b8}
@@ -117,6 +128,7 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
             } catch (e) {
                 console.error('Failed to mark as printed', e);
             }
+            setTimeout(() => { document.body.removeChild(iframe); }, 1000);
         }, 500);
     };
 
@@ -138,7 +150,7 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
                             <option value="THERMAL">POS Thermal</option>
                         </select>
                         <button onClick={handlePrint}
-                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 h-10 sm:h-9 text-sm font-bold text-white hover:bg-blue-800 whitespace-nowrap">
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-[#0B1F4E] px-4 h-10 sm:h-9 text-sm font-bold text-white hover:bg-[#122B5C] whitespace-nowrap">
                             <Printer className="h-4 w-4 shrink-0" /> Print / Save
                         </button>
                         <button onClick={onClose}
@@ -162,7 +174,7 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
                                 opacity: 0.06,
                                 pointerEvents: 'none',
                                 textTransform: 'uppercase',
-                                color: inv.status === 'PAID' ? '#15803d' : inv.balanceDue > 0 ? '#b91c1c' : '#1e40af',
+                                color: inv.status === 'PAID' ? '#15803d' : inv.balanceDue > 0 ? '#b91c1c' : '#0B1F4E',
                                 zIndex: 0,
                                 letterSpacing: '0.1em'
                             }}>
@@ -178,7 +190,7 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
 
                             if (headerMode === 'CENTERED') {
                                 return (
-                                    <div className="hdr" style={{background:'#1e40af',color:'#fff',padding:'24px 32px',borderRadius:'12px 12px 0 0',textAlign:'center'}}>
+                                    <div className="hdr" style={{background:'linear-gradient(135deg,#0B1F4E,#122B5C)',color:'#fff',padding:'24px 32px',borderRadius:'12px 12px 0 0',textAlign:'center',borderBottom:'3px solid #F5B800'}}>
                                         {showLogo && <img src={logoSrc} alt="Logo" style={{height:'48px',margin:'0 auto 10px',objectFit:'contain'}} />}
                                         <h1 style={{fontSize:'22px',fontWeight:800,color:'#ffffff'}}>{inv.school?.name || settings?.schoolName || 'School Invoice'}</h1>
                                         <p style={{fontSize:'12px',opacity:.8,marginTop:'4px'}}>
@@ -190,7 +202,7 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
 
                             if (headerMode === 'MINIMAL_RIGHT') {
                                 return (
-                                    <div className="hdr" style={{background:'#1e40af',color:'#fff',padding:'24px 32px',borderRadius:'12px 12px 0 0',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                                    <div className="hdr" style={{background:'linear-gradient(135deg,#0B1F4E,#122B5C)',color:'#fff',padding:'24px 32px',borderRadius:'12px 12px 0 0',display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'3px solid #F5B800'}}>
                                         <div style={{display:'flex',alignItems:'center',gap:'14px'}}>
                                             {showLogo && <img src={logoSrc} alt="Logo" style={{height:'44px',objectFit:'contain'}} />}
                                             <div>
@@ -208,7 +220,7 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
                             }
 
                             return (
-                                <div className="hdr" style={{background:'#1e40af',color:'#fff',padding:'24px 32px',borderRadius:'12px 12px 0 0',display:'flex',alignItems:'center',gap:'16px'}}>
+                                <div className="hdr" style={{background:'linear-gradient(135deg,#0B1F4E,#122B5C)',color:'#fff',padding:'24px 32px',borderRadius:'12px 12px 0 0',display:'flex',alignItems:'center',gap:'16px',borderBottom:'3px solid #F5B800'}}>
                                     {showLogo && <img src={logoSrc} alt="Logo" style={{height:'48px',objectFit:'contain',borderRadius:'6px'}} />}
                                     <div>
                                         <h1 style={{fontSize:'20px',fontWeight:800,color:'#ffffff'}}>{inv.school?.name || settings?.schoolName || 'School Invoice'}</h1>
@@ -294,7 +306,7 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
                                         <span>− {settings?.currencySymbol || '₦'}{inv.discountTotal?.toLocaleString()}</span>
                                     </div>
                                 )}
-                                <div style={{display:'flex',justifyContent:'space-between',padding:'10px 0 4px',fontSize:'18px',fontWeight:800,color:'#1e40af',borderTop:'2px solid #1e40af',marginTop:'8px'}}>
+                                <div style={{display:'flex',justifyContent:'space-between',padding:'10px 0 4px',fontSize:'18px',fontWeight:800,color:'#0B1F4E',borderTop:'2px solid #F5B800',marginTop:'8px'}}>
                                     <span>Total Due</span>
                                     <span>{settings?.currencySymbol || '₦'}{inv.totalAmount?.toLocaleString()}</span>
                                 </div>
@@ -336,7 +348,7 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
 
                             {/* Footer Note */}
                             <p style={{marginTop:'24px',fontSize:'11px',color:'#94a3b8',textAlign:'center'}}>
-                                {settings?.financeModuleToggles?.display?.footerNote || 'Thank you for your prompt payment. Generated by Skooly Plus Finance System.'}
+                                {settings?.financeModuleToggles?.display?.footerNote || 'Thank you for your prompt payment.'}
                             </p>
                         </div>
                     </div>
@@ -578,20 +590,19 @@ export default function InvoiceManager() {
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');.im-root,.im-root *{font-family:'Plus Jakarta Sans',sans-serif!important}.im-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="im-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');.im-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="im-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-7xl">
 
                     {/* Breadcrumb */}
                     <div className="mb-5 flex items-center gap-1.5">
                         <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Invoices</span>
+                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Invoices</span>
                     </div>
 
                     <div className="mb-6 flex items-center gap-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-500 shadow-lg shadow-blue-200">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-indigo-500 shadow-lg shadow-[#1E4DA6]/20">
                             <FileText className="h-6 w-6 text-white" />
                         </div>
                         <div>
@@ -600,7 +611,7 @@ export default function InvoiceManager() {
                         </div>
                     </div>
 
-                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-sm backdrop-blur-xl">
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
                         <div className="flex flex-wrap items-center gap-3">
                             <div className="relative flex-1 min-w-[180px]">
                             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -609,30 +620,30 @@ export default function InvoiceManager() {
                                 value={filters.search}
                                 onChange={e => setFilters(s => ({ ...s, search: e.target.value }))} />
                         </div>
-                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400"
+                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60"
                             value={filters.status} onChange={e => setFilters(s => ({ ...s, status: e.target.value }))}>
                             <option value="">All Statuses</option>
                             {['DRAFT','OPEN','SENT','PARTIALLY_PAID','PAID','OVERDUE','CANCELLED','VOID'].map(s =>
                                 <option key={s} value={s}>{s.replace(/_/g,' ')}</option>
                             )}
                         </select>
-                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400"
+                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60"
                             value={filters.term} onChange={e => setFilters(s => ({ ...s, term: e.target.value }))}>
                             <option value="">All Terms</option>
                             {metaTerms.map(t => <option key={t} value={t}>{t}</option>)}
                         </select>
-                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400"
+                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60"
                             value={filters.academicYear} onChange={e => setFilters(s => ({ ...s, academicYear: e.target.value }))}>
                             <option value="">All Sessions</option>
                             {metaSessions.map(sess => <option key={sess.id} value={sess.name}>{sess.name}</option>)}
                         </select>
-                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400"
+                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60"
                             value={filters.isSent} onChange={e => setFilters(s => ({ ...s, isSent: e.target.value }))}>
                             <option value="">Any Sent Status</option>
                             <option value="true">Sent</option>
                             <option value="false">Not Sent</option>
                         </select>
-                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400"
+                        <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60"
                             value={filters.isPrinted} onChange={e => setFilters(s => ({ ...s, isPrinted: e.target.value }))}>
                             <option value="">Any Print Status</option>
                             <option value="true">Printed</option>
@@ -731,7 +742,7 @@ export default function InvoiceManager() {
                                                 <td className="px-6 py-3.5 text-center">
                                                     <input type="checkbox" className="rounded border-slate-300" checked={selectedIds.includes(inv.id)} onChange={(e) => setSelectedIds(prev => e.target.checked ? [...prev, inv.id] : prev.filter(id => id !== inv.id))} />
                                                 </td>
-                                                <td className="px-6 py-3.5 mono text-xs font-bold text-blue-700">{inv.invoiceNumber}</td>
+                                                <td className="px-6 py-3.5 mono text-xs font-bold text-[#173F8C]">{inv.invoiceNumber}</td>
                                                 <td className="px-6 py-3.5">
                                                     <p className="font-semibold text-slate-900 text-sm">{inv.student?.user?.name}</p>
                                                     <p className="mono text-[10px] text-slate-400">{inv.student?.admissionNo}</p>
@@ -748,7 +759,7 @@ export default function InvoiceManager() {
                                                 <td className="px-6 py-3.5 text-right">
                                                     <div className="flex items-center justify-end gap-0.5">
                                                         <button onClick={() => setPrintInv(inv)} title="Print"
-                                                            className="rounded-lg p-1.5 text-slate-400 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                                                            className="rounded-lg p-1.5 text-slate-400 hover:bg-[#1E4DA6]/5 hover:text-[#1E4DA6] transition-colors">
                                                             <Printer className="h-4 w-4" />
                                                         </button>
                                                         <button onClick={() => handleSend(inv)} title="Send to Parent" disabled={sending === inv.id}
@@ -800,7 +811,7 @@ export default function InvoiceManager() {
                                                                         )}
                                                                         <div className="flex justify-between px-4 py-2.5 text-sm font-bold">
                                                                             <span>Total</span>
-                                                                            <span className="mono text-blue-700">{fmt(inv.totalAmount)}</span>
+                                                                            <span className="mono text-[#173F8C]">{fmt(inv.totalAmount)}</span>
                                                                         </div>
                                                                         <div className="flex justify-between px-4 py-2.5 text-sm text-emerald-700">
                                                                             <span>Paid</span>
@@ -880,7 +891,7 @@ export default function InvoiceManager() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="mono text-[10px] font-bold text-blue-700 mb-4 tracking-widest">{inv.invoiceNumber}</div>
+                                            <div className="mono text-[10px] font-bold text-[#173F8C] mb-4 tracking-widest">{inv.invoiceNumber}</div>
                                             
                                             <div className="flex justify-between text-xs text-slate-500 mb-2">
                                                 <span>Term</span>

@@ -8,12 +8,8 @@ import { toast } from 'sonner';
 const FEATURES = [
     { key: 'timetable', label: 'Timetable', desc: 'Allow access to Timetable module' },
     { key: 'homework', label: 'Homework', desc: 'Allow access to Homework module' },
-    { key: 'behaviour', label: 'Behaviour & Skills', desc: 'Allow access to Behaviour module' },
-    { key: 'store', label: 'Online Store & POS', desc: 'Allow access to Online Store' },
     { key: 'whatsapp', label: 'WhatsApp', desc: 'Allow access to WhatsApp Integration' },
     { key: 'messaging', label: 'Messaging', desc: 'Allow access to in-app Messaging' },
-    { key: 'sms', label: 'SMS Services', desc: 'Allow access to SMS Services' },
-    { key: 'live-class', label: 'Live Class', desc: 'Allow access to Live Class module' },
     { key: 'question-paper', label: 'Question Paper', desc: 'Allow access to Question Paper generator' },
     { key: 'exams', label: 'Exams', desc: 'Allow access to Exams module' }
 ];
@@ -60,7 +56,7 @@ export function FeatureAccess() {
                         <h2 className="text-lg font-black text-slate-800">Module Access Control</h2>
                         <p className="text-sm text-slate-500">Disabled modules will be hidden from the sidebar for all users.</p>
                     </div>
-                    <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-sm">
+                    <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 bg-[#1E4DA6] hover:bg-[#173F8C] text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-sm">
                         {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} Save Changes
                     </button>
                 </div>

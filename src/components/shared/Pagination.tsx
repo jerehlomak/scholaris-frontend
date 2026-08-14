@@ -65,8 +65,8 @@ export function Pagination({ currentPage, totalPages, totalRecords, onPageChange
                                     aria-current={isCurrent ? 'page' : undefined}
                                     className={cn(
                                         "relative inline-flex items-center px-3 sm:px-4 py-2 text-sm font-semibold focus:z-20 focus:outline-offset-0 ring-1 ring-inset ring-slate-300 transition-colors",
-                                        isCurrent 
-                                            ? "z-10 bg-[#0036a1] text-white ring-[#0036a1] hover:bg-[#00287a]" 
+                                        isCurrent
+                                            ? "z-10 bg-[#1E4DA6] text-white ring-[#1E4DA6] hover:bg-[#173F8C]"
                                             : "text-slate-900 hover:bg-slate-50"
                                     )}
                                 >

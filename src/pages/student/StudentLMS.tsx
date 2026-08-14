@@ -49,7 +49,7 @@ export default function StudentLMS() {
             <div className="mb-6">
                 <h1 className="text-2xl font-bold text-slate-900">Learning Hub (LMS)</h1>
                 <div className="flex items-center text-xs text-slate-400 gap-1 mt-1">
-                    <Link to="/student" className="hover:text-blue-600 transition-colors">Home</Link>
+                    <Link to="/student" className="hover:text-[#1E4DA6] transition-colors">Home</Link>
                     <ChevronRight size={12} className="opacity-50" />
                     <span>LMS</span>
                 </div>
@@ -58,10 +58,10 @@ export default function StudentLMS() {
             {/* Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                 {[
-                    { icon: <BookOpen className="w-5 h-5" />, label: 'Assignments', value: assignments.length, color: 'bg-blue-50 text-blue-600' },
+                    { icon: <BookOpen className="w-5 h-5" />, label: 'Assignments', value: assignments.length, color: 'bg-[#1E4DA6]/5 text-[#1E4DA6]' },
                     { icon: <AlertTriangle className="w-5 h-5" />, label: 'Overdue', value: assignments.filter((a: any) => isOverdue(a.dueDate)).length, color: 'bg-red-100 text-red-600' },
                     { icon: <Clock className="w-5 h-5" />, label: 'Due Soon', value: assignments.filter((a: any) => a.dueDate && !isOverdue(a.dueDate)).length, color: 'bg-yellow-100 text-yellow-600' },
-                    { icon: <Upload className="w-5 h-5" />, label: 'Resources', value: lessons.length, color: 'bg-purple-100 text-purple-600' },
+                    { icon: <Upload className="w-5 h-5" />, label: 'Resources', value: lessons.length, color: 'bg-[#1E4DA6]/10 text-[#1E4DA6]' },
                 ].map((k, i) => (
                     <Card key={i} className="p-4 bg-white border border-slate-100 shadow-sm flex items-center gap-3">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${k.color}`}>{k.icon}</div>
@@ -77,7 +77,7 @@ export default function StudentLMS() {
             <div className="flex gap-1 bg-slate-100 rounded-xl p-1 w-fit mb-5">
                 {([['assignments', 'Assignments'], ['resources', 'Study Materials']] as const).map(([key, label]) => (
                     <button key={key} onClick={() => setTab(key)}
-                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${tab === key ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
+                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${tab === key ? 'bg-white text-[#1E4DA6] shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
                         {label}
                     </button>
                 ))}
@@ -95,7 +95,7 @@ export default function StudentLMS() {
                         <motion.div key={a.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
                             <Card className={`p-5 bg-white border shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${isOverdue(a.dueDate) ? 'border-red-100' : 'border-slate-100'}`}>
                                 <div className="flex gap-4 items-start">
-                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${isOverdue(a.dueDate) ? 'bg-red-100 text-red-600' : 'bg-blue-50 text-blue-600'}`}>
+                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${isOverdue(a.dueDate) ? 'bg-red-100 text-red-600' : 'bg-[#1E4DA6]/5 text-[#1E4DA6]'}`}>
                                         <BookOpen className="w-5 h-5" />
                                     </div>
                                     <div>
@@ -115,7 +115,7 @@ export default function StudentLMS() {
                                         size="sm"
                                         onClick={() => handleSubmit(a.id)}
                                         disabled={submitting === a.id || !!isOverdue(a.dueDate)}
-                                        className={`gap-1 text-xs ${isOverdue(a.dueDate) ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-blue-600 text-white'}`}
+                                        className={`gap-1 text-xs ${isOverdue(a.dueDate) ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-[#1E4DA6] text-white'}`}
                                     >
                                         {submitting === a.id ? (
                                             <span className="animate-pulse">Submitting...</span>
@@ -143,7 +143,7 @@ export default function StudentLMS() {
                     ) : lessons.map((l: any) => (
                         <Card key={l.id} className="p-5 bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow space-y-3">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+                                <div className="w-10 h-10 rounded-xl bg-[#1E4DA6]/10 text-[#1E4DA6] flex items-center justify-center shrink-0">
                                     <Upload className="w-5 h-5" />
                                 </div>
                                 <div>

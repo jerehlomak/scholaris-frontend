@@ -97,7 +97,7 @@ export default function TeacherPayroll() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
         <p className="text-sm font-medium text-slate-500">Loading payroll and payslip records…</p>
       </div>
     );
@@ -120,7 +120,7 @@ export default function TeacherPayroll() {
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6 pb-16">
       {/* ── Header Hero ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-900 p-6 text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-[#0E2450] p-6 text-white shadow-xl">
         <div
           className="absolute inset-0 opacity-10"
           style={{
@@ -131,26 +131,26 @@ export default function TeacherPayroll() {
         <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 text-[11px] font-bold uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#1E4DA6]/20 text-white/60 border border-[#1E4DA6]/30 text-[11px] font-bold uppercase tracking-wider">
                 Staff Self-Service
               </span>
-              <span className="text-xs text-blue-200">ID: {teacher.employeeId || 'N/A'}</span>
+              <span className="text-xs text-white/70">ID: {teacher.employeeId || 'N/A'}</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
               My Payroll & Payslips
             </h1>
-            <p className="mt-1 text-sm text-blue-200/90 max-w-xl">
+            <p className="mt-1 text-sm text-[#1E4DA6]/90 max-w-xl">
               View your monthly compensation details, download stamped payslips, track accumulated pensions, and inspect active loan deduction records.
             </p>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
             <div className="rounded-xl bg-white/10 backdrop-blur-md px-5 py-3 border border-white/15 text-right">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-blue-200">Monthly Net Pay</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/70">Monthly Net Pay</p>
               <p className="text-2xl sm:text-3xl font-black font-mono text-emerald-400">
                 {fmt(salaryStructure?.net || 0)}
               </p>
-              <p className="text-[11px] text-blue-200 mt-0.5">
+              <p className="text-[11px] text-white/70 mt-0.5">
                 Gross: {fmt(salaryStructure?.gross || 0)}
               </p>
             </div>
@@ -176,7 +176,7 @@ export default function TeacherPayroll() {
 
         <Card className="border border-slate-200 shadow-sm bg-white hover:shadow-md transition-shadow">
           <CardContent className="p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+            <div className="w-10 h-10 rounded-xl bg-[#1E4DA6]/5 text-[#1E4DA6] flex items-center justify-center shrink-0 border border-[#1E4DA6]/10">
               <Receipt size={20} />
             </div>
             <div className="min-w-0">
@@ -231,7 +231,7 @@ export default function TeacherPayroll() {
             className={cn(
               'flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap',
               activeTab === tab.id
-                ? 'bg-blue-600 text-white shadow-sm shadow-blue-200'
+                ? 'bg-[#1E4DA6] text-white shadow-sm shadow-[#1E4DA6]/20'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             )}
           >
@@ -249,7 +249,7 @@ export default function TeacherPayroll() {
             <Card className="bg-white border border-slate-200 shadow-sm md:col-span-1">
               <CardHeader className="pb-3 border-b border-slate-100">
                 <CardTitle className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                  <Landmark className="h-4 w-4 text-blue-600" />
+                  <Landmark className="h-4 w-4 text-[#1E4DA6]" />
                   Direct Deposit Account
                 </CardTitle>
               </CardHeader>
@@ -264,7 +264,7 @@ export default function TeacherPayroll() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
                     Account Number
                   </span>
-                  <p className="text-sm font-mono font-bold text-blue-700 tracking-wider">
+                  <p className="text-sm font-mono font-bold text-[#173F8C] tracking-wider">
                     {teacher.accountNumber || 'Not configured'}
                   </p>
                 </div>
@@ -326,15 +326,15 @@ export default function TeacherPayroll() {
 
               {/* Latest Payslip Quick Card */}
               {payslips.length > 0 && (
-                <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200/60 shadow-sm p-4">
+                <Card className="bg-gradient-to-r from-[#1E4DA6]/5 to-indigo-50 border border-[#1E4DA6]/60 shadow-sm p-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-[#1E4DA6] text-white flex items-center justify-center shrink-0">
                         <Receipt size={20} />
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-blue-950">Latest Stamped Payslip: {payslips[0].periodLabel}</p>
-                        <p className="text-xs text-blue-700 mt-0.5">
+                        <p className="text-xs font-bold text-[#081634]">Latest Stamped Payslip: {payslips[0].periodLabel}</p>
+                        <p className="text-xs text-[#173F8C] mt-0.5">
                           Net Disbursed: <span className="font-mono font-bold">{fmt(payslips[0].net)}</span> • Issued on {fmtDate(payslips[0].runDate)}
                         </p>
                       </div>
@@ -342,7 +342,7 @@ export default function TeacherPayroll() {
                     <Button
                       onClick={() => openPayslipModal(payslips[0])}
                       size="sm"
-                      className="gap-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-xs font-semibold"
+                      className="gap-1.5 rounded-lg bg-[#1E4DA6] text-white hover:bg-[#173F8C] text-xs font-semibold"
                     >
                       <Eye size={14} /> View & Print
                     </Button>
@@ -389,9 +389,9 @@ export default function TeacherPayroll() {
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     {payslips.map((slip: any) => (
-                      <tr key={slip.id} className="hover:bg-blue-50/40 transition-colors">
+                      <tr key={slip.id} className="hover:bg-[#1E4DA6]/8 transition-colors">
                         <td className="py-3.5 px-4 font-bold text-slate-800 flex items-center gap-2">
-                          <Calendar className="h-3.5 w-3.5 text-blue-500" />
+                          <Calendar className="h-3.5 w-3.5 text-[#1E4DA6]" />
                           {slip.periodLabel}
                         </td>
                         <td className="py-3.5 px-4 font-mono font-semibold text-slate-700">
@@ -413,7 +413,7 @@ export default function TeacherPayroll() {
                             onClick={() => openPayslipModal(slip)}
                             size="sm"
                             variant="outline"
-                            className="h-8 gap-1.5 text-xs font-semibold text-blue-700 border-blue-200 hover:bg-blue-50"
+                            className="h-8 gap-1.5 text-xs font-semibold text-[#173F8C] border-[#1E4DA6]/20 hover:bg-[#1E4DA6]/5"
                           >
                             <Eye size={13} /> View Payslip
                           </Button>
@@ -600,8 +600,8 @@ export default function TeacherPayroll() {
                                 <span className={cn(
                                   'px-2 py-0.5 rounded text-[10px] font-bold',
                                   rep.source === 'PAYROLL'
-                                    ? 'bg-blue-100 text-blue-800'
-                                    : 'bg-purple-100 text-purple-800'
+                                    ? 'bg-[#1E4DA6]/10 text-[#122F69]'
+                                    : 'bg-[#1E4DA6]/10 text-[#122F69]'
                                 )}>
                                   {rep.source}
                                 </span>

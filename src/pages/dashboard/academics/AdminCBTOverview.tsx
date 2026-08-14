@@ -28,8 +28,8 @@ export default function AdminCBTOverview() {
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'scheduled': return 'bg-[#0036a1]/10 text-[#0036a1]';
-            case 'active': return 'bg-[#6bc048]/10 text-[#6bc048]';
+            case 'scheduled': return 'bg-[#1E4DA6]/10 text-[#1E4DA6]';
+            case 'active': return 'bg-[#10b981]/10 text-[#10b981]';
             case 'completed': return 'bg-[#ff9800]/10 text-[#ff9800]';
             default: return 'bg-gray-100 text-gray-600';
         }
@@ -46,7 +46,7 @@ export default function AdminCBTOverview() {
             {/* Top Level Stats */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <Card className="p-6 bg-white border border-gray-100 shadow-sm flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-[#0036a1]/10 flex items-center justify-center text-[#0036a1]">
+                    <div className="w-12 h-12 rounded-xl bg-[#1E4DA6]/10 flex items-center justify-center text-[#1E4DA6]">
                         <BookOpen className="w-6 h-6" />
                     </div>
                     <div>
@@ -55,7 +55,7 @@ export default function AdminCBTOverview() {
                     </div>
                 </Card>
                 <Card className="p-6 bg-white border border-gray-100 shadow-sm flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-[#6bc048]/10 flex items-center justify-center text-[#6bc048]">
+                    <div className="w-12 h-12 rounded-xl bg-[#10b981]/10 flex items-center justify-center text-[#10b981]">
                         <Activity className="w-6 h-6" />
                     </div>
                     <div>
@@ -64,7 +64,7 @@ export default function AdminCBTOverview() {
                     </div>
                 </Card>
                 <Card className="p-6 bg-white border border-gray-100 shadow-sm flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600">
+                    <div className="w-12 h-12 rounded-xl bg-[#1E4DA6]/10 flex items-center justify-center text-[#1E4DA6]">
                         <Users className="w-6 h-6" />
                     </div>
                     <div>
@@ -92,7 +92,7 @@ export default function AdminCBTOverview() {
                         <select
                             value={filterStatus}
                             onChange={(e) => setFilterStatus(e.target.value)}
-                            className="px-4 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-[#0036a1] bg-white cursor-pointer"
+                            className="px-4 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-[#1E4DA6] bg-white cursor-pointer"
                         >
                             <option value="all">All Statuses</option>
                             <option value="scheduled">Scheduled</option>
@@ -104,7 +104,7 @@ export default function AdminCBTOverview() {
                             placeholder="Search Title or Subject..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full sm:w-64 px-4 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-[#0036a1]"
+                            className="w-full sm:w-64 px-4 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-[#1E4DA6]"
                         />
                     </div>
                 </div>
@@ -162,7 +162,7 @@ export default function AdminCBTOverview() {
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-20 h-2 bg-gray-100 rounded-full overflow-hidden">
                                                         <div
-                                                            className={`h-full ${completionRate === 100 ? 'bg-[#6bc048]' : 'bg-[#0036a1]'}`}
+                                                            className={`h-full ${completionRate === 100 ? 'bg-[#10b981]' : 'bg-[#1E4DA6]'}`}
                                                             style={{ width: `${completionRate}%` }}
                                                         />
                                                     </div>
@@ -171,7 +171,7 @@ export default function AdminCBTOverview() {
                                                 <div className="text-[10px] text-gray-400 mt-1">{examResults.length} Submissions</div>
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-[#0036a1] hover:bg-[#0036a1]/5">
+                                                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5">
                                                     View Details
                                                 </Button>
                                             </td>
@@ -197,9 +197,9 @@ export default function AdminCBTOverview() {
                     <div className="relative z-10 space-y-3 mt-6">
                         <div className="flex items-center justify-between text-sm">
                             <span className="font-bold text-gray-700">Senior Secondary 3</span>
-                            <span className="font-bold text-[#6bc048]">78% Avg</span>
+                            <span className="font-bold text-[#10b981]">78% Avg</span>
                         </div>
-                        <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden"><div className="w-[78%] h-full bg-[#6bc048]" /></div>
+                        <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden"><div className="w-[78%] h-full bg-[#10b981]" /></div>
 
                         <div className="flex items-center justify-between text-sm pt-2">
                             <span className="font-bold text-gray-700">Senior Secondary 1</span>

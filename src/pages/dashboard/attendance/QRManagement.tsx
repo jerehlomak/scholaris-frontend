@@ -231,7 +231,7 @@ export default function QRManagement() {
                                                                 <AlertDialogHeader>
                                                                     <AlertDialogTitle className="flex items-center gap-2"><AlertTriangle className="h-5 w-5 text-red-500" /> Revoke QR Token?</AlertDialogTitle>
                                                                     <AlertDialogDescription>
-                                                                        The holder of this printed ID card will immediately be blocked at all scan terminals.
+                                                                        The holder of this printed ID card will immediately be invalidated for any feature that verifies this QR token.
                                                                     </AlertDialogDescription>
                                                                 </AlertDialogHeader>
                                                                 <AlertDialogFooter>

@@ -88,9 +88,8 @@ export default function PayslipGenerator() {
 
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');.pg-root,.pg-root *{font-family:'Plus Jakarta Sans',sans-serif!important}.pg-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-      <div className="pg-root min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/20 to-purple-50/20 px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
-        <div className="pointer-events-none fixed inset-0 opacity-[0.2]" style={{backgroundImage:'radial-gradient(circle,#94a3b8 1px,transparent 1px)',backgroundSize:'28px 28px'}}/>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');.pg-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+      <div className="pg-root min-h-screen bg-[#FBF9F5] px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
         <div className="relative z-10 mx-auto max-w-5xl">
 
           {/* Breadcrumb */}
@@ -108,7 +107,7 @@ export default function PayslipGenerator() {
           </div>
 
           {/* Controls */}
-          <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 backdrop-blur-xl transition-all duration-500',vis?'opacity-100':'opacity-0 translate-y-3')}>
+          <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 transition-all duration-500',vis?'opacity-100':'opacity-0 translate-y-3')}>
             <div className="flex items-center gap-2.5 sm:gap-3 border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
               <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
                 <FileText className="h-4 w-4 sm:h-4.5 sm:w-4.5"/>
@@ -263,7 +262,7 @@ export default function PayslipGenerator() {
                   </div>
 
                   {/* Net Pay hero */}
-                  <div className="net-box mb-4 sm:mb-5 flex items-center justify-between rounded-2xl bg-gradient-to-r from-indigo-700 to-blue-600 p-4 sm:p-5 text-white shadow-lg">
+                  <div className="net-box mb-4 sm:mb-5 flex items-center justify-between rounded-2xl bg-gradient-to-r from-indigo-700 to-[#1E4DA6] p-4 sm:p-5 text-white shadow-lg">
                     <div>
                       <p className="mono text-[10px] sm:text-xs font-bold uppercase tracking-widest opacity-75">Net Pay</p>
                       <p className="mt-0.5 text-[10px] sm:text-xs opacity-60">{payslip.period.label}</p>

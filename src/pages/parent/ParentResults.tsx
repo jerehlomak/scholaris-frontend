@@ -7,6 +7,7 @@ import { fetcher } from '../../utils/fetcher';
 import ReportCardPreview from '../../components/report/ReportCardPreview';
 import ReportCard from '../../components/report-blocks/ReportCard';
 import { Card } from '../../components/ui/card';
+import { mobileSafePrint } from '../../lib/printUtils';
 export default function ParentResults() {
     const [activeTab, setActiveTab] = useState<'current'|'legacy'>('current');
     const [childId, setChildId] = useState('');
@@ -133,14 +134,7 @@ export default function ParentResults() {
 
     const handlePrint = () => {
         if (!cardData) return;
-        const el = document.getElementById('report-card-printable');
-        if (!el) return;
-        const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]')).map(s => s.outerHTML).join('');
-        const w = window.open('', '_blank', 'width=900,height=700');
-        w?.document.write(`<html><head><title>Report Card</title>${styles}<style>body{margin:0}@media print{@page{size:A4;margin:10mm}}</style></head><body class="bg-white">${el.outerHTML}</body></html>`);
-        w?.document.close();
-        w?.focus();
-        setTimeout(() => { w?.print(); w?.close(); }, 500);
+        mobileSafePrint('report-card-printable');
     };
 
     const handleDownloadPDF = async () => {
@@ -218,7 +212,7 @@ export default function ParentResults() {
                     <h1 className="text-2xl font-bold text-gray-900">Report Cards</h1>
                     <div className="flex items-center text-xs text-gray-400 gap-1 mt-1">
                         <HomeIcon size={12} />
-                        <Link to="/parent" className="hover:text-blue-700 transition-colors">Home</Link>
+                        <Link to="/parent" className="hover:text-[#173F8C] transition-colors">Home</Link>
                         <ChevronRight size={12} className="opacity-50" />
                         <span>Results</span>
                     </div>
@@ -228,13 +222,13 @@ export default function ParentResults() {
             <div className="flex space-x-1 border-b border-gray-200">
                 <button
                     onClick={() => setActiveTab('current')}
-                    className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'current' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
+                    className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'current' ? 'border-[#1E4DA6] text-[#1E4DA6]' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
                 >
                     Current Results
                 </button>
                 <button
                     onClick={() => setActiveTab('legacy')}
-                    className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'legacy' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
+                    className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'legacy' ? 'border-[#1E4DA6] text-[#1E4DA6]' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
                 >
                     Legacy Results (Previous App)
                 </button>
@@ -248,17 +242,17 @@ export default function ParentResults() {
                     ) : legacyData?.legacyResults?.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {legacyData.legacyResults.filter((lr: any) => !lr.studentId || lr.studentId === childId).map((lr: any) => (
-                                <div key={lr.id} className="border border-gray-200 rounded-lg p-4 flex flex-col hover:border-blue-300 transition-colors bg-slate-50/50">
+                                <div key={lr.id} className="border border-gray-200 rounded-lg p-4 flex flex-col hover:border-[#1E4DA6]/35 transition-colors bg-slate-50/50">
                                     <div className="flex justify-between items-start mb-2">
                                         <div>
                                             <p className="font-bold text-gray-800">{lr.academicYear}</p>
                                             <p className="text-sm text-gray-600">{lr.term}</p>
                                         </div>
-                                        <span className="bg-blue-100 text-blue-800 text-[10px] px-2 py-1 rounded font-bold">LEGACY</span>
+                                        <span className="bg-[#1E4DA6]/10 text-[#122F69] text-[10px] px-2 py-1 rounded font-bold">LEGACY</span>
                                     </div>
                                     {lr.sessionName && <p className="text-xs text-gray-500 mb-2">{lr.sessionName}</p>}
                                     <p className="text-xs text-gray-500 mb-4">Class: {lr.class?.name}</p>
-                                    <a href={lr.fileUrl} target="_blank" rel="noreferrer" className="mt-auto bg-blue-50 text-blue-700 font-semibold text-sm py-2 px-4 rounded-lg text-center flex items-center justify-center gap-2 hover:bg-blue-100 transition-colors">
+                                    <a href={lr.fileUrl} target="_blank" rel="noreferrer" className="mt-auto bg-[#1E4DA6]/5 text-[#173F8C] font-semibold text-sm py-2 px-4 rounded-lg text-center flex items-center justify-center gap-2 hover:bg-[#1E4DA6]/10 transition-colors">
                                         <Download className="w-4 h-4" /> Download PDF
                                     </a>
                                 </div>
@@ -286,7 +280,7 @@ export default function ParentResults() {
                                 <select
                                     value={childId}
                                     onChange={e => { setChildId(e.target.value); setShowCard(false); }}
-                                    className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm bg-white outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+                                    className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm bg-white outline-none focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6] transition-colors"
                                 >
                                     {children.length === 0 && <option value="">No children linked</option>}
                                     {children.map((c: any) => <option key={c.id} value={c.id}>{c.name || `${c.firstName} ${c.lastName}`}</option>)}
@@ -298,7 +292,7 @@ export default function ParentResults() {
                                     <select
                                         value={year}
                                         onChange={e => { setYear(e.target.value); setShowCard(false); }}
-                                        className="w-full border border-slate-200 rounded-xl px-2 py-2.5 text-sm bg-white outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+                                        className="w-full border border-slate-200 rounded-xl px-2 py-2.5 text-sm bg-white outline-none focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6] transition-colors"
                                     >
                                         {sessions.map(s => <option key={s.id} value={s.name}>{s.name}</option>)}
                                         {sessions.length === 0 && (
@@ -314,7 +308,7 @@ export default function ParentResults() {
                                     <select
                                         value={term}
                                         onChange={e => { setTerm(e.target.value); setShowCard(false); }}
-                                        className="w-full border border-slate-200 rounded-xl px-2 py-2.5 text-sm bg-white outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+                                        className="w-full border border-slate-200 rounded-xl px-2 py-2.5 text-sm bg-white outline-none focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6] transition-colors"
                                     >
                                         {terms.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
                                         {terms.length === 0 && (
@@ -336,7 +330,7 @@ export default function ParentResults() {
                                 <Button
                                     onClick={() => loadReportCard()}
                                     disabled={cardLoading || !childId}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white gap-2 w-full sm:w-auto"
+                                    className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white gap-2 w-full sm:w-auto"
                                 >
                                     {cardLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <BookOpen className="w-4 h-4" />}
                                     {cardLoading ? 'Loading…' : 'View Report'}
@@ -444,11 +438,11 @@ export default function ParentResults() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
                     <div className="bg-white dark:bg-[#1a1a2e] w-full max-w-md rounded-2xl shadow-2xl p-6 border border-gray-100 dark:border-white/5 relative overflow-hidden">
                         {/* Decorative Top Banner */}
-                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500" />
+                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#1E4DA6] to-indigo-500" />
                         
                         <div className="text-center mb-6">
-                            <div className="w-16 h-16 mx-auto bg-blue-50 dark:bg-blue-500/10 rounded-2xl flex items-center justify-center mb-4">
-                                <KeyRound className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                            <div className="w-16 h-16 mx-auto bg-[#1E4DA6]/5 dark:bg-[#1E4DA6]/10 rounded-2xl flex items-center justify-center mb-4">
+                                <KeyRound className="w-8 h-8 text-[#1E4DA6] dark:text-[#1E4DA6]/60" />
                             </div>
                             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Result Access PIN Required</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400">Please enter your result checking PIN to view the report card for {term}.</p>
@@ -465,7 +459,7 @@ export default function ParentResults() {
                                         setPinCode(e.target.value.toUpperCase());
                                         setPinError(null);
                                     }}
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-black/20 text-gray-900 dark:text-white font-mono text-center tracking-widest outline-none focus:ring-2 focus:ring-blue-500/50 transition-all uppercase"
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-black/20 text-gray-900 dark:text-white font-mono text-center tracking-widest outline-none focus:ring-2 focus:ring-[#1E4DA6]/50 transition-all uppercase"
                                     autoFocus
                                 />
                                 {pinError && <p className="text-xs text-red-500 mt-2 flex items-center gap-1 justify-center"><AlertCircle className="w-3 h-3" /> {pinError}</p>}
@@ -476,7 +470,7 @@ export default function ParentResults() {
                                     Cancel
                                 </Button>
                                 <Button 
-                                    className="flex-1 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 border-0"
+                                    className="flex-1 rounded-xl bg-gradient-to-r from-[#1E4DA6] to-indigo-600 text-white shadow-md shadow-[#1E4DA6]/20 hover:shadow-lg hover:shadow-[#1E4DA6]/30 border-0"
                                     onClick={() => loadReportCard()}
                                     disabled={!pinCode || pinCode.length < 5 || cardLoading}
                                 >

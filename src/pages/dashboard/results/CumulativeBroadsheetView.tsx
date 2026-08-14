@@ -126,10 +126,10 @@ export default function CumulativeBroadsheetView({ classId, year, API }: Cumulat
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                 <h3 className="font-bold text-lg text-gray-900">Cumulative Broadsheet: {data?.classInfo?.name}</h3>
                 <div className="flex justify-center sm:justify-end gap-2 flex-wrap w-full sm:w-auto">
-                    <Button variant="outline" size="sm" onClick={handleSharePDF} className="gap-2 text-[#0036a1] border-[#0036a1]/30">
+                    <Button variant="outline" size="sm" onClick={handleSharePDF} className="gap-2 text-[#1E4DA6] border-[#1E4DA6]/30">
                         <Share2 className="w-4 h-4" /> Share PDF
                     </Button>
-                    <Button variant="outline" size="sm" onClick={handlePrint} className="gap-2 text-[#0036a1] border-[#0036a1]/30">
+                    <Button variant="outline" size="sm" onClick={handlePrint} className="gap-2 text-[#1E4DA6] border-[#1E4DA6]/30">
                         <Printer className="w-4 h-4" /> Print
                     </Button>
                 </div>
@@ -182,7 +182,7 @@ export default function CumulativeBroadsheetView({ classId, year, API }: Cumulat
                                     </td>
                                 ))}
                                 <td className="border border-gray-300 p-2 text-center font-bold">{st.cumTotal}</td>
-                                <td className="border border-gray-300 p-2 text-center font-bold text-[#0036a1]">{st.averageStr}</td>
+                                <td className="border border-gray-300 p-2 text-center font-bold text-[#1E4DA6]">{st.averageStr}</td>
                                 <td className="border border-gray-300 p-2 text-center font-semibold text-green-700">{st.grade || '-'}</td>
                                 <td className="border border-gray-300 p-2 text-center text-gray-600">{st.remark || '-'}</td>
                                 <td className="border border-gray-300 p-2 text-center font-bold">{st.position}</td>

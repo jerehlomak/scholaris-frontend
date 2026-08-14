@@ -431,18 +431,16 @@ export default function InventoryManagement() {
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap');
-                .fd-root, .fd-root * { font-family: 'Plus Jakarta Sans', sans-serif !important; }
                 .fd-root .mono { font-family: 'DM Mono', monospace !important; }
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
             `}</style>
             
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <div className="fd-root min-h-screen bg-[#FBF9F5] px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-7xl">
                     
                     {/* ─── TOP HEADER ─── */}
-                    <div className="mb-4 sm:mb-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 p-4 sm:p-6 shadow-xl shadow-slate-100/50 backdrop-blur-xl">
+                    <div className="mb-4 sm:mb-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 p-4 sm:p-6 shadow-xl shadow-slate-100/50">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex items-start sm:items-center gap-3 sm:gap-4">
                                 <div className="flex h-12 w-12 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-emerald-400 shadow-lg shadow-emerald-200 text-white">
@@ -521,7 +519,7 @@ export default function InventoryManagement() {
                                     : 'border border-slate-200/80 bg-white text-slate-600 hover:bg-slate-50'
                             }`}
                         >
-                            <ArrowDownRight className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${activeTab === 'restock' ? 'text-white' : 'text-blue-600'}`} />
+                            <ArrowDownRight className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${activeTab === 'restock' ? 'text-white' : 'text-[#1E4DA6]'}`} />
                             Batch Restock (Stock In)
                         </button>
 
@@ -567,10 +565,10 @@ export default function InventoryManagement() {
                             <div className="rounded-xl sm:rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm">
                                 <div className="flex items-center justify-between text-slate-400">
                                     <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider">Stock Cost Value</span>
-                                    <DollarSign className="h-3.5 w-3.5 text-blue-500" />
+                                    <DollarSign className="h-3.5 w-3.5 text-[#1E4DA6]" />
                                 </div>
                                 <p className="mono mt-0.5 sm:mt-1 text-base sm:text-lg font-black text-slate-900">{fmtCompact(valuation?.totalCostValue || 0)}</p>
-                                <p className="text-[9px] sm:text-[10px] font-semibold text-blue-600 mt-0.5 truncate">Total purchase cost</p>
+                                <p className="text-[9px] sm:text-[10px] font-semibold text-[#1E4DA6] mt-0.5 truncate">Total purchase cost</p>
                             </div>
 
                             <div className="rounded-xl sm:rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm">
@@ -926,14 +924,14 @@ export default function InventoryManagement() {
                 {/* ─── TAB 3: INTERNAL USAGE & DAMAGE LOG ─── */}
                 {activeTab === 'usage' && (
                     <div className="space-y-6">
-                        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white rounded-3xl p-6 sm:p-8 shadow-lg shadow-blue-500/10">
+                        <div className="bg-gradient-to-r from-[#1E4DA6] via-indigo-600 to-indigo-700 text-white rounded-3xl p-6 sm:p-8 shadow-lg shadow-[#1E4DA6]/10">
                             <span className="inline-block px-2.5 py-1 rounded-lg text-[11px] font-bold uppercase tracking-widest bg-white/20 text-white backdrop-blur-sm">
                                 Internal School Consumption
                             </span>
                             <h2 className="text-xl sm:text-2xl font-extrabold mt-2 text-white">
                                 Stock Out, Classroom Distribution & Damage Log
                             </h2>
-                            <p className="text-xs sm:text-sm text-blue-100 mt-2 max-w-2xl leading-relaxed font-medium">
+                            <p className="text-xs sm:text-sm text-white/80 mt-2 max-w-2xl leading-relaxed font-medium">
                                 Record consumable dispatches to teachers, science laboratories, classroom sets, or damaged goods. Stock deductions immediately update available store inventory.
                             </p>
                         </div>
@@ -1008,7 +1006,7 @@ export default function InventoryManagement() {
                                                             mov.type === 'RESTOCK' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
                                                             mov.type === 'POS_SALE' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' :
                                                             mov.type === 'USAGE' ? 'bg-amber-50 text-amber-700 border-amber-200' :
-                                                            mov.type === 'RETURN' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                                                            mov.type === 'RETURN' ? 'bg-[#1E4DA6]/5 text-[#173F8C] border-[#1E4DA6]/20' :
                                                             'bg-rose-50 text-rose-700 border-rose-200'
                                                         )}>
                                                             {mov.type}
@@ -1055,19 +1053,19 @@ export default function InventoryManagement() {
                                 exit={{ scale: 0.95, y: 20 }}
                                 className="w-full max-w-3xl bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden"
                             >
-                            <div className="px-6 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white flex items-center justify-between shadow-md">
+                            <div className="px-6 py-4 bg-gradient-to-r from-[#1E4DA6] via-indigo-600 to-indigo-700 text-white flex items-center justify-between shadow-md">
                                 <div>
                                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                                        <Boxes className="h-5 w-5 text-blue-200" />
+                                        <Boxes className="h-5 w-5 text-white/70" />
                                         {editingItem ? 'Edit Inventory Item' : 'Add New Inventory Item'}
                                     </h3>
-                                    <p className="text-xs text-blue-100 font-medium mt-0.5">
+                                    <p className="text-xs text-white/80 font-medium mt-0.5">
                                         Set up catalog product details, pricing, units, and safety reorder alerts
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setShowItemModal(false)}
-                                    className="p-2 rounded-xl text-blue-100 hover:text-white hover:bg-white/15 transition-all"
+                                    className="p-2 rounded-xl text-white/80 hover:text-white hover:bg-white/15 transition-all"
                                 >
                                     <X className="h-5 w-5" />
                                 </button>
@@ -1249,19 +1247,19 @@ export default function InventoryManagement() {
                             exit={{ scale: 0.95, y: 20 }}
                             className="w-full max-w-lg bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden"
                         >
-                            <div className="px-6 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white flex items-center justify-between shadow-md">
+                            <div className="px-6 py-4 bg-gradient-to-r from-[#1E4DA6] via-indigo-600 to-indigo-700 text-white flex items-center justify-between shadow-md">
                                 <div>
                                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                                        <ArrowDownRight className="h-5 w-5 text-blue-200" />
+                                        <ArrowDownRight className="h-5 w-5 text-white/70" />
                                         Restock Batch Intake
                                     </h3>
-                                    <p className="text-xs text-blue-100 font-medium mt-0.5">
+                                    <p className="text-xs text-white/80 font-medium mt-0.5">
                                         Adding stock for {selectedItem.name} ({selectedItem.sku})
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setShowRestockModal(false)}
-                                    className="p-2 rounded-xl text-blue-100 hover:text-white hover:bg-white/15 transition-all"
+                                    className="p-2 rounded-xl text-white/80 hover:text-white hover:bg-white/15 transition-all"
                                 >
                                     <X className="h-5 w-5" />
                                 </button>
@@ -1381,19 +1379,19 @@ export default function InventoryManagement() {
                             exit={{ scale: 0.95, y: 20 }}
                             className="w-full max-w-lg bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden"
                         >
-                            <div className="px-6 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white flex items-center justify-between shadow-md">
+                            <div className="px-6 py-4 bg-gradient-to-r from-[#1E4DA6] via-indigo-600 to-indigo-700 text-white flex items-center justify-between shadow-md">
                                 <div>
                                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                                        <ArrowUpRight className="h-5 w-5 text-blue-200" />
+                                        <ArrowUpRight className="h-5 w-5 text-white/70" />
                                         Record Stock Deduction
                                     </h3>
-                                    <p className="text-xs text-blue-100 font-medium mt-0.5">
+                                    <p className="text-xs text-white/80 font-medium mt-0.5">
                                         For {selectedItem.name} ({selectedItem.quantityOnHand} {selectedItem.unit} available)
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setShowUsageModal(false)}
-                                    className="p-2 rounded-xl text-blue-100 hover:text-white hover:bg-white/15 transition-all"
+                                    className="p-2 rounded-xl text-white/80 hover:text-white hover:bg-white/15 transition-all"
                                 >
                                     <X className="h-5 w-5" />
                                 </button>
@@ -1491,19 +1489,19 @@ export default function InventoryManagement() {
                             exit={{ scale: 0.95, y: 20 }}
                             className="w-full max-w-2xl bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden"
                         >
-                            <div className="px-6 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white flex items-center justify-between shadow-md">
+                            <div className="px-6 py-4 bg-gradient-to-r from-[#1E4DA6] via-indigo-600 to-indigo-700 text-white flex items-center justify-between shadow-md">
                                 <div>
                                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                                        <History className="h-5 w-5 text-blue-200" />
+                                        <History className="h-5 w-5 text-white/70" />
                                         Stock Card History
                                     </h3>
-                                    <p className="text-xs text-blue-100 font-medium mt-0.5">
+                                    <p className="text-xs text-white/80 font-medium mt-0.5">
                                         Audit movements for {selectedItem.name} ({selectedItem.sku})
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setShowMovementsModal(false)}
-                                    className="p-2 rounded-xl text-blue-100 hover:text-white hover:bg-white/15 transition-all"
+                                    className="p-2 rounded-xl text-white/80 hover:text-white hover:bg-white/15 transition-all"
                                 >
                                     <X className="h-5 w-5" />
                                 </button>

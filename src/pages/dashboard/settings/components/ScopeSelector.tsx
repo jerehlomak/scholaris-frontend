@@ -62,11 +62,11 @@ export function ScopeSelector({ value, type, onChange, label = "Configuration Sc
     <div className="relative mb-6">
       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">{label}</label>
       <div 
-        className="w-full md:w-96 flex items-center justify-between px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl cursor-pointer hover:border-blue-500 transition-colors"
+        className="w-full md:w-96 flex items-center justify-between px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl cursor-pointer hover:border-[#1E4DA6] transition-colors"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center gap-3">
-          <Monitor size={18} className="text-blue-600 dark:text-blue-400" />
+          <Monitor size={18} className="text-[#1E4DA6] dark:text-[#1E4DA6]/60" />
           <span className="text-slate-800 dark:text-slate-100 font-medium">{selectedOption?.name}</span>
         </div>
         <ChevronDown size={18} className="text-slate-500" />
@@ -85,16 +85,16 @@ export function ScopeSelector({ value, type, onChange, label = "Configuration Sc
                 {groupOptions.map(opt => (
                   <div
                     key={opt.id}
-                    className={`flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 ${selectedOption?.id === opt.id ? 'bg-blue-50 dark:bg-blue-900/20' : ''}`}
+                    className={`flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 ${selectedOption?.id === opt.id ? 'bg-[#1E4DA6]/5 dark:bg-[#0E2450]/20' : ''}`}
                     onClick={() => {
                       onChange(opt.value, opt.type);
                       setIsOpen(false);
                     }}
                   >
-                    <span className={`text-sm ${selectedOption?.id === opt.id ? 'text-blue-700 dark:text-blue-400 font-medium' : 'text-slate-700 dark:text-slate-300'}`}>
+                    <span className={`text-sm ${selectedOption?.id === opt.id ? 'text-[#173F8C] dark:text-[#1E4DA6]/60 font-medium' : 'text-slate-700 dark:text-slate-300'}`}>
                       {opt.name}
                     </span>
-                    {selectedOption?.id === opt.id && <Check size={16} className="text-blue-600 dark:text-blue-400" />}
+                    {selectedOption?.id === opt.id && <Check size={16} className="text-[#1E4DA6] dark:text-[#1E4DA6]/60" />}
                   </div>
                 ))}
               </div>

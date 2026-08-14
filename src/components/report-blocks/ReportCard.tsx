@@ -4,10 +4,10 @@ import StudentInfoBlock from './StudentInfoBlock';
 import AcademicSummaryBlock from './AcademicSummaryBlock';
 import SubjectResultsBlock from './SubjectResultsBlock';
 import AttendanceBlock from './AttendanceBlock';
-import TraitRatingsBlock from './TraitRatingsBlock';
 import NarrativeCommentsBlock from './NarrativeCommentsBlock';
 import RemarksBlock from './RemarksBlock';
 import SignaturesBlock from './SignaturesBlock';
+import DomainRatingsBlock from './DomainRatingsBlock';
 
 import CommentHeaderBlock from './CommentHeaderBlock';
 import CommentStudentInfoBlock from './CommentStudentInfoBlock';
@@ -21,10 +21,10 @@ const BLOCK_REGISTRY: Record<string, { component: React.FC<any> }> = {
     AcademicSummaryBlock: { component: AcademicSummaryBlock },
     SubjectResultsBlock: { component: SubjectResultsBlock },
     AttendanceBlock: { component: AttendanceBlock },
-    TraitRatingsBlock: { component: TraitRatingsBlock },
     NarrativeCommentsBlock: { component: NarrativeCommentsBlock },
     RemarksBlock: { component: RemarksBlock },
     SignaturesBlock: { component: SignaturesBlock },
+    DomainRatingsBlock: { component: DomainRatingsBlock },
     CommentHeaderBlock: { component: CommentHeaderBlock },
     CommentStudentInfoBlock: { component: CommentStudentInfoBlock },
     CommentSkillsGridBlock: { component: CommentSkillsGridBlock },
@@ -49,7 +49,6 @@ export default function ReportCard({ config, data }: ReportCardProps) {
 
     // Determine which blocks to show based on global toggles
     const isBlockVisible = (type: string) => {
-        if (type === 'TraitRatingsBlock') return toggles.showTraitRatings ?? true;
         if (type === 'AttendanceBlock') return toggles.showAttendance ?? true;
         if (type === 'NarrativeCommentsBlock') return toggles.showNarrative ?? true;
         if (type === 'AcademicSummaryBlock') return toggles.showAcademicSummaryCards ?? true;
@@ -83,18 +82,15 @@ export default function ReportCard({ config, data }: ReportCardProps) {
     };
 
     // Separate blocks if multi-column footer is enabled
-    const footerTypes = ['AttendanceBlock', 'TraitRatingsBlock', 'NarrativeCommentsBlock', 'RemarksBlock', 'SignaturesBlock', 'CommentNarrativeBlock', 'CommentSignaturesBlock'];
-    
+    const footerTypes = ['AttendanceBlock', 'NarrativeCommentsBlock', 'RemarksBlock', 'SignaturesBlock', 'CommentNarrativeBlock', 'CommentSignaturesBlock'];
+
     let renderedContent;
-    
+
     const visibleBlocks = blocks.filter((b: any) => b.isVisible && isBlockVisible(b.type));
 
     if (footerLayout === 'MULTI_COLUMN') {
         const topBlocks = visibleBlocks.filter((b: any) => !footerTypes.includes(b.type));
         const footerBlocks = visibleBlocks.filter((b: any) => footerTypes.includes(b.type));
-        
-        const col1Types = ['AttendanceBlock', 'TraitRatingsBlock'];
-        const col2Types = ['NarrativeCommentsBlock', 'RemarksBlock', 'SignaturesBlock', 'CommentNarrativeBlock', 'CommentSignaturesBlock'];
 
         renderedContent = (
             <>
@@ -106,15 +102,7 @@ export default function ReportCard({ config, data }: ReportCardProps) {
                                 {footerBlocks.filter((b: any) => b.type === 'AttendanceBlock').map(renderBlock)}
                             </div>
                             <div className="col-span-6">
-                                {footerBlocks.filter((b: any) => ['NarrativeCommentsBlock', 'RemarksBlock', 'CommentNarrativeBlock'].includes(b.type)).map(renderBlock)}
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-12 gap-5">
-                            <div className="col-span-6">
-                                {footerBlocks.filter((b: any) => b.type === 'TraitRatingsBlock').map(renderBlock)}
-                            </div>
-                            <div className="col-span-6">
-                                {footerBlocks.filter((b: any) => ['SignaturesBlock', 'CommentSignaturesBlock'].includes(b.type)).map(renderBlock)}
+                                {footerBlocks.filter((b: any) => ['NarrativeCommentsBlock', 'RemarksBlock', 'CommentNarrativeBlock', 'SignaturesBlock', 'CommentSignaturesBlock'].includes(b.type)).map(renderBlock)}
                             </div>
                         </div>
                     </div>

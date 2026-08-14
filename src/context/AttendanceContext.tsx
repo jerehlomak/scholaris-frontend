@@ -24,14 +24,14 @@ export interface AttendanceRecord {
 
 // ─── Mock Students ────────────────────────────────────────────────────────────
 export const MOCK_STUDENTS: Student[] = [
-    { id: 's1', name: 'Ayomide Balogun', admissionNo: 'ADM/2024/001', classLevel: 'SS 1', avatar: 'AB', avatarColor: 'bg-purple-500' },
+    { id: 's1', name: 'Ayomide Balogun', admissionNo: 'ADM/2024/001', classLevel: 'SS 1', avatar: 'AB', avatarColor: 'bg-[#1E4DA6]' },
     { id: 's2', name: 'Chinoso Obi', admissionNo: 'ADM/2024/002', classLevel: 'SS 1', avatar: 'CO', avatarColor: 'bg-orange-500' },
     { id: 's3', name: 'Fatima Musa', admissionNo: 'ADM/2024/003', classLevel: 'SS 1', avatar: 'FM', avatarColor: 'bg-pink-500' },
     { id: 's4', name: 'Emmanuel Adeyemi', admissionNo: 'ADM/2024/004', classLevel: 'SS 1', avatar: 'EA', avatarColor: 'bg-teal-500' },
     { id: 's5', name: 'Blessing Nwosu', admissionNo: 'ADM/2024/005', classLevel: 'SS 1', avatar: 'BN', avatarColor: 'bg-indigo-500' },
     { id: 's6', name: 'Kelechi Eze', admissionNo: 'ADM/2024/006', classLevel: 'SS 1', avatar: 'KE', avatarColor: 'bg-green-500' },
     { id: 's7', name: 'Amina Yusuf', admissionNo: 'ADM/2024/007', classLevel: 'SS 1', avatar: 'AY', avatarColor: 'bg-red-500' },
-    { id: 's8', name: 'David Okonkwo', admissionNo: 'ADM/2024/008', classLevel: 'SS 1', avatar: 'DO', avatarColor: 'bg-blue-500' },
+    { id: 's8', name: 'David Okonkwo', admissionNo: 'ADM/2024/008', classLevel: 'SS 1', avatar: 'DO', avatarColor: 'bg-[#1E4DA6]' },
     { id: 's9', name: 'Ngozi Ibe', admissionNo: 'ADM/2024/009', classLevel: 'JSS 2', avatar: 'NI', avatarColor: 'bg-yellow-600' },
     { id: 's10', name: 'Tunde Afolabi', admissionNo: 'ADM/2024/010', classLevel: 'JSS 2', avatar: 'TA', avatarColor: 'bg-cyan-600' },
     { id: 's11', name: 'Ifeoma Chukwu', admissionNo: 'ADM/2024/011', classLevel: 'JSS 2', avatar: 'IC', avatarColor: 'bg-rose-500' },
@@ -123,8 +123,8 @@ export function useAttendance() {
 export const CLASS_LEVELS = ['JSS 1', 'JSS 2', 'JSS 3', 'SS 1', 'SS 2', 'SS 3'];
 
 export const STATUS_CONFIG: Record<AttendanceStatus, { label: string; color: string; bg: string; dot: string }> = {
-    present: { label: 'Present', color: 'text-[#6bc048]', bg: 'bg-[#6bc048]/10', dot: 'bg-[#6bc048]' },
+    present: { label: 'Present', color: 'text-[#10b981]', bg: 'bg-[#10b981]/10', dot: 'bg-[#10b981]' },
     absent: { label: 'Absent', color: 'text-red-600', bg: 'bg-red-50', dot: 'bg-red-500' },
     late: { label: 'Late', color: 'text-[#ff9800]', bg: 'bg-[#ff9800]/10', dot: 'bg-[#ff9800]' },
-    excused: { label: 'Excused', color: 'text-blue-600', bg: 'bg-blue-50', dot: 'bg-blue-400' },
+    excused: { label: 'Excused', color: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5', dot: 'bg-[#1E4DA6]/60' },
 };

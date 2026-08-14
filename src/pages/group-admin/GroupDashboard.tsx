@@ -77,7 +77,7 @@ export default function GroupDashboard() {
     if (loading) {
         return (
             <div className="flex items-center justify-center h-64">
-                <div className="w-8 h-8 rounded-full border-2 border-blue-500/30 border-t-blue-500 animate-spin" />
+                <div className="w-8 h-8 rounded-full border-2 border-[#1E4DA6]/30 border-t-[#1E4DA6] animate-spin" />
             </div>
         );
     }
@@ -148,7 +148,7 @@ export default function GroupDashboard() {
             <div style={cardStyle} className="overflow-hidden">
                 <div className="px-5 py-4 border-b" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
                     <div className="flex items-center gap-2">
-                        <Activity className="w-4 h-4 text-blue-400" />
+                        <Activity className="w-4 h-4 text-[#1E4DA6]/60" />
                         <h2 className="text-sm font-semibold" style={{ color: T.textPrimary }}>Branch Analytics</h2>
                     </div>
                     <p className="text-xs mt-0.5" style={{ color: T.textMuted }}>Students, teachers & parents per branch</p>
@@ -178,7 +178,7 @@ export default function GroupDashboard() {
                                         </div>
                                     </td>
                                     <td className="px-5 py-3.5">
-                                        <span className="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">
+                                        <span className="text-xs font-mono text-[#1E4DA6]/60 bg-[#1E4DA6]/10 px-2 py-1 rounded">
                                             {branch.schoolCode ?? '—'}
                                         </span>
                                     </td>
@@ -187,7 +187,7 @@ export default function GroupDashboard() {
                                     <td className="px-5 py-3.5 text-sm font-semibold" style={{ color: T.textPrimary }}>{branch.teachers}</td>
                                     <td className="px-5 py-3.5 text-sm font-semibold" style={{ color: T.textPrimary }}>{branch.parents}</td>
                                     <td className="px-5 py-3.5">
-                                        <span className="text-sm font-bold text-blue-400">
+                                        <span className="text-sm font-bold text-[#1E4DA6]/60">
                                             {branch.students + branch.teachers + branch.parents}
                                         </span>
                                     </td>
@@ -205,11 +205,11 @@ export default function GroupDashboard() {
                         {(data?.branches ?? []).length > 0 && (
                             <tfoot>
                                 <tr style={{ borderTop: `1px solid ${T.border}`, background: 'rgba(59,130,246,0.05)' }}>
-                                    <td className="px-5 py-3 text-xs font-bold text-blue-400 uppercase" colSpan={3}>Group Totals</td>
+                                    <td className="px-5 py-3 text-xs font-bold text-[#1E4DA6]/60 uppercase" colSpan={3}>Group Totals</td>
                                     <td className="px-5 py-3 text-sm font-bold" style={{ color: T.textPrimary }}>{data?.totalStudents}</td>
                                     <td className="px-5 py-3 text-sm font-bold" style={{ color: T.textPrimary }}>{data?.totalTeachers}</td>
                                     <td className="px-5 py-3 text-sm font-bold" style={{ color: T.textPrimary }}>{data?.totalParents}</td>
-                                    <td className="px-5 py-3 text-sm font-bold text-blue-400">
+                                    <td className="px-5 py-3 text-sm font-bold text-[#1E4DA6]/60">
                                         {(data?.totalStudents ?? 0) + (data?.totalTeachers ?? 0) + (data?.totalParents ?? 0)}
                                     </td>
                                 </tr>

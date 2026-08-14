@@ -48,7 +48,7 @@ const DEFAULT_CFG: TemplateConfig = {
     showNextTerm: true, showPromotedTo: false,
     reportTitle: 'End of Term Academic Report',
     principalTitle: 'Principal', headTeacherTitle: 'Head Teacher', formTeacherTitle: 'Form Teacher', principalName: '',
-    primaryColor: '#0036a1', headerBg: '#0036a1', fontFamily: 'serif',
+    primaryColor: '#1E4DA6', headerBg: '#1E4DA6', fontFamily: 'serif',
     tableBorderColor: '#d1d5db', pageMargin: '10mm', logoPosition: 'left', headerStyle: 'standard',
     subjectColumns: [
         { id: 'ca1', name: '1st CA', key: 'ca1', show: true },
@@ -506,7 +506,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                 >
                     {!isTeacher && (
                         <div className="flex flex-col sm:flex-row justify-center gap-2 mt-4">
-                            <Button onClick={handleCompute} disabled={computing || !classId} variant="outline" className="w-full sm:w-auto gap-2 border-[#0036a1]/30 text-[#0036a1] hover:bg-[#0036a1]/5">
+                            <Button onClick={handleCompute} disabled={computing || !classId} variant="outline" className="w-full sm:w-auto gap-2 border-[#1E4DA6]/30 text-[#1E4DA6] hover:bg-[#1E4DA6]/5">
                                 {computing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Cpu className="w-4 h-4" />}
                                 {computing ? 'Computing…' : 'Compute Results'}
                             </Button>
@@ -522,8 +522,8 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                 {/* Score vs Comment Mode Toggle */}
                 <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm mb-4">
                     <div className="flex bg-gray-100 p-1 rounded-xl w-fit">
-                        <button onClick={() => { setResultMode('SCORE_BASED'); setResultPrintType('FULL'); setActiveTab('CARDS'); }} className={`px-6 py-2 rounded-lg text-sm font-bold transition-colors ${resultMode === 'SCORE_BASED' ? 'bg-white shadow-sm text-[#0036a1]' : 'text-gray-500 hover:text-gray-900'}`}>Score-Based Result</button>
-                        <button onClick={() => { setResultMode('COMMENT_BASED'); setResultPrintType('COMMENT_CA'); setActiveTab('CARDS'); }} className={`px-6 py-2 rounded-lg text-sm font-bold transition-colors ${resultMode === 'COMMENT_BASED' ? 'bg-white shadow-sm text-[#0036a1]' : 'text-gray-500 hover:text-gray-900'}`}>Comment-Based Result</button>
+                        <button onClick={() => { setResultMode('SCORE_BASED'); setResultPrintType('FULL'); setActiveTab('CARDS'); }} className={`px-6 py-2 rounded-lg text-sm font-bold transition-colors ${resultMode === 'SCORE_BASED' ? 'bg-white shadow-sm text-[#1E4DA6]' : 'text-gray-500 hover:text-gray-900'}`}>Score-Based Result</button>
+                        <button onClick={() => { setResultMode('COMMENT_BASED'); setResultPrintType('COMMENT_CA'); setActiveTab('CARDS'); }} className={`px-6 py-2 rounded-lg text-sm font-bold transition-colors ${resultMode === 'COMMENT_BASED' ? 'bg-white shadow-sm text-[#1E4DA6]' : 'text-gray-500 hover:text-gray-900'}`}>Comment-Based Result</button>
                     </div>
                 </div>
 
@@ -600,7 +600,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                             </SelectContent>
                         </Select>
                     </div>
-                    <Button onClick={loadReport} disabled={!classId || loading} className="bg-[#0036a1] hover:bg-[#001761] text-white h-10 px-6 gap-2">
+                    <Button onClick={loadReport} disabled={!classId || loading} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white h-10 px-6 gap-2">
                         <FileText className="w-4 h-4" />{loading ? 'Loading…' : 'Load Results'}
                     </Button>
                 </div>
@@ -609,25 +609,25 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                 {resultMode === 'SCORE_BASED' && (
                 <div className="flex border-b border-gray-200 gap-6 mt-4 overflow-x-auto scrollbar-hide">
                     <button
-                        className={`pb-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 shrink-0 ${activeTab === 'CARDS' ? 'border-[#0036a1] text-[#0036a1]' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
+                        className={`pb-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 shrink-0 ${activeTab === 'CARDS' ? 'border-[#1E4DA6] text-[#1E4DA6]' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
                         onClick={() => setActiveTab('CARDS')}
                     >
                         <ListIcon className="w-4 h-4" /> Report Cards
                     </button>
                     <button
-                        className={`pb-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 shrink-0 ${activeTab === 'BROADSHEET' ? 'border-[#0036a1] text-[#0036a1]' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
+                        className={`pb-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 shrink-0 ${activeTab === 'BROADSHEET' ? 'border-[#1E4DA6] text-[#1E4DA6]' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
                         onClick={() => setActiveTab('BROADSHEET')}
                     >
                         <Grid className="w-4 h-4" /> Broadsheet Printout
                     </button>
                     <button
-                        className={`pb-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 shrink-0 ${activeTab === 'CUMULATIVE' ? 'border-[#0036a1] text-[#0036a1]' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
+                        className={`pb-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 shrink-0 ${activeTab === 'CUMULATIVE' ? 'border-[#1E4DA6] text-[#1E4DA6]' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
                         onClick={() => setActiveTab('CUMULATIVE')}
                     >
                         <Grid className="w-4 h-4" /> Cumulative Sheet
                     </button>
                     <button
-                        className={`pb-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 shrink-0 ${activeTab === 'TRANSCRIPT' ? 'border-[#0036a1] text-[#0036a1]' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
+                        className={`pb-3 text-sm font-bold flex items-center gap-2 transition-colors border-b-2 shrink-0 ${activeTab === 'TRANSCRIPT' ? 'border-[#1E4DA6] text-[#1E4DA6]' : 'border-transparent text-gray-500 hover:text-gray-900'}`}
                         onClick={() => setActiveTab('TRANSCRIPT')}
                     >
                         <FileText className="w-4 h-4" /> Transcripts
@@ -667,7 +667,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                                 <td className="px-4 py-3 font-semibold text-gray-900">{s.name}</td>
                                                 <td className="px-4 py-3 text-gray-600">{s.gender}</td>
                                                 <td className="px-4 py-3">
-                                                    <Button size="sm" onClick={() => setTranscriptStudentId(s.studentProfileId)} className="gap-1 text-xs h-7 bg-[#0036a1] text-white">
+                                                    <Button size="sm" onClick={() => setTranscriptStudentId(s.studentProfileId)} className="gap-1 text-xs h-7 bg-[#1E4DA6] text-white">
                                                         <FileText className="w-3 h-3" /> View Transcript
                                                     </Button>
                                                 </td>
@@ -697,7 +697,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                                     <span>{s.gender}</span>
                                                 </p>
                                             </div>
-                                            <Button size="sm" onClick={() => setTranscriptStudentId(s.studentProfileId)} className="w-full justify-center gap-2 h-9 bg-[#0036a1] text-white">
+                                            <Button size="sm" onClick={() => setTranscriptStudentId(s.studentProfileId)} className="w-full justify-center gap-2 h-9 bg-[#1E4DA6] text-white">
                                                 <FileText className="w-4 h-4" /> View Transcript
                                             </Button>
                                         </div>
@@ -729,7 +729,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                 {students.length > 0 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                         <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm flex items-center gap-3">
-                            <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center"><Users className="w-5 h-5 text-[#0036a1]" /></div>
+                            <div className="w-10 h-10 bg-[#1E4DA6]/10 rounded-xl flex items-center justify-center"><Users className="w-5 h-5 text-[#1E4DA6]" /></div>
                             <div><p className="text-xs text-gray-500 font-bold uppercase">Students</p><p className="text-xl font-bold text-gray-900">{students.length}</p></div>
                         </div>
                         <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm flex items-center gap-3">
@@ -737,15 +737,15 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                             <div><p className="text-xs text-gray-500 font-bold uppercase">Passing</p><p className="text-xl font-bold text-gray-900">{students.filter(s => s.isPassing).length}</p></div>
                         </div>
                         <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm flex items-center gap-3">
-                            <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center"><TrendingUp className="w-5 h-5 text-purple-600" /></div>
+                            <div className="w-10 h-10 bg-[#1E4DA6]/10 rounded-xl flex items-center justify-center"><TrendingUp className="w-5 h-5 text-[#1E4DA6]" /></div>
                             <div><p className="text-xs text-gray-500 font-bold uppercase">Class Average</p>
                                 <p className="text-xl font-bold text-gray-900">
                                     {(students.reduce((s, st) => s + parseFloat(st.average), 0) / students.length).toFixed(1)}%
                                 </p>
                             </div>
                         </div>
-                        <div className="bg-[#0036a1]/5 border border-[#0036a1]/20 rounded-2xl p-4 shadow-sm flex flex-col justify-center items-center gap-2">
-                            <Button onClick={handleBulkPreview} disabled={loadingBulkModal} className="w-full bg-[#0036a1] hover:bg-[#001761] text-white gap-2 shadow-md">
+                        <div className="bg-[#1E4DA6]/5 border border-[#1E4DA6]/20 rounded-2xl p-4 shadow-sm flex flex-col justify-center items-center gap-2">
+                            <Button onClick={handleBulkPreview} disabled={loadingBulkModal} className="w-full bg-[#1E4DA6] hover:bg-[#173F8C] text-white gap-2 shadow-md">
                                 {loadingBulkModal ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />}
                                 {loadingBulkModal ? 'Loading Preview...' : 'Bulk Print Results'}
                             </Button>
@@ -812,7 +812,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                         </div>
                                         <div className="text-center border-x border-gray-200">
                                             <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-0.5">Average</p>
-                                            <p className="font-bold text-[#0036a1] text-sm">{s.average}%</p>
+                                            <p className="font-bold text-[#1E4DA6] text-sm">{s.average}%</p>
                                         </div>
                                         <div className="text-center">
                                             <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-0.5">Grade</p>
@@ -859,7 +859,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                     </div>
                                     <div className="flex gap-2">
                                         {modal && <Button size="sm" variant="outline" onClick={() => setShareModal({ studentProfileId: modal.student.id, name: modal.student.name })} className="gap-1 text-xs"><Share2 className="w-3.5 h-3.5" />Share</Button>}
-                                        <Button size="sm" variant="outline" onClick={handleDownloadSinglePDF} className="gap-1 text-xs bg-white text-[#0036a1] border-[#0036a1]/30"><Download className="w-3.5 h-3.5" />Download PDF</Button>
+                                        <Button size="sm" variant="outline" onClick={handleDownloadSinglePDF} className="gap-1 text-xs bg-white text-[#1E4DA6] border-[#1E4DA6]/30"><Download className="w-3.5 h-3.5" />Download PDF</Button>
                                         <Button size="sm" variant="outline" onClick={handlePrint} className="gap-1 text-xs bg-white"><Printer className="w-3.5 h-3.5" />Print</Button>
                                     </div>
                                 </div>
@@ -927,7 +927,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                             <div className="grid grid-cols-2 gap-2">
                                 {['EMAIL', 'WHATSAPP'].map(ch => (
                                     <button key={ch} onClick={() => setShareForm(p => ({ ...p, channel: ch }))}
-                                        className={`py-2.5 rounded-xl border-2 text-sm font-bold transition-all ${shareForm.channel === ch ? 'border-[#0036a1] bg-[#0036a1]/5 text-[#0036a1]' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
+                                        className={`py-2.5 rounded-xl border-2 text-sm font-bold transition-all ${shareForm.channel === ch ? 'border-[#1E4DA6] bg-[#1E4DA6]/5 text-[#1E4DA6]' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
                                         {ch === 'EMAIL' ? '📧  Email' : '💬 WhatsApp'}
                                     </button>
                                 ))}
@@ -942,14 +942,14 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                 value={shareForm.recipient}
                                 onChange={e => setShareForm(p => ({ ...p, recipient: e.target.value }))}
                                 placeholder={shareForm.channel === 'EMAIL' ? 'e.g. parent@example.com' : 'e.g. +2348000000000'}
-                                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm focus:border-[#0036a1] focus:ring-2 focus:ring-[#0036a1]/20 transition-all outline-none"
+                                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm focus:border-[#1E4DA6] focus:ring-2 focus:ring-[#1E4DA6]/20 transition-all outline-none"
                             />
                         </div>
                     </div>
 
                     <div className="flex gap-3 mt-6 pt-5 border-t border-gray-100">
                         <Button variant="outline" className="flex-1" onClick={() => setShareModal(null)}>Cancel</Button>
-                        <Button onClick={handleShare} disabled={sharing || !shareForm.recipient} className="flex-1 bg-[#0036a1] hover:bg-[#001761] text-white gap-2">
+                        <Button onClick={handleShare} disabled={sharing || !shareForm.recipient} className="flex-1 bg-[#1E4DA6] hover:bg-[#173F8C] text-white gap-2">
                             {sharing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Share2 className="w-4 h-4" />}
                             {sharing ? 'Sending...' : 'Send Result'}
                         </Button>
@@ -975,11 +975,11 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                 <Button size="icon" variant="ghost" onClick={() => setPreviewZoom(z => Math.min(1.5, z + 0.1))} className="w-6 h-6"><Plus className="w-3 h-3" /></Button>
                             </div>
                             <div className="flex gap-2">
-                                <Button size="sm" variant="outline" onClick={handleDownloadBulkZIP} disabled={bulkPrinting || !bulkData} className="gap-1 text-xs bg-white text-[#0036a1] border-[#0036a1]/30">
+                                <Button size="sm" variant="outline" onClick={handleDownloadBulkZIP} disabled={bulkPrinting || !bulkData} className="gap-1 text-xs bg-white text-[#1E4DA6] border-[#1E4DA6]/30">
                                     {bulkPrinting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
                                     {bulkPrinting ? 'Zipping...' : 'Download ZIP'}
                                 </Button>
-                                <Button size="sm" onClick={() => mobileSafePrint('bulk-report-cards-printable')} disabled={!bulkData} className="gap-1 text-xs bg-[#0036a1] hover:bg-[#001761] text-white">
+                                <Button size="sm" onClick={() => mobileSafePrint('bulk-report-cards-printable')} disabled={!bulkData} className="gap-1 text-xs bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
                                     <Printer className="w-3.5 h-3.5" /> Print / Save as PDF
                                 </Button>
                             </div>

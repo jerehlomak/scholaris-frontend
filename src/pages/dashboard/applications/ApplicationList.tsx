@@ -47,8 +47,8 @@ const labelCls = 'font-mono text-[10px] font-bold uppercase tracking-widest text
 const SectionCard = ({ icon, num, title, children }: { icon: React.ReactNode; num: number; title: string; children: React.ReactNode }) => (
     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-6">
         <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-3">
-            <div className="h-8 w-8 rounded-xl bg-blue-700 text-white flex items-center justify-center text-sm font-black shrink-0">{num}</div>
-            <div className="h-8 w-8 flex items-center justify-center text-blue-600 -ml-3 shrink-0">{icon}</div>
+            <div className="h-8 w-8 rounded-xl bg-[#173F8C] text-white flex items-center justify-center text-sm font-black shrink-0">{num}</div>
+            <div className="h-8 w-8 flex items-center justify-center text-[#1E4DA6] -ml-3 shrink-0">{icon}</div>
             <h2 className="font-bold text-slate-800">{title}</h2>
         </div>
         <div className="p-0">{children}</div>
@@ -127,7 +127,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
             {/* KPI Strip - Using SectionCard style for small stats if needed, or keeping them as clean cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8">
                 {[
-                    { icon: <ClipboardList className="h-4 w-4" />, label: 'TOTAL', value: applications.length, color: 'bg-blue-100 text-blue-700' },
+                    { icon: <ClipboardList className="h-4 w-4" />, label: 'TOTAL', value: applications.length, color: 'bg-[#1E4DA6]/10 text-[#173F8C]' },
                     { icon: <Clock className="h-4 w-4" />, label: 'PENDING', value: applications.filter(a => a.status === 'PENDING').length, color: 'bg-amber-100 text-amber-700' },
                     { icon: <CheckCircle2 className="h-4 w-4" />, label: 'APPROVED', value: applications.filter(a => a.status === 'APPROVED').length, color: 'bg-emerald-100 text-emerald-700' },
                     { icon: <XCircle className="h-4 w-4" />, label: 'REJECTED', value: applications.filter(a => a.status === 'REJECTED').length, color: 'bg-red-100 text-red-700' },
@@ -150,13 +150,13 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                             placeholder="Search by name, email or PIN..." 
                             value={search} 
                             onChange={e => { setSearch(e.target.value); setPage(1); }}
-                            className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white transition-all" 
+                            className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm font-semibold outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 bg-white transition-all" 
                         />
                     </div>
                     <div className="flex flex-wrap items-center gap-2 mt-2 md:mt-0">
                         <button 
                             onClick={() => navigate(fixedType === 'EMPLOYMENT' ? '/dashboard/staff/applications/new' : '/dashboard/admission/applications/new')}
-                            className="flex items-center gap-2 px-3 py-2 border border-[#1a2fa0] bg-[#1a2fa0] text-white rounded-xl text-sm font-bold hover:bg-[#121f6e] transition-colors shadow-sm whitespace-nowrap flex-grow sm:flex-grow-0 justify-center"
+                            className="flex items-center gap-2 px-3 py-2 border border-[#1E4DA6] bg-[#1E4DA6] text-white rounded-xl text-sm font-bold hover:bg-[#173F8C] transition-colors shadow-sm whitespace-nowrap flex-grow sm:flex-grow-0 justify-center"
                         >
                             + New Application
                         </button>
@@ -168,7 +168,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                         </button>
                         <button 
                             onClick={() => setShowFilters(!showFilters)}
-                            className={cn('flex items-center gap-2 px-3 py-2 border rounded-xl text-sm font-bold transition-colors whitespace-nowrap flex-grow sm:flex-grow-0 justify-center', showFilters ? 'border-blue-300 bg-blue-50 text-blue-700' : 'border-slate-200 text-slate-600 hover:bg-slate-50')}
+                            className={cn('flex items-center gap-2 px-3 py-2 border rounded-xl text-sm font-bold transition-colors whitespace-nowrap flex-grow sm:flex-grow-0 justify-center', showFilters ? 'border-[#1E4DA6]/35 bg-[#1E4DA6]/5 text-[#173F8C]' : 'border-slate-200 text-slate-600 hover:bg-slate-50')}
                         >
                             <Filter className="h-4 w-4" /> Filter <ChevronDown className={cn('h-3 w-3 transition-transform', showFilters && 'rotate-180')} />
                         </button>
@@ -182,7 +182,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                             <select 
                                 value={filterType} 
                                 onChange={e => { setFilterType(e.target.value); setPage(1); }}
-                                className="border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold bg-white outline-none focus:border-blue-400 shadow-sm"
+                                className="border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold bg-white outline-none focus:border-[#1E4DA6]/60 shadow-sm"
                             >
                                 <option value="all">All Types</option>
                                 <option value="ADMISSION_APPLICATION">Admission</option>
@@ -194,7 +194,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                                 <button 
                                     key={s} 
                                     onClick={() => { setFilterStatus(s); setPage(1); }}
-                                    className={cn('px-3 py-1 rounded-lg text-xs font-bold transition-all', filterStatus === s ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500')}
+                                    className={cn('px-3 py-1 rounded-lg text-xs font-bold transition-all', filterStatus === s ? 'bg-white text-[#173F8C] shadow-sm' : 'text-slate-500')}
                                 >
                                     {s}
                                 </button>
@@ -204,7 +204,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                             <select 
                                 value={filterSession} 
                                 onChange={e => setFilterSession(e.target.value)}
-                                className="border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold bg-white outline-none focus:border-blue-400 shadow-sm"
+                                className="border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold bg-white outline-none focus:border-[#1E4DA6]/60 shadow-sm"
                             >
                                 <option value="ALL">All Sessions</option>
                                 {uniqueSessions.map((session: any) => <option key={session} value={session}>{session}</option>)}
@@ -214,7 +214,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                             <select 
                                 value={filterTerm} 
                                 onChange={e => setFilterTerm(e.target.value)}
-                                className="border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold bg-white outline-none focus:border-blue-400 shadow-sm"
+                                className="border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold bg-white outline-none focus:border-[#1E4DA6]/60 shadow-sm"
                             >
                                 <option value="ALL">All Terms</option>
                                 {uniqueTerms.map((term: any) => <option key={term} value={term}>{term}</option>)}
@@ -238,7 +238,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                             </thead>
                             <tbody className="divide-y divide-slate-50">
                                 {isLoading ? (
-                                    <tr><td colSpan={6} className="py-12 text-center"><Loader2 className="h-8 w-8 animate-spin mx-auto text-blue-600" /></td></tr>
+                                    <tr><td colSpan={6} className="py-12 text-center"><Loader2 className="h-8 w-8 animate-spin mx-auto text-[#1E4DA6]" /></td></tr>
                                 ) : displayed.length === 0 ? (
                                     <tr><td colSpan={6} className="py-10 text-center text-slate-400 text-sm">{search ? 'No matches found.' : 'No applications in queue.'}</td></tr>
                                 ) : displayed.map((app) => (
@@ -250,7 +250,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                                             </div>
                                         </td>
                                         <td className="px-4 py-4">
-                                            <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-lg text-[10px] font-black uppercase tracking-wider border border-blue-100">
+                                            <span className="px-2 py-0.5 bg-[#1E4DA6]/5 text-[#173F8C] rounded-lg text-[10px] font-black uppercase tracking-wider border border-[#1E4DA6]/10">
                                                 {TYPE_LABELS[app.applicationType] || app.applicationType}
                                             </span>
                                         </td>
@@ -262,7 +262,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                                         </td>
                                         <td className="px-4 py-4 text-slate-400 text-[11px] font-bold">
                                             {app.formData?.academicSession && app.formData?.academicTerm && (
-                                                <div className="text-[10px] text-blue-600 mb-0.5 whitespace-nowrap">
+                                                <div className="text-[10px] text-[#1E4DA6] mb-0.5 whitespace-nowrap">
                                                     {app.formData.academicSession} ({app.formData.academicTerm})
                                                 </div>
                                             )}
@@ -271,7 +271,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                                         <td className="px-4 py-4 text-right">
                                             <button 
                                                 onClick={() => { setSelectedApp(app); setIsModalOpen(true); }}
-                                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-all border border-transparent hover:border-blue-100"
+                                                className="p-2 text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded-xl transition-all border border-transparent hover:border-[#1E4DA6]/10"
                                             >
                                                 <Eye className="h-4 w-4" />
                                             </button>
@@ -286,7 +286,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                 {view === 'grid' && (
                     <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {isLoading ? (
-                            <div className="col-span-full py-12 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>
+                            <div className="col-span-full py-12 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>
                         ) : displayed.length === 0 ? (
                             <div className="col-span-full py-10 text-center text-slate-400 text-sm">{search ? 'No matches found.' : 'No applications in queue.'}</div>
                         ) : displayed.map(app => (
@@ -301,7 +301,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                                     </span>
                                 </div>
                                 <div className="flex flex-wrap items-center gap-2 mb-4">
-                                    <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-lg text-[10px] font-black uppercase tracking-wider border border-blue-100">
+                                    <span className="px-2 py-0.5 bg-[#1E4DA6]/5 text-[#173F8C] rounded-lg text-[10px] font-black uppercase tracking-wider border border-[#1E4DA6]/10">
                                         {TYPE_LABELS[app.applicationType] || app.applicationType}
                                     </span>
                                     <span className="text-slate-500 text-xs font-black font-mono bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200">{app.pin.pinCode}</span>
@@ -309,7 +309,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                                 <div className="mt-auto pt-3 border-t border-slate-100 flex items-center justify-between">
                                     <div className="flex flex-col">
                                         {app.formData?.academicSession && app.formData?.academicTerm && (
-                                            <span className="text-blue-600 text-[9px] font-black uppercase">
+                                            <span className="text-[#1E4DA6] text-[9px] font-black uppercase">
                                                 {app.formData.academicSession} ({app.formData.academicTerm})
                                             </span>
                                         )}
@@ -319,7 +319,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                                     </div>
                                     <button 
                                         onClick={() => { setSelectedApp(app); setIsModalOpen(true); }}
-                                        className="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors"
+                                        className="text-xs font-bold text-[#1E4DA6] hover:text-[#173F8C] bg-[#1E4DA6]/5 hover:bg-[#1E4DA6]/10 px-3 py-1.5 rounded-lg transition-colors"
                                     >
                                         View Details
                                     </button>

@@ -308,7 +308,7 @@ export default function FinanceSettings() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
                     <div>
                         <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 flex items-center gap-2.5">
-                            <Settings2 className="h-7 w-7 text-blue-700" />
+                            <Settings2 className="h-7 w-7 text-[#173F8C]" />
                             Financial Settings & Permissions
                         </h1>
                         <p className="mt-1 text-sm text-slate-500">
@@ -321,7 +321,7 @@ export default function FinanceSettings() {
                             to="/dashboard/finance/payment-settings"
                             className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
                         >
-                            <CreditCard className="h-3.5 w-3.5 text-blue-600" />
+                            <CreditCard className="h-3.5 w-3.5 text-[#1E4DA6]" />
                             Payment Gateways
                         </Link>
                         <Link
@@ -364,7 +364,7 @@ export default function FinanceSettings() {
                                 className={cn(
                                     "flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-200",
                                     isActive
-                                        ? "bg-blue-700 text-white shadow-sm shadow-blue-200"
+                                        ? "bg-[#173F8C] text-white shadow-sm shadow-[#1E4DA6]/20"
                                         : "bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200/60"
                                 )}
                             >
@@ -373,7 +373,7 @@ export default function FinanceSettings() {
                                 {tab.badge && (
                                     <span className={cn(
                                         "text-[10px] px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider",
-                                        isActive ? "bg-blue-800/80 text-blue-100" : "bg-slate-200 text-slate-600"
+                                        isActive ? "bg-[#122F69]/80 text-white/80" : "bg-slate-200 text-slate-600"
                                     )}>
                                         {tab.badge}
                                     </span>
@@ -385,7 +385,7 @@ export default function FinanceSettings() {
 
                 {loading ? (
                     <div className="py-20 text-center text-slate-400 flex flex-col items-center gap-3">
-                        <RefreshCw className="h-6 w-6 animate-spin text-blue-600" />
+                        <RefreshCw className="h-6 w-6 animate-spin text-[#1E4DA6]" />
                         <p className="text-sm font-medium">Loading financial settings...</p>
                     </div>
                 ) : (
@@ -523,12 +523,12 @@ export default function FinanceSettings() {
                                                         className={cn(
                                                             "p-4 rounded-xl border cursor-pointer transition-all",
                                                             selected 
-                                                                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20 shadow-xs"
+                                                                ? "border-[#1E4DA6] bg-[#1E4DA6]/8 ring-2 ring-[#1E4DA6]/20 shadow-xs"
                                                                 : "border-slate-200 hover:border-slate-300 bg-white"
                                                         )}
                                                     >
                                                         <div className="flex items-center gap-2.5">
-                                                            <div className={cn("w-4 h-4 rounded-full border flex items-center justify-center", selected ? "border-blue-600 bg-blue-600" : "border-slate-300")}>
+                                                            <div className={cn("w-4 h-4 rounded-full border flex items-center justify-center", selected ? "border-[#1E4DA6] bg-[#1E4DA6]" : "border-slate-300")}>
                                                                 {selected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                                                             </div>
                                                             <span className="font-bold text-sm text-slate-900">{layout.title}</span>
@@ -555,7 +555,7 @@ export default function FinanceSettings() {
                                                 <div className="pr-4">
                                                     <div className="flex items-center gap-2">
                                                         <p className="font-bold text-sm text-slate-800">Show Full Itemized Breakdown</p>
-                                                        <span className="text-[10px] bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded-md font-bold">Recommended</span>
+                                                        <span className="text-[10px] bg-[#1E4DA6]/10 text-[#122F69] px-1.5 py-0.5 rounded-md font-bold">Recommended</span>
                                                     </div>
                                                     <p className="text-xs text-slate-500 mt-0.5">
                                                         When <strong>Enabled</strong>, invoices list individual items (Tuition, Books, Uniform, ICT). When <strong>Disabled</strong>, displays a single consolidated row titled "School Fees".
@@ -731,7 +731,7 @@ export default function FinanceSettings() {
                                     <CardContent className="p-5 sm:p-6 space-y-6">
                                         <div>
                                             <div className="flex items-center gap-2">
-                                                <Lock className="h-5 w-5 text-blue-700" />
+                                                <Lock className="h-5 w-5 text-[#173F8C]" />
                                                 <h2 className="text-base font-bold text-slate-900">Controlled Active Term & Session</h2>
                                             </div>
                                             <p className="text-xs text-slate-500 mt-0.5">
@@ -740,9 +740,9 @@ export default function FinanceSettings() {
                                         </div>
 
                                         {/* Lock Toggle */}
-                                        <div className="p-4 sm:p-5 rounded-2xl bg-blue-50/60 border border-blue-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                        <div className="p-4 sm:p-5 rounded-2xl bg-[#1E4DA6]/8 border border-[#1E4DA6]/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                             <div className="flex items-start gap-3">
-                                                <div className="p-2 rounded-xl bg-blue-600 text-white shrink-0 mt-0.5">
+                                                <div className="p-2 rounded-xl bg-[#1E4DA6] text-white shrink-0 mt-0.5">
                                                     <Lock className="h-5 w-5" />
                                                 </div>
                                                 <div>
@@ -771,7 +771,7 @@ export default function FinanceSettings() {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
                                             <div className="space-y-2">
                                                 <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                                                    <Calendar className="h-3.5 w-3.5 text-blue-600" />
+                                                    <Calendar className="h-3.5 w-3.5 text-[#1E4DA6]" />
                                                     Active Academic Session
                                                 </label>
                                                 <select
@@ -780,7 +780,7 @@ export default function FinanceSettings() {
                                                         updateTermLock('activeSession', e.target.value);
                                                         updateSetting('currentYear', e.target.value);
                                                     }}
-                                                    className="w-full h-11 px-3 rounded-xl border border-slate-200 bg-white font-bold text-sm text-slate-900 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                                                    className="w-full h-11 px-3 rounded-xl border border-slate-200 bg-white font-bold text-sm text-slate-900 focus:ring-2 focus:ring-[#1E4DA6] focus:outline-none"
                                                 >
                                                     <option value="">Select Academic Session</option>
                                                     {availableSessions.map((s: any) => (
@@ -792,7 +792,7 @@ export default function FinanceSettings() {
 
                                             <div className="space-y-2">
                                                 <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                                                    <Calendar className="h-3.5 w-3.5 text-blue-600" />
+                                                    <Calendar className="h-3.5 w-3.5 text-[#1E4DA6]" />
                                                     Active Academic Term
                                                 </label>
                                                 <select
@@ -801,7 +801,7 @@ export default function FinanceSettings() {
                                                         updateTermLock('activeTerm', e.target.value);
                                                         updateSetting('currentTerm', e.target.value);
                                                     }}
-                                                    className="w-full h-11 px-3 rounded-xl border border-slate-200 bg-white font-bold text-sm text-slate-900 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                                                    className="w-full h-11 px-3 rounded-xl border border-slate-200 bg-white font-bold text-sm text-slate-900 focus:ring-2 focus:ring-[#1E4DA6] focus:outline-none"
                                                 >
                                                     {availableTerms.map(t => (
                                                         <option key={t} value={t}>{t}</option>
@@ -834,7 +834,7 @@ export default function FinanceSettings() {
                                     <CardContent className="p-5 sm:p-6 space-y-6">
                                         <div>
                                             <div className="flex items-center gap-2">
-                                                <ShieldCheck className="h-5 w-5 text-blue-700" />
+                                                <ShieldCheck className="h-5 w-5 text-[#173F8C]" />
                                                 <h2 className="text-base font-bold text-slate-900">Financial Staff Roles & Access Matrix</h2>
                                             </div>
                                             <p className="text-xs text-slate-500 mt-0.5">
@@ -858,13 +858,13 @@ export default function FinanceSettings() {
                                                         className={cn(
                                                             "p-3.5 rounded-xl border cursor-pointer transition-all text-left",
                                                             isSelected
-                                                                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20"
+                                                                ? "border-[#1E4DA6] bg-[#1E4DA6]/8 ring-2 ring-[#1E4DA6]/20"
                                                                 : "border-slate-200 hover:border-slate-300 bg-white"
                                                         )}
                                                     >
                                                         <div className="flex items-center justify-between">
                                                             <span className="font-bold text-sm text-slate-900">{role.label}</span>
-                                                            {isSelected && <CheckCircle2 className="h-4 w-4 text-blue-600" />}
+                                                            {isSelected && <CheckCircle2 className="h-4 w-4 text-[#1E4DA6]" />}
                                                         </div>
                                                         <p className="text-[11px] text-slate-400 mt-1">{role.desc}</p>
                                                     </div>
@@ -938,7 +938,7 @@ export default function FinanceSettings() {
                                                         onClick={() => setCatFilter(type)}
                                                         className={cn(
                                                             "px-3 py-1.5 rounded-lg text-xs font-bold transition",
-                                                            catFilter === type ? "bg-white text-blue-700 shadow-xs" : "text-slate-600 hover:text-slate-900"
+                                                            catFilter === type ? "bg-white text-[#173F8C] shadow-xs" : "text-slate-600 hover:text-slate-900"
                                                         )}
                                                     >
                                                         {type === 'ALL' ? 'All Categories' : type === 'INCOME' ? 'Income Only' : 'Expenses Only'}
@@ -966,7 +966,7 @@ export default function FinanceSettings() {
                                             <button
                                                 onClick={handleAddCategory}
                                                 disabled={catLoading || !newCatName.trim()}
-                                                className="h-11 px-5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs whitespace-nowrap flex items-center gap-1.5 transition shrink-0"
+                                                className="h-11 px-5 rounded-xl bg-[#173F8C] hover:bg-[#122F69] text-white font-bold text-xs whitespace-nowrap flex items-center gap-1.5 transition shrink-0"
                                             >
                                                 <Plus className="h-4 w-4" /> Add Category
                                             </button>

@@ -23,7 +23,7 @@ export default function PrintVouchers({ pins, onClose }: PrintVouchersProps) {
                     <p className="text-sm text-white">Showing {pins.length} PINs formatted for A4 printing (20 cards per page).</p>
                 </div>
                 <div className="flex gap-4 w-full sm:w-auto">
-                    <button onClick={handlePrint} className="flex-1 sm:flex-none px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors">
+                    <button onClick={handlePrint} className="flex-1 sm:flex-none px-6 py-2 bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold rounded-lg transition-colors">
                         Print Now
                     </button>
                     <button onClick={onClose} className="flex-1 sm:flex-none px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition-colors">

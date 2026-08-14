@@ -31,7 +31,7 @@ const DEFAULT_CONTENT = `
 
 const QUILL_CSS = `
 .ql-toolbar.ql-snow { border: none !important; border-bottom: 1px solid #e2e8f0 !important; background: #f8fafc; padding: 10px 14px !important; border-radius: 16px 16px 0 0; }
-.ql-container.ql-snow { border: none !important; font-family: 'Plus Jakarta Sans', inherit !important; }
+.ql-container.ql-snow { border: none !important; }
 .ql-editor { min-height: 380px; padding: 22px 24px !important; color: #334155; line-height: 1.7; font-size: 0.9375rem; }
 .ql-editor h2 { color: #0f172a; font-weight: 800; margin-top: 1.25em; margin-bottom: 0.5em; font-size: 1.125rem; }
 `;
@@ -62,7 +62,7 @@ export function RulesRegulations() {
     if (loading) {
         return (
             <div className="flex h-64 items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
             </div>
         );
     }
@@ -77,7 +77,7 @@ export function RulesRegulations() {
 
             <style>{QUILL_CSS}</style>
 
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm focus-within:border-blue-300 focus-within:ring-2 focus-within:ring-blue-100 transition-all mb-8">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm focus-within:border-[#1E4DA6]/35 focus-within:ring-2 focus-within:ring-[#1E4DA6]/10 transition-all mb-8">
                 <ReactQuill
                     theme="snow"
                     value={content}

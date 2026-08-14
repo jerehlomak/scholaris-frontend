@@ -8,9 +8,8 @@ import { SaveButton } from './shared/SaveButton';
 import { cn } from '../../../lib/utils';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
 import { Button } from '../../../components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../../../components/ui/dialog';
 import { Switch } from '../../../components/ui/switch';
-import TemplateBuilder from '../../../components/report-blocks/TemplateBuilder';
+import { TemplateGallery } from './shared/TemplateGallery';
 
 const API = import.meta.env.VITE_API_URL || '/api/v1';
 
@@ -113,25 +112,25 @@ function GradingTab() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
         <div><p className="font-bold text-sm text-gray-900">Assessment Component</p></div>
         <div className="flex bg-white rounded-lg p-1 border border-gray-200">
-          <button onClick={() => setAssessmentType('EXAM')} className={cn('px-4 py-2 text-sm font-semibold rounded-md transition-colors', assessmentType === 'EXAM' ? 'bg-[#0036a1] text-white' : 'text-gray-500 hover:text-gray-700')}>Exam</button>
-          <button onClick={() => setAssessmentType('CA')} className={cn('px-4 py-2 text-sm font-semibold rounded-md transition-colors', assessmentType === 'CA' ? 'bg-[#0036a1] text-white' : 'text-gray-500 hover:text-gray-700')}>CA</button>
+          <button onClick={() => setAssessmentType('EXAM')} className={cn('px-4 py-2 text-sm font-semibold rounded-md transition-colors', assessmentType === 'EXAM' ? 'bg-[#1E4DA6] text-white' : 'text-gray-500 hover:text-gray-700')}>Exam</button>
+          <button onClick={() => setAssessmentType('CA')} className={cn('px-4 py-2 text-sm font-semibold rounded-md transition-colors', assessmentType === 'CA' ? 'bg-[#1E4DA6] text-white' : 'text-gray-500 hover:text-gray-700')}>CA</button>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
         <div><p className="font-bold text-sm text-gray-900">Grading Scope</p><p className="text-xs text-gray-500 mt-0.5">Subject Grading maps individual subject scores to letter grades. Final Grade maps the overall average to a class (e.g. Distinction).</p></div>
         <div className="flex bg-white rounded-lg p-1 border border-gray-200">
-          <button onClick={() => setScaleType('SUBJECT')} className={cn('px-4 py-2 text-sm font-semibold rounded-md transition-colors', scaleType === 'SUBJECT' ? 'bg-[#0036a1] text-white' : 'text-gray-500 hover:text-gray-700')}>Subject Grading</button>
-          <button onClick={() => setScaleType('FINAL')} className={cn('px-4 py-2 text-sm font-semibold rounded-md transition-colors', scaleType === 'FINAL' ? 'bg-[#0036a1] text-white' : 'text-gray-500 hover:text-gray-700')}>Final Grade</button>
+          <button onClick={() => setScaleType('SUBJECT')} className={cn('px-4 py-2 text-sm font-semibold rounded-md transition-colors', scaleType === 'SUBJECT' ? 'bg-[#1E4DA6] text-white' : 'text-gray-500 hover:text-gray-700')}>Subject Grading</button>
+          <button onClick={() => setScaleType('FINAL')} className={cn('px-4 py-2 text-sm font-semibold rounded-md transition-colors', scaleType === 'FINAL' ? 'bg-[#1E4DA6] text-white' : 'text-gray-500 hover:text-gray-700')}>Final Grade</button>
         </div>
       </div>
 
       {scaleType === 'SUBJECT' && (
-      <div className="flex items-center gap-3 p-2 bg-blue-50 rounded-xl border border-blue-100">
-        <span className="text-sm font-bold text-blue-800">Pass Mark:</span>
+      <div className="flex items-center gap-3 p-2 bg-[#1E4DA6]/5 rounded-xl border border-[#1E4DA6]/10">
+        <span className="text-sm font-bold text-[#122F69]">Pass Mark:</span>
         <div className="relative w-20">
-          <input type="number" value={passMark} onChange={e => setPassMark(e.target.value)} className="w-full border border-blue-200 rounded-lg px-2 py-1.5 pr-6 text-center text-sm font-black outline-none focus:border-blue-400" />
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-blue-400 font-bold">%</span>
+          <input type="number" value={passMark} onChange={e => setPassMark(e.target.value)} className="w-full border border-[#1E4DA6]/20 rounded-lg px-2 py-1.5 pr-6 text-center text-sm font-black outline-none focus:border-[#1E4DA6]/60" />
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[#1E4DA6]/60 font-bold">%</span>
         </div>
       </div>
       )}
@@ -154,16 +153,16 @@ function GradingTab() {
                 {[...grades].sort((a, b) => Number(b.maxScore) - Number(a.maxScore)).map(g => (
                   <tr key={g.id} className="hover:bg-gray-50/60 transition-colors">
                     <td className="px-4 py-3">
-                      <input value={g.grade} onChange={e => up(g.id, 'grade', e.target.value.toUpperCase())} placeholder="A" className="w-full rounded-lg border border-gray-200 px-2 py-2 text-center font-black text-lg outline-none focus:border-[#0036a1]" />
+                      <input value={g.grade} onChange={e => up(g.id, 'grade', e.target.value.toUpperCase())} placeholder="A" className="w-full rounded-lg border border-gray-200 px-2 py-2 text-center font-black text-lg outline-none focus:border-[#1E4DA6]" />
                     </td>
                     <td className="px-4 py-3">
-                      <input type="number" value={g.minScore} onChange={e => up(g.id, 'minScore', e.target.value)} className="w-full rounded-lg border border-gray-200 px-2 py-2 text-center text-sm font-semibold outline-none focus:border-[#0036a1]" />
+                      <input type="number" value={g.minScore} onChange={e => up(g.id, 'minScore', e.target.value)} className="w-full rounded-lg border border-gray-200 px-2 py-2 text-center text-sm font-semibold outline-none focus:border-[#1E4DA6]" />
                     </td>
                     <td className="px-4 py-3">
-                      <input type="number" value={g.maxScore} onChange={e => up(g.id, 'maxScore', e.target.value)} className="w-full rounded-lg border border-gray-200 px-2 py-2 text-center text-sm font-semibold outline-none focus:border-[#0036a1]" />
+                      <input type="number" value={g.maxScore} onChange={e => up(g.id, 'maxScore', e.target.value)} className="w-full rounded-lg border border-gray-200 px-2 py-2 text-center text-sm font-semibold outline-none focus:border-[#1E4DA6]" />
                     </td>
                     <td className="px-4 py-3">
-                      <textarea value={g.remark || ''} onChange={e => up(g.id, 'remark', e.target.value)} rows={2} placeholder="e.g. Excellent performance" className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#0036a1] resize-y min-h-[60px]" />
+                      <textarea value={g.remark || ''} onChange={e => up(g.id, 'remark', e.target.value)} rows={2} placeholder="e.g. Excellent performance" className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#1E4DA6] resize-y min-h-[60px]" />
                     </td>
                     <td className="px-4 py-3 text-center">
                       <button onClick={() => up(g.id, 'status', g.status === 'PASS' ? 'FAIL' : 'PASS')} className={cn('w-full rounded-lg py-2.5 text-xs font-bold uppercase transition-colors', g.status === 'PASS' ? 'bg-emerald-50 border border-emerald-200 text-emerald-700 hover:bg-emerald-100' : 'bg-red-50 border border-red-200 text-red-700 hover:bg-red-100')}>{g.status}</button>
@@ -180,7 +179,7 @@ function GradingTab() {
           </div>
         </div>
       )}
-      <button onClick={() => setGrades(p => [...p, { id: `g-${Date.now()}`, grade: '', minScore: '', maxScore: '', remark: '', status: 'PASS' }])} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-blue-200 py-4 text-sm font-semibold text-blue-600 hover:bg-blue-50">
+      <button onClick={() => setGrades(p => [...p, { id: `g-${Date.now()}`, grade: '', minScore: '', maxScore: '', remark: '', status: 'PASS' }])} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#1E4DA6]/20 py-4 text-sm font-semibold text-[#1E4DA6] hover:bg-[#1E4DA6]/5">
         <Plus className="w-4 h-4" />Add Grade Range
       </button>
       {!isValid && <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600"><AlertCircle className="w-4 h-4 shrink-0" />Fix invalid rows before saving.</div>}
@@ -279,16 +278,16 @@ function AssessmentTab() {
             {parts.map((p, i) => (
               <div key={p.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 bg-white border border-gray-100 rounded-xl shadow-sm">
                 <span className="w-7 h-7 rounded-lg bg-gray-50 flex items-center justify-center text-xs font-bold text-gray-400 shrink-0">{i + 1}</span>
-                <input value={p.name} onChange={e => up(p.id, 'name', e.target.value)} placeholder="Assessment name" className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#0036a1] w-full" />
+                <input value={p.name} onChange={e => up(p.id, 'name', e.target.value)} placeholder="Assessment name" className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1E4DA6] w-full" />
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <input type="number" value={p.weight} onChange={e => up(p.id, 'weight', e.target.value)} className="w-20 border border-gray-200 rounded-lg px-2 py-2 text-center text-sm font-bold outline-none focus:border-[#0036a1]" min="0" max="100" />
+                  <input type="number" value={p.weight} onChange={e => up(p.id, 'weight', e.target.value)} className="w-20 border border-gray-200 rounded-lg px-2 py-2 text-center text-sm font-bold outline-none focus:border-[#1E4DA6]" min="0" max="100" />
                   <span className="text-xs text-gray-400 font-bold">%</span>
                 </div>
                 <button onClick={() => setParts(prev => prev.filter(x => x.id !== p.id))} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>
               </div>
             ))}
           </div>
-          <button onClick={() => setParts(p => [...p, { id: Date.now().toString(), name: 'New Component', weight: 0 }])} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-blue-200 py-4 text-sm font-semibold text-blue-600 hover:bg-blue-50">
+          <button onClick={() => setParts(p => [...p, { id: Date.now().toString(), name: 'New Component', weight: 0 }])} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#1E4DA6]/20 py-4 text-sm font-semibold text-[#1E4DA6] hover:bg-[#1E4DA6]/5">
             <Plus className="w-4 h-4" />Add Assessment Component
           </button>
           <div className="mt-8 border-t border-gray-100 pt-6">
@@ -474,14 +473,14 @@ function TraitsTab() {
         <div><p className="font-bold text-sm text-gray-900">Trait Groups</p><p className="text-xs text-gray-500 mt-0.5">Create open trait groups like Affective Domain or Psychomotor.</p></div>
         <div className="flex gap-2 w-full sm:w-auto">
           <input type="text" value={newGroupName} onChange={e => setNewGroupName(e.target.value)} placeholder="New Group Name" className="border border-gray-200 rounded-lg px-3 py-2 text-sm w-full sm:w-48" />
-          <Button onClick={addGroup} className="bg-[#0036a1] hover:bg-[#001761]">Add</Button>
+          <Button onClick={addGroup} className="bg-[#1E4DA6] hover:bg-[#173F8C]">Add</Button>
         </div>
       </div>
 
       {configs.length > 0 && (
         <div className="flex gap-2 overflow-x-auto pb-2">
           {configs.map(c => (
-            <div key={c.domain} className={cn('px-4 py-2 text-sm font-bold rounded-lg whitespace-nowrap transition-colors flex items-center gap-2 group cursor-pointer', activeTab === c.domain ? 'bg-[#0036a1] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')} onClick={() => {
+            <div key={c.domain} className={cn('px-4 py-2 text-sm font-bold rounded-lg whitespace-nowrap transition-colors flex items-center gap-2 group cursor-pointer', activeTab === c.domain ? 'bg-[#1E4DA6] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')} onClick={() => {
               if (editingDomain !== c.domain) {
                 setActiveTab(c.domain);
                 handleTabSwitch(c);
@@ -489,13 +488,13 @@ function TraitsTab() {
             }}>
               {editingDomain === c.domain ? (
                 <div className="flex items-center gap-1">
-                  <input autoFocus value={editingDomainName} onChange={e => setEditingDomainName(e.target.value)} onBlur={() => saveRenameGroup(c.domain)} onKeyDown={e => { if (e.key === 'Enter') saveRenameGroup(c.domain); if (e.key === 'Escape') setEditingDomain(null); }} className={cn("px-2 py-0.5 rounded outline-none w-28 text-sm transition-colors border", activeTab === c.domain ? "bg-white/10 text-white border-white/30 focus:border-white focus:bg-white/20" : "bg-white text-gray-900 border-gray-300 focus:border-[#0036a1]")} onClick={e => e.stopPropagation()} />
+                  <input autoFocus value={editingDomainName} onChange={e => setEditingDomainName(e.target.value)} onBlur={() => saveRenameGroup(c.domain)} onKeyDown={e => { if (e.key === 'Enter') saveRenameGroup(c.domain); if (e.key === 'Escape') setEditingDomain(null); }} className={cn("px-2 py-0.5 rounded outline-none w-28 text-sm transition-colors border", activeTab === c.domain ? "bg-white/10 text-white border-white/30 focus:border-white focus:bg-white/20" : "bg-white text-gray-900 border-gray-300 focus:border-[#1E4DA6]")} onClick={e => e.stopPropagation()} />
                 </div>
               ) : (
                 <>
                   {c.domain}
                   <div className="flex gap-1 ml-1 opacity-60 hover:opacity-100 transition-opacity">
-                    <div onClick={(e) => startRenameGroup(e, c.domain)} className={cn("p-0.5 rounded-full hover:bg-black/20 transition-colors", activeTab === c.domain ? "text-white hover:text-white" : "text-gray-500 hover:text-blue-500")} title="Rename Group">
+                    <div onClick={(e) => startRenameGroup(e, c.domain)} className={cn("p-0.5 rounded-full hover:bg-black/20 transition-colors", activeTab === c.domain ? "text-white hover:text-white" : "text-gray-500 hover:text-[#1E4DA6]")} title="Rename Group">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
                     </div>
                     <div onClick={(e) => deleteGroup(e, c.domain)} className={cn("p-0.5 rounded-full hover:bg-black/20 transition-colors", activeTab === c.domain ? "text-white hover:text-white" : "text-gray-500 hover:text-red-500")} title="Delete Group">
@@ -511,10 +510,10 @@ function TraitsTab() {
 
       {activeTab && (
         <>
-          <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl border border-blue-100">
-            <span className="text-sm font-bold text-blue-900">Rating Scale:</span>
+          <div className="flex items-center gap-3 p-3 bg-[#1E4DA6]/5 rounded-xl border border-[#1E4DA6]/10">
+            <span className="text-sm font-bold text-[#0E2450]">Rating Scale:</span>
             <Select value={ratingScale} onValueChange={(v: any) => updateRatingScale(v)}>
-              <SelectTrigger className="w-48 bg-white border-blue-200"><SelectValue /></SelectTrigger>
+              <SelectTrigger className="w-48 bg-white border-[#1E4DA6]/20"><SelectValue /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="ALPHA">A, B, C, D, E</SelectItem>
                 <SelectItem value="NUMERIC">1, 2, 3, 4, 5</SelectItem>
@@ -525,12 +524,12 @@ function TraitsTab() {
             {traits.map((t, i) => (
               <div key={t.id} className="flex flex-row items-center gap-3 p-3 bg-white border border-gray-100 rounded-xl shadow-sm hover:border-gray-200 transition-colors">
                 <span className="w-7 h-7 rounded-lg bg-gray-50 flex items-center justify-center text-xs font-bold text-gray-400 shrink-0">{i + 1}</span>
-                <input value={t.name} onChange={e => updateTraits((p: any[]) => p.map(x => x.id === t.id ? { ...x, name: e.target.value } : x))} className="flex-1 min-w-0 border-0 border-b-2 border-transparent bg-transparent px-3 py-2 text-sm font-semibold outline-none focus:border-[#0036a1] focus:bg-gray-50 rounded-t-lg transition-all" placeholder="Enter trait name (e.g. Neatness)" />
+                <input value={t.name} onChange={e => updateTraits((p: any[]) => p.map(x => x.id === t.id ? { ...x, name: e.target.value } : x))} className="flex-1 min-w-0 border-0 border-b-2 border-transparent bg-transparent px-3 py-2 text-sm font-semibold outline-none focus:border-[#1E4DA6] focus:bg-gray-50 rounded-t-lg transition-all" placeholder="Enter trait name (e.g. Neatness)" />
                 <button onClick={() => updateTraits((p: any[]) => p.filter(x => x.id !== t.id))} className="p-2 shrink-0 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
               </div>
             ))}
           </div>
-          <button onClick={() => updateTraits((p: any[]) => [...p, { id: Date.now().toString(), name: '' }])} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-blue-200 py-4 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors">
+          <button onClick={() => updateTraits((p: any[]) => [...p, { id: Date.now().toString(), name: '' }])} className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#1E4DA6]/20 py-4 text-sm font-semibold text-[#1E4DA6] hover:bg-[#1E4DA6]/5 transition-colors">
             <Plus className="w-4 h-4" />Add Trait Element
           </button>
           <div className="mt-8 border-t border-gray-100 pt-6">
@@ -555,140 +554,42 @@ function PlaceholderTab({ title, desc, icon: Icon }: { title: string; desc: stri
 
 
 /* ── TEMPLATES TAB ──────────────────────────────────────── */
+// Rewritten 12 Aug 2026: used to open a drag-and-drop TemplateBuilder modal
+// and call the now-retired /results/template(s) API. Replaced with the same
+// fixed-gallery picker used on the Report Card Templates settings page
+// (client/src/pages/dashboard/settings/shared/TemplateGallery.tsx) so there
+// is exactly one place to manage result templates, not two — see
+// PROJECT_BRIEF.md section 3 for the full "three disconnected systems"
+// writeup this consolidates.
 function TemplatesTab() {
-  const [templates, setTemplates] = useState<any[]>([]);
-  const [categories, setCategories] = useState<{id: string, name: string, isClass: boolean, rawVal: string}[]>([]);
-  const [isEditorOpen, setIsEditorOpen] = useState(false);
-  const [editingTemplate, setEditingTemplate] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch(`${API}/sections`, { credentials: 'include' })
-      .then(r => r.json())
-      .then(data => {
-         const sectionsList = (data.sections || []).map((s: any) => ({ id: `SEC_${s.id}`, name: `Section: ${s.name}`, rawVal: s.id }));
-         setCategories([{ id: 'ALL', name: 'Global Default (All Sections)', rawVal: 'ALL' }, ...sectionsList]);
-      })
-      .catch(console.error);
-      
-    fetchTemplates();
-  }, []);
-
-  const fetchTemplates = () => {
-    fetch(`${API}/results/templates`, { credentials: 'include' })
-      .then(res => res.json())
-      .then(data => {
-        if (data.templates) setTemplates(data.templates);
-      })
-      .catch(console.error);
-  };
-
-  const handleEdit = (id: string) => {
-    setEditingTemplate(id);
-    setIsEditorOpen(true);
-  };
-
-  const assignSection = async (templateId: string, sectionId: string) => {
-    try {
-       await axios.patch(`${API}/results/template/${templateId}/assign`, { sectionId }, { withCredentials: true });
-       fetchTemplates(); // reload
-    } catch (e: any) {
-       console.error(e);
-       alert('Failed to assign section');
-    }
-  };
-
-  const updateTemplateType = async (templateId: string, resultType: string) => {
-    try {
-       await axios.patch(`${API}/results/template/${templateId}/assign`, { resultType }, { withCredentials: true });
-       fetchTemplates(); // reload
-    } catch (e: any) {
-       console.error(e);
-       alert('Failed to update template type');
-    }
-  };
-
-  const deleteTemplate = async (templateId: string) => {
-      if (!confirm('Are you sure you want to delete this template?')) return;
-      try {
-          await axios.delete(`${API}/results/template/${templateId}`, { withCredentials: true });
-          fetchTemplates();
-      } catch (e: any) {
-          console.error(e);
-          alert('Failed to delete template');
-      }
-  };
+  const [resultType, setResultType] = useState('SCORE_BASED');
 
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-xl">
-        <div className="flex flex-col md:flex-row gap-4 justify-between mb-4">
+        <div className="flex flex-col md:flex-row gap-4 justify-between mb-4 items-start md:items-center">
           <h3 className="font-bold text-gray-900">Result Templates</h3>
-          <Button onClick={() => { setEditingTemplate(null); setIsEditorOpen(true); }} className="bg-[#0036a1] hover:bg-[#001761]">
-            Open Template Builder
-          </Button>
+          <Select value={resultType} onValueChange={setResultType}>
+            <SelectTrigger className="w-56 bg-white text-xs h-9"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="SCORE_BASED">Score-Based Results</SelectItem>
+              <SelectItem value="COMMENT_BASED">Comment-Based Reports</SelectItem>
+              <SelectItem value="TRANSCRIPT">Transcripts</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        
-        <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 text-sm text-blue-900">
+
+        <div className="bg-[#FDF6E3]/60 border border-[#F5B800]/30 rounded-xl p-4 mb-6 text-sm text-[#0B1F4E]">
           <p className="font-bold mb-1">How to use templates:</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Click <b>Open Template Builder</b> to design a new template layout.</li>
-            <li>Use the dropdown on each template card to assign it to a specific section (e.g., Primary, Secondary).</li>
-            <li>If a template is assigned to "Global Default", it will be used for any section that doesn't have a specific template assigned.</li>
+            <li>Pick one of the pre-made designs below — there's no layout builder anymore, each design is finished as-is.</li>
+            <li>Apply it to a specific section (e.g. Primary, Secondary) or the whole school as the default.</li>
+            <li>A section-specific template always wins over the school default for that section.</li>
           </ul>
         </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {templates.map(t => (
-            <div key={t.id} className="border border-gray-200 rounded-xl p-5 hover:border-[#0036a1]/50 transition-colors bg-gray-50 flex flex-col justify-between">
-              <div>
-                <h4 className="font-bold text-gray-900">{t.name}</h4>
-                <div className="grid grid-cols-2 gap-4 mt-3">
-                  <div>
-                    <div className="mb-1 text-[10px] font-bold text-gray-500 uppercase">Assigned To:</div>
-                    <Select value={t.assignedSectionId || 'ALL'} onValueChange={(v) => assignSection(t.id, v)}>
-                      <SelectTrigger className="w-full bg-white text-xs h-8"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        {categories.map(c => <SelectItem key={c.id} value={c.rawVal}>{c.name}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <div className="mb-1 text-[10px] font-bold text-gray-500 uppercase">Result Type:</div>
-                    <Select value={t.resultType || 'SCORE_BASED'} onValueChange={(v) => updateTemplateType(t.id, v)}>
-                      <SelectTrigger className="w-full bg-white text-xs h-8"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="SCORE_BASED">Score Based</SelectItem>
-                        <SelectItem value="COMMENT_BASED">Comment Based</SelectItem>
-                        <SelectItem value="TRANSCRIPT">Transcript</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-6 flex gap-2">
-                <Button onClick={() => handleEdit(t.id)} variant="outline" className="flex-1 text-xs bg-white hover:bg-gray-50">
-                  Edit Layout
-                </Button>
-                <Button onClick={() => deleteTemplate(t.id)} variant="outline" className="w-10 px-0 text-red-500 hover:bg-red-50 hover:text-red-600 border-red-100">
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          ))}
-          {templates.length === 0 && (
-            <div className="col-span-full py-12 text-center text-gray-400">
-              <p>No templates found. Open the builder to create one.</p>
-            </div>
-          )}
-        </div>
-      </div>
 
-      <Dialog open={isEditorOpen} onOpenChange={setIsEditorOpen}>
-        <DialogContent hideClose className="max-w-[100vw] w-screen h-screen max-h-screen m-0 p-0 rounded-none border-0 overflow-hidden flex flex-col bg-gray-50">
-          <TemplateBuilder API={API} initialTemplateId={editingTemplate || undefined} onClose={() => { setIsEditorOpen(false); fetchTemplates(); }} />
-        </DialogContent>
-      </Dialog>
+        <TemplateGallery resultType={resultType} />
+      </div>
     </div>
   );
 }
@@ -822,7 +723,7 @@ function CommentsTab() {
             {rules.map(rule => (
               <div key={rule.id} className="flex flex-col sm:flex-row gap-4 sm:items-center border border-gray-100 rounded-xl p-4 bg-gray-50 hover:border-gray-200">
                 <div className="flex gap-2">
-                  <span className="text-xs font-bold text-[#0036a1] bg-blue-50 px-2 py-1 rounded-md uppercase w-28 text-center">{rule.role}</span>
+                  <span className="text-xs font-bold text-[#1E4DA6] bg-[#1E4DA6]/5 px-2 py-1 rounded-md uppercase w-28 text-center">{rule.role}</span>
                   <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded-md uppercase">{rule.resultType || 'EXAM'}</span>
                 </div>
                 <div className="flex gap-2 items-center bg-white px-3 py-1.5 rounded-lg border border-gray-200">
@@ -832,7 +733,7 @@ function CommentsTab() {
                 </div>
                 <div className="flex-1 text-sm text-gray-700 italic">"{rule.comment}"</div>
                 <div className="flex gap-1">
-                  <button onClick={() => handleEditRule(rule)} className="p-2 text-gray-400 hover:text-[#0036a1] hover:bg-blue-50 rounded-lg"><Pencil className="w-4 h-4" /></button>
+                  <button onClick={() => handleEditRule(rule)} className="p-2 text-gray-400 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded-lg"><Pencil className="w-4 h-4" /></button>
                   <button onClick={() => deleteRule(rule.id)} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>
                 </div>
               </div>
@@ -843,7 +744,7 @@ function CommentsTab() {
         <div className="mt-8 pt-6 border-t border-gray-100">
           <div className="flex items-center justify-between mb-4">
             <h4 className="font-bold text-sm text-gray-900 flex items-center gap-2">
-                {editingRuleId ? <Pencil className="w-4 h-4 text-[#0036a1]" /> : <Plus className="w-4 h-4 text-[#0036a1]" />} 
+                {editingRuleId ? <Pencil className="w-4 h-4 text-[#1E4DA6]" /> : <Plus className="w-4 h-4 text-[#1E4DA6]" />} 
                 {editingRuleId ? 'Edit Range' : 'Add New Range'}
             </h4>
             {editingRuleId && (
@@ -853,7 +754,7 @@ function CommentsTab() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end bg-gray-50 p-5 rounded-xl border border-gray-200">
             <div>
               <label className="text-xs font-bold text-gray-500 uppercase">Target Role</label>
-              <select value={newRule.role} onChange={e => setNewRule(p => ({ ...p, role: e.target.value }))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-[#0036a1]">
+              <select value={newRule.role} onChange={e => setNewRule(p => ({ ...p, role: e.target.value }))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-[#1E4DA6]">
                 {signatures.map((s, idx) => {
                     const roleName = s.roleName || s.role || s.label;
                     return <option key={idx} value={roleName}>{roleName}</option>;
@@ -862,24 +763,24 @@ function CommentsTab() {
             </div>
             <div>
               <label className="text-xs font-bold text-gray-500 uppercase">Result Type</label>
-              <select value={newRule.resultType} onChange={e => setNewRule(p => ({ ...p, resultType: e.target.value }))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-[#0036a1]">
+              <select value={newRule.resultType} onChange={e => setNewRule(p => ({ ...p, resultType: e.target.value }))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-[#1E4DA6]">
                 <option value="EXAM">Exam / Final Score</option>
                 <option value="CA">Continuous Assessment (CA)</option>
               </select>
             </div>
             <div>
               <label className="text-xs font-bold text-gray-500 uppercase">Min Score (%)</label>
-              <input type="number" value={newRule.minScore} onChange={e => setNewRule(p => ({ ...p, minScore: Number(e.target.value) }))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-[#0036a1]" />
+              <input type="number" value={newRule.minScore} onChange={e => setNewRule(p => ({ ...p, minScore: Number(e.target.value) }))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-[#1E4DA6]" />
             </div>
             <div>
               <label className="text-xs font-bold text-gray-500 uppercase">Max Score (%)</label>
-              <input type="number" value={newRule.maxScore} onChange={e => setNewRule(p => ({ ...p, maxScore: Number(e.target.value) }))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-[#0036a1]" />
+              <input type="number" value={newRule.maxScore} onChange={e => setNewRule(p => ({ ...p, maxScore: Number(e.target.value) }))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-[#1E4DA6]" />
             </div>
             <div className="sm:col-span-2 lg:col-span-4">
               <label className="text-xs font-bold text-gray-500 uppercase">Generated Comment</label>
               <div className="flex flex-col sm:flex-row gap-2 mt-1">
-                <input type="text" value={newRule.comment} onChange={e => setNewRule(p => ({ ...p, comment: e.target.value }))} className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#0036a1]" placeholder="e.g. Excellent performance, keep it up!" />
-                <Button onClick={addRule} disabled={saving} className="bg-[#0036a1] hover:bg-[#001761] text-white">
+                <input type="text" value={newRule.comment} onChange={e => setNewRule(p => ({ ...p, comment: e.target.value }))} className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1E4DA6]" placeholder="e.g. Excellent performance, keep it up!" />
+                <Button onClick={addRule} disabled={saving} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
                   {saving ? (editingRuleId ? 'Updating...' : 'Adding...') : (editingRuleId ? 'Update Range' : 'Add Range')}
                 </Button>
               </div>
@@ -1007,7 +908,7 @@ function SignaturesTab() {
                 <button onClick={() => setSignatures(p => p.filter(s => s.id !== sig.id))} className="absolute top-4 right-4 p-2 text-gray-400 hover:text-red-500 bg-white rounded-lg hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100 z-10"><Trash2 className="w-4 h-4" /></button>
                 <div className="mb-4">
                   <label className="block text-xs font-bold text-gray-500 mb-1 uppercase">Signature Role / Title</label>
-                  <input type="text" value={sig.roleName} onChange={e => setSignatures(p => p.map(s => s.id === sig.id ? { ...s, roleName: e.target.value } : s))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#0036a1]" />
+                  <input type="text" value={sig.roleName} onChange={e => setSignatures(p => p.map(s => s.id === sig.id ? { ...s, roleName: e.target.value } : s))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1E4DA6]" />
                 </div>
                 <div className="relative border-2 border-dashed border-gray-200 rounded-lg p-6 text-center hover:bg-gray-50 cursor-pointer overflow-hidden bg-white">
                   {sig.url ? (
@@ -1032,11 +933,11 @@ function SignaturesTab() {
               </div>
             ))}
             
-            <button onClick={addSignature} className="border-2 border-dashed border-blue-200 rounded-xl p-6 text-center hover:bg-blue-50 transition-colors flex flex-col items-center justify-center min-h-[220px]">
-              <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3">
+            <button onClick={addSignature} className="border-2 border-dashed border-[#1E4DA6]/20 rounded-xl p-6 text-center hover:bg-[#1E4DA6]/5 transition-colors flex flex-col items-center justify-center min-h-[220px]">
+              <div className="w-10 h-10 rounded-full bg-[#1E4DA6]/10 text-[#1E4DA6] flex items-center justify-center mb-3">
                 <Plus className="w-5 h-5" />
               </div>
-              <p className="text-sm font-bold text-blue-700">Add Signature Role</p>
+              <p className="text-sm font-bold text-[#173F8C]">Add Signature Role</p>
             </button>
           </div>
         )}
@@ -1073,11 +974,9 @@ const AUTO_TOGGLES = [
   { key: 'showElectivePassed', label: 'No. of Elective Subjects Passed' },
   { key: 'showElectiveFailed', label: 'No. of Elective Subjects Failed' },
   { key: 'showTotalSubjects', label: 'Total No. of Subjects Offered' },
-  { key: 'showTraitScale', label: 'Scale for Trait Ratings' },
   { key: 'showNextTermFees', label: 'Next Term Fees' },
   { key: 'parentTranscriptAccess', label: 'Parent Transcript Access' },
   // Additional blocks
-  { key: 'showTraitRatings', label: 'Trait Ratings Block' },
   { key: 'showAttendance', label: 'Attendance Block' },
   { key: 'showClassTeacherRemark', label: 'Class Teacher Remark' },
   { key: 'showHeadTeacherRemark', label: 'Head Teacher or Principal Remark' },
@@ -1102,7 +1001,6 @@ const MANUAL_TOGGLES = [
 
 const BLOCK_TOGGLES = [
   { key: 'showStudentPicture', label: 'Student Passport Picture' },
-  { key: 'showTraitRatings', label: 'Behavioral & Trait Ratings' },
   { key: 'showAttendance', label: 'Attendance Statistics' },
   { key: 'showNarrative', label: 'Teacher & Principal Comments' },
   { key: 'showAcademicSummaryCards', label: 'Academic Summary Cards' },
@@ -1177,33 +1075,33 @@ function DisplayTab() {
         <h3 className="font-bold text-gray-900 mb-2">Display Toggles</h3>
         <p className="text-sm text-gray-500 mb-6">Control which fields appear on the printed result sheet.</p>
 
-        <h4 className="text-xs font-bold text-[#0036a1] uppercase tracking-wider mb-3">Header Layout Options</h4>
+        <h4 className="text-xs font-bold text-[#1E4DA6] uppercase tracking-wider mb-3">Header Layout Options</h4>
         <p className="text-xs text-gray-500 mb-4">Choose how the school name and logo are positioned on report cards.</p>
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <label className={cn("flex-1 p-4 border rounded-xl cursor-pointer transition-all", headerLayoutMode === 'LEFT' ? "border-[#0036a1] bg-[#0036a1]/5 ring-2 ring-[#0036a1]/20" : "border-gray-200 hover:border-blue-200 bg-white")}>
+            <label className={cn("flex-1 p-4 border rounded-xl cursor-pointer transition-all", headerLayoutMode === 'LEFT' ? "border-[#1E4DA6] bg-[#1E4DA6]/5 ring-2 ring-[#1E4DA6]/20" : "border-gray-200 hover:border-[#1E4DA6]/20 bg-white")}>
                 <div className="flex items-center gap-3 mb-2">
-                    <input type="radio" name="headerMode" checked={headerLayoutMode === 'LEFT'} onChange={() => setHeaderLayoutMode('LEFT')} className="w-4 h-4 text-[#0036a1]" />
+                    <input type="radio" name="headerMode" checked={headerLayoutMode === 'LEFT'} onChange={() => setHeaderLayoutMode('LEFT')} className="w-4 h-4 text-[#1E4DA6]" />
                     <span className="font-bold text-gray-900">Left Aligned</span>
                 </div>
                 <p className="text-xs text-gray-500 ml-7">Logo on left, School name aligned left.</p>
             </label>
-            <label className={cn("flex-1 p-4 border rounded-xl cursor-pointer transition-all", headerLayoutMode === 'CENTER' ? "border-[#0036a1] bg-[#0036a1]/5 ring-2 ring-[#0036a1]/20" : "border-gray-200 hover:border-blue-200 bg-white")}>
+            <label className={cn("flex-1 p-4 border rounded-xl cursor-pointer transition-all", headerLayoutMode === 'CENTER' ? "border-[#1E4DA6] bg-[#1E4DA6]/5 ring-2 ring-[#1E4DA6]/20" : "border-gray-200 hover:border-[#1E4DA6]/20 bg-white")}>
                 <div className="flex items-center gap-3 mb-2">
-                    <input type="radio" name="headerMode" checked={headerLayoutMode === 'CENTER'} onChange={() => setHeaderLayoutMode('CENTER')} className="w-4 h-4 text-[#0036a1]" />
+                    <input type="radio" name="headerMode" checked={headerLayoutMode === 'CENTER'} onChange={() => setHeaderLayoutMode('CENTER')} className="w-4 h-4 text-[#1E4DA6]" />
                     <span className="font-bold text-gray-900">Centered</span>
                 </div>
                 <p className="text-xs text-gray-500 ml-7">School name and Logo centered.</p>
             </label>
-            <label className={cn("flex-1 p-4 border rounded-xl cursor-pointer transition-all", headerLayoutMode === 'RIGHT' ? "border-[#0036a1] bg-[#0036a1]/5 ring-2 ring-[#0036a1]/20" : "border-gray-200 hover:border-blue-200 bg-white")}>
+            <label className={cn("flex-1 p-4 border rounded-xl cursor-pointer transition-all", headerLayoutMode === 'RIGHT' ? "border-[#1E4DA6] bg-[#1E4DA6]/5 ring-2 ring-[#1E4DA6]/20" : "border-gray-200 hover:border-[#1E4DA6]/20 bg-white")}>
                 <div className="flex items-center gap-3 mb-2">
-                    <input type="radio" name="headerMode" checked={headerLayoutMode === 'RIGHT'} onChange={() => setHeaderLayoutMode('RIGHT')} className="w-4 h-4 text-[#0036a1]" />
+                    <input type="radio" name="headerMode" checked={headerLayoutMode === 'RIGHT'} onChange={() => setHeaderLayoutMode('RIGHT')} className="w-4 h-4 text-[#1E4DA6]" />
                     <span className="font-bold text-gray-900">Right Aligned</span>
                 </div>
                 <p className="text-xs text-gray-500 ml-7">Logo on right, School name aligned right.</p>
             </label>
         </div>
 
-        <h4 className="text-xs font-bold text-[#0036a1] uppercase tracking-wider mb-3">1-Page Layout Optimization</h4>
+        <h4 className="text-xs font-bold text-[#1E4DA6] uppercase tracking-wider mb-3">1-Page Layout Optimization</h4>
         <p className="text-xs text-gray-500 mb-4">Settings to help bulky report cards fit perfectly on one page.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="bg-white p-4 border border-gray-200 rounded-xl">
@@ -1251,12 +1149,12 @@ function DisplayTab() {
             </div>
         </div>
 
-        <h4 className="text-xs font-bold text-[#0036a1] uppercase tracking-wider mb-3">Major Report Blocks</h4>
+        <h4 className="text-xs font-bold text-[#1E4DA6] uppercase tracking-wider mb-3">Major Report Blocks</h4>
         <p className="text-xs text-gray-500 mb-4">Toggle entire sections of the report card ON or OFF.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
           {BLOCK_TOGGLES.map(t => (
-            <label key={t.key} className="flex items-center justify-between p-3 border border-blue-100 rounded-lg hover:bg-blue-50 cursor-pointer bg-white shadow-sm">
-              <span className="text-sm font-bold text-blue-900">{t.label}</span>
+            <label key={t.key} className="flex items-center justify-between p-3 border border-[#1E4DA6]/10 rounded-lg hover:bg-[#1E4DA6]/5 cursor-pointer bg-white shadow-sm">
+              <span className="text-sm font-bold text-[#0E2450]">{t.label}</span>
               <Switch checked={toggles[t.key] ?? true} onCheckedChange={() => handleToggle(t.key)} />
             </label>
           ))}
@@ -1277,8 +1175,8 @@ function DisplayTab() {
         <p className="text-xs text-gray-500 mb-4">These fields require manual input (e.g. from the teacher comment page) to display on the result.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {MANUAL_TOGGLES.map(t => (
-            <label key={t.key} className="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:bg-blue-50 cursor-pointer bg-blue-50/30">
-              <span className="text-sm font-semibold text-blue-900">{t.label}</span>
+            <label key={t.key} className="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:bg-[#1E4DA6]/5 cursor-pointer bg-[#1E4DA6]/8">
+              <span className="text-sm font-semibold text-[#0E2450]">{t.label}</span>
               <Switch checked={toggles[t.key] ?? true} onCheckedChange={() => handleToggle(t.key)} />
             </label>
           ))}
@@ -1350,19 +1248,19 @@ function RankingTab() {
           <div>
             <label className="text-xs font-bold text-gray-500 uppercase">Ranking Strategy</label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-1">
-              <label className={cn('p-3 border rounded-lg cursor-pointer flex justify-between items-center', config.strategy === 'standard' ? 'border-[#0036a1] bg-blue-50' : 'border-gray-200')}>
+              <label className={cn('p-3 border rounded-lg cursor-pointer flex justify-between items-center', config.strategy === 'standard' ? 'border-[#1E4DA6] bg-[#1E4DA6]/5' : 'border-gray-200')}>
                 <div>
                   <div className="font-semibold text-sm">Standard Ranking</div>
                   <div className="text-xs text-gray-500">Ties share rank, skips next (1, 2, 2, 4)</div>
                 </div>
-                <input type="radio" name="strategy" checked={config.strategy === 'standard'} onChange={() => setConfig(p => ({...p, strategy: 'standard'}))} className="text-[#0036a1]" />
+                <input type="radio" name="strategy" checked={config.strategy === 'standard'} onChange={() => setConfig(p => ({...p, strategy: 'standard'}))} className="text-[#1E4DA6]" />
               </label>
-              <label className={cn('p-3 border rounded-lg cursor-pointer flex justify-between items-center', config.strategy === 'dense' ? 'border-[#0036a1] bg-blue-50' : 'border-gray-200')}>
+              <label className={cn('p-3 border rounded-lg cursor-pointer flex justify-between items-center', config.strategy === 'dense' ? 'border-[#1E4DA6] bg-[#1E4DA6]/5' : 'border-gray-200')}>
                 <div>
                   <div className="font-semibold text-sm">Dense Ranking</div>
                   <div className="text-xs text-gray-500">Ties share rank, no skips (1, 2, 2, 3)</div>
                 </div>
-                <input type="radio" name="strategy" checked={config.strategy === 'dense'} onChange={() => setConfig(p => ({...p, strategy: 'dense'}))} className="text-[#0036a1]" />
+                <input type="radio" name="strategy" checked={config.strategy === 'dense'} onChange={() => setConfig(p => ({...p, strategy: 'dense'}))} className="text-[#1E4DA6]" />
               </label>
             </div>
           </div>
@@ -1555,7 +1453,7 @@ function GeneralTab() {
                           reader.onloadend = () => setConfig(p => ({ ...p, logoUrl: reader.result as string }));
                           reader.readAsDataURL(file);
                       }
-                  }} className="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 truncate" />
+                  }} className="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#1E4DA6]/5 file:text-[#173F8C] hover:file:bg-[#1E4DA6]/10 truncate" />
                   <p className="text-[10px] text-gray-400 mt-1 truncate sm:whitespace-normal">This logo will be used at the top of the report cards.</p>
               </div>
           </div>
@@ -1627,9 +1525,9 @@ function GeneralTab() {
             <h4 className="font-semibold text-sm text-gray-800 border-b pb-2 mb-2">Automation Rules</h4>
           </div>
           
-          <div className="col-span-2 w-full flex flex-col md:flex-row md:items-center justify-between p-4 border border-gray-100 rounded-xl hover:bg-blue-50 bg-blue-50/30 gap-4">
+          <div className="col-span-2 w-full flex flex-col md:flex-row md:items-center justify-between p-4 border border-gray-100 rounded-xl hover:bg-[#1E4DA6]/5 bg-[#1E4DA6]/8 gap-4">
               <div>
-                <span className="text-sm font-semibold text-blue-900 block mb-1">Automatic Result Comments</span>
+                <span className="text-sm font-semibold text-[#0E2450] block mb-1">Automatic Result Comments</span>
                 <p className="text-xs text-gray-600">If enabled, comments will be auto-generated based on the student's average score using the rules defined in the "Comments" tab.</p>
               </div>
               <Switch checked={config.resultAutomaticComments} onCheckedChange={(val) => setConfig(p => ({...p, resultAutomaticComments: val}))} />
@@ -1757,7 +1655,7 @@ function VisibilityTab() {
               {categories.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
             </SelectContent>
           </Select>
-          <input type="text" value={year} onChange={e => setYear(e.target.value)} placeholder="2026/2027" className="border border-gray-200 rounded-lg px-3 py-2 text-sm w-32 outline-none focus:border-[#0036a1]" />
+          <input type="text" value={year} onChange={e => setYear(e.target.value)} placeholder="2026/2027" className="border border-gray-200 rounded-lg px-3 py-2 text-sm w-32 outline-none focus:border-[#1E4DA6]" />
           <Select value={term} onValueChange={setTerm}>
             <SelectTrigger className="w-full sm:w-48 bg-white"><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -1797,7 +1695,7 @@ function VisibilityTab() {
               </div>
             </div>
 
-            <Button onClick={handleSave} disabled={saving} className="bg-[#0036a1] hover:bg-[#001761] text-white">
+            <Button onClick={handleSave} disabled={saving} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
               {saving ? 'Saving...' : 'Save Settings'}
             </Button>
           </div>
@@ -1891,7 +1789,7 @@ function CommentBasedSetupTab() {
                       <Button variant="ghost" size="sm" onClick={() => removeSkill(cat.id, skill.id)} className="text-gray-400 hover:text-red-500 shrink-0 px-2"><Trash2 className="w-4 h-4" /></Button>
                     </div>
                   ))}
-                  <Button size="sm" variant="ghost" onClick={() => addSkill(cat.id)} className="text-[#0036a1] hover:bg-blue-50 mt-2 text-xs font-semibold"><Plus className="w-3 h-3 mr-1" />Add Skill</Button>
+                  <Button size="sm" variant="ghost" onClick={() => addSkill(cat.id)} className="text-[#1E4DA6] hover:bg-[#1E4DA6]/5 mt-2 text-xs font-semibold"><Plus className="w-3 h-3 mr-1" />Add Skill</Button>
                 </div>
               </div>
             ))}
@@ -1953,7 +1851,7 @@ export function ResultSettings() {
             {TABS.map(t => {
               const Icon = t.icon;
               return (
-                <button key={t.id} onClick={() => setTab(t.id)} className={cn('flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap text-left w-auto lg:w-full shrink-0', tab === t.id ? 'bg-[#0036a1] text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100')}>
+                <button key={t.id} onClick={() => setTab(t.id)} className={cn('flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap text-left w-auto lg:w-full shrink-0', tab === t.id ? 'bg-[#1E4DA6] text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100')}>
                   <Icon className="w-4 h-4 shrink-0" />{t.label}
                 </button>
               );

@@ -89,7 +89,7 @@ export function SubjectCategories() {
     if (isLoading) {
         return (
             <SettingsShell breadcrumbCurrent="Subject Categories" tabLabel="Subject Categories" tabIcon={<Tag className="h-3.5 w-3.5" />}>
-                <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>
+                <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>
             </SettingsShell>
         );
     }
@@ -109,7 +109,7 @@ export function SubjectCategories() {
                         'flex items-center gap-2 rounded-xl border-2 border-dashed px-5 py-2.5 text-sm font-semibold transition-all',
                         isAdding
                             ? 'border-red-200 bg-red-50 text-red-600 hover:bg-red-100'
-                            : 'border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100'
+                            : 'border-[#1E4DA6]/20 bg-[#1E4DA6]/5 text-[#1E4DA6] hover:bg-[#1E4DA6]/10'
                     )}
                 >
                     {isAdding ? <><X className="h-4 w-4" /> Cancel</> : <><Plus className="h-4 w-4" /> Add New Category</>}
@@ -117,7 +117,7 @@ export function SubjectCategories() {
             </div>
 
             {isAdding && (
-                <form onSubmit={handleAdd} className="mb-8 rounded-2xl border border-blue-100 bg-blue-50/50 p-6 space-y-4">
+                <form onSubmit={handleAdd} className="mb-8 rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-6 space-y-4">
                     <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">
                         Create Subject Category
                     </h3>
@@ -131,12 +131,12 @@ export function SubjectCategories() {
                                 value={name}
                                 onChange={e => setName(e.target.value)}
                                 placeholder="e.g. Science"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             />
                         </div>
                     </div>
                     <div className="flex justify-end pt-2">
-                        <button type="submit" className="rounded-xl bg-blue-700 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 transition-colors">
+                        <button type="submit" className="rounded-xl bg-[#173F8C] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69] transition-colors">
                             Create Category
                         </button>
                     </div>
@@ -167,7 +167,7 @@ export function SubjectCategories() {
                                         {editingId === category.id ? (
                                             <input 
                                                 value={editName} onChange={e => setEditName(e.target.value)} 
-                                                className="w-full rounded-md border border-slate-300 px-2 py-1 text-sm outline-none focus:border-blue-500" 
+                                                className="w-full rounded-md border border-slate-300 px-2 py-1 text-sm outline-none focus:border-[#1E4DA6]" 
                                             />
                                         ) : (
                                             <span className="font-semibold text-slate-800">{category.name}</span>
@@ -181,7 +181,7 @@ export function SubjectCategories() {
                                             </div>
                                         ) : (
                                             <div className="flex justify-end items-center gap-2">
-                                                <button onClick={() => startEdit(category)} className="rounded-lg p-2 text-slate-400 hover:bg-blue-50 hover:text-blue-500 transition-colors"><Pencil className="h-4 w-4" /></button>
+                                                <button onClick={() => startEdit(category)} className="rounded-lg p-2 text-slate-400 hover:bg-[#1E4DA6]/5 hover:text-[#1E4DA6] transition-colors"><Pencil className="h-4 w-4" /></button>
                                                 <button onClick={() => handleDelete(category.id)} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors"><Trash2 className="h-4 w-4" /></button>
                                             </div>
                                         )}

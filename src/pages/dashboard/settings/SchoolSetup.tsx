@@ -48,7 +48,7 @@ interface SchoolTypeOption {
     defaultClasses: TemplateClass[];
 }
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
 export function SchoolSetup() {
     const [classes, setClasses] = useState<ClassLevel[]>([]);
@@ -356,7 +356,7 @@ export function SchoolSetup() {
         } catch { toast.error('Failed to save'); }
     };
 
-    if (isLoading) return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>;
+    if (isLoading) return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>;
 
     return (
         <SettingsShell breadcrumbCurrent="School Setup" tabLabel="School Setup" tabIcon={<School className="h-3.5 w-3.5" />}>
@@ -374,15 +374,15 @@ export function SchoolSetup() {
                         <div
                             key={st.type}
                             onClick={() => { setSelectedSchoolType(st); setSelectedTypeId(st.id); }}
-                            className={cn('cursor-pointer rounded-2xl border-2 p-5 transition-all', selectedSchoolType?.id === st.id ? 'border-blue-500 bg-blue-50/60 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm')}
+                            className={cn('cursor-pointer rounded-2xl border-2 p-5 transition-all', selectedSchoolType?.id === st.id ? 'border-[#1E4DA6] bg-[#1E4DA6]/8 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm')}
                         >
                             <div className="flex items-center justify-between mb-3">
-                                <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl', selectedSchoolType?.id === st.id ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500')}>
+                                <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl', selectedSchoolType?.id === st.id ? 'bg-[#1E4DA6] text-white' : 'bg-slate-100 text-slate-500')}>
                                     {st.icon}
                                 </div>
-                                {selectedSchoolType?.id === st.id && <CheckCircle2 className="h-5 w-5 text-blue-600" />}
+                                {selectedSchoolType?.id === st.id && <CheckCircle2 className="h-5 w-5 text-[#1E4DA6]" />}
                             </div>
-                            <h4 className={cn('font-bold text-sm', selectedSchoolType?.type === st.type ? 'text-blue-700' : 'text-slate-700')}>{st.label}</h4>
+                            <h4 className={cn('font-bold text-sm', selectedSchoolType?.type === st.type ? 'text-[#173F8C]' : 'text-slate-700')}>{st.label}</h4>
                             <p className="text-xs text-slate-500 mt-0.5 mb-3">{st.sub}</p>
                             <div className="flex flex-wrap gap-1">
                                 {st.preview.map(p => <span key={p} className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500">{p}</span>)}
@@ -392,7 +392,7 @@ export function SchoolSetup() {
                                     e.stopPropagation();
                                     openTemplateModal(st);
                                 }}
-                                className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-600 transition-colors hover:bg-slate-100 hover:text-blue-600"
+                                className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-600 transition-colors hover:bg-slate-100 hover:text-[#1E4DA6]"
                             >
                                 <Pencil className="h-3.5 w-3.5" /> Customize Template
                             </button>
@@ -412,7 +412,7 @@ export function SchoolSetup() {
                 </div>
 
                 {/* Seed button */}
-                <button onClick={applySeed} disabled={loadingSeed} className="flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 hover:bg-blue-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                <button onClick={applySeed} disabled={loadingSeed} className="flex items-center gap-2 rounded-xl border border-[#1E4DA6]/20 bg-[#1E4DA6]/5 px-4 py-3 text-sm font-semibold text-[#173F8C] hover:bg-[#1E4DA6]/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                     {loadingSeed ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />} 
                     {loadingSeed ? 'Applying...' : `Apply Template`}
                 </button>
@@ -510,7 +510,7 @@ export function SchoolSetup() {
                                         <>
                                             <span className="flex-1 font-semibold text-slate-800 text-sm">{cls.name}</span>
                                             {cls.category && <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-500">{cls.category}</span>}
-                                            <button onClick={() => startTempEdit(idx, cls)} className="rounded-lg p-2 text-slate-400 hover:bg-blue-50 hover:text-blue-500 transition-colors"><Pencil className="h-4 w-4" /></button>
+                                            <button onClick={() => startTempEdit(idx, cls)} className="rounded-lg p-2 text-slate-400 hover:bg-[#1E4DA6]/5 hover:text-[#1E4DA6] transition-colors"><Pencil className="h-4 w-4" /></button>
                                             <button onClick={() => deleteTempClass(idx)} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors"><Trash2 className="h-4 w-4" /></button>
                                         </>
                                     )}
@@ -532,7 +532,7 @@ export function SchoolSetup() {
                         <button onClick={() => setIsTemplateModalOpen(false)} className="px-5 py-2.5 text-sm font-bold text-slate-500 hover:text-slate-700 transition-colors">
                             Cancel
                         </button>
-                        <button onClick={saveTemplate} disabled={isSavingTemplate} className="flex items-center gap-2 rounded-xl bg-blue-700 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 transition-colors disabled:opacity-50">
+                        <button onClick={saveTemplate} disabled={isSavingTemplate} className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69] transition-colors disabled:opacity-50">
                             {isSavingTemplate ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                             Save Template
                         </button>
@@ -572,7 +572,7 @@ export function SchoolSetup() {
                         <button
                             onClick={handleCreateSchoolType}
                             disabled={isCreatingType || !newTypeName.trim()}
-                            className="flex items-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-blue-800 disabled:opacity-50"
+                            className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#122F69] disabled:opacity-50"
                         >
                             {isCreatingType ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
                             Create

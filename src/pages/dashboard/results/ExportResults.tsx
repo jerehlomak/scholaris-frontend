@@ -10,6 +10,7 @@ import ReportCardPreview from '../../../components/report/ReportCardPreview';
 import type { TemplateConfig } from '../../../components/report/ReportCardPreview';
 import ReportCard from '../../../components/report-blocks/ReportCard';
 import { Printer, Eye, X, Plus, Minus } from 'lucide-react';
+import { mobileSafePrint } from '../../../lib/printUtils';
 
 const DEFAULT_CFG: TemplateConfig = {
     showSchoolLogo: true, showSchoolAddress: true, showStudentPhoto: true,
@@ -21,7 +22,7 @@ const DEFAULT_CFG: TemplateConfig = {
     showNextTerm: true, showPromotedTo: false,
     reportTitle: 'End of Term Academic Report',
     principalTitle: 'Principal', headTeacherTitle: 'Head Teacher', formTeacherTitle: 'Form Teacher', principalName: '',
-    primaryColor: '#0036a1', headerBg: '#0036a1', fontFamily: 'serif',
+    primaryColor: '#1E4DA6', headerBg: '#1E4DA6', fontFamily: 'serif',
     tableBorderColor: '#d1d5db', pageMargin: '10mm', logoPosition: 'left', headerStyle: 'standard',
     subjectColumns: [
         { id: 'ca1', name: '1st CA', key: 'ca1', show: true },
@@ -67,7 +68,7 @@ export default function ExportResults() {
         Promise.all([
             axios.get(`${API}/sessions`, { withCredentials: true }),
             axios.get(`${API}/classes/all${activeSchoolType ? `?schoolType=${activeSchoolType}` : ''}`, { withCredentials: true }),
-            axios.get(`${API}/results/templates`, { withCredentials: true })
+            axios.get(`${API}/report-templates`, { withCredentials: true })
         ]).then(([sessionsRes, classesRes, templatesRes]) => {
             const sessions = sessionsRes.data.sessions || [];
             setAcademicYears(sessions);
@@ -76,7 +77,7 @@ export default function ExportResults() {
 
             setClasses(classesRes.data.classes || []);
             setTemplates(templatesRes.data.templates || []);
-            const activeTemplate = (templatesRes.data.templates || []).find((t: any) => t.isActive);
+            const activeTemplate = (templatesRes.data.templates || []).find((t: any) => t.isDefault);
             if (activeTemplate) setSelectedTemplateId(activeTemplate.id);
         }).catch(err => {
             console.error("Failed to load export options:", err);
@@ -258,7 +259,7 @@ export default function ExportResults() {
                             <label className="block text-sm font-semibold text-gray-700 mb-1">Result Template</label>
                             <select value={selectedTemplateId} onChange={e => setSelectedTemplateId(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm">
                                 <option value="">Select Template...</option>
-                                {templates.map(t => <option key={t.id} value={t.id}>{t.name} {t.isActive ? '(Active)' : ''}</option>)}
+                                {templates.map(t => <option key={t.id} value={t.id}>{t.name} {t.isDefault ? '(Default)' : ''}</option>)}
                             </select>
                         </div>
 
@@ -267,14 +268,14 @@ export default function ExportResults() {
                             <div className="grid grid-cols-2 gap-2">
                                 <button 
                                     onClick={() => setFormat('merged')}
-                                    className={`flex flex-col items-center justify-center p-3 border rounded-lg text-xs font-medium transition-colors ${format === 'merged' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+                                    className={`flex flex-col items-center justify-center p-3 border rounded-lg text-xs font-medium transition-colors ${format === 'merged' ? 'bg-[#1E4DA6]/5 border-[#1E4DA6] text-[#173F8C]' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
                                 >
                                     <File className="w-5 h-5 mb-1" />
                                     Single PDF
                                 </button>
                                 <button 
                                     onClick={() => setFormat('zip')}
-                                    className={`flex flex-col items-center justify-center p-3 border rounded-lg text-xs font-medium transition-colors ${format === 'zip' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+                                    className={`flex flex-col items-center justify-center p-3 border rounded-lg text-xs font-medium transition-colors ${format === 'zip' ? 'bg-[#1E4DA6]/5 border-[#1E4DA6] text-[#173F8C]' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
                                 >
                                     <Archive className="w-5 h-5 mb-1" />
                                     ZIP Archive
@@ -305,7 +306,7 @@ export default function ExportResults() {
                             </div>
                         ) : validating ? (
                             <div className="flex justify-center py-12">
-                                <RefreshCw className="w-8 h-8 text-blue-500 animate-spin" />
+                                <RefreshCw className="w-8 h-8 text-[#1E4DA6] animate-spin" />
                             </div>
                         ) : (
                             <div>
@@ -346,7 +347,7 @@ export default function ExportResults() {
                             <button 
                                 onClick={handlePreview}
                                 disabled={!selectedClassId || !selectedTemplateId || loadingPreview}
-                                className="w-full sm:w-auto px-8 py-3 bg-white border-2 border-[#0036a1] hover:bg-blue-50 text-[#0036a1] font-bold rounded-xl flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+                                className="w-full sm:w-auto px-8 py-3 bg-white border-2 border-[#1E4DA6] hover:bg-[#1E4DA6]/5 text-[#1E4DA6] font-bold rounded-xl flex items-center justify-center gap-2 transition-all disabled:opacity-50"
                             >
                                 {loadingPreview ? <RefreshCw className="w-5 h-5 animate-spin" /> : <Eye className="w-5 h-5" />}
                                 {loadingPreview ? 'Loading...' : 'Preview Results'}
@@ -354,7 +355,7 @@ export default function ExportResults() {
                             <button 
                                 onClick={handleExport}
                                 disabled={!selectedClassId || !selectedTemplateId || exporting}
-                                className="w-full sm:w-auto px-8 py-3 bg-[#0036a1] hover:bg-blue-800 text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 disabled:opacity-50 disabled:shadow-none transition-all"
+                                className="w-full sm:w-auto px-8 py-3 bg-[#1E4DA6] hover:bg-[#122F69] text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-[#1E4DA6]/30 disabled:opacity-50 disabled:shadow-none transition-all"
                             >
                                 {exporting ? <RefreshCw className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
                                 {exporting ? 'Generating...' : `Export ${students.length} Results`}
@@ -384,13 +385,13 @@ export default function ExportResults() {
                                         {exporting ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
                                         {exporting ? 'Exporting...' : 'Export PDF'}
                                     </button>
-                                    <button onClick={() => { setTimeout(() => window.print(), 100) }} disabled={!previewData} className="px-3 py-1.5 border rounded-lg text-xs font-bold bg-white hover:bg-gray-50 flex items-center gap-1">
+                                    <button onClick={() => mobileSafePrint('export-results-printable')} disabled={!previewData} className="px-3 py-1.5 border rounded-lg text-xs font-bold bg-white hover:bg-gray-50 flex items-center gap-1">
                                         <Printer className="w-3.5 h-3.5" />Print Preview
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div className="p-0 pb-24 sm:p-4 overflow-auto print:overflow-visible print:p-0 flex flex-col items-center bg-gray-50/50 sm:bg-white rounded-b-2xl">
+                        <div id="export-results-printable" className="p-0 pb-24 sm:p-4 overflow-auto print:overflow-visible print:p-0 flex flex-col items-center bg-gray-50/50 sm:bg-white rounded-b-2xl">
                             {loadingPreview ? (
                                 <div className="h-48 flex items-center justify-center text-gray-400">Loading preview data...</div>
                             ) : previewData && previewData.map((dataItem, idx) => {

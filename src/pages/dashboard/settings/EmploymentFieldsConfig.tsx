@@ -79,14 +79,14 @@ function FieldCard({ field, groupId, onToggle, onEdit, onDelete }: { field: Form
     return (
         <div className={cn(
             'flex flex-col justify-between rounded-2xl border-2 p-5 transition-all',
-            !field.isVisible ? 'opacity-50 grayscale bg-slate-50 border-slate-100' : 'border-slate-200 bg-white hover:border-blue-100 shadow-sm hover:shadow-md'
+            !field.isVisible ? 'opacity-50 grayscale bg-slate-50 border-slate-100' : 'border-slate-200 bg-white hover:border-[#1E4DA6]/10 shadow-sm hover:shadow-md'
         )}>
             <div>
                 <div className="mb-1 flex items-start justify-between gap-2">
                     <h4 className={cn('font-bold text-sm', field.isVisible ? 'text-slate-800' : 'text-slate-500 line-through')}>{field.label}</h4>
                     <div className="flex items-center gap-2 shrink-0">
                         <span className="rounded-full bg-slate-100 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-slate-500">{field.type}</span>
-                        <button onClick={() => onEdit(field)} className="text-slate-400 hover:text-blue-500 transition-colors p-1" title="Edit Field">
+                        <button onClick={() => onEdit(field)} className="text-slate-400 hover:text-[#1E4DA6] transition-colors p-1" title="Edit Field">
                             <Edit className="w-3.5 h-3.5" />
                         </button>
                         {field.isCustom && (
@@ -104,7 +104,7 @@ function FieldCard({ field, groupId, onToggle, onEdit, onDelete }: { field: Form
                     <button
                         onClick={() => onToggle(groupId, field.id, 'isVisible')}
                         disabled={field.isPermanent}
-                        className={cn('relative inline-flex h-5 w-9 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors', field.isPermanent ? 'cursor-not-allowed' : '', field.isVisible ? 'bg-blue-600' : 'bg-slate-200')}
+                        className={cn('relative inline-flex h-5 w-9 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors', field.isPermanent ? 'cursor-not-allowed' : '', field.isVisible ? 'bg-[#1E4DA6]' : 'bg-slate-200')}
                     >
                         <span className={cn('inline-block h-4 w-4 rounded-full bg-white shadow transition-transform', field.isVisible ? 'translate-x-4' : 'translate-x-0')} />
                     </button>
@@ -271,7 +271,7 @@ export function EmploymentFieldsConfig() {
             <AnimatePresence>
                 {loading ? (
                     <div className="flex items-center justify-center p-16">
-                        <div className="w-8 h-8 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
+                        <div className="w-8 h-8 border-4 border-gray-200 border-t-[#1E4DA6] rounded-full animate-spin" />
                     </div>
                 ) : (
                     <div className="space-y-10">
@@ -281,8 +281,8 @@ export function EmploymentFieldsConfig() {
                                     <div className="flex items-center gap-2.5">
                                         <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-50 border border-slate-100">
                                             {/* Icons are dropped during serialization, map back locally */}
-                                            {group.id === 'basic' ? <UserPlus className="h-4 w-4 text-blue-500" /> :
-                                            group.id === 'professional' ? <Sparkles className="h-4 w-4 text-purple-500" /> :
+                                            {group.id === 'basic' ? <UserPlus className="h-4 w-4 text-[#1E4DA6]" /> :
+                                            group.id === 'professional' ? <Sparkles className="h-4 w-4 text-[#1E4DA6]" /> :
                                             group.id === 'contact' ? <Bus className="h-4 w-4 text-amber-500" /> :
                                             group.id === 'documents' ? <FileText className="h-4 w-4 text-slate-500" /> :
                                             <Plus className="h-4 w-4 text-slate-500" />}
@@ -290,7 +290,7 @@ export function EmploymentFieldsConfig() {
                                         <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">{group.title}</h3>
                                     </div>
                                     <div className="flex items-center gap-1">
-                                        <button onClick={() => handleEditGroup(group)} className="p-1.5 text-slate-400 hover:text-blue-600 rounded-md hover:bg-blue-50 transition-colors" title="Edit Section">
+                                        <button onClick={() => handleEditGroup(group)} className="p-1.5 text-slate-400 hover:text-[#1E4DA6] rounded-md hover:bg-[#1E4DA6]/5 transition-colors" title="Edit Section">
                                             <Edit className="h-3.5 w-3.5" />
                                         </button>
                                         {group.id !== 'basic' && (
@@ -306,7 +306,7 @@ export function EmploymentFieldsConfig() {
                                     ))}
                                     <div 
                                         onClick={() => handleAddField(group.id)}
-                                        className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-5 text-slate-400 transition-all hover:border-blue-300 hover:bg-blue-50/50 hover:text-blue-500 cursor-pointer min-h-[140px]"
+                                        className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-5 text-slate-400 transition-all hover:border-[#1E4DA6]/35 hover:bg-[#1E4DA6]/8 hover:text-[#1E4DA6] cursor-pointer min-h-[140px]"
                                     >
                                         <Plus className="w-8 h-8 mb-2" />
                                         <span className="font-semibold text-sm">Add Field to {group.title.split(' ')[0]}</span>
@@ -316,7 +316,7 @@ export function EmploymentFieldsConfig() {
                         ))}
 
                         <div className="flex justify-center pt-4">
-                            <Button variant="outline" onClick={handleAddGroup} className="border-dashed border-2 border-slate-300 text-slate-500 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50">
+                            <Button variant="outline" onClick={handleAddGroup} className="border-dashed border-2 border-slate-300 text-slate-500 hover:text-[#1E4DA6] hover:border-[#1E4DA6]/35 hover:bg-[#1E4DA6]/5">
                                 <Plus className="h-4 w-4 mr-2" />
                                 Add New Category
                             </Button>

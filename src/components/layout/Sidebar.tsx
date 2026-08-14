@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronDown, Lock, X } from 'lucide-react';
 import { Button } from '../ui/button';
 import { cn } from '../../lib/utils';
-import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { useSubscription } from '../../contexts/SubscriptionContext';
@@ -16,61 +15,9 @@ import { toast } from 'sonner';
 
 const API_BASE = '/api/v1';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Color maps (all original logic preserved)
-// ─────────────────────────────────────────────────────────────────────────────
-const sidebarBgMap: Record<string, string> = {
-    dark: 'bg-slate-800 border-black/10',
-    red: 'bg-red-400 border-red-500/30',
-    teal: 'bg-teal-400 border-teal-500/30',
-    green: 'bg-green-500 border-green-600/30',
-    blue: 'bg-blue-400 border-blue-500/30',
-    light: 'bg-white/90 border-slate-100',
-};
-
-const activeBgClassMap: Record<string, string> = {
-    red: 'bg-red-500', pink: 'bg-pink-500',
-    teal: 'bg-teal-500', blue: 'bg-blue-500',
-    yellow: 'bg-yellow-500', orange: 'bg-orange-500',
-    indigo: 'bg-indigo-600', navy: 'bg-indigo-800',
-    magenta: 'bg-pink-600', rust: 'bg-orange-600',
-    forest: 'bg-green-600', purple: 'bg-purple-800',
-};
-
-const activeTextClassMap: Record<string, string> = {
-    red: 'text-red-500', pink: 'text-pink-500',
-    teal: 'text-teal-500', blue: 'text-blue-500',
-    yellow: 'text-yellow-500', orange: 'text-orange-500',
-    indigo: 'text-indigo-500', navy: 'text-indigo-400',
-    magenta: 'text-pink-500', rust: 'text-orange-500',
-    forest: 'text-green-500', purple: 'text-purple-500',
-};
-
-// Active glow map — soft shadow color matching the accent
-const activeGlowMap: Record<string, string> = {
-    red: 'shadow-red-500/25', pink: 'shadow-pink-500/25',
-    teal: 'shadow-teal-500/25', blue: 'shadow-blue-500/25',
-    yellow: 'shadow-yellow-500/25', orange: 'shadow-orange-500/25',
-    indigo: 'shadow-indigo-500/25', navy: 'shadow-indigo-500/25',
-    magenta: 'shadow-pink-500/25', rust: 'shadow-orange-500/25',
-    forest: 'shadow-green-500/25', purple: 'shadow-purple-500/25',
-};
-
-// Active bg pill — subtle tinted background behind active item
-const activePillMap: Record<string, string> = {
-    red: 'bg-red-500/10', pink: 'bg-pink-500/10',
-    teal: 'bg-teal-500/10', blue: 'bg-blue-500/10',
-    yellow: 'bg-yellow-500/10', orange: 'bg-orange-500/10',
-    indigo: 'bg-indigo-500/10', navy: 'bg-indigo-500/10',
-    magenta: 'bg-pink-500/10', rust: 'bg-orange-500/10',
-    forest: 'bg-green-500/10', purple: 'bg-purple-500/10',
-};
-
-const textClassMap: Record<string, string> = {
-    white: 'text-white',
-    dark: 'text-black',
-    gray: 'text-slate-500',
-};
+// The old per-school color-picker maps (sidebarBg/activeItemBg/text color
+// options) were removed 14 Aug 2026 — the sidebar is now a fixed navy/gold
+// panel, not user-customizable (see the "Fixed brand theme" block below).
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Spring / easing configs
@@ -203,14 +150,14 @@ const BranchSwitcher = ({ isDarkBg }: { isDarkBg: boolean }) => {
                                         className={cn(
                                             "w-full text-left px-3 py-2.5 rounded-xl text-sm transition-colors",
                                             currentSchoolId === mainSchool.id
-                                                ? (isDarkBg ? "bg-indigo-500/20 text-indigo-300 font-bold" : "bg-indigo-50 text-indigo-700 font-bold")
+                                                ? (isDarkBg ? "bg-[#F5B800]/15 text-[#FFC72C] font-bold" : "bg-[#F5B800]/10 text-[#0B1F4E] font-bold")
                                                 : (isDarkBg ? "text-white hover:bg-white/5" : "text-slate-700 hover:bg-slate-50")
                                         )}
                                     >
                                         <div className="flex items-center justify-between">
                                             <span>{mainSchool.name}</span>
                                             {currentSchoolId === mainSchool.id && (
-                                                <span className="text-[10px] uppercase tracking-wider bg-indigo-500/20 px-2 py-0.5 rounded-md">Main</span>
+                                                <span className="text-[10px] uppercase tracking-wider bg-[#F5B800]/20 px-2 py-0.5 rounded-md">Main</span>
                                             )}
                                         </div>
                                     </button>
@@ -228,7 +175,7 @@ const BranchSwitcher = ({ isDarkBg }: { isDarkBg: boolean }) => {
                                             className={cn(
                                                 "w-full text-left px-3 py-2.5 rounded-xl text-sm transition-colors",
                                                 currentSchoolId === branch.id
-                                                    ? (isDarkBg ? "bg-indigo-500/20 text-indigo-300 font-bold" : "bg-indigo-50 text-indigo-700 font-bold")
+                                                    ? (isDarkBg ? "bg-[#F5B800]/15 text-[#FFC72C] font-bold" : "bg-[#F5B800]/10 text-[#0B1F4E] font-bold")
                                                     : (isDarkBg ? "text-white hover:bg-white/5" : "text-slate-700 hover:bg-slate-50")
                                             )}
                                         >
@@ -258,7 +205,6 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
     const [expandedSubMenus, setExpandedSubMenus] = useState<Record<string, boolean>>({});
     const [mounted, setMounted] = useState(false);
 
-    const { sidebarBg, activeItemBg, sidebarText } = useTheme();
     const { t } = useTranslation();
     const { hasFeatureAccess } = useSubscription();
     const { user, logout } = useAuth();
@@ -327,40 +273,46 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
     const toggleMenu = (title: string) =>
         setExpandedMenus((prev) => prev[title] ? {} : { [title]: true });
 
-    // ── Computed theme values ─────────────────────────────────────────────
-    const isLight = sidebarBg === 'light';
-    const bgClass = sidebarBgMap[sidebarBg] ?? sidebarBgMap['dark'];
-    const activeBg = activeBgClassMap[activeItemBg] ?? 'bg-indigo-600';
-    const activeText = activeTextClassMap[activeItemBg] ?? 'text-indigo-400';
-    const activeGlow = activeGlowMap[activeItemBg] ?? 'shadow-indigo-500/25';
-    const activePill = activePillMap[activeItemBg] ?? 'bg-indigo-500/10';
+    // ── Fixed brand theme ──────────────────────────────────────────────────
+    // Sidebar color is no longer user-customizable — the client explicitly
+    // asked for "one consistent color for the whole school[s], unlike
+    // skcoolyplus that is changeable" (section 1, item 3). ThemeContext's
+    // sidebarBg/activeItemBg color-picker values are intentionally ignored
+    // here; a fixed navy/gold panel replaces the old theme-map lookups.
+    const isLight = false;
+    const bgClass = 'bg-gradient-to-b from-[#15316B] to-[#0E2450] border-black/20';
+    const activeBg = 'bg-[#F5B800]';
+    const activeText = 'text-[#FFC72C]';
+    const activeGlow = 'shadow-[#F5B800]/25';
+    const activePill = 'bg-[#F5B800]/12';
 
-    const defaultText = 'text-black';
+    const defaultText = 'text-white/85';
 
-    const hoverBg = isLight ? 'hover:bg-slate-100/80' : 'hover:bg-white/[0.06]';
-    const activeBgItem = isLight ? activePill : activePill; // tinted pill
+    const hoverBg = 'hover:bg-white/[0.06]';
+    const activeBgItem = activePill;
 
     // Label visible?
     const showLabel = isMobile ? true : isOpen;
 
     // Divider / section line color
-    const dividerColor = isLight ? 'border-slate-200/70' : 'border-white/[0.07]';
+    const dividerColor = 'border-white/[0.08]';
 
     // Submenu border
-    const submenuBorder = isLight ? 'border-slate-200' : 'border-white/[0.08]';
+    const submenuBorder = 'border-white/[0.1]';
 
     // Section label color
-    const sectionLabelColor = 'text-black';
+    const sectionLabelColor = 'text-white/50';
 
     return (
         <>
             {/* ── Global styles ─────────────────────────────────────────── */}
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
-                .sb-root, .sb-root * {
-                    font-family: 'Outfit', sans-serif !important;
-                }
+                /* Nav item labels inherit the app's global Inter body font
+                   (index.css) — kept only the monospace face for small
+                   technical-feeling labels (.sb-mono: "Navigation", version
+                   number), a deliberate detail rather than a full override. */
                 .sb-root .sb-mono {
                     font-family: 'JetBrains Mono', monospace !important;
                 }
@@ -528,7 +480,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                     /* ── Locked item ──────────────────── */
                                     <div className={cn(
                                         'group relative flex items-center gap-3',
-                                        'rounded-2xl px-3 py-2.5 text-[15px] font-[550]',
+                                        'rounded-2xl px-3 py-2.5 text-[13px] font-normal',
                                         'cursor-not-allowed select-none',
                                         showLabel ? 'justify-between' : 'justify-center',
                                         isLight ? 'text-slate-300/70' : 'text-white/20',
@@ -544,7 +496,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                                     icon={item.icon}
                                                     size={16}
                                                     strokeWidth={2}
-                                                    className="text-black"
+                                                    className="text-white"
                                                 />
                                             </div>
                                             {showLabel && (
@@ -581,12 +533,18 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                         onClick={() => toggleMenu(item.title)}
                                         className={cn(
                                             'group relative w-full h-auto flex items-center gap-3',
-                                            'rounded-2xl px-3 py-2.5 text-[15px] font-[550]',
+                                            'rounded-2xl px-3 py-2.5 text-[13px] font-normal',
                                             'transition-all duration-200',
                                             showLabel ? 'justify-between' : 'justify-center',
+                                            // The shadcn `ghost` variant ships its own `hover:text-gray-900` —
+                                            // a hover-scoped utility beats our plain (unscoped) `defaultText`
+                                            // during :hover regardless of source order, since a `:hover`
+                                            // pseudo-class selector outranks a plain class selector. Repeating
+                                            // the hover state explicitly here lets tailwind-merge dedupe the
+                                            // two `hover:text-*` utilities and keep ours instead.
                                             isActive
                                                 ? `${activeBgItem} ${activeText}`
-                                                : `${hoverBg} ${defaultText}`,
+                                                : `${hoverBg} hover:text-white/85 ${defaultText}`,
                                         )}
                                     >
                                         <div className="flex items-center gap-3 min-w-0">
@@ -606,7 +564,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                                     strokeWidth={isActive ? 2.5 : 2}
                                                     className={cn(
                                                         'transition-transform duration-200 group-hover:scale-110',
-                                                        isActive ? activeText : 'text-black'
+                                                        isActive ? activeText : 'text-white/80'
                                                     )}
                                                 />
                                             </div>
@@ -625,7 +583,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] as any }}
                                                 className={cn(
                                                     'shrink-0 transition-colors duration-200',
-                                                    isActive ? activeText : 'text-black'
+                                                    isActive ? activeText : 'text-white/80'
                                                 )}
                                             >
                                                 <ChevronRight className="h-3.5 w-3.5" />
@@ -650,16 +608,16 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                         }}
                                         className={cn(
                                             'group relative flex items-center gap-3',
-                                            'rounded-2xl px-3 py-2.5 text-[15px] font-[550]',
+                                            'rounded-2xl px-3 py-2.5 text-[13px] font-normal',
                                             'transition-all duration-200 overflow-visible',
                                             showLabel ? '' : 'justify-center',
-                                            (isActive || item.isActiveForced)
+                                            isActive
                                                 ? `${activeBgItem} ${activeText}`
                                                 : `${hoverBg} ${defaultText}`,
                                         )}
                                     >
                                         {/* Active left rail indicator */}
-                                        {(isActive || item.isActiveForced) && (
+                                        {isActive && (
                                             <motion.div
                                                 layoutId="sb-active-rail"
                                                 className={cn(
@@ -678,7 +636,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                             'flex items-center justify-center',
                                             'w-8 h-8 rounded-xl',
                                             'transition-all duration-200',
-                                            (isActive || item.isActiveForced)
+                                            isActive
                                                 ? cn(activePill, 'shadow-md', activeGlow)
                                                 : isLight
                                                     ? 'group-hover:bg-slate-200/60'
@@ -687,10 +645,10 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                             <RenderIcon
                                                 icon={item.icon}
                                                 size={16}
-                                                strokeWidth={(isActive || item.isActiveForced) ? 2.5 : 2}
+                                                strokeWidth={isActive ? 2.5 : 2}
                                                 className={cn(
                                                     'transition-transform duration-200 group-hover:scale-110',
-                                                    (isActive || item.isActiveForced) ? activeText : 'text-black',
+                                                    isActive ? activeText : 'text-white/80',
                                                 )}
                                             />
                                         </div>
@@ -746,7 +704,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                                                         return (
                                                                             <div className={cn(
                                                                                 'flex items-center justify-between',
-                                                                                'px-3 py-2 rounded-xl text-[14px]',
+                                                                                'px-3 py-2 rounded-xl text-[12.5px]',
                                                                                 'cursor-not-allowed select-none',
                                                                                 isLight
                                                                                     ? 'text-slate-300 bg-slate-50/80'
@@ -774,7 +732,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                                                                     onClick={() => setExpandedSubMenus(prev => prev[child.title] ? {} : { [child.title]: true })}
                                                                                     className={cn(
                                                                                         'w-full group relative flex items-center justify-between',
-                                                                                        'px-3 py-2 rounded-xl text-[14px] font-[500]',
+                                                                                        'px-3 py-2 rounded-xl text-[12.5px] font-normal',
                                                                                         'transition-all duration-200',
                                                                                         expandedSubMenus[child.title]
                                                                                             ? `${activePill} ${activeText} font-[600]`
@@ -785,7 +743,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                                                                         <span className={cn(
                                                                                             'shrink-0 w-1.5 h-1.5 rounded-full',
                                                                                             'transition-all duration-200',
-                                                                                            expandedSubMenus[child.title] ? activeBg : 'bg-black/40'
+                                                                                            expandedSubMenus[child.title] ? activeBg : 'bg-white/30'
                                                                                         )} />
                                                                                         <span className="truncate leading-none">
                                                                                             {t(child.title)}
@@ -809,7 +767,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                                                                                     <Link
                                                                                                         to={grandchild.path}
                                                                                                         className={cn(
-                                                                                                            'block px-3 py-1.5 rounded-lg text-[13px] transition-all',
+                                                                                                            'block px-3 py-1.5 rounded-lg text-[12px] transition-all',
                                                                                                             location.pathname === grandchild.path
                                                                                                                 ? `${activePill} ${activeText} font-semibold`
                                                                                                                 : `${defaultText} opacity-70 ${hoverBg} hover:opacity-100`
@@ -837,7 +795,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                                                             }}
                                                                             className={cn(
                                                                                 'group relative flex items-center gap-2.5',
-                                                                                'px-3 py-2 rounded-xl text-[14px] font-[500]',
+                                                                                'px-3 py-2 rounded-xl text-[12.5px] font-normal',
                                                                                 'transition-all duration-200',
                                                                                 isChildActive
                                                                                     ? `${activePill} ${activeText} font-[600]`
@@ -850,7 +808,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                                                                                 'transition-all duration-200',
                                                                                 isChildActive
                                                                                     ? cn(activeBg, 'shadow-sm')
-                                                                                    : 'bg-black opacity-80 group-hover:opacity-100',
+                                                                                    : 'bg-white/40 group-hover:opacity-100',
                                                                             )} />
                                                                             <span className="truncate leading-none">
                                                                                 {t(child.title)}
@@ -900,7 +858,7 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose?: () => 
                     {showLabel ? (
                         <span className={cn(
                             'sb-mono text-[10px] tracking-widest',
-                            'text-black/40'
+                            'text-white/40'
                         )}>
                             v2.0
                         </span>

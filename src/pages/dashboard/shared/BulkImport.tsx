@@ -115,7 +115,7 @@ export default function BulkImportPage() {
     return (
         <SettingsShell breadcrumbParent="Dashboard" breadcrumbCurrent="Bulk Import" tabLabel="Bulk Import" tabIcon={<Upload className="h-3.5 w-3.5" />}>
             <Link to={mode === 'staff' ? '/dashboard/employees/all' : mode === 'students' ? '/dashboard/students/all' : '/dashboard/parents'}
-                className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600 mb-6 transition-colors">
+                className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[#1E4DA6] mb-6 transition-colors">
                 <ArrowLeft className="h-4 w-4" /> Back
             </Link>
 
@@ -130,7 +130,7 @@ export default function BulkImportPage() {
                     <button key={m} onClick={() => { setMode(m); setFile(null); setResult(null); navigate(`/dashboard/bulk-import/${m}`); }}
                         className={cn(
                             'px-5 py-2 rounded-xl text-sm font-bold transition-all',
-                            mode === m ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                            mode === m ? 'bg-white text-[#173F8C] shadow-sm' : 'text-slate-500 hover:text-slate-700'
                         )}>
                         {m === 'staff' ? '👤 Staff' : m === 'students' ? '🎓 Students' : '👪 Parents'}
                     </button>
@@ -143,7 +143,7 @@ export default function BulkImportPage() {
                     {/* Step 1: Template */}
                     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                         <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-3">
-                            <div className="h-7 w-7 rounded-full bg-blue-700 text-white flex items-center justify-center text-xs font-black">1</div>
+                            <div className="h-7 w-7 rounded-full bg-[#173F8C] text-white flex items-center justify-center text-xs font-black">1</div>
                             <h2 className="font-bold text-slate-800">Download Template</h2>
                         </div>
                         <div className="p-6">
@@ -162,14 +162,14 @@ export default function BulkImportPage() {
                     {/* Step 2: Upload */}
                     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                         <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-3">
-                            <div className="h-7 w-7 rounded-full bg-blue-700 text-white flex items-center justify-center text-xs font-black">2</div>
+                            <div className="h-7 w-7 rounded-full bg-[#173F8C] text-white flex items-center justify-center text-xs font-black">2</div>
                             <h2 className="font-bold text-slate-800">Upload Filled Template</h2>
                         </div>
                         <div className="p-6">
                             <div
                                 className={cn(
                                     'border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all',
-                                    isDragging ? 'border-blue-400 bg-blue-50' : 'border-slate-200 hover:border-blue-300 hover:bg-slate-50',
+                                    isDragging ? 'border-[#1E4DA6]/60 bg-[#1E4DA6]/5' : 'border-slate-200 hover:border-[#1E4DA6]/35 hover:bg-slate-50',
                                     file && 'border-emerald-300 bg-emerald-50'
                                 )}
                                 onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
@@ -196,7 +196,7 @@ export default function BulkImportPage() {
 
                             {file && (
                                 <button onClick={handleImport} disabled={isUploading}
-                                    className="mt-4 w-full flex items-center justify-center gap-2 py-3 bg-blue-700 text-white text-sm font-bold rounded-xl hover:bg-blue-800 transition-colors shadow-sm disabled:opacity-50">
+                                    className="mt-4 w-full flex items-center justify-center gap-2 py-3 bg-[#173F8C] text-white text-sm font-bold rounded-xl hover:bg-[#122F69] transition-colors shadow-sm disabled:opacity-50">
                                     {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Users className="h-4 w-4" />}
                                     {isUploading ? 'Importing...' : `Import ${mode === 'staff' ? 'Staff' : mode === 'students' ? 'Students' : 'Parents'}`}
                                 </button>
@@ -264,12 +264,12 @@ export default function BulkImportPage() {
                         ].map(s => (
                             <div key={s.label} className={cn(
                                 'rounded-2xl border p-5 text-center',
-                                s.color === 'blue' ? 'border-blue-100 bg-blue-50' :
+                                s.color === 'blue' ? 'border-[#1E4DA6]/10 bg-[#1E4DA6]/5' :
                                 s.color === 'emerald' ? 'border-emerald-100 bg-emerald-50' :
                                 'border-red-100 bg-red-50'
                             )}>
                                 <p className={cn('text-3xl font-black',
-                                    s.color === 'blue' ? 'text-blue-700' :
+                                    s.color === 'blue' ? 'text-[#173F8C]' :
                                     s.color === 'emerald' ? 'text-emerald-700' : 'text-red-700'
                                 )}>{s.val}</p>
                                 <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mt-1">{s.label}</p>
@@ -307,7 +307,7 @@ export default function BulkImportPage() {
                                         {result.created.slice(0, 50).map((r, i) => (
                                             <tr key={i} className="border-b border-slate-50 hover:bg-slate-50">
                                                 <td className="px-4 py-3 font-semibold text-slate-800">{r.name}</td>
-                                                <td className="px-4 py-3 font-mono text-blue-700 text-xs">{r.employeeId || r.admissionNo}</td>
+                                                <td className="px-4 py-3 font-mono text-[#173F8C] text-xs">{r.employeeId || r.admissionNo}</td>
                                                 <td className="px-4 py-3 text-slate-600 text-xs">{r.email}</td>
                                                 <td className="px-4 py-3 font-mono text-emerald-700 font-bold text-xs">{r.generatedPassword}</td>
                                             </tr>

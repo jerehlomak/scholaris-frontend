@@ -79,7 +79,7 @@ export default function ParentWallet() {
     if (loading) {
         return (
             <div className="flex h-[60vh] items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
+                <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
             </div>
         );
     }
@@ -98,7 +98,7 @@ export default function ParentWallet() {
         <div className="w-full max-w-6xl mx-auto space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                 <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-700 to-indigo-500 shadow-lg shadow-purple-200">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-indigo-500 shadow-lg shadow-[#1E4DA6]/20">
                         <Wallet className="h-6 w-6 text-white" />
                     </div>
                     <div>
@@ -109,7 +109,7 @@ export default function ParentWallet() {
 
                 <Button
                     onClick={() => setShowTopupModal(true)}
-                    className="bg-purple-600 hover:bg-purple-700 text-white font-bold shadow-md shadow-purple-200 flex items-center gap-2"
+                    className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold shadow-md shadow-[#1E4DA6]/20 flex items-center gap-2"
                 >
                     <PlusCircle className="h-4 w-4" />
                     Top-Up / Fund Wallet
@@ -118,16 +118,16 @@ export default function ParentWallet() {
 
             <div className="grid gap-6 md:grid-cols-[1fr_2fr]">
                 <div className="space-y-6">
-                    <Card className="bg-gradient-to-br from-purple-700 to-indigo-800 border-none text-white shadow-xl overflow-hidden relative">
+                    <Card className="bg-gradient-to-br from-[#173F8C] to-indigo-800 border-none text-white shadow-xl overflow-hidden relative">
                         <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white opacity-[0.08] blur-xl"></div>
                         <CardContent className="p-6">
                             <div className="flex items-center justify-between">
-                                <p className="text-purple-200 text-xs font-bold uppercase tracking-wider">Family Wallet Balance</p>
+                                <p className="text-white/70 text-xs font-bold uppercase tracking-wider">Family Wallet Balance</p>
                                 <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-bold">Pooled</span>
                             </div>
                             <p className="mt-2 text-4xl font-black tracking-tight">₦{(walletData.familyWalletBalance || 0).toLocaleString('en-NG')}</p>
                             <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
-                                <span className="text-purple-200">Usable for any enrolled child</span>
+                                <span className="text-white/70">Usable for any enrolled child</span>
                                 <button
                                     onClick={() => { setTopupTarget('FAMILY'); setShowTopupModal(true); }}
                                     className="font-bold text-white hover:underline flex items-center gap-1"
@@ -155,7 +155,7 @@ export default function ParentWallet() {
                                                 <p className="text-sm font-bold text-slate-900">₦{sw.balance.toLocaleString('en-NG')}</p>
                                                 <button
                                                     onClick={() => { setTopupTarget(sw.studentId); setShowTopupModal(true); }}
-                                                    className="text-[11px] text-purple-600 font-semibold hover:underline"
+                                                    className="text-[11px] text-[#1E4DA6] font-semibold hover:underline"
                                                 >
                                                     + Top Up
                                                 </button>
@@ -219,7 +219,7 @@ export default function ParentWallet() {
                                                         <span className="mono text-xs font-semibold text-slate-600">{tx.reference}</span>
                                                     </td>
                                                     <td className="px-6 py-3">
-                                                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${tx.account === 'FAMILY' ? 'bg-purple-100 text-purple-700' : 'bg-slate-100 text-slate-600'}`}>
+                                                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${tx.account === 'FAMILY' ? 'bg-[#1E4DA6]/10 text-[#173F8C]' : 'bg-slate-100 text-slate-600'}`}>
                                                             {tx.account === 'FAMILY' ? 'Family Pool' : (tx.studentName || 'Child')}
                                                         </span>
                                                     </td>
@@ -254,9 +254,9 @@ export default function ParentWallet() {
             {showTopupModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
                     <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-purple-50 to-indigo-50">
+                        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-[#1E4DA6]/5 to-indigo-50">
                             <div className="flex items-center gap-2">
-                                <Wallet className="h-5 w-5 text-purple-600" />
+                                <Wallet className="h-5 w-5 text-[#1E4DA6]" />
                                 <h3 className="font-bold text-slate-900">Fund Wallet Online</h3>
                             </div>
                             <button onClick={() => setShowTopupModal(false)} className="text-slate-400 hover:text-slate-600">
@@ -301,7 +301,7 @@ export default function ParentWallet() {
                                             key={val}
                                             type="button"
                                             onClick={() => setTopupAmount(val)}
-                                            className="px-2 py-1 bg-slate-100 hover:bg-purple-100 hover:text-purple-700 rounded text-[11px] font-semibold text-slate-600 transition-colors"
+                                            className="px-2 py-1 bg-slate-100 hover:bg-[#1E4DA6]/10 hover:text-[#173F8C] rounded text-[11px] font-semibold text-slate-600 transition-colors"
                                         >
                                             ₦{Number(val).toLocaleString()}
                                         </button>
@@ -345,7 +345,7 @@ export default function ParentWallet() {
                                 <Button
                                     type="submit"
                                     disabled={processingTopup}
-                                    className="w-full h-11 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-md shadow-purple-200"
+                                    className="w-full h-11 bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold rounded-xl shadow-md shadow-[#1E4DA6]/20"
                                 >
                                     {processingTopup ? (
                                         <span className="flex items-center gap-2">

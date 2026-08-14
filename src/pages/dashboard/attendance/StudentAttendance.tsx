@@ -44,13 +44,13 @@ const STATUS_CONFIG: Record<AttendanceStatus, {
     PRESENT: { label: 'Present', bgColor: 'bg-emerald-50', textColor: 'text-emerald-600', dotColor: 'bg-emerald-500', borderColor: 'border-emerald-300', abbr: 'P', icon: <CheckCircle2 className="h-3.5 w-3.5" /> },
     ABSENT: { label: 'Absent', bgColor: 'bg-red-50', textColor: 'text-red-600', dotColor: 'bg-red-500', borderColor: 'border-red-300', abbr: 'A', icon: <XCircle className="h-3.5 w-3.5" /> },
     LATE: { label: 'Late', bgColor: 'bg-amber-50', textColor: 'text-amber-600', dotColor: 'bg-amber-500', borderColor: 'border-amber-300', abbr: 'L', icon: <Clock className="h-3.5 w-3.5" /> },
-    EXCUSED: { label: 'Excused', bgColor: 'bg-blue-50', textColor: 'text-blue-600', dotColor: 'bg-blue-500', borderColor: 'border-blue-300', abbr: 'E', icon: <BookOpen className="h-3.5 w-3.5" /> },
+    EXCUSED: { label: 'Excused', bgColor: 'bg-[#1E4DA6]/5', textColor: 'text-[#1E4DA6]', dotColor: 'bg-[#1E4DA6]', borderColor: 'border-[#1E4DA6]/35', abbr: 'E', icon: <BookOpen className="h-3.5 w-3.5" /> },
 };
 
-const AVATAR_COLORS = ['bg-blue-500', 'bg-purple-500', 'bg-pink-500', 'bg-orange-500', 'bg-teal-500', 'bg-indigo-500'];
+const AVATAR_COLORS = ['bg-[#1E4DA6]', 'bg-[#1E4DA6]', 'bg-pink-500', 'bg-orange-500', 'bg-teal-500', 'bg-indigo-500'];
 const avatarBg = (name: string) => AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];
 
-const fieldCls = 'rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition-all outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100';
+const fieldCls = 'rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition-all outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10';
 
 // ─── Status Badge ─────────────────────────────────────────────────────────────
 function StatusBadge({ status }: { status: AttendanceStatus }) {
@@ -75,7 +75,7 @@ function StatCard({ label, value, of: total, iconBg, iconText, icon, delay }: {
         <div className={cn(
             'flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-500',
             'hover:shadow-md hover:-translate-y-0.5',
-            vis ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+            vis ? 'opacity-100' : 'translate-y-3 opacity-0'
         )}>
             <div className={cn('flex h-11 w-11 shrink-0 items-center justify-center rounded-xl', iconBg, iconText)}>{icon}</div>
             <div>
@@ -151,7 +151,7 @@ function AttendanceCalendar({ classId, onSelectDate, selectedDate }: {
                             title={data ? `${Math.round(data.rate * 100)}% attendance` : ''}
                             className={cn(
                                 'flex h-9 w-full items-center justify-center rounded-xl font-mono text-xs font-bold transition-all',
-                                isSelected && 'ring-2 ring-blue-500 ring-offset-1',
+                                isSelected && 'ring-2 ring-[#1E4DA6] ring-offset-1',
                                 isWeekend ? 'cursor-default opacity-25 text-slate-400'
                                     : data ? cn(rateColor(data.rate), 'hover:opacity-80 cursor-pointer')
                                         : 'cursor-pointer bg-slate-50 text-slate-500 hover:bg-slate-100'
@@ -234,7 +234,7 @@ function MarkAttendance({ classId, classes, onClassChange }: {
 
             {loading ? (
                 <div className="flex items-center justify-center py-16">
-                    <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
+                    <Loader2 className="h-6 w-6 animate-spin text-[#1E4DA6]" />
                 </div>
             ) : roster.length === 0 ? (
                 <div className="flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-slate-200 py-16 text-center">
@@ -289,7 +289,7 @@ function MarkAttendance({ classId, classes, onClassChange }: {
                                                 value={marks[s.studentId]?.note || ''}
                                                 onChange={e => setMarks(m => ({ ...m, [s.studentId]: { ...m[s.studentId], note: e.target.value } }))}
                                                 placeholder="e.g. sick, trip…"
-                                                className="w-32 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-1.5 font-mono text-[11px] outline-none transition-all focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                                className="w-32 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-1.5 font-mono text-[11px] outline-none transition-all focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                                             />
                                         </td>
                                         {s.record && <td className="px-4 py-3 font-mono text-[11px] text-slate-500">{s.record.markedBy}</td>}
@@ -310,7 +310,7 @@ function MarkAttendance({ classId, classes, onClassChange }: {
                                     </motion.div>
                                 ) : (
                                     <Button onClick={handleSave} disabled={saving || Object.keys(marks).length === 0}
-                                        className="h-9 gap-2 rounded-xl bg-blue-700 px-5 text-xs font-bold text-white shadow-md shadow-blue-200 transition-all hover:bg-blue-800 disabled:opacity-50">
+                                        className="h-9 gap-2 rounded-xl bg-[#173F8C] px-5 text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 transition-all hover:bg-[#122F69] disabled:opacity-50">
                                         {saving && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                                         {saving ? 'Saving…' : 'Save Attendance'}
                                     </Button>
@@ -357,7 +357,7 @@ function MarkAttendance({ classId, classes, onClassChange }: {
                                             value={marks[s.studentId]?.note || ''}
                                             onChange={e => setMarks(m => ({ ...m, [s.studentId]: { ...m[s.studentId], note: e.target.value } }))}
                                             placeholder="Note…"
-                                            className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-[11px] outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                            className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-[11px] outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                                         />
                                     </div>
                                 </div>
@@ -376,7 +376,7 @@ function MarkAttendance({ classId, classes, onClassChange }: {
                                         </motion.div>
                                     ) : (
                                         <Button onClick={handleSave} disabled={saving || Object.keys(marks).length === 0}
-                                            className="h-9 gap-2 rounded-xl bg-blue-700 px-5 text-xs font-bold text-white shadow-md shadow-blue-200">
+                                            className="h-9 gap-2 rounded-xl bg-[#173F8C] px-5 text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20">
                                             {saving && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                                             {saving ? 'Saving…' : 'Save'}
                                         </Button>
@@ -398,7 +398,7 @@ function RosterView({ classId, date }: { classId: string; date: string }) {
     );
     const roster: RosterStudent[] = rosterData?.roster || [];
 
-    if (loading) return <div className="flex items-center justify-center py-10"><Loader2 className="h-5 w-5 animate-spin text-blue-600" /></div>;
+    if (loading) return <div className="flex items-center justify-center py-10"><Loader2 className="h-5 w-5 animate-spin text-[#1E4DA6]" /></div>;
     const marked = roster.filter(s => s.record);
 
     if (marked.length === 0) return (
@@ -466,7 +466,7 @@ function StudentHistory({ classId }: { classId: string }) {
     );
     const data: StudentHistoryEntry[] = histData?.data || [];
 
-    if (loading) return <div className="flex items-center justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-blue-600" /></div>;
+    if (loading) return <div className="flex items-center justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-[#1E4DA6]" /></div>;
     if (data.length === 0) return (
         <div className="flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-slate-200 py-16 text-center">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100"><History className="h-5 w-5 text-slate-400" /></div>
@@ -486,7 +486,7 @@ function StudentHistory({ classId }: { classId: string }) {
                             { h: 'Present', cls: 'text-emerald-600' },
                             { h: 'Absent', cls: 'text-red-500' },
                             { h: 'Late', cls: 'text-amber-500' },
-                            { h: 'Excused', cls: 'text-blue-500' },
+                            { h: 'Excused', cls: 'text-[#1E4DA6]' },
                             { h: 'Rate', cls: '' },
                         ].map(({ h, cls }) => (
                             <th key={h} className={cn('px-5 py-3.5 font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400', cls)}>{h}</th>
@@ -506,7 +506,7 @@ function StudentHistory({ classId }: { classId: string }) {
                                 <td className="px-5 py-3 font-mono text-sm font-bold text-emerald-600">{s.present}</td>
                                 <td className="px-5 py-3 font-mono text-sm font-bold text-red-500">{s.absent}</td>
                                 <td className="px-5 py-3 font-mono text-sm font-bold text-amber-500">{s.late}</td>
-                                <td className="px-5 py-3 font-mono text-sm font-bold text-blue-500">{s.excused}</td>
+                                <td className="px-5 py-3 font-mono text-sm font-bold text-[#1E4DA6]">{s.excused}</td>
                                 <td className="px-5 py-3">
                                     <div className="flex items-center gap-2">
                                         <div className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-100">
@@ -545,7 +545,7 @@ function StudentHistory({ classId }: { classId: string }) {
                                     { lbl: 'P', val: s.present, cls: 'text-emerald-600 bg-emerald-50' },
                                     { lbl: 'A', val: s.absent, cls: 'text-red-600 bg-red-50' },
                                     { lbl: 'L', val: s.late, cls: 'text-amber-600 bg-amber-50' },
-                                    { lbl: 'E', val: s.excused, cls: 'text-blue-600 bg-blue-50' },
+                                    { lbl: 'E', val: s.excused, cls: 'text-[#1E4DA6] bg-[#1E4DA6]/5' },
                                 ].map(({ lbl, val, cls }) => (
                                     <div key={lbl} className={cn('flex flex-1 flex-col items-center rounded-xl py-1.5 font-mono font-bold', cls)}>
                                         <span className="text-[10px] opacity-70">{lbl}</span>
@@ -596,7 +596,6 @@ export default function StudentAttendance() {
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');
-                .att-root, .att-root * { font-family: 'Plus Jakarta Sans', sans-serif !important; }
                 .att-root .font-mono   { font-family: 'DM Mono', monospace !important; }
                 @keyframes att-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
                 @keyframes att-pulse { 0%{transform:scale(0.9);opacity:.4} 100%{transform:scale(1.5);opacity:0} }
@@ -604,29 +603,27 @@ export default function StudentAttendance() {
                 .att-pulse { animation: att-pulse 2.4s ease-out infinite; }
             `}</style>
 
-            <div className="att-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.25]"
-                    style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <div className="att-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
 
                 <div className="relative z-10 mx-auto max-w-6xl">
 
                     {/* Breadcrumb */}
-                    <div className={cn('mb-6 flex items-center gap-1.5 transition-all duration-500', pageVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0')}>
+                    <div className={cn('mb-6 flex items-center gap-1.5 transition-all duration-500', pageVisible ? 'opacity-100' : '-translate-y-2 opacity-0')}>
                         <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Academics</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Attendance Tracking</span>
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Attendance Tracking</span>
                     </div>
 
                     {/* Main panel */}
                     <div className={cn(
-                        'overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl transition-all duration-500',
-                        pageVisible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+                        'overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-all duration-500',
+                        pageVisible ? 'opacity-100' : 'translate-y-3 opacity-0'
                     )}>
                         {/* Tab bar */}
                         <div className="border-b border-slate-100 bg-slate-50/80 px-6">
-                            <div className="inline-flex items-center gap-2 border-b-2 border-blue-600 pb-3 pt-3.5">
-                                <CalendarDays className="h-3.5 w-3.5 text-blue-600" />
-                                <span className="text-xs font-bold tracking-tight text-blue-600">Attendance System</span>
+                            <div className="inline-flex items-center gap-2 border-b-2 border-[#1E4DA6] pb-3 pt-3.5">
+                                <CalendarDays className="h-3.5 w-3.5 text-[#1E4DA6]" />
+                                <span className="text-xs font-bold tracking-tight text-[#1E4DA6]">Attendance System</span>
                             </div>
                         </div>
 
@@ -635,8 +632,8 @@ export default function StudentAttendance() {
                             {/* Hero + toolbar */}
                             <div className="mb-10 flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left sm:gap-6">
                                 <div className="att-float relative mb-5 h-16 w-16 shrink-0 sm:mb-0">
-                                    <div className="att-pulse absolute inset-0 rounded-2xl bg-blue-400/25" />
-                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 shadow-lg shadow-blue-200">
+                                    <div className="att-pulse absolute inset-0 rounded-2xl bg-[#1E4DA6]/8" />
+                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-[#1E4DA6] shadow-lg shadow-[#1E4DA6]/20">
                                         <CalendarDays className="h-7 w-7 text-white" />
                                     </div>
                                 </div>
@@ -649,7 +646,7 @@ export default function StudentAttendance() {
                                         {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                                     </select>
                                     <button onClick={() => fetchStats()}
-                                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-slate-300 hover:text-blue-600">
+                                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-slate-300 hover:text-[#1E4DA6]">
                                         <RefreshCw className="h-4 w-4" />
                                     </button>
                                 </div>
@@ -666,7 +663,7 @@ export default function StudentAttendance() {
                                         { label: 'Present Today', value: stats.present, of: stats.totalStudents, iconBg: 'bg-emerald-50', iconText: 'text-emerald-600', icon: <CheckCircle2 className="h-5 w-5" />, delay: 80 },
                                         { label: 'Absent', value: stats.absent, of: stats.totalStudents, iconBg: 'bg-red-50', iconText: 'text-red-600', icon: <XCircle className="h-5 w-5" />, delay: 140 },
                                         { label: 'Late', value: stats.late, of: stats.totalStudents, iconBg: 'bg-amber-50', iconText: 'text-amber-600', icon: <Clock className="h-5 w-5" />, delay: 200 },
-                                        { label: 'Excused', value: stats.excused, of: stats.totalStudents, iconBg: 'bg-blue-50', iconText: 'text-blue-600', icon: <BookOpen className="h-5 w-5" />, delay: 260 },
+                                        { label: 'Excused', value: stats.excused, of: stats.totalStudents, iconBg: 'bg-[#1E4DA6]/5', iconText: 'text-[#1E4DA6]', icon: <BookOpen className="h-5 w-5" />, delay: 260 },
                                     ].map(s => <StatCard key={s.label} {...s} />)}
                                 </div>
                             ) : null}
@@ -677,7 +674,7 @@ export default function StudentAttendance() {
                                     <button key={t.key} onClick={() => setTab(t.key)}
                                         className={cn(
                                             'flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-wide transition-all sm:px-4',
-                                            tab === t.key ? 'bg-white text-blue-700 shadow-sm ring-1 ring-slate-200' : 'text-slate-400 hover:text-slate-600'
+                                            tab === t.key ? 'bg-white text-[#173F8C] shadow-sm ring-1 ring-slate-200' : 'text-slate-400 hover:text-slate-600'
                                         )}>
                                         {t.icon}
                                         <span className="hidden sm:inline">{t.label}</span>

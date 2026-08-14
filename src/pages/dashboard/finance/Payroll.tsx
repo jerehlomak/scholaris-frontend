@@ -26,7 +26,7 @@ interface StaffPayroll {
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-const AVATAR_COLORS = ['bg-blue-500', 'bg-purple-500', 'bg-pink-500', 'bg-orange-500', 'bg-teal-500', 'bg-indigo-500'];
+const AVATAR_COLORS = ['bg-[#1E4DA6]', 'bg-[#1E4DA6]', 'bg-pink-500', 'bg-orange-500', 'bg-teal-500', 'bg-indigo-500'];
 const avatarBg = (name: string) => AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];
 
 function fmt(n: number) { return '₦' + (n || 0).toLocaleString('en-NG'); }
@@ -50,7 +50,7 @@ function StatCard({ icon, label, value, iconBg, iconText, delay }: {
         <div className={cn(
             'flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-500',
             'hover:shadow-md hover:-translate-y-0.5',
-            vis ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+            vis ? 'opacity-100' : 'translate-y-3 opacity-0'
         )}>
             <div className={cn('flex h-10 w-10 shrink-0 items-center justify-center rounded-xl', iconBg, iconText)}>{icon}</div>
             <div>
@@ -129,7 +129,7 @@ export default function Payroll() {
     if (loading) return (
         <div className="flex min-h-[60vh] items-center justify-center">
             <div className="flex flex-col items-center gap-3">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
                 <span className="font-mono text-xs font-semibold uppercase tracking-widest text-slate-400">Loading payroll…</span>
             </div>
         </div>
@@ -139,7 +139,6 @@ export default function Payroll() {
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');
-                .sal-root, .sal-root * { font-family: 'Plus Jakarta Sans', sans-serif !important; }
                 .sal-root .font-mono   { font-family: 'DM Mono', monospace !important; }
                 @keyframes sal-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
                 @keyframes sal-pulse { 0%{transform:scale(0.9);opacity:.4} 100%{transform:scale(1.5);opacity:0} }
@@ -147,29 +146,27 @@ export default function Payroll() {
                 .sal-pulse { animation: sal-pulse 2.4s ease-out infinite; }
             `}</style>
 
-            <div className="sal-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.25]"
-                    style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <div className="sal-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
 
                 <div className="relative z-10 mx-auto max-w-6xl">
 
                     {/* Breadcrumb */}
-                    <div className={cn('mb-6 flex items-center gap-1.5 transition-all duration-500', pageVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0')}>
+                    <div className={cn('mb-6 flex items-center gap-1.5 transition-all duration-500', pageVisible ? 'opacity-100' : '-translate-y-2 opacity-0')}>
                         <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Salary & Payroll</span>
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Salary & Payroll</span>
                     </div>
 
                     {/* Main panel */}
                     <div className={cn(
-                        'overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl transition-all duration-500',
-                        pageVisible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+                        'overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-all duration-500',
+                        pageVisible ? 'opacity-100' : 'translate-y-3 opacity-0'
                     )}>
                         {/* Tab bar */}
                         <div className="border-b border-slate-100 bg-slate-50/80 px-6">
-                            <div className="inline-flex items-center gap-2 border-b-2 border-blue-600 pb-3 pt-3.5">
-                                <Banknote className="h-3.5 w-3.5 text-blue-600" />
-                                <span className="text-xs font-bold tracking-tight text-blue-600">Payroll Manager</span>
+                            <div className="inline-flex items-center gap-2 border-b-2 border-[#1E4DA6] pb-3 pt-3.5">
+                                <Banknote className="h-3.5 w-3.5 text-[#1E4DA6]" />
+                                <span className="text-xs font-bold tracking-tight text-[#1E4DA6]">Payroll Manager</span>
                             </div>
                         </div>
 
@@ -178,14 +175,14 @@ export default function Payroll() {
                             {/* Hero + actions */}
                             <div className="mb-10 flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left sm:gap-6">
                                 <div className="sal-float relative mb-5 h-16 w-16 shrink-0 sm:mb-0">
-                                    <div className="sal-pulse absolute inset-0 rounded-2xl bg-blue-400/25" />
-                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 shadow-lg shadow-blue-200">
+                                    <div className="sal-pulse absolute inset-0 rounded-2xl bg-[#1E4DA6]/8" />
+                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-[#1E4DA6] shadow-lg shadow-[#1E4DA6]/20">
                                         <Banknote className="h-7 w-7 text-white" />
                                     </div>
                                 </div>
                                 <div className="flex-1">
                                     <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">Salary & Payroll</h2>
-                                    <p className="mt-1 text-sm leading-relaxed text-slate-500">Manage staff salaries for <span className="font-bold text-blue-700">{payPeriod}</span>.</p>
+                                    <p className="mt-1 text-sm leading-relaxed text-slate-500">Manage staff salaries for <span className="font-bold text-[#173F8C]">{payPeriod}</span>.</p>
                                 </div>
                                 <div className="mt-4 flex flex-wrap gap-2 sm:mt-0 sm:self-start">
                                     {pending > 0 && (
@@ -204,9 +201,9 @@ export default function Payroll() {
                             {/* KPI cards */}
                             <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4">
                                 {[
-                                    { icon: <Users className="h-5 w-5" />, label: 'Total Staff', value: payroll.length, iconBg: 'bg-blue-50', iconText: 'text-blue-600', delay: 80 },
+                                    { icon: <Users className="h-5 w-5" />, label: 'Total Staff', value: payroll.length, iconBg: 'bg-[#1E4DA6]/5', iconText: 'text-[#1E4DA6]', delay: 80 },
                                     { icon: <DollarSign className="h-5 w-5" />, label: 'Total Payable', value: fmt(totalPayable), iconBg: 'bg-emerald-50', iconText: 'text-emerald-600', delay: 140 },
-                                    { icon: <CheckCircle2 className="h-5 w-5" />, label: 'Total Paid', value: fmt(totalPaid), iconBg: 'bg-purple-50', iconText: 'text-purple-600', delay: 200 },
+                                    { icon: <CheckCircle2 className="h-5 w-5" />, label: 'Total Paid', value: fmt(totalPaid), iconBg: 'bg-[#1E4DA6]/5', iconText: 'text-[#1E4DA6]', delay: 200 },
                                     { icon: <Clock className="h-5 w-5" />, label: 'Pending', value: `${pending} staff`, iconBg: pending > 0 ? 'bg-amber-50' : 'bg-slate-100', iconText: pending > 0 ? 'text-amber-600' : 'text-slate-400', delay: 260 },
                                 ].map(s => <StatCard key={s.label} {...s} />)}
                             </div>
@@ -215,21 +212,21 @@ export default function Payroll() {
                             <div className="mb-6 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
                                 <div className="mb-2 flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                        <TrendingUp className="h-4 w-4 text-blue-600" />
+                                        <TrendingUp className="h-4 w-4 text-[#1E4DA6]" />
                                         <span className="font-bold text-slate-800 text-sm">Payroll Progress</span>
                                     </div>
-                                    <span className="font-mono text-sm font-black text-blue-600">{paidPct}%</span>
+                                    <span className="font-mono text-sm font-black text-[#1E4DA6]">{paidPct}%</span>
                                 </div>
                                 <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: `${paidPct}%` }}
                                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-                                        className="h-full rounded-full bg-gradient-to-r from-blue-600 to-emerald-500"
+                                        className="h-full rounded-full bg-gradient-to-r from-[#1E4DA6] to-emerald-500"
                                     />
                                 </div>
                                 <p className="mt-2 font-mono text-[11px] text-slate-400">
-                                    <span className="font-bold text-blue-700">{payroll.filter(e => e.status === 'paid').length}/{payroll.length}</span> staff paid for {payPeriod}.{' '}
+                                    <span className="font-bold text-[#173F8C]">{payroll.filter(e => e.status === 'paid').length}/{payroll.length}</span> staff paid for {payPeriod}.{' '}
                                     {pending > 0 ? `${pending} payment(s) still pending.` : '✓ All payments up to date.'}
                                 </p>
                             </div>
@@ -240,7 +237,7 @@ export default function Payroll() {
                                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                                     <Input value={search} onChange={e => setSearch(e.target.value)}
                                         placeholder="Search staff by name or role…"
-                                        className="h-10 border-slate-200 bg-white pl-9 text-sm shadow-sm focus-visible:border-blue-400 focus-visible:ring-2 focus-visible:ring-blue-100" />
+                                        className="h-10 border-slate-200 bg-white pl-9 text-sm shadow-sm focus-visible:border-[#1E4DA6]/60 focus-visible:ring-2 focus-visible:ring-[#1E4DA6]/10" />
                                 </div>
                             </div>
 
@@ -279,7 +276,7 @@ export default function Payroll() {
                                                             <div className="flex items-center gap-3">
                                                                 <Avatar name={e.name} />
                                                                 <div>
-                                                                    <p className="font-bold text-slate-900 group-hover:text-blue-700 transition-colors">{e.name}</p>
+                                                                    <p className="font-bold text-slate-900 group-hover:text-[#173F8C] transition-colors">{e.name}</p>
                                                                     <p className="font-mono text-[11px] text-slate-400">
                                                                         {e.role}{e.accountNumber && e.accountNumber !== 'Pending Details' ? ` · ${e.bankName} ${e.accountNumber}` : ''}
                                                                     </p>
@@ -290,7 +287,7 @@ export default function Payroll() {
                                                         <td className="px-4 py-3.5 text-right font-mono text-sm text-slate-700">{fmt(e.basic)}</td>
                                                         <td className="px-4 py-3.5 text-right font-mono text-sm font-semibold text-emerald-600">+{fmt(e.allowance)}</td>
                                                         <td className="px-4 py-3.5 text-right font-mono text-sm font-semibold text-red-500">-{fmt(e.deduction)}</td>
-                                                        <td className="px-4 py-3.5 text-right font-mono text-sm font-black text-blue-700">{fmt(netPay)}</td>
+                                                        <td className="px-4 py-3.5 text-right font-mono text-sm font-black text-[#173F8C]">{fmt(netPay)}</td>
                                                         <td className="px-4 py-3.5 text-center">
                                                             {e.status === 'paid'
                                                                 ? <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 font-mono text-[10px] font-bold text-emerald-600"><CheckCircle2 className="h-3 w-3" />Paid</span>
@@ -300,7 +297,7 @@ export default function Payroll() {
                                                         <td className="px-4 py-3.5 text-center">
                                                             {e.status === 'pending' ? (
                                                                 <button onClick={() => setConfirmingPay(e)} disabled={processingId === e.id}
-                                                                    className="inline-flex min-w-[72px] items-center justify-center gap-1.5 rounded-xl bg-blue-700 px-3 py-1.5 font-mono text-[10px] font-bold text-white shadow-sm transition-all hover:bg-blue-800 disabled:opacity-60">
+                                                                    className="inline-flex min-w-[72px] items-center justify-center gap-1.5 rounded-xl bg-[#173F8C] px-3 py-1.5 font-mono text-[10px] font-bold text-white shadow-sm transition-all hover:bg-[#122F69] disabled:opacity-60">
                                                                     {processingId === e.id ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Pay Now'}
                                                                 </button>
                                                             ) : (
@@ -318,7 +315,7 @@ export default function Payroll() {
                                     <tfoot className="border-t-2 border-slate-200 bg-slate-50/80">
                                         <tr>
                                             <td colSpan={5} className="px-5 py-3.5 font-bold text-slate-700">Total Net Payroll</td>
-                                            <td className="px-4 py-3.5 text-right font-mono text-base font-black text-blue-700">{fmt(totalPayable)}</td>
+                                            <td className="px-4 py-3.5 text-right font-mono text-base font-black text-[#173F8C]">{fmt(totalPayable)}</td>
                                             <td colSpan={2} />
                                         </tr>
                                     </tfoot>
@@ -380,11 +377,11 @@ export default function Payroll() {
                                                         <div className="flex items-center justify-between">
                                                             <div>
                                                                 <p className="font-mono text-[10px] uppercase tracking-widest text-slate-400">Net Pay</p>
-                                                                <p className="font-mono text-xl font-black text-blue-700">{fmt(netPay)}</p>
+                                                                <p className="font-mono text-xl font-black text-[#173F8C]">{fmt(netPay)}</p>
                                                             </div>
                                                             {e.status === 'pending' ? (
                                                                 <button onClick={() => setConfirmingPay(e)} disabled={processingId === e.id}
-                                                                    className="flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2.5 font-mono text-xs font-bold text-white shadow-md shadow-blue-200 transition-all hover:bg-blue-800 disabled:opacity-60">
+                                                                    className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-4 py-2.5 font-mono text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 transition-all hover:bg-[#122F69] disabled:opacity-60">
                                                                     {processingId === e.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
                                                                     {processingId === e.id ? 'Processing…' : 'Pay Now'}
                                                                 </button>
@@ -403,9 +400,9 @@ export default function Payroll() {
 
                                 {/* Mobile total */}
                                 {displayed.length > 0 && (
-                                    <div className="flex items-center justify-between rounded-2xl border border-blue-100 bg-blue-50/60 px-5 py-4">
+                                    <div className="flex items-center justify-between rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 px-5 py-4">
                                         <span className="font-mono text-xs font-bold uppercase tracking-widest text-slate-500">Total Net Payroll</span>
-                                        <span className="font-mono text-lg font-black text-blue-700">{fmt(totalPayable)}</span>
+                                        <span className="font-mono text-lg font-black text-[#173F8C]">{fmt(totalPayable)}</span>
                                     </div>
                                 )}
 
@@ -440,7 +437,7 @@ export default function Payroll() {
                         {/* Body */}
                         <div className="space-y-4 p-6">
                             {/* Staff pill */}
-                            <div className="flex items-center gap-4 rounded-2xl border border-blue-100 bg-blue-50/40 p-4">
+                            <div className="flex items-center gap-4 rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-4">
                                 <Avatar name={confirmingPay.name} />
                                 <div>
                                     <p className="font-bold text-slate-900">{confirmingPay.name}</p>
@@ -462,7 +459,7 @@ export default function Payroll() {
                                 <Separator className="bg-slate-200" />
                                 <div className="flex items-center justify-between">
                                     <span className="text-sm font-medium text-slate-500">Net Pay Authorized</span>
-                                    <span className="font-mono text-xl font-black text-blue-700">
+                                    <span className="font-mono text-xl font-black text-[#173F8C]">
                                         {fmt(confirmingPay.basic + confirmingPay.allowance - confirmingPay.deduction)}
                                     </span>
                                 </div>
@@ -475,7 +472,7 @@ export default function Payroll() {
                             <Button
                                 onClick={() => executePayment(confirmingPay)}
                                 disabled={!confirmingPay.accountNumber || confirmingPay.accountNumber === 'Pending Details'}
-                                className="flex-1 gap-2 rounded-xl bg-blue-700 text-xs font-bold text-white shadow-md shadow-blue-200 hover:bg-blue-800 disabled:opacity-50"
+                                className="flex-1 gap-2 rounded-xl bg-[#173F8C] text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#122F69] disabled:opacity-50"
                             >
                                 Authorize Payment
                             </Button>

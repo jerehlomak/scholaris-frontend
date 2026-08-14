@@ -63,7 +63,7 @@ export const GroupAdminLayout = () => {
                         style={{ background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)' }}>
                         <ShieldCheck className="w-6 h-6 text-white" />
                     </div>
-                    <div className="w-6 h-6 rounded-full border-2 border-blue-500/30 border-t-blue-500 animate-spin" />
+                    <div className="w-6 h-6 rounded-full border-2 border-[#1E4DA6]/30 border-t-[#1E4DA6] animate-spin" />
                 </div>
             </div>
         );
@@ -89,7 +89,7 @@ export const GroupAdminLayout = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                     <p className="text-sm font-bold truncate" style={{ color: T.textPrimary }}>{groupName}</p>
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-blue-500">Group Admin</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-[#1E4DA6]">Group Admin</p>
                 </div>
                 <button className="md:hidden" style={{ color: T.textMuted }} onClick={() => setSidebarOpen(false)}>
                     <X className="w-4 h-4" />

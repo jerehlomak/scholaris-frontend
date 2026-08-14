@@ -13,11 +13,11 @@ export function AttendanceStatCards({ totalStudents, presentToday, absentToday, 
     const rate = totalStudents > 0 ? Math.round(((presentToday + lateToday) / totalStudents) * 100) : 0;
 
     const cards = [
-        { icon: <Users className="w-5 h-5" />, label: 'Total Students', value: totalStudents, color: 'bg-[#0036a1]/10 text-[#0036a1]' },
-        { icon: <CheckCircle2 className="w-5 h-5" />, label: 'Present Today', value: presentToday, color: 'bg-[#6bc048]/10 text-[#6bc048]' },
+        { icon: <Users className="w-5 h-5" />, label: 'Total Students', value: totalStudents, color: 'bg-[#1E4DA6]/10 text-[#1E4DA6]' },
+        { icon: <CheckCircle2 className="w-5 h-5" />, label: 'Present Today', value: presentToday, color: 'bg-[#10b981]/10 text-[#10b981]' },
         { icon: <XCircle className="w-5 h-5" />, label: 'Absent Today', value: absentToday, color: 'bg-red-100 text-red-600' },
         { icon: <Clock className="w-5 h-5" />, label: 'Late Today', value: lateToday, color: 'bg-[#ff9800]/10 text-[#ff9800]' },
-        { icon: <AlertCircle className="w-5 h-5" />, label: 'Attendance Rate', value: `${rate}%`, color: 'bg-purple-100 text-purple-600' },
+        { icon: <AlertCircle className="w-5 h-5" />, label: 'Attendance Rate', value: `${rate}%`, color: 'bg-[#1E4DA6]/10 text-[#1E4DA6]' },
     ];
 
     return (

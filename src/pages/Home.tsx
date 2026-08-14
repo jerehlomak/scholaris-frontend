@@ -4,12 +4,10 @@ import { Header } from '../components/home/Header';
 import { HeroBanner } from '../components/home/HeroBanner';
 import { BenefitsBar } from '../components/home/BenefitsBar';
 import { FeaturedSlider } from '../components/home/featuredSlider';
-import { PricingSection } from '../components/home/PricingSection';
 import { CategoriesGrid } from '../components/home/CategoriesGrid';
+import { PricingSection } from '../components/home/PricingSection';
 import { ReviewsSection } from '../components/home/ReviewsSection';
 import { AboutBanner } from '../components/home/AboutBanner';
-import { NewsletterCommunity } from '../components/home/NewsletterCommunity';
-import { BlogSection } from '../components/home/BlogSection';
 import { ContactSection } from '../components/home/ContactSection';
 import { Footer } from '../components/home/Footer';
 
@@ -25,7 +23,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen font-primary text-brand-dark bg-white">
+    <div className="min-h-screen font-primary text-[#1C2333] bg-white">
       <AnnouncementBar />
       <Header />
 
@@ -33,12 +31,10 @@ const Home = () => {
         <HeroBanner />
         <BenefitsBar />
         <FeaturedSlider />
-        <PricingSection />
         <CategoriesGrid />
+        <PricingSection />
         <ReviewsSection />
         <AboutBanner />
-        <NewsletterCommunity />
-        <BlogSection />
         <ContactSection />
       </main>
 

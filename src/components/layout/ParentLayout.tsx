@@ -85,7 +85,7 @@ function NavItem({ item, isActive }: { item: typeof NAV_GROUPS[0]['items'][0]; i
             className={cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group',
                 isActive
-                    ? 'bg-blue-50 text-blue-700'
+                    ? 'bg-[#1E4DA6]/5 text-[#173F8C]'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             )}
         >
@@ -93,12 +93,12 @@ function NavItem({ item, isActive }: { item: typeof NAV_GROUPS[0]['items'][0]; i
                 size={16}
                 className={cn(
                     'shrink-0 transition-colors',
-                    isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'
+                    isActive ? 'text-[#1E4DA6]' : 'text-slate-400 group-hover:text-slate-600'
                 )}
             />
             <span className="truncate">{item.title}</span>
             {isActive && (
-                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#1E4DA6] shrink-0" />
             )}
         </Link>
     );
@@ -163,7 +163,7 @@ function Sidebar({
                 {/* ── School chip ── */}
                 <div className="px-4 py-3 border-b border-slate-100 shrink-0">
                     <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-slate-50 border border-slate-200">
-                        <div className="w-7 h-7 rounded-md bg-blue-600 flex items-center justify-center shrink-0">
+                        <div className="w-7 h-7 rounded-md bg-[#1E4DA6] flex items-center justify-center shrink-0">
                             <GraduationCap size={14} className="text-white" />
                         </div>
                         <div className="min-w-0">
@@ -404,12 +404,12 @@ export function ParentLayout() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-80 p-0">
                                 <div className="px-4 py-3 border-b border-slate-100 font-semibold text-slate-800">
-                                    Notifications {unreadCount > 0 && <span className="ml-2 text-xs text-blue-600">({unreadCount} new)</span>}
+                                    Notifications {unreadCount > 0 && <span className="ml-2 text-xs text-[#1E4DA6]">({unreadCount} new)</span>}
                                 </div>
                                 <div className="max-h-[300px] overflow-y-auto">
                                     {notifications.length > 0 ? (
                                         notifications.slice(0, 5).map((msg, i) => (
-                                            <div key={i} onClick={() => setSelectedMessage(msg)} className={cn("px-4 py-3 hover:bg-slate-50 border-b border-slate-50 last:border-0 cursor-pointer", !msg.isRead && msg.senderType === 'ADMIN' ? 'bg-blue-50/50' : '')}>
+                                            <div key={i} onClick={() => setSelectedMessage(msg)} className={cn("px-4 py-3 hover:bg-slate-50 border-b border-slate-50 last:border-0 cursor-pointer", !msg.isRead && msg.senderType === 'ADMIN' ? 'bg-[#1E4DA6]/8' : '')}>
                                                 <h4 className="text-sm font-semibold text-slate-900">{msg.subject}</h4>
                                                 <p className="text-xs text-slate-500 mt-1 line-clamp-2">{msg.body}</p>
                                                 <p className="text-[10px] text-slate-400 mt-2">{new Date(msg.createdAt).toLocaleDateString()}</p>
@@ -478,16 +478,16 @@ export function ParentLayout() {
                                     </span>
                                     <div className={cn(
                                         'p-3 rounded-2xl text-sm shadow-sm', 
-                                        isParent ? 'bg-blue-600 text-white rounded-br-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-bl-sm'
+                                        isParent ? 'bg-[#1E4DA6] text-white rounded-br-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-bl-sm'
                                     )}>
                                         {msg.subject && msg.subject !== 'Fee Reminder' && !msg.subject.startsWith('Re:') && (
-                                            <p className={cn("text-xs font-bold mb-2 pb-2 border-b", isParent ? "border-blue-500 text-blue-100" : "border-slate-100 text-slate-500")}>
+                                            <p className={cn("text-xs font-bold mb-2 pb-2 border-b", isParent ? "border-[#1E4DA6] text-white/80" : "border-slate-100 text-slate-500")}>
                                                 {msg.subject}
                                             </p>
                                         )}
                                         <p className="whitespace-pre-wrap">{msg.body}</p>
                                         {msg.attachmentUrl && (
-                                            <a href={msg.attachmentUrl} target="_blank" rel="noreferrer" className={cn('mt-2 flex items-center gap-1 text-[11px] font-bold underline', isParent ? 'text-blue-200 hover:text-white' : 'text-blue-600 hover:text-blue-800')}>
+                                            <a href={msg.attachmentUrl} target="_blank" rel="noreferrer" className={cn('mt-2 flex items-center gap-1 text-[11px] font-bold underline', isParent ? 'text-white/70 hover:text-white' : 'text-[#1E4DA6] hover:text-[#122F69]')}>
                                                 View Attachment
                                             </a>
                                         )}
@@ -503,7 +503,7 @@ export function ParentLayout() {
                                 value={replyBody}
                                 onChange={(e) => setReplyBody(e.target.value)}
                                 placeholder="Type your reply here..."
-                                className="w-full min-h-[80px] p-3 text-sm rounded-xl border border-slate-200 bg-slate-50 focus:bg-white shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all outline-none resize-none"
+                                className="w-full min-h-[80px] p-3 text-sm rounded-xl border border-slate-200 bg-slate-50 focus:bg-white shadow-sm focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6] transition-all outline-none resize-none"
                             />
                             <div className="flex items-center justify-between gap-3">
                                 <div className="relative flex-1 max-w-[200px]">
@@ -518,7 +518,7 @@ export function ParentLayout() {
                                 <Button 
                                     onClick={handleReplySubmit}
                                     disabled={!replyBody.trim() || isReplying}
-                                    className="rounded-xl h-9 px-5 gap-2 bg-blue-600 hover:bg-blue-700 font-bold shadow-md shadow-blue-200"
+                                    className="rounded-xl h-9 px-5 gap-2 bg-[#1E4DA6] hover:bg-[#173F8C] font-bold shadow-md shadow-[#1E4DA6]/20"
                                 >
                                     {isReplying ? <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <Send className="w-4 h-4" />}
                                     {isReplying ? 'Sending...' : 'Send'}

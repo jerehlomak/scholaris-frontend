@@ -110,7 +110,7 @@ export default function StudentCBT() {
                     </p>
                 </Card>
                 <div className="flex flex-col gap-3 pt-6">
-                    <Button onClick={() => { setScreen('list'); setResult(null); setActiveExam(null); setTab('results'); }} className="bg-blue-600 hover:bg-blue-700 text-white h-14 rounded-2xl font-black shadow-lg shadow-blue-600/20 transition-all active:scale-95">
+                    <Button onClick={() => { setScreen('list'); setResult(null); setActiveExam(null); setTab('results'); }} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white h-14 rounded-2xl font-black shadow-lg shadow-[#1E4DA6]/20 transition-all active:scale-95">
                         View Results History
                     </Button>
                     <Button variant="ghost" onClick={() => { setScreen('list'); setResult(null); setActiveExam(null); setTab('available'); }} className="text-slate-400 font-bold hover:text-slate-600">
@@ -132,7 +132,7 @@ export default function StudentCBT() {
         return (
             <div className="max-w-4xl mx-auto font-dash pb-20 px-4">
                 {/* Timer Bar */}
-                <div className={`sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100 px-6 py-4 flex items-center justify-between gap-4 transition-all rounded-b-3xl shadow-sm ${timeLeft < 60 ? 'border-red-200 bg-red-50/90' : ''}`}>
+                <div className={`sticky top-0 z-50 bg-white/90 border-b border-gray-100 px-6 py-4 flex items-center justify-between gap-4 transition-all rounded-b-3xl shadow-sm ${timeLeft < 60 ? 'border-red-200 bg-red-50/90' : ''}`}>
                     <div className="flex items-center gap-4">
                         <div className="hidden sm:block">
                             <p className="font-black text-gray-900 text-lg leading-none">{activeExam.title}</p>
@@ -140,14 +140,14 @@ export default function StudentCBT() {
                         </div>
                     </div>
                     <div className="flex items-center gap-6">
-                        <div className={`flex items-center gap-2 font-mono font-black text-3xl ${timeLeft < 60 ? 'text-red-500 animate-pulse' : 'text-blue-600'}`}>
+                        <div className={`flex items-center gap-2 font-mono font-black text-3xl ${timeLeft < 60 ? 'text-red-500 animate-pulse' : 'text-[#1E4DA6]'}`}>
                             <Clock className="w-7 h-7" /> {formatTime(timeLeft)}
                         </div>
                     </div>
                 </div>
                 
                 <div className="h-2 bg-gray-50 flex mt-4 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#0036a1] transition-all duration-1000 ease-linear shadow-[0_0_10px_rgba(0,54,161,0.5)]" style={{ width: `${pct}%` }} />
+                    <div className="h-full bg-[#1E4DA6] transition-all duration-1000 ease-linear shadow-[0_0_10px_rgba(0,54,161,0.5)]" style={{ width: `${pct}%` }} />
                 </div>
 
                 <div className="py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -158,7 +158,7 @@ export default function StudentCBT() {
                              <div className="grid grid-cols-4 gap-2">
                                 {questions.map((_: any, i: number) => (
                                     <button key={i} onClick={() => setCurrentQ(i)}
-                                        className={`h-11 rounded-xl text-xs font-black transition-all transform hover:scale-110 active:scale-90 border-2 ${i === currentQ ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-600/20' : answers[questions[i]?.question?.id] ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-white text-slate-400 border-slate-100 hover:border-slate-200'}`}>
+                                        className={`h-11 rounded-xl text-xs font-black transition-all transform hover:scale-110 active:scale-90 border-2 ${i === currentQ ? 'bg-[#1E4DA6] text-white border-[#1E4DA6] shadow-lg shadow-[#1E4DA6]/20' : answers[questions[i]?.question?.id] ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-white text-slate-400 border-slate-100 hover:border-slate-200'}`}>
                                         {i + 1}
                                     </button>
                                 ))}
@@ -177,7 +177,7 @@ export default function StudentCBT() {
                         {q ? (
                             <AnimatePresence mode="wait">
                                 <motion.div key={currentQ} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-6">
-                                    <Card className="p-10 bg-blue-700 text-white rounded-[2.5rem] relative overflow-hidden shadow-2xl shadow-blue-700/10">
+                                    <Card className="p-10 bg-[#173F8C] text-white rounded-[2.5rem] relative overflow-hidden shadow-2xl shadow-[#173F8C]/10">
                                          <div className="absolute top-0 right-0 p-8 opacity-10">
                                             <BookOpen className="w-32 h-32" />
                                          </div>
@@ -194,10 +194,10 @@ export default function StudentCBT() {
                                             const selected = answers[q.id] === letters[i];
                                             return (
                                                 <button key={i} onClick={() => setAnswers(a => ({ ...a, [q.id]: letters[i] }))}
-                                                    className={`group w-full flex items-center gap-5 p-6 rounded-[2rem] border-2 transition-all text-left ${selected ? 'border-blue-600 bg-blue-50 ring-4 ring-blue-50' : 'border-slate-50 hover:border-slate-200 bg-white shadow-sm'}`}>
-                                                    <span className={`w-12 h-12 rounded-2xl font-black text-lg flex items-center justify-center shrink-0 transition-all ${selected ? 'bg-blue-600 text-white rotate-6' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-50 group-hover:text-blue-600'}`}>{letters[i]}</span>
+                                                    className={`group w-full flex items-center gap-5 p-6 rounded-[2rem] border-2 transition-all text-left ${selected ? 'border-[#1E4DA6] bg-[#1E4DA6]/5 ring-4 ring-[#1E4DA6]/5' : 'border-slate-50 hover:border-slate-200 bg-white shadow-sm'}`}>
+                                                    <span className={`w-12 h-12 rounded-2xl font-black text-lg flex items-center justify-center shrink-0 transition-all ${selected ? 'bg-[#1E4DA6] text-white rotate-6' : 'bg-slate-100 text-slate-500 group-hover:bg-[#1E4DA6]/5 group-hover:text-[#1E4DA6]'}`}>{letters[i]}</span>
                                                     <span className={`text-lg font-bold transition-colors ${selected ? 'text-slate-900' : 'text-slate-600'}`}>{opt}</span>
-                                                    {selected && <CheckCircle2 className="w-6 h-6 text-blue-600 ml-auto shrink-0" />}
+                                                    {selected && <CheckCircle2 className="w-6 h-6 text-[#1E4DA6] ml-auto shrink-0" />}
                                                 </button>
                                             );
                                         })}
@@ -212,7 +212,7 @@ export default function StudentCBT() {
 
                         {/* Navigation Footer */}
                         <div className="flex justify-between items-center pt-10 border-t border-slate-100">
-                            <Button variant="ghost" onClick={() => setCurrentQ(q => Math.max(0, q - 1))} disabled={currentQ === 0} className="rounded-2xl px-10 h-14 font-black uppercase text-xs tracking-widest text-slate-400 hover:text-blue-600">
+                            <Button variant="ghost" onClick={() => setCurrentQ(q => Math.max(0, q - 1))} disabled={currentQ === 0} className="rounded-2xl px-10 h-14 font-black uppercase text-xs tracking-widest text-slate-400 hover:text-[#1E4DA6]">
                                  Back
                             </Button>
                             {currentQ < questions.length - 1
@@ -236,10 +236,10 @@ export default function StudentCBT() {
         <div className="w-full max-w-6xl mx-auto space-y-6">
             <div className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                 <div>
-                    <span className="text-[10px] font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-[0.2em] mb-3 inline-block">Assessment Hub</span>
+                    <span className="text-[10px] font-black text-[#1E4DA6] bg-[#1E4DA6]/5 px-3 py-1 rounded-full uppercase tracking-[0.2em] mb-3 inline-block">Assessment Hub</span>
                     <h1 className="text-4xl font-black text-slate-900 tracking-tight">CBT Exam Center</h1>
                     <div className="flex items-center text-[10px] font-bold text-slate-400 uppercase tracking-widest gap-2 mt-2">
-                        <Link to="/student" className="hover:text-blue-600 transition-colors">Home</Link>
+                        <Link to="/student" className="hover:text-[#1E4DA6] transition-colors">Home</Link>
                         <ChevronRight size={10} className="opacity-50" />
                         <span>Available Assessments</span>
                     </div>
@@ -248,13 +248,13 @@ export default function StudentCBT() {
                 <div className="bg-slate-100 p-2 rounded-3xl flex gap-1 w-full md:w-auto">
                     <button 
                         onClick={() => setTab('available')}
-                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-[1.25rem] text-xs font-black uppercase tracking-widest transition-all ${tab === 'available' ? 'bg-white text-blue-700 shadow-xl shadow-slate-200/50 scale-105' : 'text-slate-500 hover:bg-white/50'}`}
+                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-[1.25rem] text-xs font-black uppercase tracking-widest transition-all ${tab === 'available' ? 'bg-white text-[#173F8C] shadow-xl shadow-slate-200/50 scale-105' : 'text-slate-500 hover:bg-white/50'}`}
                     >
                         <PlayCircle className="w-4 h-4" /> Available
                     </button>
                     <button 
                         onClick={() => setTab('results')}
-                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-[1.25rem] text-xs font-black uppercase tracking-widest transition-all ${tab === 'results' ? 'bg-white text-blue-700 shadow-xl shadow-slate-200/50 scale-105' : 'text-slate-500 hover:bg-white/50'}`}
+                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-3.5 rounded-[1.25rem] text-xs font-black uppercase tracking-widest transition-all ${tab === 'results' ? 'bg-white text-[#173F8C] shadow-xl shadow-slate-200/50 scale-105' : 'text-slate-500 hover:bg-white/50'}`}
                     >
                         <History className="w-4 h-4" /> Results
                     </button>
@@ -285,11 +285,11 @@ export default function StudentCBT() {
                                             )}
                                             
                                             <div className="flex items-center gap-5 mb-8">
-                                                <div className={`w-14 h-14 rounded-[1.25rem] flex items-center justify-center shrink-0 transition-all duration-500 group-hover:scale-110 ${completed ? 'bg-emerald-100 text-emerald-600' : 'bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white group-hover:rotate-6'}`}>
+                                                <div className={`w-14 h-14 rounded-[1.25rem] flex items-center justify-center shrink-0 transition-all duration-500 group-hover:scale-110 ${completed ? 'bg-emerald-100 text-emerald-600' : 'bg-[#1E4DA6]/5 text-[#1E4DA6] group-hover:bg-[#1E4DA6] group-hover:text-white group-hover:rotate-6'}`}>
                                                     <BookOpen className="w-7 h-7" />
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <p className="font-black text-slate-900 text-xl leading-tight group-hover:text-blue-600 transition-colors truncate">{exam.title}</p>
+                                                    <p className="font-black text-slate-900 text-xl leading-tight group-hover:text-[#1E4DA6] transition-colors truncate">{exam.title}</p>
                                                     <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1.5">{exam.subject?.name}</p>
                                                 </div>
                                             </div>
@@ -309,7 +309,7 @@ export default function StudentCBT() {
                                                 <Button 
                                                     onClick={() => startExam(exam)} 
                                                     disabled={completed}
-                                                    className={`w-full text-xs h-14 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl transition-all ${completed ? 'bg-slate-50 text-slate-300 cursor-not-allowed shadow-none border border-slate-100' : 'bg-slate-900 hover:bg-blue-600 text-white hover:shadow-blue-600/20 scale-100 active:scale-95'}`}
+                                                    className={`w-full text-xs h-14 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl transition-all ${completed ? 'bg-slate-50 text-slate-300 cursor-not-allowed shadow-none border border-slate-100' : 'bg-slate-900 hover:bg-[#1E4DA6] text-white hover:shadow-[#1E4DA6]/20 scale-100 active:scale-95'}`}
                                                 >
                                                     {completed ? 'Assessment Complete' : 'Begin Assessment'}
                                                 </Button>
@@ -347,7 +347,7 @@ export default function StudentCBT() {
                                                 <span className="text-[10px] text-gray-400 font-bold bg-gray-50 px-3 py-1 rounded-full uppercase tracking-tighter">{new Date(res.createdAt).toLocaleDateString()}</span>
                                             </div>
                                             
-                                            <h3 className="font-black text-slate-900 text-2xl mb-1 tracking-tight group-hover:text-blue-600 transition-colors">{res.exam?.title}</h3>
+                                            <h3 className="font-black text-slate-900 text-2xl mb-1 tracking-tight group-hover:text-[#1E4DA6] transition-colors">{res.exam?.title}</h3>
                                             <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mb-10">{res.exam?.subject?.name}</p>
                                             
                                             <div className={`mt-auto p-10 text-center rounded-[2rem] border transition-all duration-500 ${passed ? 'bg-emerald-50 border-emerald-100 group-hover:bg-emerald-500 group-hover:border-emerald-500' : 'bg-red-50 border-red-100 group-hover:bg-red-500 group-hover:border-red-500'}`}>

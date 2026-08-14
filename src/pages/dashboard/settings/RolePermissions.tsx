@@ -144,10 +144,10 @@ export function RolePermissions() {
     };
 
     if (loading) {
-        return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>;
+        return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>;
     }
 
-    const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100';
+    const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10';
 
     return (
         <SettingsShell breadcrumbParent="Access Control" breadcrumbCurrent="Roles & Permissions" tabLabel="Access Control (RBAC)" tabIcon={<ShieldCheck className="h-3.5 w-3.5" />}>
@@ -168,11 +168,11 @@ export function RolePermissions() {
                                 onClick={() => selectRole(role)}
                                 className={cn(
                                     'w-full rounded-xl border-2 p-3 text-left transition-all',
-                                    activeRoleId === role.id ? 'border-blue-200 bg-blue-50/60 shadow-sm' : 'border-transparent bg-slate-50/60 hover:bg-slate-100/60'
+                                    activeRoleId === role.id ? 'border-[#1E4DA6]/20 bg-[#1E4DA6]/8 shadow-sm' : 'border-transparent bg-slate-50/60 hover:bg-slate-100/60'
                                 )}
                             >
                                 <div className="flex items-center justify-between">
-                                    <span className={cn('text-sm font-bold', activeRoleId === role.id ? 'text-blue-700' : 'text-slate-700')}>{role.name}</span>
+                                    <span className={cn('text-sm font-bold', activeRoleId === role.id ? 'text-[#173F8C]' : 'text-slate-700')}>{role.name}</span>
                                     {role.isSystemDefault && <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[9px] font-bold uppercase text-slate-500">System</span>}
                                 </div>
                                 <p className="mt-0.5 text-xs text-slate-400">{role.rolePermissions.length} permissions</p>
@@ -181,7 +181,7 @@ export function RolePermissions() {
                     </div>
                     <button
                         onClick={handleAddRole}
-                        className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-blue-200 py-3 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors mt-2"
+                        className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#1E4DA6]/20 py-3 text-sm font-semibold text-[#1E4DA6] hover:bg-[#1E4DA6]/5 transition-colors mt-2"
                     >
                         <Plus className="h-4 w-4" /> Create Custom Role
                     </button>
@@ -210,11 +210,11 @@ export function RolePermissions() {
                             </div>
 
                             {activeRole.isSystemDefault && (
-                                <div className="flex items-start gap-3 rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
-                                    <ShieldAlert className="h-5 w-5 text-blue-600 mt-0.5 shrink-0" />
+                                <div className="flex items-start gap-3 rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-4">
+                                    <ShieldAlert className="h-5 w-5 text-[#1E4DA6] mt-0.5 shrink-0" />
                                     <div>
-                                        <h4 className="font-bold text-blue-700 text-sm">System Role — Read Only</h4>
-                                        <p className="text-xs text-blue-500/80 mt-0.5">Core system roles cannot be modified. Create a custom role for specific variations.</p>
+                                        <h4 className="font-bold text-[#173F8C] text-sm">System Role — Read Only</h4>
+                                        <p className="text-xs text-[#1E4DA6]/80 mt-0.5">Core system roles cannot be modified. Create a custom role for specific variations.</p>
                                     </div>
                                 </div>
                             )}
@@ -243,7 +243,7 @@ export function RolePermissions() {
                                                         {!activeRole.isSystemDefault && (
                                                             <button
                                                                 onClick={() => toggleModule(items)}
-                                                                className="text-[11px] font-semibold text-blue-600 hover:text-blue-700"
+                                                                className="text-[11px] font-semibold text-[#1E4DA6] hover:text-[#173F8C]"
                                                             >
                                                                 {allChecked ? 'Clear all' : 'Select all'}
                                                             </button>
@@ -258,7 +258,7 @@ export function RolePermissions() {
                                                                     onClick={() => togglePermission(perm.id)}
                                                                     className={cn('flex items-center gap-3 rounded-lg p-2 transition-colors select-none', activeRole.isSystemDefault ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer hover:bg-white')}
                                                                 >
-                                                                    <div className={cn('flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors', isChecked ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 bg-white')}>
+                                                                    <div className={cn('flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors', isChecked ? 'border-[#1E4DA6] bg-[#1E4DA6] text-white' : 'border-slate-300 bg-white')}>
                                                                         {isChecked && <Check className="h-3.5 w-3.5" strokeWidth={3} />}
                                                                     </div>
                                                                     <span className={cn('text-sm', isChecked ? 'font-semibold text-slate-800' : 'text-slate-500')}>{perm.label}</span>

@@ -47,8 +47,8 @@ function PinTypeBadge({ type }: { type: string }) {
     const label = type.replace(/_/g, ' ').replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.substring(1).toLowerCase());
     
     let colors = 'bg-slate-100 text-slate-600';
-    if (type === 'RESULT_CHECKING') colors = 'bg-blue-100 text-blue-700';
-    if (type === 'ADMISSION_APPLICATION') colors = 'bg-purple-100 text-purple-700';
+    if (type === 'RESULT_CHECKING') colors = 'bg-[#1E4DA6]/10 text-[#173F8C]';
+    if (type === 'ADMISSION_APPLICATION') colors = 'bg-[#1E4DA6]/10 text-[#173F8C]';
     if (type === 'EMPLOYMENT') colors = 'bg-amber-100 text-amber-700';
 
     return <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${colors}`}>{label}</span>;

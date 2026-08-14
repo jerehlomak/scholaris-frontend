@@ -101,7 +101,7 @@ export function FieldEditorModal({ isOpen, onClose, onSave, initialField }: Fiel
                         <label className="block text-sm font-medium text-gray-700 mb-1">Field Label *</label>
                         <input 
                             type="text" 
-                            className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                            className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                             value={label}
                             onChange={(e) => setLabel(e.target.value)}
                             placeholder="e.g. T-Shirt Size"
@@ -111,7 +111,7 @@ export function FieldEditorModal({ isOpen, onClose, onSave, initialField }: Fiel
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Field Type</label>
                         <select 
-                            className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                            className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                             value={type}
                             onChange={(e) => setType(e.target.value)}
                             disabled={initialField?.isPermanent}
@@ -129,7 +129,7 @@ export function FieldEditorModal({ isOpen, onClose, onSave, initialField }: Fiel
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Description / Helper Text</label>
                         <textarea 
-                            className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                            className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             placeholder="Hint shown under the field..."
@@ -144,7 +144,7 @@ export function FieldEditorModal({ isOpen, onClose, onSave, initialField }: Fiel
                             <div className="flex items-center gap-2">
                                 <input 
                                     type="text" 
-                                    className="flex-1 px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                    className="flex-1 px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                     value={newOption}
                                     onChange={(e) => setNewOption(e.target.value)}
                                     onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddOption())}
@@ -180,7 +180,7 @@ export function FieldEditorModal({ isOpen, onClose, onSave, initialField }: Fiel
                         <input 
                             id="field-required"
                             type="checkbox" 
-                            className="h-4 w-4 text-[#1a2fa0] focus:ring-[#1a2fa0] border-gray-300 rounded"
+                            className="h-4 w-4 text-[#1E4DA6] focus:ring-[#1E4DA6] border-gray-300 rounded"
                             checked={isRequired}
                             onChange={(e) => setIsRequired(e.target.checked)}
                         />
@@ -192,7 +192,7 @@ export function FieldEditorModal({ isOpen, onClose, onSave, initialField }: Fiel
 
                 <DialogFooter className="mt-4 border-t pt-4">
                     <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-                    <Button type="button" onClick={handleSave} disabled={!label.trim() || (type === 'Dropdown' && options.length === 0)} className="bg-[#1a2fa0] hover:bg-[#121f6e]">
+                    <Button type="button" onClick={handleSave} disabled={!label.trim() || (type === 'Dropdown' && options.length === 0)} className="bg-[#1E4DA6] hover:bg-[#173F8C]">
                         {initialField ? 'Save Changes' : 'Add Field'}
                     </Button>
                 </DialogFooter>
