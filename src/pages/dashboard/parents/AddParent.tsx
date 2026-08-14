@@ -136,7 +136,22 @@ export default function AddParent() {
                             </div>
                         ))}
                     </div>
-                    <button onClick={() => navigate('/dashboard/parents/all')} className="mt-8 px-6 py-3 bg-[#173F8C] text-white rounded-xl font-bold hover:bg-[#122F69] transition-colors">Return to Parents List</button>
+                    <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                        <button
+                            onClick={() => {
+                                setFormData({ fatherName: '', fatherPhone: '', fatherNationalId: '', fatherOccupation: '', fatherEducation: '', motherName: '', motherPhone: '', motherNationalId: '', motherOccupation: '', motherEducation: '', address: '', occupation: '' });
+                                setSelectedStudentIds([]);
+                                setStudentSearch('');
+                                setSelectedClassId('all');
+                                setCreatedCredentials(null);
+                                setSubmitted(false);
+                            }}
+                            className="px-6 py-3 bg-[#173F8C] text-white rounded-xl font-bold hover:bg-[#122F69] transition-colors"
+                        >
+                            + Add Another Parent
+                        </button>
+                        <button onClick={() => navigate('/dashboard/parents/all')} className="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-50 transition-colors">Done — Return to Parents List</button>
+                    </div>
                 </div>
             </SettingsShell>
         );

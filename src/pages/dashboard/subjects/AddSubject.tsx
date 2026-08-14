@@ -63,8 +63,12 @@ export function AddSubject() {
                 teacherId: form.teacherId === 'none' ? undefined : form.teacherId,
                 classIds: selectedClassIds
             }, { withCredentials: true });
-            toast.success(`Subject "${form.name}" created successfully!`);
-            navigate('/dashboard/subjects/all');
+            toast.success(`Subject "${form.name}" created successfully! Ready for the next one.`);
+            // Stay on this page instead of bouncing back to the list — keep the
+            // category and class assignment (the common case is adding several
+            // subjects to the same set of classes in one sitting) and only
+            // clear the per-subject fields.
+            setForm(f => ({ ...f, name: '', code: 'Auto-generated on save', description: '', teacherId: 'none' }));
         } catch (error: any) {
             toast.error(error.response?.data?.msg || 'Failed to create subject');
         } finally {

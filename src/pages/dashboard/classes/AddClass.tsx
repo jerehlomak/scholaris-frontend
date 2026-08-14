@@ -166,8 +166,12 @@ export function AddClass() {
                 sessionId: form.sessionId || undefined
             }, { withCredentials: true });
 
-            toast.success(`Class${armsArray.length > 1 ? 'es' : ''} created successfully!`);
-            navigate('/dashboard/classes/all');
+            toast.success(`Class${armsArray.length > 1 ? 'es' : ''} created successfully! Ready for the next one.`);
+            // Stay on this page instead of bouncing back to the list — keep the
+            // section/session selected (the common case is adding several class
+            // levels to the same section in one sitting) and only clear the
+            // per-class fields, so the next entry doesn't start from scratch.
+            setForm(f => ({ ...f, name: '', arms: '', nextTermFee: '' }));
         } catch (e) {
             const err = e as { response?: { data?: { msg?: string } } };
             toast.error(err.response?.data?.msg || 'Failed to create class');

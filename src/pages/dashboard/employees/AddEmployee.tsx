@@ -157,7 +157,15 @@ export default function AddStaff() {
                             </div>
                         ))}
                     </div>
-                    <button onClick={() => navigate('/dashboard/employees/all')} className="mt-8 px-6 py-3 bg-[#173F8C] text-white rounded-xl font-bold hover:bg-[#122F69] transition-colors">Done — Return to Staff List</button>
+                    <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                        <button
+                            onClick={() => { setForm(BLANK); setPhoto(null); setPhotoPreview(null); setCreatedCredentials(null); setSubmitted(false); }}
+                            className="px-6 py-3 bg-[#173F8C] text-white rounded-xl font-bold hover:bg-[#122F69] transition-colors"
+                        >
+                            + Add Another Staff Member
+                        </button>
+                        <button onClick={() => navigate('/dashboard/employees/all')} className="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-50 transition-colors">Done — Return to Staff List</button>
+                    </div>
                 </div>
             </SettingsShell>
         );

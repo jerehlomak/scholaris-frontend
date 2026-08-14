@@ -161,9 +161,13 @@ export function AdmissionForm() {
                 navigate('/dashboard/students/all');
             } else {
                 const res = await axios.post(`${API}/students/add`, payload, { withCredentials: true });
-                toast.success('Student registered successfully!');
+                toast.success('Student registered successfully! Ready for the next one.');
                 setCreatedCredentials(res.data.credentials);
-                setFormData(EMPTY_FORM);
+                // Keep the class selection — the common case is registering a
+                // whole class's worth of students in one sitting, and having to
+                // reselect the level + arm for every single student would be
+                // exactly the friction this "stay on page" flow is meant to fix.
+                setFormData({ ...EMPTY_FORM, classLevel: formData.classLevel, classId: formData.classId });
                 setAdmissionNo('');
             }
         } catch (e) {
