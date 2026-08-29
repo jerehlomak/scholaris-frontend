@@ -41,7 +41,7 @@ export function StatCard({ title, value, subtitle, icon: Icon, colorTheme = 'pri
     const getThemeClasses = () => {
         switch (colorTheme) {
             case 'accent': return 'bg-dash-accent/10 text-dash-accent';
-            case 'purple': return 'bg-purple-500/10 text-purple-600';
+            case 'purple': return 'bg-[#1E4DA6]/10 text-[#1E4DA6]';
             case 'orange': return 'bg-orange-500/10 text-orange-600';
             case 'primary':
             default: return 'bg-dash-primary/10 text-dash-primary';

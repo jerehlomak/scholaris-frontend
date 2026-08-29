@@ -20,7 +20,7 @@ const EMPTY_FORM = {
     bloodGroup: '', genotype: '', address: '', previousSchool: '',
 };
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all disabled:opacity-60 disabled:bg-slate-50';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#15316B] focus:ring-2 focus:ring-[#15316B]/10 transition-all disabled:opacity-60 disabled:bg-slate-50';
 const labelCls = 'font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1.5 block';
 
 const SectionCard = ({ icon, num, title, sub, children }: {
@@ -28,8 +28,8 @@ const SectionCard = ({ icon, num, title, sub, children }: {
 }) => (
     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
         <div className="px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-3">
-            <div className="h-8 w-8 rounded-xl bg-blue-700 text-white flex items-center justify-center text-sm font-black shrink-0">{num}</div>
-            <div className="h-8 w-8 flex items-center justify-center text-blue-600 -ml-3 shrink-0">{icon}</div>
+            <div className="h-8 w-8 rounded-xl bg-[#15316B] text-white flex items-center justify-center text-sm font-black shrink-0">{num}</div>
+            <div className="h-8 w-8 flex items-center justify-center text-[#15316B] -ml-3 shrink-0">{icon}</div>
             <div>
                 <h2 className="font-bold text-slate-800">{title}</h2>
                 {sub && <p className="text-xs text-slate-400">{sub}</p>}
@@ -161,9 +161,13 @@ export function AdmissionForm() {
                 navigate('/dashboard/students/all');
             } else {
                 const res = await axios.post(`${API}/students/add`, payload, { withCredentials: true });
-                toast.success('Student registered successfully!');
+                toast.success('Student registered successfully! Ready for the next one.');
                 setCreatedCredentials(res.data.credentials);
-                setFormData(EMPTY_FORM);
+                // Keep the class selection — the common case is registering a
+                // whole class's worth of students in one sitting, and having to
+                // reselect the level + arm for every single student would be
+                // exactly the friction this "stay on page" flow is meant to fix.
+                setFormData({ ...EMPTY_FORM, classLevel: formData.classLevel, classId: formData.classId });
                 setAdmissionNo('');
             }
         } catch (e) {
@@ -231,22 +235,22 @@ export function AdmissionForm() {
     };
 
     const disabled = isViewMode || isLoading;
-    if (isFetchingStudent) return <div className="flex items-center justify-center min-h-64"><Loader2 className="h-10 w-10 animate-spin text-blue-600" /></div>;
+    if (isFetchingStudent) return <div className="flex items-center justify-center min-h-64"><Loader2 className="h-10 w-10 animate-spin text-[#15316B]" /></div>;
 
     return (
         <SettingsShell breadcrumbParent="Students" breadcrumbCurrent={pageTitle} tabLabel={pageTitle} tabIcon={<User className="h-3.5 w-3.5" />}>
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-xs text-slate-400 font-mono mb-6">
                 <span>Dashboard</span><span>/</span>
-                <button onClick={() => navigate('/dashboard/students/all')} className="hover:text-blue-600 transition-colors">Students</button>
+                <button onClick={() => navigate('/dashboard/students/all')} className="hover:text-[#15316B] transition-colors">Students</button>
                 <span>/</span><span>{pageTitle}</span>
-                {admissionNo && <span className="ml-1 bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">{admissionNo}</span>}
+                {admissionNo && <span className="ml-1 bg-[#15316B]/10 text-[#15316B] px-2 py-0.5 rounded-full font-bold">{admissionNo}</span>}
             </div>
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
                 <div>
-                    <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600 transition-colors mb-2">
+                    <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-slate-500 hover:text-[#15316B] transition-colors mb-2">
                         <ArrowLeft className="h-4 w-4" /> Back
                     </button>
                     <h1 className="text-2xl font-black text-slate-800">{pageTitle}</h1>
@@ -260,12 +264,12 @@ export function AdmissionForm() {
                             </button>
                             {id && (
                                 <button onClick={() => setViewTranscript(true)}
-                                    className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-indigo-700 transition-colors">
+                                    className="flex items-center gap-2 rounded-xl bg-[#0F766E] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0B5A54] transition-colors">
                                     <FileText className="h-4 w-4" /> Transcript
                                 </button>
                             )}
                             <button onClick={() => navigate(`/dashboard/students/edit/${id}`)}
-                                className="flex items-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-blue-800 transition-colors">
+                                className="flex items-center gap-2 rounded-xl bg-[#1E4DA6] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#173F8C] transition-colors">
                                 Edit Student
                             </button>
                         </>
@@ -293,7 +297,7 @@ export function AdmissionForm() {
                         ].map(c => (
                             <div key={c.label} className="rounded-xl bg-white border border-emerald-100 p-3">
                                 <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-1">{c.label}</span>
-                                <span className="font-mono font-black text-blue-700 text-sm break-all">{c.val}</span>
+                                <span className="font-mono font-black text-[#15316B] text-sm break-all">{c.val}</span>
                             </div>
                         ))}
                     </div>
@@ -306,7 +310,7 @@ export function AdmissionForm() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         {/* Name */}
                         <div className="md:col-span-2 lg:col-span-2">
-                            <label className={labelCls}>Student Name <span className="text-blue-600">*</span></label>
+                            <label className={labelCls}>Student Name <span className="text-[#15316B]">*</span></label>
                             <Input value={formData.name} onChange={e => set('name', e.target.value)}
                                 className={inputCls} placeholder="Full name (type in any language)" disabled={disabled} />
                         </div>
@@ -325,7 +329,7 @@ export function AdmissionForm() {
 
                         {/* Class Level */}
                         <div>
-                            <label className={labelCls}>Class Level <span className="text-blue-600">*</span></label>
+                            <label className={labelCls}>Class Level <span className="text-[#15316B]">*</span></label>
                             <Select value={selectedLevel} onValueChange={val => { setSelectedLevel(val); set('classId', ''); }} disabled={disabled}>
                                 <SelectTrigger className={inputCls}><SelectValue placeholder="Select Class Level" /></SelectTrigger>
                                 <SelectContent>
@@ -337,7 +341,7 @@ export function AdmissionForm() {
                         </div>
                         {/* Class Arm */}
                         <div>
-                            <label className={labelCls}>Class <span className="text-blue-600">*</span></label>
+                            <label className={labelCls}>Class <span className="text-[#15316B]">*</span></label>
                             <Select value={formData.classId} onValueChange={val => set('classId', val)} disabled={disabled || !selectedLevel}>
                                 <SelectTrigger className={inputCls}>
                                     <SelectValue placeholder={selectedLevel ? "Select Class Arm" : "Select Level First"} />
@@ -505,9 +509,9 @@ export function AdmissionForm() {
 
                 {/* Parent Info — read-only, shown only in view/edit if a parent is linked */}
                 {(isViewMode || isEditMode) && linkedParent && (
-                    <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-6">
+                    <div className="rounded-2xl border border-[#15316B]/15 bg-[#15316B]/5 p-6">
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="h-6 w-6 rounded-lg bg-blue-700 text-white flex items-center justify-center text-xs font-black">P</div>
+                            <div className="h-6 w-6 rounded-lg bg-[#15316B] text-white flex items-center justify-center text-xs font-black">P</div>
                             <h3 className="font-bold text-slate-800">Linked Parent / Guardian</h3>
                             <span className="text-xs text-slate-400 ml-1">(read-only — manage in the Parent module)</span>
                         </div>
@@ -535,7 +539,7 @@ export function AdmissionForm() {
                             <RotateCcw className="h-4 w-4" /> Reset
                         </button>
                         <button type="submit" disabled={isLoading || !!admissionNoError}
-                            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-3 sm:py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 disabled:opacity-50 transition-colors">
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-[#1E4DA6] px-6 py-3 sm:py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#173F8C] disabled:opacity-50 transition-colors">
                             {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                             {isLoading ? 'Saving...' : isEditMode ? 'Update Student' : 'Register Student'}
                         </button>

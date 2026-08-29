@@ -56,7 +56,7 @@ export default function GroupAdmins() {
     if (loading) {
         return (
             <div className="flex h-[60vh] items-center justify-center">
-                <div className="w-8 h-8 rounded-full border-2 border-blue-500/30 border-t-blue-500 animate-spin" />
+                <div className="w-8 h-8 rounded-full border-2 border-[#1E4DA6]/30 border-t-[#1E4DA6] animate-spin" />
             </div>
         );
     }
@@ -80,7 +80,7 @@ export default function GroupAdmins() {
                         placeholder="Search schools or emails..."
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
-                        className="w-full pl-9 pr-4 py-2 text-sm rounded-lg outline-none transition-all focus:ring-2 focus:ring-blue-500/50"
+                        className="w-full pl-9 pr-4 py-2 text-sm rounded-lg outline-none transition-all focus:ring-2 focus:ring-[#1E4DA6]/50"
                         style={{ background: T.hoverBg, border: `1px solid ${T.border}`, color: T.textPrimary }}
                     />
                 </div>
@@ -129,7 +129,7 @@ export default function GroupAdmins() {
                                     <Lock className="w-4 h-4" /> Reset Password
                                 </button>
                             ) : (
-                                <span className="text-xs font-semibold uppercase tracking-wider text-blue-500">
+                                <span className="text-xs font-semibold uppercase tracking-wider text-[#1E4DA6]">
                                     Assign from Branches
                                 </span>
                             )}

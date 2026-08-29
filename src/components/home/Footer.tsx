@@ -1,90 +1,81 @@
+import { SkcoolyWordmark } from '../shared/SkcoolyWordmark';
 
-import { Instagram, Facebook, Youtube, ChevronDown } from 'lucide-react';
+const NAVY = '#15316B';
+
+// TODO: replace with the school's real sales/support email once confirmed.
+const SALES_EMAIL = 'hello@skcooly.com';
+
+const COLUMNS = [
+    {
+        title: 'Product',
+        links: [
+            { label: 'Features', href: '#features-section' },
+            { label: 'Pricing', href: '#pricing' },
+            { label: 'Why Skcooly', href: '#why-skcooly' },
+        ],
+    },
+    {
+        title: 'Company',
+        links: [
+            { label: 'Our Mission', href: '#our-mission' },
+            { label: 'Contact', href: '#contact-section' },
+            { label: 'Apply', href: '/apply' },
+        ],
+    },
+    {
+        title: 'Account',
+        links: [
+            { label: 'Login', href: '/portal/login' },
+            { label: 'Get Started', href: '/get-started' },
+        ],
+    },
+];
 
 export function Footer() {
     return (
-        <footer className="bg-[#f8f9fa] pt-16 pb-8 border-t border-gray-200">
+        <footer className="bg-[#FBF9F5] pt-16 pb-8 border-t border-[#EEEAE0]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* Main Footer Content */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
-                    {/* Column 1: Navigation */}
-                    <div>
-                        <h4 className="font-bold text-brand-dark mb-6 text-lg">Product</h4>
-                        <ul className="space-y-3">
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Features Overview</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">For Administrators</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">For Teachers</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Parent Portal</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Integrations</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Pricing Plans</a></li>
-                        </ul>
+                    {/* Brand column */}
+                    <div className="lg:col-span-1">
+                        <SkcoolyWordmark size="md" />
+                        <p className="text-slate-500 text-sm mt-4 leading-relaxed max-w-[220px]">
+                            One platform to run admissions, results, attendance, and fees for your school.
+                        </p>
                     </div>
 
-                    {/* Column 2: Service */}
-                    <div>
-                        <h4 className="font-bold text-brand-dark mb-6 text-lg">Support</h4>
-                        <ul className="space-y-3">
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Help Center & FAQ</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Implementation Guide</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Video Tutorials</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Contact Support</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">System Status</a></li>
-                        </ul>
-                    </div>
-
-                    {/* Column 3: About */}
-                    <div>
-                        <h4 className="font-bold text-brand-dark mb-6 text-lg">Company</h4>
-                        <ul className="space-y-3">
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">About Us</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Our Mission</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Careers</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Blog / Resources</a></li>
-                            <li><a href="#" className="text-gray-600 hover:text-brand-teal transition-colors text-sm">Partner Program</a></li>
-                        </ul>
-                    </div>
-
-                    {/* Column 4: Contact & Social */}
-                    <div>
-                        <h4 className="font-bold text-brand-dark mb-6 text-lg">Contact Sales</h4>
-                        <p className="text-gray-600 text-sm mb-2">Email: sales@skoolyplus.com</p>
-                        <p className="text-gray-600 text-sm mb-6">We aim to respond within 24 hours.</p>
-
-                        <h4 className="font-bold text-brand-dark mb-4 text-lg">Follow Us</h4>
-                        <div className="flex gap-4 mb-8">
-                            <a href="#" className="text-brand-teal hover:text-brand-dark transition-colors"><Instagram className="w-5 h-5" /></a>
-                            <a href="#" className="text-brand-teal hover:text-brand-dark transition-colors"><Facebook className="w-5 h-5" /></a>
-                            <a href="#" className="text-brand-teal hover:text-brand-dark transition-colors"><Youtube className="w-5 h-5" /></a>
+                    {COLUMNS.map(col => (
+                        <div key={col.title}>
+                            <h4 className="font-bold text-[#1C2333] mb-6 text-base">{col.title}</h4>
+                            <ul className="space-y-3">
+                                {col.links.map(link => (
+                                    <li key={link.label}>
+                                        <a href={link.href} className="text-slate-500 hover:text-[#15316B] transition-colors text-sm">
+                                            {link.label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
-
-                        <h4 className="font-bold text-brand-dark mb-4 text-lg">Certified Security</h4>
-                        <div className="flex gap-2">
-                            <div className="bg-white p-2 rounded-sm border border-gray-200 shadow-sm text-[10px] font-bold text-blue-800 flex items-center">FERPA</div>
-                            <div className="bg-white p-2 rounded-sm border border-gray-200 shadow-sm text-[10px] font-bold text-green-700 flex items-center">GDPR</div>
-                            <div className="bg-white p-2 rounded-sm border border-gray-200 shadow-sm text-[10px] font-bold flex items-center">SOC2</div>
-                        </div>
-                    </div>
+                    ))}
 
                 </div>
 
+                <div className="mb-16 max-w-sm">
+                    <h4 className="font-bold text-[#1C2333] mb-2 text-base">Contact sales</h4>
+                    <a href={`mailto:${SALES_EMAIL}`} className="text-sm hover:underline" style={{ color: NAVY }}>{SALES_EMAIL}</a>
+                </div>
+
                 {/* Bottom Bar */}
-                <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div className="text-gray-500 text-xs text-center md:text-left">
-                        &copy; {new Date().getFullYear()} Skooly Plus Inc. - All rights reserved.
+                <div className="pt-8 border-t border-[#EEEAE0] flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="text-slate-400 text-xs text-center md:text-left">
+                        &copy; {new Date().getFullYear()} Skcooly. All rights reserved.
                     </div>
-
-                    <div className="flex flex-wrap justify-center gap-4 text-xs">
-                        <a href="#" className="text-gray-500 hover:text-brand-teal">Privacy Policy</a>
-                        <a href="#" className="text-gray-500 hover:text-brand-teal">Terms of Service</a>
-                        <a href="#" className="text-gray-500 hover:text-brand-teal">Cookie Settings</a>
-                        <a href="#" className="text-gray-500 hover:text-brand-teal">Accessibility</a>
-                    </div>
-
-                    <div className="flex items-center gap-2 cursor-pointer text-sm text-gray-500">
-                        <span>🇳🇬 English (NG)</span>
-                        <ChevronDown className="w-4 h-4" />
+                    <div className="flex items-center gap-2 text-sm text-slate-400">
+                        <span>🇳🇬 Made for Nigerian schools</span>
                     </div>
                 </div>
 

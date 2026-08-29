@@ -20,7 +20,7 @@ const STATUS:Record<string,{label:string;bg:string;text:string;icon:React.ReactN
   PARTIAL:  { label:'Partial',   bg:'bg-amber-50',  text:'text-amber-700', icon:<Clock className="h-3 w-3"/> },
   PAID:     { label:'Paid',      bg:'bg-emerald-50',text:'text-emerald-700',icon:<CheckCircle2 className="h-3 w-3"/> },
 };
-const field = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const field = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
 // Surfaces per-student generation failures instead of silently reporting "0 created, 0 skipped"
 // as a success when every student actually errored out.
@@ -210,25 +210,24 @@ export default function SingleBilling() {
 
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');.sb-root,.sb-root *{font-family:'Plus Jakarta Sans',sans-serif!important}.sb-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-      <div className="sb-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-        <div className="pointer-events-none fixed inset-0 opacity-[0.18]" style={{backgroundImage:'radial-gradient(circle,#94a3b8 1px,transparent 1px)',backgroundSize:'28px 28px'}}/>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');.sb-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+      <div className="sb-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
         <div className="relative z-10 mx-auto max-w-6xl">
 
           {/* Breadcrumb */}
           <div className="mb-5 flex items-center gap-1.5 flex-wrap">
             <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
             <ChevronRight className="h-3 w-3 text-slate-400"/>
-            <button onClick={()=>setView('classes')} className={cn("mono text-[10px] font-bold uppercase tracking-widest", view==='classes'?'text-blue-600':'text-slate-400 hover:text-blue-500')}>Single Billing</button>
-            {selectedClass && <><ChevronRight className="h-3 w-3 text-slate-400"/><button onClick={()=>setView('students')} className={cn("mono text-[10px] font-bold uppercase tracking-widest", view==='students'?'text-blue-600':'text-slate-400 hover:text-blue-500')}>{selectedClass.name}</button></>}
-            {selectedStudent && view==='profile' && <><ChevronRight className="h-3 w-3 text-slate-400"/><span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">{selectedStudent.name}</span></>}
+            <button onClick={()=>setView('classes')} className={cn("mono text-[10px] font-bold uppercase tracking-widest", view==='classes'?'text-[#1E4DA6]':'text-slate-400 hover:text-[#1E4DA6]')}>Single Billing</button>
+            {selectedClass && <><ChevronRight className="h-3 w-3 text-slate-400"/><button onClick={()=>setView('students')} className={cn("mono text-[10px] font-bold uppercase tracking-widest", view==='students'?'text-[#1E4DA6]':'text-slate-400 hover:text-[#1E4DA6]')}>{selectedClass.name}</button></>}
+            {selectedStudent && view==='profile' && <><ChevronRight className="h-3 w-3 text-slate-400"/><span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">{selectedStudent.name}</span></>}
           </div>
 
           {/* Header */}
           <div className="mb-6 flex flex-col md:flex-row items-start gap-4 justify-between">
             <div className="flex items-center gap-4">
               {view!=='classes' && <button onClick={()=>view==='profile'?setView('students'):setView('classes')} className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 hover:bg-slate-50 shadow-sm"><ArrowLeft className="h-4 w-4"/></button>}
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-500 shadow-lg shadow-blue-200"><DollarSign className="h-6 w-6 text-white"/></div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-indigo-500 shadow-lg shadow-[#1E4DA6]/20"><DollarSign className="h-6 w-6 text-white"/></div>
               <div>
                 <h1 className="text-xl font-extrabold text-slate-900">{view==='classes'?'Single Billing':view==='students'?selectedClass?.name:selectedStudent?.name}</h1>
                 <p className="mono text-[10px] text-slate-400 uppercase tracking-widest">{view==='classes'?'Select a class to begin billing':view==='students'?`${students.length} students`:'Student Billing Profile'}</p>
@@ -256,10 +255,10 @@ export default function SingleBilling() {
                 Generate All
               </button>
               <div className="hidden sm:block h-8 w-px bg-slate-200 mx-2"></div>
-              <select value={term} onChange={e=>setTerm(e.target.value)} className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400">
+              <select value={term} onChange={e=>setTerm(e.target.value)} className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60">
                 {metaTerms.map(t => <option key={t} value={t}>{t}</option>)}
               </select>
-              <select value={year} onChange={e=>setYear(e.target.value)} className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400">
+              <select value={year} onChange={e=>setYear(e.target.value)} className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60">
                 {metaSessions.map(s => <option key={s.id} value={s.name}>{s.name}</option>)}
               </select>
             </div>
@@ -267,9 +266,9 @@ export default function SingleBilling() {
 
           {/* ── CLASS SUMMARY VIEW ── */}
           {view==='classes' && (
-            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl backdrop-blur-xl">
+            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl">
               <div className="border-b border-slate-100 px-6 py-4"><h2 className="font-bold text-slate-800">All Classes</h2></div>
-              {loadingClasses ? <div className="flex justify-center py-16"><Loader2 className="h-7 w-7 animate-spin text-blue-500"/></div> : (
+              {loadingClasses ? <div className="flex justify-center py-16"><Loader2 className="h-7 w-7 animate-spin text-[#1E4DA6]"/></div> : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left whitespace-nowrap min-w-[700px] border-collapse border border-slate-200 [&_th]:border [&_th]:border-slate-200 [&_td]:border [&_td]:border-slate-200">
                     <thead className="bg-slate-50/60 border-b border-slate-50">
@@ -286,11 +285,11 @@ export default function SingleBilling() {
                       <AnimatePresence mode="popLayout">
                       {filteredClasses.map((c,i)=>(
                           <motion.tr key={c.id} initial={{opacity:0,y:6}} animate={{opacity:1,y:0}} transition={{delay:i*0.03}} onClick={()=>openClass(c)}
-                            className="group cursor-pointer transition-colors hover:bg-blue-50/40">
+                            className="group cursor-pointer transition-colors hover:bg-[#1E4DA6]/8">
                             <td className="px-6 py-4">
                               <div className="flex items-center gap-3">
-                                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Users className="h-4 w-4"/></div>
-                                <div><p className="font-bold text-slate-900 group-hover:text-blue-700">{c.name}</p><p className="mono text-[10px] text-slate-400">{c.billedCount}/{c.studentCount} billed</p></div>
+                                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1E4DA6]/5 text-[#1E4DA6]"><Users className="h-4 w-4"/></div>
+                                <div><p className="font-bold text-slate-900 group-hover:text-[#173F8C]">{c.name}</p><p className="mono text-[10px] text-slate-400">{c.billedCount}/{c.studentCount} billed</p></div>
                               </div>
                             </td>
                             <td className="px-6 py-4 mono text-center font-semibold text-slate-700">{c.studentCount}</td>
@@ -299,7 +298,7 @@ export default function SingleBilling() {
                             <td className="px-6 py-4 text-right">
                               <p className={cn("mono text-sm font-bold", c.outstanding>0?'text-red-600':'text-emerald-600')}>{fmt(c.outstanding)}</p>
                             </td>
-                            <td className="px-6 py-4 text-right text-slate-300 group-hover:text-blue-500">
+                            <td className="px-6 py-4 text-right text-slate-300 group-hover:text-[#1E4DA6]">
                                 <ChevronRight className="h-4 w-4 inline-block"/>
                             </td>
                           </motion.tr>
@@ -315,21 +314,21 @@ export default function SingleBilling() {
 
           {/* ── STUDENTS VIEW ── */}
           {view==='students' && (
-            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl backdrop-blur-xl">
+            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 px-6 py-4 gap-4">
                 <div className="flex items-center gap-3">
-                  <button onClick={toggleAll} className={cn("flex h-5 w-5 items-center justify-center rounded border-2 transition-colors", selected.size===students.length&&students.length>0?'border-blue-600 bg-blue-600':'border-slate-300 hover:border-blue-400')}>
+                  <button onClick={toggleAll} className={cn("flex h-5 w-5 items-center justify-center rounded border-2 transition-colors", selected.size===students.length&&students.length>0?'border-[#1E4DA6] bg-[#1E4DA6]':'border-slate-300 hover:border-[#1E4DA6]/60')}>
                     {selected.size===students.length&&students.length>0&&<Check className="h-3 w-3 text-white"/>}
                   </button>
                   <span className="text-sm font-semibold text-slate-600">{selected.size>0?`${selected.size} selected`:'Select all'}</span>
                 </div>
                 {selected.size>0 && (
-                  <button onClick={handleBulkGenerate} disabled={bulkGenerating} className="flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2 text-xs font-bold text-white hover:bg-blue-800 disabled:opacity-60">
+                  <button onClick={handleBulkGenerate} disabled={bulkGenerating} className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-4 py-2 text-xs font-bold text-white hover:bg-[#122F69] disabled:opacity-60">
                     {bulkGenerating?<Loader2 className="h-3 w-3 animate-spin"/>:<Copy className="h-3 w-3"/>} Bulk Generate ({selected.size})
                   </button>
                 )}
               </div>
-              {loadingStudents ? <div className="flex justify-center py-16"><Loader2 className="h-7 w-7 animate-spin text-blue-500"/></div> : (
+              {loadingStudents ? <div className="flex justify-center py-16"><Loader2 className="h-7 w-7 animate-spin text-[#1E4DA6]"/></div> : (
                 <div className="divide-y divide-slate-50">
                   {filteredStudents.map((s,i)=>{
                     const sc = STATUS[s.billingStatus];
@@ -337,7 +336,7 @@ export default function SingleBilling() {
                       <motion.div key={s.id} initial={{opacity:0,y:6}} animate={{opacity:1,y:0}} transition={{delay:i*0.02}}
                         className="flex items-center gap-4 px-6 py-3.5 hover:bg-slate-50/50 group">
                         <button onClick={()=>setSelected(p=>{const n=new Set(p);n.has(s.id)?n.delete(s.id):n.add(s.id);return n;})}
-                          className={cn("flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors",selected.has(s.id)?'border-blue-600 bg-blue-600':'border-slate-300 hover:border-blue-400')}>
+                          className={cn("flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors",selected.has(s.id)?'border-[#1E4DA6] bg-[#1E4DA6]':'border-slate-300 hover:border-[#1E4DA6]/60')}>
                           {selected.has(s.id)&&<Check className="h-3 w-3 text-white"/>}
                         </button>
                         <button onClick={()=>openProfile(s)} className="flex flex-1 items-center gap-4 min-w-0">
@@ -346,8 +345,8 @@ export default function SingleBilling() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
-                              <p className="font-bold text-slate-900 group-hover:text-blue-700 truncate">{s.name}</p>
-                              {s.hasScholarship&&<span className="mono shrink-0 rounded-full bg-purple-50 px-2 py-0.5 text-[9px] font-bold uppercase text-purple-600">Scholarship</span>}
+                              <p className="font-bold text-slate-900 group-hover:text-[#173F8C] truncate">{s.name}</p>
+                              {s.hasScholarship&&<span className="mono shrink-0 rounded-full bg-[#1E4DA6]/5 px-2 py-0.5 text-[9px] font-bold uppercase text-[#1E4DA6]">Scholarship</span>}
                             </div>
                             <p className="mono text-[10px] text-slate-400">{s.admissionNo} · {s.classLevel}</p>
                           </div>
@@ -355,7 +354,7 @@ export default function SingleBilling() {
                             <div className={cn("inline-flex items-center gap-1 rounded-full px-2 py-0.5 mono text-[9px] font-bold uppercase",sc.bg,sc.text)}>{sc.icon}{sc.label}</div>
                             {s.totalExpected>0&&<p className="mono mt-0.5 text-[10px] text-slate-400">{fmt(s.totalPaid)} / {fmt(s.totalExpected)}</p>}
                           </div>
-                          <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-blue-500 shrink-0"/>
+                          <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-[#1E4DA6] shrink-0"/>
                         </button>
                       </motion.div>
                     );
@@ -368,19 +367,19 @@ export default function SingleBilling() {
 
           {/* ── BILLING PROFILE VIEW ── */}
           {view==='profile' && (
-            loadingProfile ? <div className="flex justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-blue-500"/></div> :
+            loadingProfile ? <div className="flex justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]"/></div> :
             profile && (
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                 {/* Left: Existing invoices */}
                 <div className="lg:col-span-1 space-y-4">
-                  <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-lg backdrop-blur-xl">
+                  <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-lg">
                     <div className="border-b border-slate-100 px-5 py-3.5"><p className="font-bold text-slate-800">Existing Invoices</p></div>
                     {profile.existingInvoices.length===0 ? (
                       <div className="px-5 py-6 text-center"><p className="text-sm text-slate-400">No invoices for this term yet</p></div>
                     ) : profile.existingInvoices.map(inv=>(
                       <div key={inv.id} className="border-b border-slate-50 px-5 py-3.5">
                         <div className="flex items-center justify-between mb-1">
-                          <p className="mono text-xs font-bold text-blue-700">{inv.invoiceNumber}</p>
+                          <p className="mono text-xs font-bold text-[#173F8C]">{inv.invoiceNumber}</p>
                           <span className={cn("mono rounded-full px-2 py-0.5 text-[9px] font-bold uppercase", inv.status==='PAID'?'bg-emerald-50 text-emerald-700':inv.status==='PARTIAL'?'bg-amber-50 text-amber-700':'bg-red-50 text-red-600')}>{inv.status}</span>
                         </div>
                         <div className="flex items-center justify-between">
@@ -392,12 +391,12 @@ export default function SingleBilling() {
                   </div>
                   {/* Scholarships */}
                   {profile.scholarships.length>0&&(
-                    <div className="overflow-hidden rounded-2xl border border-purple-100 bg-purple-50/60 px-5 py-4">
-                      <p className="font-bold text-purple-800 mb-2">Applied Discounts</p>
+                    <div className="overflow-hidden rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 px-5 py-4">
+                      <p className="font-bold text-[#122F69] mb-2">Applied Discounts</p>
                       {profile.scholarships.map(sc=>(
                         <div key={sc.id} className="flex items-center justify-between">
-                          <p className="text-sm font-semibold text-purple-700">{sc.type==='PERCENTAGE'?'Percentage Discount':sc.type==='SCHOLARSHIP'?'Scholarship':'Fixed Amount'}</p>
-                          <p className="mono font-black text-purple-800">{sc.type==='PERCENTAGE'?`${sc.value}% off`:fmt(sc.value)}</p>
+                          <p className="text-sm font-semibold text-[#173F8C]">{sc.type==='PERCENTAGE'?'Percentage Discount':sc.type==='SCHOLARSHIP'?'Scholarship':'Fixed Amount'}</p>
+                          <p className="mono font-black text-[#122F69]">{sc.type==='PERCENTAGE'?`${sc.value}% off`:fmt(sc.value)}</p>
                         </div>
                       ))}
                     </div>
@@ -406,7 +405,7 @@ export default function SingleBilling() {
 
                 {/* Right: Fee builder */}
                 <div className="lg:col-span-2">
-                  <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-lg backdrop-blur-xl">
+                  <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-lg">
                     <div className="border-b border-slate-100 px-6 py-4"><p className="font-bold text-slate-800">Build Invoice</p><p className="mono text-[10px] text-slate-400">Toggle optional fees · Add custom items</p></div>
                     <div className="divide-y divide-slate-50">
                       {profile.fees.map(f=>(
@@ -417,8 +416,8 @@ export default function SingleBilling() {
                             title={f.alreadyBilled?'Already invoiced this term — cannot be re-billed':undefined}
                             className={cn("flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors",
                               f.alreadyBilled?'cursor-not-allowed border-slate-300 bg-slate-100':
-                              f.isCompulsory?'cursor-not-allowed border-blue-600 bg-blue-600':
-                              feeToggles[f.id]?'border-blue-600 bg-blue-600':'border-slate-300')}>
+                              f.isCompulsory?'cursor-not-allowed border-[#1E4DA6] bg-[#1E4DA6]':
+                              feeToggles[f.id]?'border-[#1E4DA6] bg-[#1E4DA6]':'border-slate-300')}>
                             {!f.alreadyBilled&&(f.isCompulsory||feeToggles[f.id])&&<Check className="h-3 w-3 text-white"/>}
                           </button>
                           <div className="flex-1">
@@ -427,7 +426,7 @@ export default function SingleBilling() {
                               {f.alreadyBilled?(
                                 <span className="mono rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-bold uppercase text-emerald-600">Already Billed</span>
                               ):f.isCompulsory&&(
-                                <span className="mono rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-bold uppercase text-blue-600">Compulsory</span>
+                                <span className="mono rounded-full bg-[#1E4DA6]/5 px-2 py-0.5 text-[9px] font-bold uppercase text-[#1E4DA6]">Compulsory</span>
                               )}
                             </div>
                             <p className="mono text-[10px] text-slate-400">{f.termScope} · {f.type==='ITEM'?`Qty ${f.quantity||1}`:'Service'}</p>
@@ -439,8 +438,8 @@ export default function SingleBilling() {
                       {/* Custom fees */}
                       {customFees.map((cf,i)=>(
                         <div key={i} className="flex flex-wrap items-center gap-3 px-4 py-3 sm:px-6">
-                          <input value={cf.name} onChange={e=>setCustomFees(p=>p.map((x,j)=>j===i?{...x,name:e.target.value}:x))} placeholder="Fee name" className="min-w-[140px] flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm outline-none focus:border-blue-400"/>
-                          <input type="number" value={cf.amount} onChange={e=>setCustomFees(p=>p.map((x,j)=>j===i?{...x,amount:e.target.value}:x))} placeholder="Amount" className="w-28 rounded-lg border border-slate-200 px-3 py-1.5 text-sm outline-none focus:border-blue-400"/>
+                          <input value={cf.name} onChange={e=>setCustomFees(p=>p.map((x,j)=>j===i?{...x,name:e.target.value}:x))} placeholder="Fee name" className="min-w-[140px] flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm outline-none focus:border-[#1E4DA6]/60"/>
+                          <input type="number" value={cf.amount} onChange={e=>setCustomFees(p=>p.map((x,j)=>j===i?{...x,amount:e.target.value}:x))} placeholder="Amount" className="w-28 rounded-lg border border-slate-200 px-3 py-1.5 text-sm outline-none focus:border-[#1E4DA6]/60"/>
                           <button onClick={()=>setCustomFees(p=>p.filter((_,j)=>j!==i))} className="text-slate-400 hover:text-red-500"><Trash2 className="h-4 w-4"/></button>
                         </div>
                       ))}
@@ -474,7 +473,7 @@ export default function SingleBilling() {
                     )}
 
                     <div className="border-t border-slate-100 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-                      <button onClick={()=>setCustomFees(p=>[...p,{name:'',amount:''}])} className="flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-800 w-full sm:w-auto justify-center">
+                      <button onClick={()=>setCustomFees(p=>[...p,{name:'',amount:''}])} className="flex items-center gap-1.5 text-sm font-semibold text-[#1E4DA6] hover:text-[#122F69] w-full sm:w-auto justify-center">
                         <Plus className="h-4 w-4"/>Add Custom Fee
                       </button>
                       <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
@@ -482,7 +481,7 @@ export default function SingleBilling() {
                           <p className="mono text-[10px] text-slate-400 uppercase">Total</p>
                           <p className="mono text-xl font-black text-slate-900">{fmt(computeTotal())}</p>
                         </div>
-                        <button onClick={handleGenerateInvoice} disabled={generating} className="flex items-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-200 hover:bg-blue-800 disabled:opacity-60">
+                        <button onClick={handleGenerateInvoice} disabled={generating} className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#122F69] disabled:opacity-60">
                           {generating&&<Loader2 className="h-4 w-4 animate-spin"/>}
                           {generating?'Generating…':'Generate Invoice'}
                         </button>

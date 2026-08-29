@@ -26,7 +26,7 @@ function fmt(n: number) {
     return '₦' + (n || 0).toLocaleString('en-NG', { minimumFractionDigits: 2 });
 }
 
-const AVATAR_COLORS = ['bg-violet-500','bg-blue-500','bg-teal-500','bg-rose-500','bg-amber-500','bg-indigo-500'];
+const AVATAR_COLORS = ['bg-violet-500','bg-[#1E4DA6]','bg-teal-500','bg-rose-500','bg-amber-500','bg-indigo-500'];
 function avatarBg(name: string) { return AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length]; }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
@@ -130,13 +130,10 @@ export default function PayrollSettings() {
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');
-                .prs-root, .prs-root * { font-family: 'Plus Jakarta Sans', sans-serif !important; }
                 .prs-root .mono { font-family: 'DM Mono', monospace !important; }
             `}</style>
 
-            <div className="prs-root min-h-screen bg-gradient-to-br from-slate-50 via-violet-50/20 to-indigo-50/30 px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]"
-                    style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <div className="prs-root min-h-screen bg-[#FBF9F5] px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
 
                 <div className="relative z-10 mx-auto max-w-6xl">
 
@@ -156,7 +153,7 @@ export default function PayrollSettings() {
                     </div>
 
                     {/* Staff Selector */}
-                    <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-violet-900/5 backdrop-blur-xl transition-all duration-500', pageVisible ? 'opacity-100' : 'opacity-0 translate-y-3')}>
+                    <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-violet-900/5 transition-all duration-500', pageVisible ? 'opacity-100' : 'opacity-0 translate-y-3')}>
                         <div className="flex items-center gap-2.5 sm:gap-3 border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
                             <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-violet-100 text-violet-600">
                                 <Users className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
@@ -227,7 +224,7 @@ export default function PayrollSettings() {
                                 </div>
 
                                 {/* Add Item Form */}
-                                <div className="mb-4 sm:mb-5 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 backdrop-blur-xl">
+                                <div className="mb-4 sm:mb-5 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50">
                                     <div className="border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
                                         <h3 className="text-xs sm:text-sm font-bold text-slate-800">Add Earning / Deduction</h3>
                                         <p className="mt-0.5 text-[11px] sm:text-xs text-slate-500">Add items to {selectedStaff?.name}'s pay structure</p>
@@ -311,7 +308,7 @@ export default function PayrollSettings() {
                                                                     </div>
                                                                     <div className="flex items-center gap-1 shrink-0">
                                                                         <button onClick={() => { setEditingId(item.id); setEditName(item.itemName); setEditAmount(String(item.amount)); }}
-                                                                            className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-blue-600 cursor-pointer">
+                                                                            className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-[#1E4DA6] cursor-pointer">
                                                                             <Edit2 className="h-3.5 w-3.5" />
                                                                         </button>
                                                                         <button onClick={() => handleDelete(item.id)}
@@ -365,7 +362,7 @@ export default function PayrollSettings() {
                                                                     </div>
                                                                     <div className="flex items-center gap-1 shrink-0">
                                                                         <button onClick={() => { setEditingId(item.id); setEditName(item.itemName); setEditAmount(String(item.amount)); }}
-                                                                            className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-blue-600 cursor-pointer">
+                                                                            className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-[#1E4DA6] cursor-pointer">
                                                                             <Edit2 className="h-3.5 w-3.5" />
                                                                         </button>
                                                                         <button onClick={() => handleDelete(item.id)}

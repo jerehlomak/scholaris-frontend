@@ -27,15 +27,15 @@ export default function TeacherResults() {
                 {/* ── Tabs (shadcn) ── */}
                 <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
                     <TabsList className="bg-slate-100 p-1 h-10 w-full sm:w-auto overflow-x-auto scrollbar-hide flex-nowrap justify-start">
-                        <TabsTrigger value="entry" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm">
+                        <TabsTrigger value="entry" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-[#173F8C] data-[state=active]:shadow-sm">
                             <Edit3 size={13} /> Grade Entry
                         </TabsTrigger>
                         {isFormTeacherOrAdmin && (
                             <>
-                                <TabsTrigger value="broadsheet" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm">
+                                <TabsTrigger value="broadsheet" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-[#173F8C] data-[state=active]:shadow-sm">
                                     <FileSpreadsheet size={13} /> Broadsheet
                                 </TabsTrigger>
-                                <TabsTrigger value="print" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm">
+                                <TabsTrigger value="print" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-[#173F8C] data-[state=active]:shadow-sm">
                                     <Printer size={13} /> Report Cards
                                 </TabsTrigger>
                             </>

@@ -12,7 +12,7 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
     const { user } = useAuth();
     const { data, isLoading } = useSWR('/api/v1/school-settings', fetcher);
     
-    if (isLoading) return <div className="fixed inset-0 z-[200] bg-white flex items-center justify-center"><Loader2 className="animate-spin text-blue-600 h-8 w-8" /></div>;
+    if (isLoading) return <div className="fixed inset-0 z-[200] bg-white flex items-center justify-center"><Loader2 className="animate-spin text-[#1E4DA6] h-8 w-8" /></div>;
 
     const template = data?.settings?.admissionLetterTemplate || {
         body: '<p>Dear {ApplicantName},</p><p>Congratulations! We are pleased to offer you admission to our institution.</p>',
@@ -35,7 +35,7 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
                     <h2 className="text-lg font-bold tracking-widest">Print Admission Letter</h2>
                 </div>
                 <div className="flex gap-4">
-                    <button onClick={() => { window.print(); onClose(); }} className="px-6 py-2 bg-[#1a2fa0] hover:bg-[#121f6e] text-white font-bold rounded-lg transition-colors shadow-sm flex items-center">
+                    <button onClick={() => { window.print(); onClose(); }} className="px-6 py-2 bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold rounded-lg transition-colors shadow-sm flex items-center">
                         <Printer className="w-4 h-4 mr-2" /> Print Letter
                     </button>
                     <button onClick={onClose} className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition-colors">
@@ -45,7 +45,7 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
             </div>
 
             <div id="print-letter-container" className="p-12 print:p-[20mm] mx-auto w-[210mm] min-h-[297mm] bg-white text-black font-sans flex flex-col relative overflow-hidden">
-                <div className="flex items-center mb-10 pb-6 border-b-2 border-[#1a2fa0]">
+                <div className="flex items-center mb-10 pb-6 border-b-2 border-[#1E4DA6]">
                     {template.showLogo ? (
                         logoUrl ? <img src={logoUrl} alt="School Logo" className="h-20 w-20 object-contain shrink-0" /> : <div className="h-20 w-20 shrink-0"></div>
                     ) : (

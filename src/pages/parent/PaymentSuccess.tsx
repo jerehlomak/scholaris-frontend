@@ -75,7 +75,7 @@ export default function PaymentSuccess() {
     if (loading) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center font-dash max-w-lg mx-auto px-4">
-                <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-6">
+                <div className="w-20 h-20 bg-[#1E4DA6]/5 text-[#1E4DA6] rounded-full flex items-center justify-center mb-6">
                     <Loader2 className="w-10 h-10 animate-spin" />
                 </div>
                 <h1 className="text-2xl font-black text-gray-900 mb-2">Confirming Payment…</h1>
@@ -98,7 +98,7 @@ export default function PaymentSuccess() {
                 </p>
                 <button
                     onClick={() => navigate('/parent/fees')}
-                    className="bg-[#0036a1] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#00287a] transition-all"
+                    className="bg-[#1E4DA6] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#00287a] transition-all"
                 >
                     Back to Fees
                 </button>
@@ -110,14 +110,14 @@ export default function PaymentSuccess() {
     if (!result) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center font-dash max-w-lg mx-auto px-4">
-                <div className="w-20 h-20 bg-[#6bc048]/10 text-[#6bc048] rounded-full flex items-center justify-center mb-6">
+                <div className="w-20 h-20 bg-[#10b981]/10 text-[#10b981] rounded-full flex items-center justify-center mb-6">
                     <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h1 className="text-3xl font-black text-gray-900 mb-2">Payment Successful!</h1>
                 <p className="text-gray-500 mb-8 text-sm">
                     Your payment has been processed. Your invoice will be updated shortly.
                 </p>
-                <button onClick={() => navigate('/parent/fees')} className="bg-[#0036a1] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#00287a] transition-all">
+                <button onClick={() => navigate('/parent/fees')} className="bg-[#1E4DA6] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#00287a] transition-all">
                     Return to Fees
                 </button>
             </div>
@@ -129,7 +129,7 @@ export default function PaymentSuccess() {
     return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] font-dash max-w-md mx-auto px-4 py-10">
             {/* Success Icon */}
-            <div className="w-24 h-24 bg-[#6bc048]/10 text-[#6bc048] rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-100">
+            <div className="w-24 h-24 bg-[#10b981]/10 text-[#10b981] rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-100">
                 <CheckCircle2 className="w-12 h-12" />
             </div>
 
@@ -144,10 +144,10 @@ export default function PaymentSuccess() {
 
             {/* Receipt Card */}
             <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden mb-6">
-                <div className="bg-[#0036a1] px-6 py-4 flex items-center gap-3">
-                    <Receipt className="w-5 h-5 text-blue-200" />
+                <div className="bg-[#1E4DA6] px-6 py-4 flex items-center gap-3">
+                    <Receipt className="w-5 h-5 text-white/70" />
                     <div>
-                        <p className="text-blue-200 text-xs font-semibold uppercase tracking-wider">Receipt</p>
+                        <p className="text-white/70 text-xs font-semibold uppercase tracking-wider">Receipt</p>
                         <p className="text-white font-bold text-lg">{result.receiptNumber || ref}</p>
                     </div>
                 </div>
@@ -161,7 +161,7 @@ export default function PaymentSuccess() {
                     )}
                     <div className="flex justify-between text-sm">
                         <span className="text-gray-500">Amount {isWalletDeposit ? 'Credited' : 'Paid'}</span>
-                        <span className="font-black text-[#6bc048] text-base">
+                        <span className="font-black text-[#10b981] text-base">
                             ₦{result.amount.toLocaleString('en-NG')}
                         </span>
                     </div>
@@ -185,7 +185,7 @@ export default function PaymentSuccess() {
 
             <button
                 onClick={() => navigate('/parent/fees')}
-                className="bg-[#0036a1] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#00287a] transition-all w-full"
+                className="bg-[#1E4DA6] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#00287a] transition-all w-full"
             >
                 {isWalletDeposit ? 'View My Wallet' : 'Back to Fees'}
             </button>

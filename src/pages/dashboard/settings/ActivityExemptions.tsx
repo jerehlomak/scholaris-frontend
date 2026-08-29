@@ -118,7 +118,7 @@ export function ActivityExemptions() {
     };
 
     if (isLoading) {
-        return <div className="flex h-32 items-center justify-center"><Loader2 className="h-6 w-6 animate-spin text-blue-600" /></div>;
+        return <div className="flex h-32 items-center justify-center"><Loader2 className="h-6 w-6 animate-spin text-[#1E4DA6]" /></div>;
     }
 
     return (
@@ -126,7 +126,7 @@ export function ActivityExemptions() {
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                        <ShieldOff className="h-5 w-5 text-purple-600" />
+                        <ShieldOff className="h-5 w-5 text-[#1E4DA6]" />
                         Staff Exemptions & Grace Periods
                     </h3>
                     <p className="text-sm text-slate-500 mt-1">Temporarily bypass global deadlines and term locks for specific teachers.</p>
@@ -134,19 +134,19 @@ export function ActivityExemptions() {
                 <button
                     onClick={() => setIsAdding(!isAdding)}
                     className={cn('flex items-center gap-2 rounded-xl border-2 px-4 py-2 text-sm font-bold transition-all whitespace-nowrap',
-                        isAdding ? 'border-red-200 bg-red-50 text-red-600' : 'border-purple-200 bg-purple-50 text-purple-700 hover:bg-purple-100')}
+                        isAdding ? 'border-red-200 bg-red-50 text-red-600' : 'border-[#1E4DA6]/20 bg-[#1E4DA6]/5 text-[#173F8C] hover:bg-[#1E4DA6]/10')}
                 >
                     {isAdding ? <><X className="h-4 w-4" /> Cancel</> : <><Plus className="h-4 w-4" /> Grant Exemption</>}
                 </button>
             </div>
 
             {isAdding && (
-                <form onSubmit={handleSave} className="mb-8 rounded-2xl border border-purple-100 bg-purple-50/30 p-6 space-y-5 shadow-sm">
+                <form onSubmit={handleSave} className="mb-8 rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-6 space-y-5 shadow-sm">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Teacher <span className="text-red-500">*</span></label>
                             <select required value={fUserId} onChange={e => setFUserId(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-purple-400">
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60">
                                 <option value="">Select Teacher...</option>
                                 {teachers.map(t => (
                                     <option key={t.id} value={t.userId}>{t.user?.name} ({t.user?.email})</option>
@@ -156,7 +156,7 @@ export function ActivityExemptions() {
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Term <span className="text-red-500">*</span></label>
                             <select required value={fTermId} onChange={e => setFTermId(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-purple-400">
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60">
                                 {terms.map(t => (
                                     <option key={t.id} value={t.id}>{t.session?.name} — {t.name}</option>
                                 ))}
@@ -165,7 +165,7 @@ export function ActivityExemptions() {
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Activity to Unlock <span className="text-red-500">*</span></label>
                             <select required value={fActivity} onChange={e => setFActivity(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-purple-400">
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60">
                                 <option value="ALL">Unlock Everything</option>
                                 <option value="SCORE_ENTRY">Score Entry Only</option>
                                 <option value="ATTENDANCE">Attendance Only</option>
@@ -174,7 +174,7 @@ export function ActivityExemptions() {
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Restrict to Class (Optional)</label>
                             <select value={fClassId} onChange={e => setFClassId(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-purple-400">
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60">
                                 <option value="">No restriction (All Classes)</option>
                                 {classes.map(c => (
                                     <option key={c.id} value={c.id}>{c.name}</option>
@@ -184,7 +184,7 @@ export function ActivityExemptions() {
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Restrict to Subject (Optional)</label>
                             <select value={fSubjectId} onChange={e => setFSubjectId(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-purple-400">
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60">
                                 <option value="">No restriction (All Subjects)</option>
                                 {subjects.map(s => (
                                     <option key={s.id} value={s.id}>{s.name}</option>
@@ -194,12 +194,12 @@ export function ActivityExemptions() {
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Expiration Date & Time <span className="text-red-500">*</span></label>
                             <input required type="datetime-local" value={fExpiresAt} onChange={e => setFExpiresAt(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-purple-400" />
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60" />
                         </div>
                     </div>
                     <div className="flex justify-end pt-2">
                         <button type="submit" disabled={isSaving}
-                            className="rounded-xl bg-purple-600 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-purple-700 disabled:opacity-70 flex items-center gap-2">
+                            className="rounded-xl bg-[#1E4DA6] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#173F8C] disabled:opacity-70 flex items-center gap-2">
                             {isSaving && <Loader2 className="h-4 w-4 animate-spin" />}
                             {isSaving ? 'Granting...' : 'Grant Exemption'}
                         </button>
@@ -222,10 +222,10 @@ export function ActivityExemptions() {
                         
                         return (
                             <div key={ex.id} className={cn("flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 rounded-2xl border p-4 shadow-sm", 
-                                isExpired ? 'border-slate-200 bg-slate-50 opacity-60' : 'border-purple-200 bg-white')}>
+                                isExpired ? 'border-slate-200 bg-slate-50 opacity-60' : 'border-[#1E4DA6]/20 bg-white')}>
                                 <div className="flex items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
                                     <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-xl", 
-                                        isExpired ? 'bg-slate-200 text-slate-500' : 'bg-purple-100 text-purple-600')}>
+                                        isExpired ? 'bg-slate-200 text-slate-500' : 'bg-[#1E4DA6]/10 text-[#1E4DA6]')}>
                                         <UserIcon className="h-5 w-5" />
                                     </div>
                                     <div className="flex-1 min-w-0">
@@ -234,7 +234,7 @@ export function ActivityExemptions() {
                                             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border whitespace-nowrap">
                                                 {ex.activity === 'ALL' ? 'Full Unlock' : ex.activity.replace('_', ' ')}
                                             </span>
-                                            {ex.class && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100 whitespace-nowrap">{ex.class.name}</span>}
+                                            {ex.class && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#1E4DA6]/5 text-[#1E4DA6] border border-[#1E4DA6]/10 whitespace-nowrap">{ex.class.name}</span>}
                                             {ex.subject && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100 whitespace-nowrap">{ex.subject.name}</span>}
                                         </div>
                                         <p className="text-xs text-slate-500 mt-1 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-1.5">
@@ -243,7 +243,7 @@ export function ActivityExemptions() {
                                             <span className="flex items-center gap-1.5">
                                                 <Calendar className="w-3 h-3" />
                                                 {isExpired ? 'Expired: ' : 'Expires: '}
-                                                <span className={cn("font-semibold", isExpired ? "text-slate-500" : "text-purple-700")}>
+                                                <span className={cn("font-semibold", isExpired ? "text-slate-500" : "text-[#173F8C]")}>
                                                     {expires.toLocaleString('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
                                                 </span>
                                             </span>

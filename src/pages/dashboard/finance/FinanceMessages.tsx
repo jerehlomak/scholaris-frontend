@@ -143,31 +143,29 @@ export default function FinanceMessages() {
 
     if (loading) {
         return (
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 flex items-center justify-center">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
-                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <div className="fd-root min-h-screen bg-[#FBF9F5] flex items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
             </div>
         );
     }
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root,.fd-root *{font-family:'Plus Jakarta Sans',sans-serif!important} .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="fd-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-6xl">
 
                     {/* Breadcrumb */}
                     <div className="mb-5 flex items-center gap-1.5">
                         <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Messages</span>
+                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Messages</span>
                     </div>
 
                     {/* Header */}
                     <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
-                            <div className="flex h-14 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 shadow-lg shadow-slate-200">
+                            <div className="flex h-14 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-[#1E4DA6] shadow-lg shadow-slate-200">
                                 <MessageSquare className="h-7 w-7 text-white" />
                             </div>
                             <div>
@@ -187,7 +185,7 @@ export default function FinanceMessages() {
 
                         {/* Left Sidebar: Contact List */}
                         <div className={cn(
-                            "md:col-span-1 bg-white/90 backdrop-blur-md rounded-2xl border border-slate-200 shadow-xl shadow-blue-900/5 overflow-hidden flex-col",
+                            "md:col-span-1 bg-white/90 backdrop-blur-md rounded-2xl border border-slate-200 shadow-xl shadow-[#0E2450]/5 overflow-hidden flex-col",
                             activeContactId ? "hidden md:flex" : "flex"
                         )}>
                             <div className="p-4 border-b border-slate-100 bg-slate-50/60">
@@ -198,14 +196,14 @@ export default function FinanceMessages() {
                                         placeholder="Search parents (existing or new)..."
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm"
+                                        className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E4DA6] focus:border-transparent transition-all shadow-sm"
                                     />
                                 </div>
                             </div>
 
                             {searchQuery.trim().length >= 2 && (
-                                <div className="border-b border-slate-100 bg-blue-50/40">
-                                    <p className="px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-blue-600 flex items-center gap-1.5">
+                                <div className="border-b border-slate-100 bg-[#1E4DA6]/8">
+                                    <p className="px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6] flex items-center gap-1.5">
                                         <UserPlus className="h-3 w-3" /> Start New Conversation
                                     </p>
                                     {searchingParents ? (
@@ -220,8 +218,8 @@ export default function FinanceMessages() {
                                                     onClick={() => startNewConversation(p)}
                                                     className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/80 text-left transition-colors"
                                                 >
-                                                    <div className="h-8 w-8 shrink-0 rounded-full bg-blue-100 flex items-center justify-center">
-                                                        <User className="h-4 w-4 text-blue-600" />
+                                                    <div className="h-8 w-8 shrink-0 rounded-full bg-[#1E4DA6]/10 flex items-center justify-center">
+                                                        <User className="h-4 w-4 text-[#1E4DA6]" />
                                                     </div>
                                                     <div className="min-w-0">
                                                         <p className="text-sm font-semibold text-slate-800 truncate">{p.user?.name}</p>
@@ -246,7 +244,7 @@ export default function FinanceMessages() {
                                             onClick={() => { setActiveContactId(contact.parentId); setPendingNewContact(null); }}
                                             className={cn(
                                                 "p-4 border-b border-slate-50 cursor-pointer transition-all hover:bg-slate-50/80",
-                                                activeContactId === contact.parentId ? "bg-blue-50/50 border-l-4 border-l-blue-600" : "border-l-4 border-l-transparent"
+                                                activeContactId === contact.parentId ? "bg-[#1E4DA6]/8 border-l-4 border-l-[#1E4DA6]" : "border-l-4 border-l-transparent"
                                             )}
                                         >
                                             <div className="flex items-center gap-3 mb-1">
@@ -260,7 +258,7 @@ export default function FinanceMessages() {
                                                             {new Date(contact.lastMessage.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                                                         </span>
                                                     </div>
-                                                    <p className="text-[11px] text-blue-600 font-medium truncate mb-1">Child: {contact.studentName}</p>
+                                                    <p className="text-[11px] text-[#1E4DA6] font-medium truncate mb-1">Child: {contact.studentName}</p>
                                                     <p className="text-xs text-slate-500 truncate">{contact.lastMessage.body}</p>
                                                 </div>
                                             </div>
@@ -272,7 +270,7 @@ export default function FinanceMessages() {
 
                         {/* Right Side: Chat Thread */}
                         <div className={cn(
-                            "md:col-span-2 bg-white/90 backdrop-blur-md rounded-2xl border border-slate-200 shadow-xl shadow-blue-900/5 flex-col overflow-hidden",
+                            "md:col-span-2 bg-white/90 backdrop-blur-md rounded-2xl border border-slate-200 shadow-xl shadow-[#0E2450]/5 flex-col overflow-hidden",
                             (activeContactId || pendingNewContact) ? "flex" : "hidden md:flex"
                         )}>
                             {(activeContact || pendingNewContact) ? (
@@ -285,8 +283,8 @@ export default function FinanceMessages() {
                                         >
                                             <ArrowLeft className="h-5 w-5" />
                                         </button>
-                                        <div className="h-10 w-10 shrink-0 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center border border-blue-200 shadow-sm">
-                                            <User className="h-5 w-5 text-blue-600" />
+                                        <div className="h-10 w-10 shrink-0 rounded-full bg-gradient-to-br from-[#1E4DA6]/10 to-[#1E4DA6]/20 flex items-center justify-center border border-[#1E4DA6]/20 shadow-sm">
+                                            <User className="h-5 w-5 text-[#1E4DA6]" />
                                         </div>
                                         <div>
                                             <h2 className="text-base font-bold text-slate-800">{(activeContact || pendingNewContact)!.parentName}</h2>
@@ -313,11 +311,11 @@ export default function FinanceMessages() {
                                                     <div className={cn(
                                                         "p-4 rounded-2xl text-sm shadow-sm relative group",
                                                         isAdmin 
-                                                            ? "bg-blue-600 text-white rounded-tr-sm" 
+                                                            ? "bg-[#1E4DA6] text-white rounded-tr-sm" 
                                                             : "bg-white border border-slate-200 text-slate-700 rounded-tl-sm"
                                                     )}>
                                                         {msg.subject && msg.subject !== 'Fee Reminder' && !msg.subject.startsWith('Re:') && (
-                                                            <p className={cn("text-xs font-bold mb-2 pb-2 border-b", isAdmin ? "border-blue-500 text-blue-100" : "border-slate-100 text-slate-500")}>
+                                                            <p className={cn("text-xs font-bold mb-2 pb-2 border-b", isAdmin ? "border-[#1E4DA6] text-white/80" : "border-slate-100 text-slate-500")}>
                                                                 {msg.subject}
                                                             </p>
                                                         )}
@@ -339,7 +337,7 @@ export default function FinanceMessages() {
 
                                     {/* Chat Input */}
                                     <div className="p-4 bg-white border-t border-slate-100 shrink-0">
-                                        <div className="flex items-end gap-3 bg-slate-50 border border-slate-200 rounded-2xl p-2 focus-within:bg-white focus-within:border-blue-300 focus-within:ring-4 focus-within:ring-blue-50 transition-all shadow-sm">
+                                        <div className="flex items-end gap-3 bg-slate-50 border border-slate-200 rounded-2xl p-2 focus-within:bg-white focus-within:border-[#1E4DA6]/35 focus-within:ring-4 focus-within:ring-[#1E4DA6]/5 transition-all shadow-sm">
                                             <textarea 
                                                 className="flex-1 bg-transparent border-0 px-3 py-2 text-sm focus:ring-0 resize-none max-h-32 min-h-[44px] outline-none"
                                                 placeholder="Type a message to the parent..."
@@ -356,7 +354,7 @@ export default function FinanceMessages() {
                                             <button 
                                                 onClick={handleReply}
                                                 disabled={!replyText.trim() || isSending}
-                                                className="h-11 px-5 bg-blue-600 text-white rounded-xl flex items-center justify-center gap-2 font-bold shadow-md hover:bg-blue-700 hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+                                                className="h-11 px-5 bg-[#1E4DA6] text-white rounded-xl flex items-center justify-center gap-2 font-bold shadow-md hover:bg-[#173F8C] hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
                                             >
                                                 {isSending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                                                 <span className="hidden sm:inline">Send</span>

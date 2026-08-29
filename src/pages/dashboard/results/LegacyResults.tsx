@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 
 const API = import.meta.env.VITE_API_URL || '/api/v1';
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
 interface LegacyResult {
   id: string;
@@ -164,7 +164,7 @@ export function LegacyResults() {
           <form onSubmit={handleUpload} className="p-6 space-y-4">
 
             <div className="space-y-1.5">
-              <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Class <span className="text-blue-600">*</span></label>
+              <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Class <span className="text-[#1E4DA6]">*</span></label>
               <Select value={classId} onValueChange={(val) => { setClassId(val); fetchStudents(val); setStudentId(''); }}>
                 <SelectTrigger className={inputCls}>
                   <SelectValue placeholder="Select Class" />
@@ -191,7 +191,7 @@ export function LegacyResults() {
             )}
 
             <div className="space-y-1.5">
-              <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Academic Year <span className="text-blue-600">*</span></label>
+              <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Academic Year <span className="text-[#1E4DA6]">*</span></label>
               {sessions.length > 0 ? (
                 <Select value={academicYear} onValueChange={setAcademicYear}>
                   <SelectTrigger className={inputCls}>
@@ -211,7 +211,7 @@ export function LegacyResults() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Term <span className="text-blue-600">*</span></label>
+              <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Term <span className="text-[#1E4DA6]">*</span></label>
               <Select value={term} onValueChange={setTerm}>
                 <SelectTrigger className={inputCls}>
                   <SelectValue placeholder="Select Term" />
@@ -239,11 +239,11 @@ export function LegacyResults() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">PDF Document <span className="text-blue-600">*</span></label>
-              <label className="mt-1 border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center bg-slate-50 text-center hover:bg-blue-50/40 hover:border-blue-200 transition-colors cursor-pointer group">
-                <FileText className="w-8 h-8 text-slate-300 group-hover:text-blue-400 mb-2 transition-colors" />
+              <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">PDF Document <span className="text-[#1E4DA6]">*</span></label>
+              <label className="mt-1 border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center bg-slate-50 text-center hover:bg-[#1E4DA6]/8 hover:border-[#1E4DA6]/20 transition-colors cursor-pointer group">
+                <FileText className="w-8 h-8 text-slate-300 group-hover:text-[#1E4DA6]/60 mb-2 transition-colors" />
                 {file ? (
-                  <p className="text-sm font-bold text-blue-600">{file.name}</p>
+                  <p className="text-sm font-bold text-[#1E4DA6]">{file.name}</p>
                 ) : (
                   <>
                     <p className="text-sm text-slate-600 mb-1 font-medium">Click to select a PDF</p>
@@ -260,7 +260,7 @@ export function LegacyResults() {
             <div className="pt-2">
               <Button
                 type="submit" disabled={uploading || !file}
-                className="w-full rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold h-11 flex items-center gap-2 justify-center"
+                className="w-full rounded-xl bg-[#173F8C] hover:bg-[#122F69] text-white font-bold h-11 flex items-center gap-2 justify-center"
               >
                 {uploading ? <><Loader2 className="w-4 h-4 animate-spin" /> Uploading...</> : <><Upload className="w-4 h-4" /> Upload Legacy Result</>}
               </Button>
@@ -274,7 +274,7 @@ export function LegacyResults() {
             <h2 className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
               <Clock className="w-3.5 h-3.5" /> Historical Records
             </h2>
-            <span className="text-xs font-bold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full">{results.length} Files</span>
+            <span className="text-xs font-bold bg-[#1E4DA6]/10 text-[#173F8C] px-2.5 py-1 rounded-full">{results.length} Files</span>
           </div>
 
           <div className="flex-1 overflow-y-auto min-h-[400px]">
@@ -311,7 +311,7 @@ export function LegacyResults() {
                         <div className="flex items-center justify-end gap-2">
                           <a
                             href={r.fileUrl} target="_blank" rel="noopener noreferrer"
-                            className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors" title="Download"
+                            className="p-2 rounded-lg bg-[#1E4DA6]/5 text-[#1E4DA6] hover:bg-[#1E4DA6]/10 transition-colors" title="Download"
                           >
                             <Download className="w-4 h-4" />
                           </a>

@@ -11,9 +11,9 @@ export default function NotFound() {
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-center max-w-md">
                 {/* Large 404 */}
                 <div className="relative mb-6">
-                    <p className="text-[10rem] font-black text-[#0036a1]/5 leading-none select-none">404</p>
+                    <p className="text-[10rem] font-black text-[#1E4DA6]/5 leading-none select-none">404</p>
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-24 h-24 bg-[#0036a1] rounded-3xl flex items-center justify-center shadow-xl shadow-[#0036a1]/30">
+                        <div className="w-24 h-24 bg-[#1E4DA6] rounded-3xl flex items-center justify-center shadow-xl shadow-[#1E4DA6]/30">
                             <span className="text-4xl">🔍</span>
                         </div>
                     </div>
@@ -26,10 +26,10 @@ export default function NotFound() {
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <button onClick={() => window.history.back()}
-                        className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-gray-200 rounded-xl font-semibold text-gray-700 hover:border-[#0036a1] hover:text-[#0036a1] transition-all">
+                        className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-gray-200 rounded-xl font-semibold text-gray-700 hover:border-[#1E4DA6] hover:text-[#1E4DA6] transition-all">
                         <ArrowLeft className="w-4 h-4" /> Go Back
                     </button>
-                    <Link to="/" className="flex items-center justify-center gap-2 px-6 py-3 bg-[#0036a1] text-white rounded-xl font-semibold hover:bg-[#001761] transition-all shadow-lg shadow-[#0036a1]/30">
+                    <Link to="/" className="flex items-center justify-center gap-2 px-6 py-3 bg-[#1E4DA6] text-white rounded-xl font-semibold hover:bg-[#173F8C] transition-all shadow-lg shadow-[#1E4DA6]/30">
                         <Home className="w-4 h-4" /> Return Home
                     </Link>
                 </div>

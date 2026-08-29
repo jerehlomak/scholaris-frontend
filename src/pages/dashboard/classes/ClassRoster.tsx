@@ -131,7 +131,7 @@ export function ClassRoster() {
             <div className="mb-4">
                 <button 
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors"
+                    className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-[#1E4DA6] transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" /> Back to Classes
                 </button>
@@ -139,12 +139,12 @@ export function ClassRoster() {
 
             {isLoading ? (
                 <div className="py-20 flex justify-center">
-                    <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                    <Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" />
                 </div>
             ) : (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6">
                     <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-3 mb-6">
-                        <div className="text-sm font-semibold text-blue-700 bg-blue-50 border border-blue-100 px-4 py-2 rounded-xl w-full sm:w-auto text-center">
+                        <div className="text-sm font-semibold text-[#173F8C] bg-[#1E4DA6]/5 border border-[#1E4DA6]/10 px-4 py-2 rounded-xl w-full sm:w-auto text-center">
                             Total Students: <span className="font-bold text-lg ml-1">{students.length}</span>
                         </div>
                         <div className="flex w-full sm:w-auto">
@@ -179,7 +179,7 @@ export function ClassRoster() {
                                     </tr>
                                 ) : (
                                     students.map((student) => (
-                                        <tr key={student.id} className="border-b border-slate-100 hover:bg-blue-50/50 transition-colors">
+                                        <tr key={student.id} className="border-b border-slate-100 hover:bg-[#1E4DA6]/8 transition-colors">
                                             <td className="px-5 py-3">
                                                 {student.profilePicture ? (
                                                     <img src={student.profilePicture} alt={student.user.name} className="w-10 h-10 rounded-full object-cover border border-slate-200 shadow-sm" />

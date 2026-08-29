@@ -67,7 +67,7 @@ function FundWalletModal({ targetId, mode, onClose, onSuccess }: { targetId: str
                     
                     <div className="pt-4 flex justify-end gap-2">
                         <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-                        <Button type="submit" disabled={submitting} className="bg-purple-600 hover:bg-purple-700 text-white">
+                        <Button type="submit" disabled={submitting} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
                             {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wallet className="mr-2 h-4 w-4" />}
                             Process Funding
                         </Button>
@@ -177,19 +177,19 @@ function AllocateCreditModal({
 
                 <div className="p-6 space-y-4 overflow-y-auto">
                     {/* Wallet summary banner */}
-                    <div className="bg-purple-50 border border-purple-200 rounded-xl p-3.5 flex justify-between items-center">
+                    <div className="bg-[#1E4DA6]/5 border border-[#1E4DA6]/20 rounded-xl p-3.5 flex justify-between items-center">
                         <div>
-                            <p className="text-xs font-bold text-purple-900">Available Wallet Balance</p>
-                            <p className="text-xl font-black text-purple-700">₦{walletBalance.toLocaleString('en-NG')}</p>
+                            <p className="text-xs font-bold text-[#0E2450]">Available Wallet Balance</p>
+                            <p className="text-xl font-black text-[#173F8C]">₦{walletBalance.toLocaleString('en-NG')}</p>
                         </div>
-                        <span className="text-xs font-semibold px-2 py-1 bg-purple-200 text-purple-800 rounded-md">
+                        <span className="text-xs font-semibold px-2 py-1 bg-[#1E4DA6]/20 text-[#122F69] rounded-md">
                             {mode === 'STUDENT' ? 'Student Wallet' : 'Family Wallet'}
                         </span>
                     </div>
 
                     {loading ? (
                         <div className="p-8 text-center text-slate-500 flex items-center justify-center gap-2">
-                            <Loader2 className="h-5 w-5 animate-spin text-purple-600" /> Finding open invoices...
+                            <Loader2 className="h-5 w-5 animate-spin text-[#1E4DA6]" /> Finding open invoices...
                         </div>
                     ) : invoices.length === 0 ? (
                         <div className="p-8 text-center text-slate-500 bg-slate-50 rounded-xl border border-slate-200">
@@ -213,7 +213,7 @@ function AllocateCreditModal({
                                             <div 
                                                 key={inv.id}
                                                 onClick={() => handleSelectInvoice(inv.id)}
-                                                className={`p-3 rounded-xl border cursor-pointer transition-all ${isSelected ? 'border-purple-600 bg-purple-50/50 shadow-sm' : 'border-slate-200 hover:border-slate-300 bg-white'}`}
+                                                className={`p-3 rounded-xl border cursor-pointer transition-all ${isSelected ? 'border-[#1E4DA6] bg-[#1E4DA6]/8 shadow-sm' : 'border-slate-200 hover:border-slate-300 bg-white'}`}
                                             >
                                                 <div className="flex justify-between items-start">
                                                     <div>
@@ -241,7 +241,7 @@ function AllocateCreditModal({
                                         <button
                                             type="button"
                                             onClick={() => setAmount(String(maxApplicable))}
-                                            className="text-xs font-bold text-purple-600 hover:text-purple-800 underline"
+                                            className="text-xs font-bold text-[#1E4DA6] hover:text-[#122F69] underline"
                                         >
                                             Use Maximum (₦{maxApplicable.toLocaleString('en-NG')})
                                         </button>
@@ -268,7 +268,7 @@ function AllocateCreditModal({
                                 <Button 
                                     type="submit" 
                                     disabled={submitting || !selectedInvoiceId || Number(amount) <= 0} 
-                                    className="bg-purple-600 hover:bg-purple-700 text-white font-semibold"
+                                    className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-semibold"
                                 >
                                     {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Check className="mr-2 h-4 w-4" />}
                                     Confirm Allocation
@@ -396,22 +396,21 @@ export default function WalletLedger() {
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root,.fd-root *{font-family:'Plus Jakarta Sans',sans-serif!important} .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="fd-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-full">
 
                     {/* Breadcrumb */}
                     <div className="mb-5 flex items-center gap-1.5">
                         <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Wallet / Ledger</span>
+                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Wallet / Ledger</span>
                     </div>
 
                     {/* Header */}
                     <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div className="flex items-center gap-4">
-                            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-700 to-indigo-500 shadow-lg shadow-purple-200">
+                            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-indigo-500 shadow-lg shadow-[#1E4DA6]/20">
                                 <Wallet className="h-7 w-7 text-white" />
                             </div>
                             <div>
@@ -424,13 +423,13 @@ export default function WalletLedger() {
                             <div className="flex rounded-md shadow-sm">
                                 <button
                                     onClick={() => setMode('STUDENT')}
-                                    className={`px-4 py-2 text-sm font-medium border ${mode === 'STUDENT' ? 'bg-purple-50 border-purple-200 text-purple-700 z-10 rounded-l-md' : 'bg-white border-slate-200 text-slate-700 rounded-l-md hover:bg-slate-50'}`}
+                                    className={`px-4 py-2 text-sm font-medium border ${mode === 'STUDENT' ? 'bg-[#1E4DA6]/5 border-[#1E4DA6]/20 text-[#173F8C] z-10 rounded-l-md' : 'bg-white border-slate-200 text-slate-700 rounded-l-md hover:bg-slate-50'}`}
                                 >
                                     Student Wallet
                                 </button>
                                 <button
                                     onClick={() => setMode('FAMILY')}
-                                    className={`px-4 py-2 text-sm font-medium border-y border-r ${mode === 'FAMILY' ? 'bg-purple-50 border-purple-200 text-purple-700 z-10 rounded-r-md' : 'bg-white border-slate-200 text-slate-700 rounded-r-md hover:bg-slate-50'}`}
+                                    className={`px-4 py-2 text-sm font-medium border-y border-r ${mode === 'FAMILY' ? 'bg-[#1E4DA6]/5 border-[#1E4DA6]/20 text-[#173F8C] z-10 rounded-r-md' : 'bg-white border-slate-200 text-slate-700 rounded-r-md hover:bg-slate-50'}`}
                                 >
                                     Family Wallet
                                 </button>
@@ -465,7 +464,7 @@ export default function WalletLedger() {
                                                 placeholder="Search name or ID..."
                                                 value={searchQuery}
                                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                                className="h-9 w-full rounded-md border border-slate-200 bg-slate-50 pl-9 pr-3 text-sm outline-none focus:border-purple-500 focus:bg-white transition-colors"
+                                                className="h-9 w-full rounded-md border border-slate-200 bg-slate-50 pl-9 pr-3 text-sm outline-none focus:border-[#1E4DA6] focus:bg-white transition-colors"
                                                 autoFocus
                                             />
                                         </div>
@@ -492,7 +491,7 @@ export default function WalletLedger() {
                                                         </span>
                                                         {mode === 'STUDENT' && <span className="text-xs text-slate-400">ID: {item.admissionNo || item.id.slice(-6)}</span>}
                                                     </div>
-                                                    {targetId === item.id && <Check className="h-4 w-4 text-purple-600 shrink-0" />}
+                                                    {targetId === item.id && <Check className="h-4 w-4 text-[#1E4DA6] shrink-0" />}
                                                 </button>
                                             ))
                                         )}
@@ -502,11 +501,11 @@ export default function WalletLedger() {
                         </div>
                         {targetId && (
                             <div className="flex gap-2">
-                                <Button onClick={() => setShowFundModal(true)} className="bg-purple-600 hover:bg-purple-700 text-white shadow-md">
+                                <Button onClick={() => setShowFundModal(true)} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white shadow-md">
                                     <ArrowDownRight className="mr-2 h-4 w-4" /> Fund Wallet
                                 </Button>
                                 {Number(displayBalance || 0) > 0 && (
-                                    <Button onClick={() => setShowAllocateModal(true)} variant="outline" className="border-purple-300 text-purple-700 hover:bg-purple-50 shadow-sm">
+                                    <Button onClick={() => setShowAllocateModal(true)} variant="outline" className="border-[#1E4DA6]/35 text-[#173F8C] hover:bg-[#1E4DA6]/5 shadow-sm">
                                         <ArrowUpRight className="mr-2 h-4 w-4" /> Allocate to Invoices
                                     </Button>
                                 )}
@@ -522,14 +521,14 @@ export default function WalletLedger() {
                     ) : walletData ? (
                         <div className="grid gap-6 md:grid-cols-[300px_1fr]">
                             <div className="flex flex-col gap-6">
-                                <Card className="h-fit bg-purple-600 border-none text-white shadow-lg overflow-hidden relative">
+                                <Card className="h-fit bg-[#1E4DA6] border-none text-white shadow-lg overflow-hidden relative">
                                     <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white opacity-[0.05] blur-xl"></div>
                                     <CardContent className="p-6">
-                                        <p className="text-purple-100 text-sm font-medium">Available Balance</p>
+                                        <p className="text-white/80 text-sm font-medium">Available Balance</p>
                                         <p className="mt-2 text-4xl font-bold tracking-tight">₦{(displayBalance || 0).toLocaleString('en-NG')}</p>
                                         
-                                        <div className="mt-8 pt-6 border-t border-purple-500/50">
-                                            <p className="text-xs text-purple-200">Status</p>
+                                        <div className="mt-8 pt-6 border-t border-[#1E4DA6]/50">
+                                            <p className="text-xs text-white/70">Status</p>
                                             <p className="font-semibold">{displayStatus || 'ACTIVE'}</p>
                                         </div>
                                     </CardContent>
@@ -594,7 +593,7 @@ export default function WalletLedger() {
                                                                 </td>
                                                                 {mode === 'FAMILY' && (
                                                                     <td className="px-6 py-3">
-                                                                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${tx.account === 'FAMILY' ? 'bg-purple-100 text-purple-700' : 'bg-slate-100 text-slate-600'}`}>
+                                                                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${tx.account === 'FAMILY' ? 'bg-[#1E4DA6]/10 text-[#173F8C]' : 'bg-slate-100 text-slate-600'}`}>
                                                                             {tx.account === 'FAMILY' ? 'Family Account' : (tx.studentName || 'Child')}
                                                                         </span>
                                                                     </td>
@@ -615,7 +614,7 @@ export default function WalletLedger() {
                                                                 <td className="px-6 py-3 text-right">
                                                                     <button
                                                                         onClick={() => openReceipt(tx)}
-                                                                        className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded"
+                                                                        className="p-1.5 text-slate-400 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded"
                                                                         title="Print Receipt"
                                                                     >
                                                                         <Printer className="h-4 w-4" />

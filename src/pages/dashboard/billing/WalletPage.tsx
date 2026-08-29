@@ -71,22 +71,21 @@ export default function WalletPage() {
 
     return (
         <SettingsShell breadcrumbParent="Billing" breadcrumbCurrent="My Wallet" tabLabel="My Wallet" tabIcon={<Wallet className="h-3.5 w-3.5" />}>
+            <SettingsHero
+                icon={<Wallet className="h-7 w-7" />}
+                title="My Wallet"
+                subtitle="Platform wallet for invoice payments and top-ups."
+            />
             <div className="flex flex-col gap-6">
 
-            {/* Header */}
-            <div className="flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-slate-200">
-                <div>
-                    <h1 className="text-xl sm:text-2xl font-bold text-slate-800">My Wallet</h1>
-                    <p className="text-sm mt-1 text-slate-500">Platform wallet for invoice payments and top-ups.</p>
-                </div>
-                <div className="flex items-center gap-2">
-                    <button onClick={() => setShowFundModal(true)} className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white rounded-lg transition-all hover:-translate-y-0.5" style={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}>
-                        <Plus size={14} /> Fund Wallet
-                    </button>
-                    <button onClick={loadData} className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50">
-                        <RefreshCw size={13} /> Refresh
-                    </button>
-                </div>
+            {/* Actions */}
+            <div className="flex flex-wrap items-center justify-end gap-2 -mt-2">
+                <button onClick={() => setShowFundModal(true)} className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white rounded-lg transition-all hover:-translate-y-0.5 bg-[#1E4DA6] hover:bg-[#173F8C]">
+                    <Plus size={14} /> Fund Wallet
+                </button>
+                <button onClick={loadData} className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50">
+                    <RefreshCw size={13} /> Refresh
+                </button>
             </div>
 
             {/* Fund Wallet Modal */}
@@ -99,12 +98,12 @@ export default function WalletPage() {
                         <form onSubmit={handleFundWallet}>
                             <div className="mb-5">
                                 <label className="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-2">Amount (₦)</label>
-                                <input 
-                                    type="number" 
-                                    value={fundAmount} 
+                                <input
+                                    type="number"
+                                    value={fundAmount}
                                     onChange={(e) => setFundAmount(e.target.value)}
                                     placeholder="e.g. 50000"
-                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-lg font-semibold text-slate-800 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all"
+                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-lg font-semibold text-slate-800 focus:outline-none focus:border-[#1E4DA6] focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all"
                                     autoFocus
                                 />
                             </div>
@@ -112,7 +111,7 @@ export default function WalletPage() {
                                 <button type="button" onClick={() => setShowFundModal(false)} className="flex-1 px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors">
                                     Cancel
                                 </button>
-                                <button type="submit" disabled={funding} className="flex-1 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all disabled:opacity-70 hover:shadow-lg hover:shadow-indigo-500/30" style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}>
+                                <button type="submit" disabled={funding} className="flex-1 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all disabled:opacity-70 hover:shadow-lg hover:shadow-[#1E4DA6]/30 bg-[#1E4DA6] hover:bg-[#173F8C]">
                                     {funding ? 'Processing...' : 'Pay Now'}
                                 </button>
                             </div>
@@ -123,18 +122,17 @@ export default function WalletPage() {
 
             {loading ? (
                 <div className="flex items-center justify-center p-14">
-                    <div className="w-7 h-7 border-4 border-slate-200 border-t-indigo-500 rounded-full animate-spin" />
+                    <div className="w-7 h-7 border-4 border-slate-200 border-t-[#1E4DA6] rounded-full animate-spin" />
                 </div>
             ) : (
                 <>
                     {/* Balance Hero */}
-                    <div className="rounded-2xl p-6 text-white shadow-xl"
-                        style={{ background: 'linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%)' }}>
+                    <div className="rounded-2xl p-6 text-white shadow-xl bg-gradient-to-br from-[#15316B] via-[#0E2450] to-[#081434]">
                         <div className="flex items-center gap-2 mb-1 opacity-80">
                             <Wallet size={16} />
                             <span className="text-sm font-semibold">Available Balance</span>
                             <span className="ml-auto text-xs px-2 py-0.5 rounded-full font-bold"
-                                style={{ background: wallet?.status === 'ACTIVE' ? 'rgba(255,255,255,0.2)' : 'rgba(239,68,68,0.3)' }}>
+                                style={{ background: wallet?.status === 'ACTIVE' ? 'rgba(245,184,0,0.25)' : 'rgba(239,68,68,0.3)' }}>
                                 {wallet?.status || 'ACTIVE'}
                             </span>
                         </div>
@@ -167,7 +165,7 @@ export default function WalletPage() {
                     {/* Transaction History */}
                     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                         <div className="px-5 py-3.5 border-b border-slate-100 flex items-center gap-2">
-                            <TrendingUp size={15} className="text-indigo-500" />
+                            <TrendingUp size={15} className="text-[#1E4DA6]" />
                             <span className="text-sm font-bold text-slate-700">Transaction History</span>
                             <span className="ml-auto text-xs text-slate-400">{transactions.length} records</span>
                         </div>

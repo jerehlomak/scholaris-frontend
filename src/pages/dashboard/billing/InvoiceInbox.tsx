@@ -12,8 +12,8 @@ const API = import.meta.env.VITE_API_BASE_URL || '';
 
 const STATUS_STYLES: Record<string, { bg: string; text: string; icon: React.ReactNode }> = {
     DRAFT: { bg: '#f1f5f9', text: '#64748b', icon: <Clock size={11} /> },
-    SENT: { bg: '#eff6ff', text: '#3b82f6', icon: <FileText size={11} /> },
-    OPEN: { bg: '#eff6ff', text: '#3b82f6', icon: <FileText size={11} /> },
+    SENT: { bg: '#1E4DA614', text: '#1E4DA6', icon: <FileText size={11} /> },
+    OPEN: { bg: '#1E4DA614', text: '#1E4DA6', icon: <FileText size={11} /> },
     PARTIALLY_PAID: { bg: '#fff7ed', text: '#f59e0b', icon: <AlertTriangle size={11} /> },
     PAID: { bg: '#f0fdf4', text: '#16a34a', icon: <CheckCircle2 size={11} /> },
     OVERDUE: { bg: '#fef2f2', text: '#ef4444', icon: <XCircle size={11} /> },

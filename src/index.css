@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -27,9 +27,15 @@
   /* Dark: Rich Slate 900 for dashboard texts/borders instead of flat black */
   --color-dash-dark: #0f172a;
 
-  /* ── Typography ── */
-  --font-primary: 'Outfit', sans-serif;
-  --font-heading: 'Archivo Black', sans-serif;
+  /* ── Typography ──
+     14 Aug 2026: heading/body repointed to Fraunces + Inter — chosen from
+     a 6-pairing comparison (see PROJECT_BRIEF.md) for its "editorial,
+     distinguished" read, fitting a platform centered on result sheets and
+     formal documents. Global tokens (not scoped to one page) since this is
+     a typeface choice, not a color — much lower risk of an inconsistent,
+     half-migrated look than repointing the brand color tokens would be. */
+  --font-primary: 'Inter', sans-serif;
+  --font-heading: 'Fraunces', serif;
   --font-secondary: 'Inter', sans-serif;
   --font-poppins: 'Poppins', sans-serif;
   --font-dash: 'Poppins', sans-serif;
@@ -39,9 +45,9 @@
 :root,
 html.light {
   /* Skooly Plus Global Theme Palette */
-  --color-primary-blue: #1a2fa0;
+  --color-primary-blue: #1e4da6; /* brand navy, brightened per feedback — drives default shadcn Button fill */
   --color-primary-green: #5cb85c;
-  --color-bg-light: #f0f4ff;
+  --color-bg-light: #fbf9f5; /* brand cream base — was a leftover pale-blue Skcooly Plus tint */
   --color-text-dark: #111111;
   --color-text-muted: #6b7280;
   --color-white: #ffffff;
@@ -98,6 +104,14 @@ html.dark {
   }
   * {
     @apply border-border outline-ring/50;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+  button:disabled,
+  [role="button"][aria-disabled="true"] {
+    cursor: not-allowed;
   }
   html {
     @apply font-sans;
@@ -201,7 +215,12 @@ html.dark {
 }
 
 @theme inline {
-  --font-heading: var(--font-sans);
+  /* Was `var(--font-sans)` (Geist) — silently overrode the Fraunces choice
+     made earlier in this file, since this later @theme block wins on
+     shared keys. Decoupled from --font-sans (which other shadcn tokens
+     still reasonably expect to be a sans body face) rather than repointing
+     --font-sans itself to a serif. */
+  --font-heading: 'Fraunces', serif;
   --font-sans: 'Geist Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);

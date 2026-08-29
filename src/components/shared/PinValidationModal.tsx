@@ -68,7 +68,7 @@ export default function PinValidationModal({
                 style={{ animation: 'dashRise 0.3s ease-out' }}
             >
                 {/* Header Graphic */}
-                <div className="relative h-32 bg-gradient-to-br from-blue-700 to-indigo-800 p-6 flex flex-col justify-end overflow-hidden">
+                <div className="relative h-32 bg-gradient-to-br from-[#173F8C] to-indigo-800 p-6 flex flex-col justify-end overflow-hidden">
                     <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
                     <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
                     
@@ -78,7 +78,7 @@ export default function PinValidationModal({
                         </div>
                         <div>
                             <h2 className="text-xl font-bold tracking-tight text-white">{title}</h2>
-                            <p className="text-sm font-medium text-blue-100">{description}</p>
+                            <p className="text-sm font-medium text-white/80">{description}</p>
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@ export default function PinValidationModal({
                                 onChange={(e) => setPinCode(e.target.value.toUpperCase())}
                                 placeholder="e.g. BTNX-1234-ABCD"
                                 disabled={loading}
-                                className="w-full rounded-xl border-2 border-slate-200 bg-slate-50 px-4 py-3.5 pl-11 font-mono text-lg font-bold tracking-widest text-slate-800 transition-colors focus:border-blue-600 focus:bg-white focus:outline-none disabled:opacity-50"
+                                className="w-full rounded-xl border-2 border-slate-200 bg-slate-50 px-4 py-3.5 pl-11 font-mono text-lg font-bold tracking-widest text-slate-800 transition-colors focus:border-[#1E4DA6] focus:bg-white focus:outline-none disabled:opacity-50"
                                 maxLength={24}
                             />
                             <ShieldCheck className="absolute left-4 top-4 h-5 w-5 text-slate-400" />
@@ -112,7 +112,7 @@ export default function PinValidationModal({
                     <button
                         type="submit"
                         disabled={loading || !pinCode}
-                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3.5 text-sm font-bold tracking-wider text-white transition-all hover:bg-blue-700 active:scale-95 disabled:pointer-events-none disabled:opacity-50 shadow-md shadow-blue-200 hover:shadow-lg"
+                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1E4DA6] px-4 py-3.5 text-sm font-bold tracking-wider text-white transition-all hover:bg-[#173F8C] active:scale-95 disabled:pointer-events-none disabled:opacity-50 shadow-md shadow-[#1E4DA6]/20 hover:shadow-lg"
                     >
                         {loading ? (
                             <><Loader2 className="h-5 w-5 animate-spin" /> Verifying Secure PIN...</>

@@ -37,7 +37,7 @@ function KpiCard({ label, value, icon: Icon, color, bg, highlight = false }: {
                 <div className="min-w-0">
                     <p className="text-xs font-medium text-slate-500 mb-0.5">{label}</p>
                     {highlight ? (
-                        <Badge className="bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-50 text-xs font-bold px-2 py-0.5 mt-1">
+                        <Badge className="bg-[#1E4DA6]/5 text-[#173F8C] border border-[#1E4DA6]/20 hover:bg-[#1E4DA6]/5 text-xs font-bold px-2 py-0.5 mt-1">
                             {value as string}
                         </Badge>
                     ) : (
@@ -83,7 +83,7 @@ export function StudentHome() {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-[60vh]">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" />
             </div>
         );
     }
@@ -107,7 +107,7 @@ export function StudentHome() {
         >
             {/* ── Welcome Hero ── */}
             <motion.div variants={itemVariants}>
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 p-6 text-white shadow-lg">
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0E2450] via-[#122F69] to-indigo-900 p-6 text-white shadow-lg">
                     <div className="absolute inset-0 opacity-10"
                         style={{ backgroundImage: 'radial-gradient(circle at 80% 20%, white 1px, transparent 1px)', backgroundSize: '24px 24px' }}
                     />
@@ -116,13 +116,13 @@ export function StudentHome() {
                             <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-1">
                                 Welcome back, {studentName} 👋
                             </h1>
-                            <p className="text-blue-100/80 text-sm">{today}</p>
+                            <p className="text-[#1E4DA6]/80 text-sm">{today}</p>
                         </div>
                         <div className="flex gap-2">
                             <Button asChild variant="secondary" className="bg-white/10 hover:bg-white/20 text-white border-0 font-semibold h-9 rounded-xl transition-all">
                                 <Link to="/student/course">My Courses</Link>
                             </Button>
-                            <Button asChild variant="secondary" className="bg-white text-blue-900 hover:bg-slate-50 border-0 font-bold h-9 rounded-xl transition-all shadow-sm">
+                            <Button asChild variant="secondary" className="bg-white text-[#0E2450] hover:bg-slate-50 border-0 font-bold h-9 rounded-xl transition-all shadow-sm">
                                 <Link to="/student/cbt">CBT Portal</Link>
                             </Button>
                         </div>
@@ -150,8 +150,8 @@ export function StudentHome() {
                     label="Wallet Balance"
                     value={stats.walletBalance || "₦0.00"}
                     icon={Wallet}
-                    color="text-blue-600"
-                    bg="bg-blue-50"
+                    color="text-[#1E4DA6]"
+                    bg="bg-[#1E4DA6]/5"
                     highlight
                 />
             </motion.div>
@@ -191,7 +191,7 @@ export function StudentHome() {
                         </div>
                         
                         <div className="mt-6 pt-5 border-t border-slate-100">
-                            <Link to="/student/result" className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm">
+                            <Link to="/student/result" className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-lg bg-[#1E4DA6] text-white hover:bg-[#173F8C] transition-colors shadow-sm">
                                 View Full Transcript <ChevronRight className="w-3.5 h-3.5" />
                             </Link>
                         </div>
@@ -224,7 +224,7 @@ export function StudentHome() {
                     <Card className="shadow-sm border-slate-200 h-full flex flex-col">
                         <CardHeader className="pb-3 border-b border-slate-100 flex flex-row items-center justify-between space-y-0">
                             <CardTitle className="text-sm font-semibold text-slate-800">Upcoming Classes & Tasks</CardTitle>
-                            <Link to="/student/course" className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                            <Link to="/student/course" className="text-xs font-semibold text-[#1E4DA6] hover:text-[#173F8C] transition-colors">
                                 Full Schedule
                             </Link>
                         </CardHeader>
@@ -265,7 +265,7 @@ export function StudentHome() {
                             <CardTitle className="text-sm font-semibold text-slate-800 flex items-center gap-2">
                                 <BarChart2 className="w-4 h-4 text-slate-400" /> Subject Performance
                             </CardTitle>
-                            <Link to="/student/course" className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                            <Link to="/student/course" className="text-xs font-semibold text-[#1E4DA6] hover:text-[#173F8C] transition-colors">
                                 All Subjects →
                             </Link>
                         </CardHeader>

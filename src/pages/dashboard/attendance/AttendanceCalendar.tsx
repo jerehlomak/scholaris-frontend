@@ -67,9 +67,9 @@ export function AttendanceCalendar({ records, selectedDate, onSelectDate }: Prop
                     const isToday = dateStr === today.toISOString().split('T')[0];
 
                     let bg = 'hover:bg-gray-100';
-                    if (isSelected) bg = 'bg-[#0036a1] text-white';
+                    if (isSelected) bg = 'bg-[#1E4DA6] text-white';
                     else if (rate !== null) {
-                        if (rate >= 90) bg = 'bg-[#6bc048]/20 text-[#3a7a1f] hover:bg-[#6bc048]/30';
+                        if (rate >= 90) bg = 'bg-[#10b981]/20 text-[#3a7a1f] hover:bg-[#10b981]/30';
                         else if (rate >= 70) bg = 'bg-[#ff9800]/20 text-[#b86000] hover:bg-[#ff9800]/30';
                         else bg = 'bg-red-100 text-red-700 hover:bg-red-200';
                     }
@@ -78,7 +78,7 @@ export function AttendanceCalendar({ records, selectedDate, onSelectDate }: Prop
                         <button
                             key={day}
                             onClick={() => onSelectDate(dateStr)}
-                            className={`aspect-square rounded-lg flex flex-col items-center justify-center transition-colors text-xs font-semibold ${bg} ${isToday && !isSelected ? 'ring-2 ring-[#0036a1]/40' : ''}`}
+                            className={`aspect-square rounded-lg flex flex-col items-center justify-center transition-colors text-xs font-semibold ${bg} ${isToday && !isSelected ? 'ring-2 ring-[#1E4DA6]/40' : ''}`}
                         >
                             {day}
                             {rate !== null && !isSelected && (
@@ -92,7 +92,7 @@ export function AttendanceCalendar({ records, selectedDate, onSelectDate }: Prop
             {/* Legend */}
             <div className="flex items-center gap-4 mt-4 pt-3 border-t border-gray-100">
                 {[
-                    { label: '≥90%', color: 'bg-[#6bc048]/30' },
+                    { label: '≥90%', color: 'bg-[#10b981]/30' },
                     { label: '70–89%', color: 'bg-[#ff9800]/30' },
                     { label: '<70%', color: 'bg-red-200' },
                 ].map(l => (

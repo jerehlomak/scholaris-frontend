@@ -64,7 +64,7 @@ export default function ParentAcademics() {
     if (loading) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[400px] gap-3">
-                <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+                <Loader2 className="w-8 h-8 text-[#1E4DA6] animate-spin" />
                 <p className="text-sm text-slate-500 font-dash">Loading academic records...</p>
             </div>
         );
@@ -94,7 +94,7 @@ export default function ParentAcademics() {
                 <select
                     value={selectedStudentId}
                     onChange={e => setSelectedStudentId(e.target.value)}
-                    className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 min-w-[200px]"
+                    className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6] min-w-[200px]"
                 >
                     {students.map(s => (
                         <option key={s.id} value={s.id}>
@@ -106,7 +106,7 @@ export default function ParentAcademics() {
 
             {/* Overall Student Progress bar */}
             {selectedChild && (
-                <Card className="p-4 bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-900 text-white border-none shadow-lg overflow-hidden relative">
+                <Card className="p-4 bg-gradient-to-r from-[#173F8C] via-[#122F69] to-indigo-900 text-white border-none shadow-lg overflow-hidden relative">
                     <div className="relative z-10">
                         <div className="flex items-center justify-between mb-2">
                             <div>
@@ -146,16 +146,16 @@ export default function ParentAcademics() {
                     ) : selectedChild?.subjects.map((sub, idx) => {
                         // Generate a consistent color/bg based on index or subject name
                         const colors = [
-                            { text: 'text-blue-700', bg: 'bg-blue-100', icon: '📐' },
+                            { text: 'text-[#173F8C]', bg: 'bg-[#1E4DA6]/10', icon: '📐' },
                             { text: 'text-emerald-700', bg: 'bg-emerald-100', icon: '📝' },
-                            { text: 'text-purple-700', bg: 'bg-purple-100', icon: '⚡' },
+                            { text: 'text-[#173F8C]', bg: 'bg-[#1E4DA6]/10', icon: '⚡' },
                             { text: 'text-amber-700', bg: 'bg-amber-100', icon: '🧪' },
                             { text: 'text-teal-700', bg: 'bg-teal-100', icon: '🔬' },
                         ];
                         const style = colors[idx % colors.length];
 
                         return (
-                            <Card key={sub.id || idx} className="p-4 bg-white border border-gray-100 shadow-sm flex items-center gap-4 transition-all hover:border-[#0036a1]/30">
+                            <Card key={sub.id || idx} className="p-4 bg-white border border-gray-100 shadow-sm flex items-center gap-4 transition-all hover:border-[#1E4DA6]/30">
                                 <div className={`w-11 h-11 ${style.bg} rounded-xl flex items-center justify-center text-xl shrink-0`}>{style.icon}</div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between gap-2 mb-0.5">
@@ -195,7 +195,7 @@ export default function ParentAcademics() {
                     <Card className="bg-white border border-slate-200 shadow-sm overflow-hidden">
                         {DAYS.map((day, i) => (
                             <div key={day} className={`p-3 ${i < DAYS.length - 1 ? 'border-b border-slate-100' : ''}`}>
-                                <p className="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">{day}</p>
+                                <p className="text-xs font-bold text-[#173F8C] uppercase tracking-wider mb-2">{day}</p>
                                 <div className="space-y-1">
                                     {(TIMETABLE[day] || []).map((cls: { subject: string, time: string }) => (
                                         <div key={cls.subject} className="flex items-center justify-between text-xs text-slate-700 bg-slate-50 rounded-lg px-2.5 py-1.5">

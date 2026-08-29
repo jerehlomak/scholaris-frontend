@@ -34,7 +34,7 @@ interface StaffLoan {
 
 function fmt(n: number) { return '₦' + (n || 0).toLocaleString('en-NG', { minimumFractionDigits: 2 }); }
 function fmtDate(d: string) { return new Date(d).toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' }); }
-const AC = ['bg-amber-500','bg-blue-500','bg-teal-500','bg-rose-500','bg-violet-500','bg-indigo-500'];
+const AC = ['bg-amber-500','bg-[#1E4DA6]','bg-teal-500','bg-rose-500','bg-violet-500','bg-indigo-500'];
 function avBg(n: string) { return AC[n.charCodeAt(0) % AC.length]; }
 
 export default function LoanManagement() {
@@ -163,9 +163,8 @@ export default function LoanManagement() {
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');.lm-root,.lm-root *{font-family:'Plus Jakarta Sans',sans-serif!important}.lm-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="lm-root min-h-screen bg-gradient-to-br from-slate-50 via-amber-50/20 to-orange-50/20 px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.2]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');.lm-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="lm-root min-h-screen bg-[#FBF9F5] px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-6xl">
 
                     {/* Breadcrumb */}
@@ -183,7 +182,7 @@ export default function LoanManagement() {
                     </div>
 
                     {/* Staff selector */}
-                    <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl backdrop-blur-xl transition-all duration-500', vis ? 'opacity-100' : 'opacity-0 translate-y-3')}>
+                    <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl transition-all duration-500', vis ? 'opacity-100' : 'opacity-0 translate-y-3')}>
                         <div className="flex items-center gap-2.5 sm:gap-3 border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
                             <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
                                 <Users className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
@@ -230,7 +229,7 @@ export default function LoanManagement() {
                                 </div>
 
                                 {/* Record form */}
-                                <div className="mb-4 sm:mb-5 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 backdrop-blur-xl">
+                                <div className="mb-4 sm:mb-5 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50">
                                     <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
                                         <div><h3 className="text-xs sm:text-sm font-bold text-slate-800">Record New Loan</h3><p className="mt-0.5 text-[11px] sm:text-xs text-slate-500">For {selStaff?.name}</p></div>
                                         <Button onClick={() => setShowForm(f => !f)} variant="outline" className="h-8 sm:h-9 gap-1.5 rounded-xl text-xs font-semibold cursor-pointer">
@@ -259,7 +258,7 @@ export default function LoanManagement() {
                                 </div>
 
                                 {/* Loan history & Repayment Ledger */}
-                                <div className="overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 backdrop-blur-xl">
+                                <div className="overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50">
                                     <div className="border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
                                         <h3 className="text-xs sm:text-sm font-bold text-slate-800">Staff Loan &amp; Repayment Ledger</h3>
                                         <p className="text-[11px] sm:text-xs text-slate-500">Click on any loan to expand its full repayment audit trail.</p>
@@ -470,7 +469,7 @@ export default function LoanManagement() {
                                                                                             {repaymentsList.map(rep => (
                                                                                                 <div key={rep.id} className="flex items-center justify-between py-2 text-xs">
                                                                                                     <div className="flex items-center gap-3">
-                                                                                                        <span className={cn('px-2 py-0.5 rounded text-[9px] font-bold uppercase', rep.source === 'PAYROLL' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700')}>
+                                                                                                        <span className={cn('px-2 py-0.5 rounded text-[9px] font-bold uppercase', rep.source === 'PAYROLL' ? 'bg-[#1E4DA6]/10 text-[#173F8C]' : 'bg-emerald-100 text-emerald-700')}>
                                                                                                             {rep.source === 'PAYROLL' ? 'Payroll Deduction' : 'Direct Repayment'}
                                                                                                         </span>
                                                                                                         <span className="font-semibold text-slate-700">{fmtDate(rep.date)}</span>

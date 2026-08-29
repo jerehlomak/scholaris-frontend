@@ -45,15 +45,14 @@ export default function FamilyPaymentView() {
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root,.fd-root *{font-family:'Plus Jakarta Sans',sans-serif!important} .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="fd-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-full space-y-6">
                     {/* Breadcrumb */}
             <div className="flex items-center gap-1.5">
                 <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                 <ChevronRight className="h-3 w-3 text-slate-400" />
-                <span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Family Payment</span>
+                <span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Family Payment</span>
             </div>
 
             {/* Header */}

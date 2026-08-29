@@ -24,7 +24,7 @@ interface Section {
     };
 }
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
 export function Sections() {
     const [sections, setSections] = useState<Section[]>([]);
@@ -116,7 +116,7 @@ export function Sections() {
     };
 
     if (isLoading) {
-        return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>;
+        return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>;
     }
 
     return (
@@ -167,7 +167,7 @@ export function Sections() {
                                     {section.shortCode && <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-600">{section.shortCode}</span>}
                                     <span className="font-mono text-xs text-slate-400 w-24 text-right pr-4">{section._count.classes} classes</span>
                                     
-                                    <button onClick={() => startEdit(section)} className="rounded-lg p-2 text-slate-400 hover:bg-blue-50 hover:text-blue-500 transition-colors"><Pencil className="h-4 w-4" /></button>
+                                    <button onClick={() => startEdit(section)} className="rounded-lg p-2 text-slate-400 hover:bg-[#1E4DA6]/5 hover:text-[#1E4DA6] transition-colors"><Pencil className="h-4 w-4" /></button>
                                     
                                     {section._count.classes > 0 ? (
                                         <AlertDialog>
@@ -216,7 +216,7 @@ export function Sections() {
 
                 <div className="flex gap-3 flex-col sm:flex-row mt-4 bg-slate-50/50 p-4 rounded-2xl border border-slate-200">
                     <div className="flex-[2]">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Section Name <span className="text-blue-500">*</span></label>
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Section Name <span className="text-[#1E4DA6]">*</span></label>
                         <input className={inputCls} placeholder="e.g. Primary" value={newName} onChange={e => setNewName(e.target.value)} onKeyDown={e => e.key === 'Enter' && addSection()} />
                     </div>
                     <div className="flex-1">

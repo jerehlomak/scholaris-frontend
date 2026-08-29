@@ -40,8 +40,8 @@ interface ClassData {
 const DEFAULT_CAT_STYLE = { label: 'General', cls: 'bg-slate-100 text-slate-600' };
 
 const CATEGORY_COLORS = [
-    'bg-blue-100 text-blue-700',
-    'bg-purple-100 text-purple-700',
+    'bg-[#1E4DA6]/10 text-[#173F8C]',
+    'bg-[#1E4DA6]/10 text-[#173F8C]',
     'bg-orange-100 text-orange-700',
     'bg-teal-100 text-teal-700',
     'bg-rose-100 text-rose-700',
@@ -50,7 +50,7 @@ const CATEGORY_COLORS = [
 
 // Color palette for class badges
 const CLASS_BADGE_COLORS = [
-    'bg-blue-100 text-blue-700',
+    'bg-[#1E4DA6]/10 text-[#173F8C]',
     'bg-emerald-100 text-emerald-700',
     'bg-indigo-100 text-indigo-700',
     'bg-violet-100 text-violet-700',
@@ -202,11 +202,11 @@ export function AllSubjects() {
                     <Download className="w-4 h-4" /> Export CSV
                 </button>
                 <button onClick={() => navigate('/dashboard/subjects/allocation')}
-                    className="bg-brand-teal/10 hover:bg-brand-teal/20 text-brand-teal px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold shadow-sm transition-colors border border-brand-teal/20">
+                    className="bg-[#0F766E]/10 hover:bg-[#0F766E]/20 text-[#0F766E] px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold shadow-sm transition-colors border border-[#0F766E]/20">
                     <Users className="w-4 h-4" /> Allocate Electives
                 </button>
                 <button onClick={() => navigate('/dashboard/subjects/add')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold shadow-sm transition-colors">
+                    className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold shadow-sm transition-colors">
                     <Plus className="w-4 h-4" /> Add New Subject
                 </button>
             </div>
@@ -224,7 +224,7 @@ export function AllSubjects() {
                         const classIdMatch = classes.find(c => c.name === cls.name)?.id;
                         return (
                             <button key={cls.id} onClick={() => setFilterClass(filterClass === classIdMatch ? 'all' : (classIdMatch || 'all'))}
-                                className={`flex-shrink-0 min-w-[120px] rounded-xl p-3 text-left border transition-all snap-start ${filterClass === classIdMatch ? 'border-blue-400 shadow-md shadow-blue-100' : 'border-slate-100 bg-white shadow-sm hover:shadow-md'}`}>
+                                className={`flex-shrink-0 min-w-[120px] rounded-xl p-3 text-left border transition-all snap-start ${filterClass === classIdMatch ? 'border-[#1E4DA6]/60 shadow-md shadow-[#1E4DA6]/10' : 'border-slate-100 bg-white shadow-sm hover:shadow-md'}`}>
                                 <div className={`text-xs font-bold px-2 py-0.5 rounded-full inline-block mb-1 ${style}`}>{cls.name}</div>
                                 <p className="text-xl font-bold text-slate-900">{count}</p>
                                 <p className="text-[10px] text-slate-400">subjects</p>
@@ -240,7 +240,7 @@ export function AllSubjects() {
                     <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input type="text" placeholder="Search subjects or code..."
                         value={search} onChange={e => setSearch(e.target.value)}
-                        className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+                        className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#1E4DA6] bg-white" />
                 </div>
                 <button onClick={() => setShowFilters(!showFilters)}
                     className="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white text-slate-600 hover:bg-slate-50">
@@ -253,12 +253,12 @@ export function AllSubjects() {
                 {showFilters && (
                     <div className="w-full flex flex-wrap gap-2">
                         <button onClick={() => setFilterCat('all')}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${filterCat === 'all' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-slate-200 text-slate-600'}`}>
+                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${filterCat === 'all' ? 'bg-[#1E4DA6] text-white border-[#1E4DA6]' : 'bg-white border-slate-200 text-slate-600'}`}>
                             All Categories
                         </button>
                         {uniqueCategories.map(cat => (
                             <button key={cat.id} onClick={() => setFilterCat(cat.id)}
-                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${filterCat === cat.id ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-slate-200 text-slate-600'}`}>
+                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${filterCat === cat.id ? 'bg-[#1E4DA6] text-white border-[#1E4DA6]' : 'bg-white border-slate-200 text-slate-600'}`}>
                                 {cat.name}
                             </button>
                         ))}
@@ -267,12 +267,12 @@ export function AllSubjects() {
                 {showFilters && (
                     <div className="w-full flex flex-wrap gap-2 mt-2">
                         <button onClick={() => setFilterClass('all')}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${filterClass === 'all' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-slate-200 text-slate-600'}`}>
+                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${filterClass === 'all' ? 'bg-[#1E4DA6] text-white border-[#1E4DA6]' : 'bg-white border-slate-200 text-slate-600'}`}>
                             All Classes
                         </button>
                         {classes.map(clsObj => (
                             <button key={clsObj.id} onClick={() => setFilterClass(clsObj.id)}
-                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${filterClass === clsObj.id ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-slate-200 text-slate-600'}`}>
+                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${filterClass === clsObj.id ? 'bg-[#1E4DA6] text-white border-[#1E4DA6]' : 'bg-white border-slate-200 text-slate-600'}`}>
                                 {clsObj.name}
                             </button>
                         ))}
@@ -282,7 +282,7 @@ export function AllSubjects() {
 
             {isLoading ? (
                 <div className="flex items-center justify-center py-20">
-                    <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
+                    <Loader2 className="w-10 h-10 animate-spin text-[#1E4DA6]" />
                 </div>
             ) : view === 'grid' ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -291,7 +291,7 @@ export function AllSubjects() {
                         const catStyle = CATEGORY_COLORS[(subject.category?.name?.length ?? 0) % CATEGORY_COLORS.length];
                         return (
                             <div key={subject.id} className="bg-white rounded-[20px] shadow-sm border border-slate-100 p-5 flex flex-col justify-between min-h-[190px] hover:shadow-md transition-shadow relative overflow-hidden group">
-                                <div className="absolute -right-8 -top-8 w-24 h-24 bg-blue-50 rounded-full group-hover:scale-110 transition-transform duration-500" />
+                                <div className="absolute -right-8 -top-8 w-24 h-24 bg-[#1E4DA6]/5 rounded-full group-hover:scale-110 transition-transform duration-500" />
 
                                 <div className="flex items-start justify-between mb-2 relative z-10">
                                     <div className="flex flex-wrap gap-1">
@@ -311,7 +311,7 @@ export function AllSubjects() {
                                             </button>
                                         ) : (
                                             <>
-                                                <button onClick={() => setEditingSubjectId(subject.id)} className="hover:text-blue-600"><Edit3 className="w-4 h-4" /></button>
+                                                <button onClick={() => setEditingSubjectId(subject.id)} className="hover:text-[#1E4DA6]"><Edit3 className="w-4 h-4" /></button>
                                                 <AlertDialog>
                                                     <AlertDialogTrigger asChild>
                                                         <button className="hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
@@ -352,9 +352,9 @@ export function AllSubjects() {
                     {/* Add New Card */}
                     {view === 'grid' && (
                         <button onClick={() => navigate('/dashboard/subjects/add')}
-                            className="flex flex-col items-center justify-center min-h-[190px] border-2 border-dashed border-blue-300 rounded-[20px] bg-blue-50/30 hover:bg-blue-50 transition-colors group cursor-pointer">
-                            <Plus className="w-8 h-8 text-blue-600 mb-2 group-hover:scale-110 transition-transform" />
-                            <span className="text-blue-600 font-semibold text-sm">Add New Subject</span>
+                            className="flex flex-col items-center justify-center min-h-[190px] border-2 border-dashed border-[#1E4DA6]/35 rounded-[20px] bg-[#1E4DA6]/8 hover:bg-[#1E4DA6]/5 transition-colors group cursor-pointer">
+                            <Plus className="w-8 h-8 text-[#1E4DA6] mb-2 group-hover:scale-110 transition-transform" />
+                            <span className="text-[#1E4DA6] font-semibold text-sm">Add New Subject</span>
                         </button>
                     )}
                 </div>
@@ -401,7 +401,7 @@ export function AllSubjects() {
                                             <td className="px-6 py-4">
                                                 {subject.teacher ? (
                                                     <div className="flex items-center gap-1.5">
-                                                        <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-xs">
+                                                        <div className="w-6 h-6 rounded-full bg-[#1E4DA6]/10 flex items-center justify-center text-[#173F8C] font-bold text-xs">
                                                             {subject.teacher.user.name.charAt(0)}
                                                         </div>
                                                         <span className="text-slate-700">{subject.teacher.user.name}</span>
@@ -416,7 +416,7 @@ export function AllSubjects() {
                                                         </button>
                                                     ) : (
                                                         <>
-                                                            <button onClick={() => setEditingSubjectId(subject.id)} className="rounded-lg p-2 text-slate-400 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                                                            <button onClick={() => setEditingSubjectId(subject.id)} className="rounded-lg p-2 text-slate-400 hover:bg-[#1E4DA6]/5 hover:text-[#1E4DA6] transition-colors">
                                                                 <Edit3 className="h-4 w-4" />
                                                             </button>
                                                             <AlertDialog>

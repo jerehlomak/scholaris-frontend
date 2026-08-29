@@ -16,7 +16,7 @@ const STATUS_CONFIG: Record<string, { color: string; label: string }> = {
     PENDING:              { color: 'bg-amber-100 text-amber-700', label: 'Pending Review' },
     APPROVED:             { color: 'bg-emerald-100 text-emerald-700', label: 'Approved' },
     REJECTED:             { color: 'bg-red-100 text-red-700', label: 'Rejected' },
-    CLARIFICATION_NEEDED: { color: 'bg-purple-100 text-purple-700', label: 'Needs Clarification' },
+    CLARIFICATION_NEEDED: { color: 'bg-[#1E4DA6]/10 text-[#173F8C]', label: 'Needs Clarification' },
 };
 
 export default function TransferVerifications() {
@@ -156,7 +156,7 @@ export default function TransferVerifications() {
                             {selectedSub.evidenceUrl && (
                                 <div className="rounded-lg overflow-hidden border border-slate-200 h-full min-h-[300px] max-h-[500px] flex items-center justify-center bg-slate-50">
                                     {selectedSub.evidenceUrl.includes('.pdf') ? (
-                                        <a href={selectedSub.evidenceUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-4 text-sm text-blue-600 hover:text-blue-800">
+                                        <a href={selectedSub.evidenceUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-4 text-sm text-[#1E4DA6] hover:text-[#122F69]">
                                             View PDF Evidence →
                                         </a>
                                     ) : (
@@ -210,7 +210,7 @@ export default function TransferVerifications() {
                                 </div>
 
                                 {selectedSub.note && (
-                                    <div className="rounded-lg bg-blue-50 p-3 text-sm text-blue-800">
+                                    <div className="rounded-lg bg-[#1E4DA6]/5 p-3 text-sm text-[#122F69]">
                                         <strong>Parent Note:</strong> {selectedSub.note}
                                     </div>
                                 )}
@@ -229,7 +229,7 @@ export default function TransferVerifications() {
                         </div>
 
                         <DialogFooter className="gap-2 sm:gap-0 mt-2 flex-col sm:flex-row">
-                            <Button variant="outline" onClick={() => handleAction('CLARIFICATION_NEEDED')} disabled={processing} className="text-purple-700 border-purple-200 hover:bg-purple-50 w-full sm:w-auto mb-2 sm:mb-0">
+                            <Button variant="outline" onClick={() => handleAction('CLARIFICATION_NEEDED')} disabled={processing} className="text-[#173F8C] border-[#1E4DA6]/20 hover:bg-[#1E4DA6]/5 w-full sm:w-auto mb-2 sm:mb-0">
                                 <AlertCircle className="mr-1.5 h-4 w-4" />
                                 Request Clarification
                             </Button>

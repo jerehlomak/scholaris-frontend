@@ -17,7 +17,7 @@ export default function ParentAttendance() {
     );
 
     if (isLoading) {
-        return <div className="flex items-center justify-center py-20"><Loader2 className="w-8 h-8 animate-spin text-[#0036a1]" /></div>;
+        return <div className="flex items-center justify-center py-20"><Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" /></div>;
     }
 
     const studentsAttendance = attendanceData?.attendance || {};
@@ -46,7 +46,7 @@ export default function ParentAttendance() {
                         {/* Header */}
                         <div className="p-5 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-blue-100 text-blue-600 font-bold rounded-xl flex items-center justify-center text-lg shadow-inner">
+                                <div className="w-12 h-12 bg-[#1E4DA6]/10 text-[#1E4DA6] font-bold rounded-xl flex items-center justify-center text-lg shadow-inner">
                                     {data.name.substring(0, 2).toUpperCase()}
                                 </div>
                                 <div>
@@ -78,16 +78,16 @@ export default function ParentAttendance() {
                                 <div className="text-xl font-bold text-amber-500">{data.summary.LATE}</div>
                                 <div className="text-[10px] font-bold uppercase tracking-wider text-amber-500/70">Late</div>
                             </div>
-                            <div className="py-4 bg-blue-50/30">
-                                <div className="text-xl font-bold text-blue-500">{data.summary.EXCUSED}</div>
-                                <div className="text-[10px] font-bold uppercase tracking-wider text-blue-500/70">Excused</div>
+                            <div className="py-4 bg-[#1E4DA6]/8">
+                                <div className="text-xl font-bold text-[#1E4DA6]">{data.summary.EXCUSED}</div>
+                                <div className="text-[10px] font-bold uppercase tracking-wider text-[#1E4DA6]/70">Excused</div>
                             </div>
                         </div>
 
                         {/* Calendar view for this student */}
                         <div className="p-6">
                             <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
-                                <CalendarDays className="w-4 h-4 text-blue-500" /> Recent Records
+                                <CalendarDays className="w-4 h-4 text-[#1E4DA6]" /> Recent Records
                             </h3>
                             <div className="space-y-2">
                                 {Object.entries(data.dates).slice(-5).reverse().map(([date, status]) => (
@@ -112,6 +112,6 @@ function StatusBadge({ status }: { status: string }) {
     if (status === 'PRESENT') return <span className="px-2.5 py-1 text-xs font-bold bg-emerald-100 text-emerald-700 rounded-full flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5"/> Present</span>;
     if (status === 'ABSENT') return <span className="px-2.5 py-1 text-xs font-bold bg-red-100 text-red-700 rounded-full flex items-center gap-1.5"><XCircle className="w-3.5 h-3.5"/> Absent</span>;
     if (status === 'LATE') return <span className="px-2.5 py-1 text-xs font-bold bg-amber-100 text-amber-700 rounded-full flex items-center gap-1.5"><Clock className="w-3.5 h-3.5"/> Late</span>;
-    if (status === 'EXCUSED') return <span className="px-2.5 py-1 text-xs font-bold bg-blue-100 text-blue-700 rounded-full flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5"/> Excused</span>;
+    if (status === 'EXCUSED') return <span className="px-2.5 py-1 text-xs font-bold bg-[#1E4DA6]/10 text-[#173F8C] rounded-full flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5"/> Excused</span>;
     return <span className="px-2 py-0.5 text-[10px] font-bold bg-slate-100 text-slate-500 rounded">{status}</span>;
 }

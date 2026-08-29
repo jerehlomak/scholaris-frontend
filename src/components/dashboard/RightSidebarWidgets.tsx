@@ -35,19 +35,19 @@ export function ReviewEarnWidget() {
 export function DesktopAppWidget() {
     return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-            <Card className="p-6 bg-white/90 backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] relative overflow-hidden transition-all duration-300 group">
+            <Card className="p-6 bg-white/90 border border-white/40 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] relative overflow-hidden transition-all duration-300 group">
                 {/* Subtle accent background shape instead of full gradient */}
-                <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none group-hover:bg-blue-500/20 transition-colors duration-500" />
+                <div className="absolute top-0 right-0 w-48 h-48 bg-[#1E4DA6]/10 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none group-hover:bg-[#1E4DA6]/20 transition-colors duration-500" />
 
                 <div className="absolute top-6 right-6 flex items-center justify-center opacity-5 group-hover:opacity-10 transition-opacity duration-300 group-hover:scale-110 transform">
-                    <Monitor className="w-20 h-20 text-blue-900" />
+                    <Monitor className="w-20 h-20 text-[#0E2450]" />
                 </div>
 
                 <div className="relative z-10 w-full">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold mb-3 border border-blue-100">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1E4DA6]/5 text-[#1E4DA6] text-xs font-bold mb-3 border border-[#1E4DA6]/10">
                         <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1E4DA6]/60 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1E4DA6]"></span>
                         </span>
                         New Release
                     </div>
@@ -56,7 +56,7 @@ export function DesktopAppWidget() {
                         Faster experience native to your PC.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3">
-                        <Button className="flex-1 bg-gradient-to-br from-blue-600 to-[#0036a1] hover:from-blue-500 hover:to-blue-700 text-white text-sm py-6 rounded-xl flex items-center justify-center transition-all shadow-md shadow-blue-500/20 hover:shadow-lg hover:-translate-y-0.5 border-none">
+                        <Button className="flex-1 bg-gradient-to-br from-[#1E4DA6] to-[#1E4DA6] hover:from-[#1E4DA6] hover:to-[#173F8C] text-white text-sm py-6 rounded-xl flex items-center justify-center transition-all shadow-md shadow-[#1E4DA6]/20 hover:shadow-lg hover:-translate-y-0.5 border-none">
                             <Monitor className="w-4 h-4 mr-2" /><span className="font-bold">Windows</span>
                         </Button>
                         <Button className="flex-1 bg-gradient-to-br from-gray-800 to-gray-950 hover:from-gray-700 hover:to-gray-900 text-white text-sm py-6 rounded-xl flex items-center justify-center transition-all shadow-md shadow-gray-900/20 hover:shadow-lg hover:-translate-y-0.5 border-none">
@@ -76,14 +76,14 @@ export function CalendarWidget() {
 
     return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
-            <Card className="p-6 bg-white/90 backdrop-blur-xl border border-white/40 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+            <Card className="p-6 bg-white/90 border border-white/40 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
                 <div className="flex items-center justify-between mb-5">
                     <Button variant="ghost" size="icon" className="rounded-xl bg-gray-50/50 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors h-9 w-9 border border-gray-100">
                         <ChevronLeft className="w-4 h-4 flex-shrink-0" />
                     </Button>
                     <div className="text-center">
                         <h4 className="text-gray-900 font-extrabold text-[15px] tracking-wide">FEBRUARY 2026</h4>
-                        <p className="text-[#0036a1] text-[11px] uppercase font-bold mt-0.5 tracking-wider">Upcoming Events</p>
+                        <p className="text-[#1E4DA6] text-[11px] uppercase font-bold mt-0.5 tracking-wider">Upcoming Events</p>
                     </div>
                     <Button variant="ghost" size="icon" className="rounded-xl bg-gray-50/50 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors h-9 w-9 border border-gray-100">
                         <ChevronRight className="w-4 h-4 flex-shrink-0" />
@@ -94,7 +94,7 @@ export function CalendarWidget() {
                     {days.map(d => (
                         <div key={d} className={cn(
                             "text-[10px] font-bold text-center",
-                            d === 'SUN' || d === 'SAT' ? 'text-gray-400' : 'text-[#0036a1]'
+                            d === 'SUN' || d === 'SAT' ? 'text-gray-400' : 'text-[#1E4DA6]'
                         )}>
                             {d}
                         </div>
@@ -108,8 +108,8 @@ export function CalendarWidget() {
                             className={cn(
                                 "text-[13px] font-semibold text-center flex items-center justify-center w-8 h-8 mx-auto rounded-full cursor-pointer transition-all duration-200",
                                 date === 27
-                                    ? "bg-gradient-to-br from-blue-500 to-[#0036a1] text-white shadow-md shadow-blue-500/30 scale-110"
-                                    : "text-gray-700 hover:bg-blue-50 hover:text-[#0036a1]"
+                                    ? "bg-gradient-to-br from-[#1E4DA6] to-[#1E4DA6] text-white shadow-md shadow-[#1E4DA6]/30 scale-110"
+                                    : "text-gray-700 hover:bg-[#1E4DA6]/5 hover:text-[#1E4DA6]"
                             )}
                         >
                             {date}

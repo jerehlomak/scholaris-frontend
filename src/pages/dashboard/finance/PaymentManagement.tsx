@@ -101,12 +101,12 @@ export default function PaymentManagement() {
                                         className={`
                                             group flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap
                                             ${isActive 
-                                                ? 'bg-blue-600 text-white shadow-md shadow-blue-200' 
+                                                ? 'bg-[#1E4DA6] text-white shadow-md shadow-[#1E4DA6]/20' 
                                                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
                                             }
                                         `}
                                     >
-                                        <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-blue-100' : 'text-slate-400 group-hover:text-slate-600'}`} />
+                                        <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white/80' : 'text-slate-400 group-hover:text-slate-600'}`} />
                                         {tab.label}
                                     </button>
                                 );

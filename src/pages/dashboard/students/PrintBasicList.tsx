@@ -32,7 +32,7 @@ export function PrintBasicList() {
             <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                 <div className="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-end gap-4">
                     <div className="space-y-2 min-w-[200px]">
-                        <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Select Class <span className="text-blue-600">*</span></label>
+                        <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Select Class <span className="text-[#1E4DA6]">*</span></label>
                         <Select value={selectedClass} onValueChange={setSelectedClass}>
                             <SelectTrigger className="w-full rounded-xl border border-slate-200 px-4 py-3 h-12 bg-white text-slate-700 font-semibold"><SelectValue /></SelectTrigger>
                             <SelectContent><SelectItem value="all">All Classes</SelectItem><SelectItem value="jss1">JSS1</SelectItem><SelectItem value="jss2">JSS2</SelectItem><SelectItem value="jss3">JSS3</SelectItem></SelectContent>
@@ -41,7 +41,7 @@ export function PrintBasicList() {
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
                         <input type="text" placeholder="Search students..." value={search} onChange={e => setSearch(e.target.value)}
-                            className="w-full pl-9 pr-4 h-12 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all" />
+                            className="w-full pl-9 pr-4 h-12 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all" />
                     </div>
                     <div className="flex gap-2 shrink-0">
                         {[{ icon: <Printer className="h-4 w-4" />, label: 'Print' }, { icon: <Download className="h-4 w-4" />, label: 'PDF' }].map(b => (
@@ -55,7 +55,7 @@ export function PrintBasicList() {
                 {/* Table */}
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm whitespace-nowrap">
-                        <thead className="bg-blue-700 text-white text-xs font-bold uppercase tracking-wider">
+                        <thead className="bg-[#173F8C] text-white text-xs font-bold uppercase tracking-wider">
                             <tr>
                                 <th className="px-5 py-3 text-left">Sr</th>
                                 <th className="px-5 py-3 text-left">ID</th>
@@ -73,7 +73,7 @@ export function PrintBasicList() {
                                     <td className="px-5 py-4 text-slate-500 font-mono text-xs">{student.id}</td>
                                     <td className="px-5 py-4 font-bold text-slate-800">{student.name}</td>
                                     <td className="px-5 py-4 text-slate-600">{student.father || <span className="text-slate-300 italic">N/A</span>}</td>
-                                    <td className="px-5 py-4"><span className="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-bold">{student.class}</span></td>
+                                    <td className="px-5 py-4"><span className="px-2.5 py-1 bg-[#1E4DA6]/5 text-[#173F8C] rounded-lg text-xs font-bold">{student.class}</span></td>
                                     <td className="px-5 py-4 font-bold text-red-500">{student.fee}</td>
                                     <td className="px-5 py-4 text-slate-600">{student.phone || <span className="text-slate-300 italic">N/A</span>}</td>
                                 </tr>

@@ -14,7 +14,7 @@ function fmtShort(n: number) {
   if (Math.abs(n) >= 1_000) return '₦' + (n / 1_000).toFixed(1) + 'k';
   return '₦' + n.toLocaleString('en-NG', { minimumFractionDigits: 2 });
 }
-function avBg(n: string) { const c=['bg-violet-500','bg-blue-500','bg-teal-500','bg-rose-500','bg-amber-500','bg-indigo-500']; return c[n.charCodeAt(0)%c.length]; }
+function avBg(n: string) { const c=['bg-violet-500','bg-[#1E4DA6]','bg-teal-500','bg-rose-500','bg-amber-500','bg-indigo-500']; return c[n.charCodeAt(0)%c.length]; }
 
 interface RunItem { id:string; staffId:string; staffName:string; department:string; employeeId:string; bankName:string; accountNumber:string; accountName:string; gross:number; net:number; status:string; earningsBreakdown:any[]; deductionsBreakdown:any[]; }
 interface Run { id:string; month:number; year:number; totalGross:number; totalDeductions:number; totalNet:number; status:string; createdAt:string; items:RunItem[]; }
@@ -81,9 +81,8 @@ export default function PayrollRun() {
 
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');.pr-root,.pr-root *{font-family:'Plus Jakarta Sans',sans-serif!important}.pr-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-      <div className="pr-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
-        <div className="pointer-events-none fixed inset-0 opacity-[0.2]" style={{backgroundImage:'radial-gradient(circle,#94a3b8 1px,transparent 1px)',backgroundSize:'28px 28px'}}/>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');.pr-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+      <div className="pr-root min-h-screen bg-[#FBF9F5] px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
         <div className="relative z-10 mx-auto max-w-6xl">
 
           {/* Breadcrumb */}
@@ -92,7 +91,7 @@ export default function PayrollRun() {
             <ChevronRight className="h-3 w-3 text-slate-400"/>
             <span className="mono font-bold uppercase tracking-widest text-slate-500">Payroll</span>
             <ChevronRight className="h-3 w-3 text-slate-400"/>
-            <span className="mono font-bold uppercase tracking-widest text-blue-600">Payroll Run</span>
+            <span className="mono font-bold uppercase tracking-widest text-[#1E4DA6]">Payroll Run</span>
           </div>
 
           <div className={cn('mb-4 sm:mb-8 transition-all duration-500',vis?'opacity-100':'opacity-0 translate-y-3')}>
@@ -101,9 +100,9 @@ export default function PayrollRun() {
           </div>
 
           {/* Generate controls */}
-          <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 backdrop-blur-xl transition-all duration-500',vis?'opacity-100':'opacity-0 translate-y-3')}>
+          <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 transition-all duration-500',vis?'opacity-100':'opacity-0 translate-y-3')}>
             <div className="flex items-center gap-2.5 sm:gap-3 border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
-              <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
+              <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-[#1E4DA6]/10 text-[#1E4DA6]">
                 <Play className="h-4 w-4 sm:h-4.5 sm:w-4.5"/>
               </div>
               <h2 className="text-sm sm:text-base font-bold text-slate-800">Generate Payroll</h2>
@@ -116,7 +115,7 @@ export default function PayrollRun() {
                     <select
                       value={month}
                       onChange={e=>setMonth(+e.target.value)}
-                      className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-xs sm:text-sm font-semibold text-slate-800 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                      className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-xs sm:text-sm font-semibold text-slate-800 focus:border-[#1E4DA6]/60 focus:outline-none focus:ring-2 focus:ring-[#1E4DA6]/10"
                     >
                       {MONTHS.map((m,i)=><option key={m} value={i+1}>{m}</option>)}
                     </select>
@@ -126,7 +125,7 @@ export default function PayrollRun() {
                     <select
                       value={year}
                       onChange={e=>setYear(+e.target.value)}
-                      className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-xs sm:text-sm font-semibold text-slate-800 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                      className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-xs sm:text-sm font-semibold text-slate-800 focus:border-[#1E4DA6]/60 focus:outline-none focus:ring-2 focus:ring-[#1E4DA6]/10"
                     >
                       {[2024,2025,2026,2027].map(y=><option key={y} value={y}>{y}</option>)}
                     </select>
@@ -135,7 +134,7 @@ export default function PayrollRun() {
                 <Button
                   onClick={doGenerate}
                   disabled={generating}
-                  className="h-10 sm:h-10 w-full sm:w-auto gap-2 rounded-xl bg-blue-600 px-6 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-200 hover:bg-blue-700 active:scale-95 cursor-pointer"
+                  className="h-10 sm:h-10 w-full sm:w-auto gap-2 rounded-xl bg-[#1E4DA6] px-6 text-xs sm:text-sm font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#173F8C] active:scale-95 cursor-pointer"
                 >
                   {generating?<Loader2 className="h-4 w-4 animate-spin"/>:<Play className="h-4 w-4"/>}
                   Generate {MONTHS[month-1]} {year}
@@ -154,7 +153,7 @@ export default function PayrollRun() {
                 {[
                   {label:'Total Gross Pay',value:fmt(currentRun.totalGross),color:'text-emerald-700',bg:'bg-emerald-50/70',border:'border-emerald-200'},
                   {label:'Total Deductions',value:`-${fmt(currentRun.totalDeductions)}`,color:'text-rose-700',bg:'bg-rose-50/70',border:'border-rose-200'},
-                  {label:'Total Net Disbursed',value:fmt(currentRun.totalNet),color:'text-blue-700',bg:'bg-blue-50/70',border:'border-blue-200'},
+                  {label:'Total Net Disbursed',value:fmt(currentRun.totalNet),color:'text-[#173F8C]',bg:'bg-[#1E4DA6]/8',border:'border-[#1E4DA6]/20'},
                 ].map(c=>(
                   <div key={c.label} className={cn('rounded-xl sm:rounded-2xl border p-3.5 sm:p-4 shadow-sm',c.bg,c.border)}>
                     <p className="mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-500">{c.label}</p>
@@ -164,7 +163,7 @@ export default function PayrollRun() {
               </div>
 
               {/* Staff Breakdown Container */}
-              <div className="mb-4 sm:mb-5 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 backdrop-blur-xl">
+              <div className="mb-4 sm:mb-5 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50">
                 <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/60 px-4 py-3.5 sm:px-6 sm:py-4">
                   <div>
                     <h3 className="text-xs sm:text-sm font-bold text-slate-800">{MONTHS[currentRun.month-1]} {currentRun.year} — Staff Breakdown</h3>
@@ -206,7 +205,7 @@ export default function PayrollRun() {
                         </div>
                         <div>
                           <span className="text-[8px] font-bold uppercase text-slate-400">Net Pay</span>
-                          <p className="mono text-[11px] font-black text-blue-700 truncate">{fmtShort(item.net)}</p>
+                          <p className="mono text-[11px] font-black text-[#173F8C] truncate">{fmtShort(item.net)}</p>
                         </div>
                       </div>
 
@@ -276,7 +275,7 @@ export default function PayrollRun() {
                             <td className="px-4 py-3 text-xs text-slate-500">{item.department||'—'}</td>
                             <td className="px-4 py-3"><span className="mono font-bold text-emerald-700">{fmt(item.gross)}</span></td>
                             <td className="px-4 py-3"><span className="mono font-bold text-rose-600">-{fmt(item.gross-item.net)}</span></td>
-                            <td className="px-4 py-3"><span className="mono font-black text-blue-700">{fmt(item.net)}</span></td>
+                            <td className="px-4 py-3"><span className="mono font-black text-[#173F8C]">{fmt(item.net)}</span></td>
                             <td className="px-4 py-3"><span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold uppercase',item.status==='paid'?'bg-emerald-100 text-emerald-700':'bg-slate-100 text-slate-500')}>{item.status}</span></td>
                             <td className="px-4 py-3"><ChevronDown className={cn('h-4 w-4 text-slate-400 transition-transform',expandedRow===item.staffId&&'rotate-180')}/></td>
                           </motion.tr>
@@ -312,12 +311,12 @@ export default function PayrollRun() {
 
               {/* Payment method tabs */}
               {currentRun.status!=='confirmed' && (
-                <div className="mb-4 sm:mb-5 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 backdrop-blur-xl">
+                <div className="mb-4 sm:mb-5 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50">
                   <div className="border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4"><h3 className="text-xs sm:text-sm font-bold text-slate-800">Disbursement &amp; Payment Options</h3></div>
                   <div className="p-4 sm:p-6">
                     <div className="mb-4 flex flex-col sm:flex-row gap-2">
                       {(['excel','gateway','manual'] as const).map(tab=>(
-                        <button key={tab} onClick={()=>setActiveTab(tab)} className={cn('rounded-xl px-3.5 py-2 text-xs font-bold uppercase tracking-wide transition-all cursor-pointer text-center',activeTab===tab?'bg-blue-600 text-white shadow-md':'bg-slate-100 text-slate-500 hover:bg-slate-200')}>
+                        <button key={tab} onClick={()=>setActiveTab(tab)} className={cn('rounded-xl px-3.5 py-2 text-xs font-bold uppercase tracking-wide transition-all cursor-pointer text-center',activeTab===tab?'bg-[#1E4DA6] text-white shadow-md':'bg-slate-100 text-slate-500 hover:bg-slate-200')}>
                           {tab==='excel'?'📊 Excel / Bank Export':tab==='gateway'?'💳 Payment Gateway':'💵 Manual / Cash'}
                         </button>
                       ))}
@@ -372,7 +371,7 @@ export default function PayrollRun() {
 
           {/* Run History Section */}
           {runs.length>0 && (
-            <div className={cn('mt-6 sm:mt-8 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 backdrop-blur-xl transition-all duration-500',vis?'opacity-100':'opacity-0')}>
+            <div className={cn('mt-6 sm:mt-8 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 transition-all duration-500',vis?'opacity-100':'opacity-0')}>
               <div className="flex items-center gap-2.5 sm:gap-3 border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
                 <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-600">
                   <History className="h-4 w-4 sm:h-4.5 sm:w-4.5"/>
@@ -386,7 +385,7 @@ export default function PayrollRun() {
                   <div key={run.id} className="p-3.5 space-y-2.5">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2.5">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#1E4DA6]/5 text-[#173F8C]">
                           <span className="mono text-xs font-bold">{MONTHS[run.month-1].substring(0,3)}</span>
                         </div>
                         <div>
@@ -431,7 +430,7 @@ export default function PayrollRun() {
                       <tr key={run.id} className="hover:bg-slate-50/60 transition-colors bg-white">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-4">
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700"><span className="mono text-xs font-bold">{MONTHS[run.month-1].substring(0,3)}</span></div>
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#1E4DA6]/5 text-[#173F8C]"><span className="mono text-xs font-bold">{MONTHS[run.month-1].substring(0,3)}</span></div>
                             <p className="font-semibold text-slate-800">{MONTHS[run.month-1]} {run.year}</p>
                           </div>
                         </td>
@@ -468,7 +467,7 @@ export default function PayrollRun() {
                   <div className="flex justify-between text-xs sm:text-sm"><span className="text-slate-500">Period</span><span className="font-semibold">{MONTHS[currentRun.month-1]} {currentRun.year}</span></div>
                   <div className="flex justify-between text-xs sm:text-sm"><span className="text-slate-500">Total Gross</span><span className="mono font-bold text-emerald-700">{fmt(currentRun.totalGross)}</span></div>
                   <div className="flex justify-between text-xs sm:text-sm"><span className="text-slate-500">Total Deductions</span><span className="mono font-bold text-rose-600">-{fmt(currentRun.totalDeductions)}</span></div>
-                  <div className="flex justify-between border-t border-slate-200 pt-2 text-xs sm:text-sm"><span className="font-bold text-slate-700">Total Net Pay</span><span className="mono text-base sm:text-lg font-black text-blue-700">{fmt(currentRun.totalNet)}</span></div>
+                  <div className="flex justify-between border-t border-slate-200 pt-2 text-xs sm:text-sm"><span className="font-bold text-slate-700">Total Net Pay</span><span className="mono text-base sm:text-lg font-black text-[#173F8C]">{fmt(currentRun.totalNet)}</span></div>
                 </div>
                 <div className="mb-4 sm:mb-5 flex items-start gap-2 rounded-xl bg-amber-50 border border-amber-200 p-3">
                   <AlertTriangle className="h-4 w-4 shrink-0 text-amber-600 mt-0.5"/>

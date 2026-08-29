@@ -5,11 +5,10 @@ import { Separator } from '../ui/separator';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTerm } from '../../context/TermContext';
-import { useTheme } from '../../context/ThemeContext';
 import { useSubscription } from '../../contexts/SubscriptionContext';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
-import logo from '../../assets/SkcoolyPlus.png';
+import { SkcoolyWordmark } from '../shared/SkcoolyWordmark';
 import { cn } from '../../lib/utils';
 import { useBranch } from '../../context/BranchContext';
 import { useSchoolType } from '../../context/SchoolTypeContext';
@@ -27,35 +26,13 @@ const KNOWN_NOTIFICATION_LINK_PREFIXES = [
     '/dashboard/finance/messages',
 ];
 
-// ─────────────────────────────────────────────
-// Color maps (unchanged logic)
-// ─────────────────────────────────────────────
-const headerBgMap: Record<string, string> = {
-    dark: 'bg-slate-800 border-black/10',
-    red: 'bg-red-400 border-red-500/30',
-    teal: 'bg-teal-400 border-teal-500/30',
-    green: 'bg-green-500 border-green-600/30',
-    blue: 'bg-blue-400 border-blue-500/30',
-    light: 'bg-white/90 border-slate-100',
-};
-
-const activeBgClassMap: Record<string, string> = {
-    red: 'bg-red-500', pink: 'bg-pink-500', teal: 'bg-teal-500', blue: 'bg-blue-500',
-    yellow: 'bg-yellow-500', orange: 'bg-orange-500', indigo: 'bg-indigo-600', navy: 'bg-indigo-800',
-    magenta: 'bg-pink-600', rust: 'bg-orange-600', forest: 'bg-green-600', purple: 'bg-purple-800',
-};
-
-const headerTextClassMap: Record<string, string> = {
-    white: 'text-white',
-    dark: 'text-slate-900',
-    gray: 'text-slate-500',
-};
+// The old per-school header color-picker maps were removed 14 Aug 2026 —
+// see the "Fixed brand theme" comment further down.
 
 interface NavbarProps { toggleSidebar: () => void; }
 
 export function Navbar({ toggleSidebar }: NavbarProps) {
     const { viewingTerm, terms, setViewingTerm } = useTerm();
-    const { headerBg, activeItemBg, headerText } = useTheme();
     const { currentPlan } = useSubscription();
     const { logout, user } = useAuth();
     const { isUnrestrictedAdmin } = usePermissions();
@@ -124,16 +101,20 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
         return () => document.removeEventListener('mousedown', onMouseDown);
     }, []);
 
-    const isLight = headerBg === 'light';
-    const bgClass = headerBgMap[headerBg] || headerBgMap['light'];
-    const activeBgClass = activeBgClassMap[activeItemBg] || 'bg-indigo-600';
-    const textClass = headerTextClassMap[headerText] || (isLight ? 'text-slate-800' : 'text-white');
+    // Fixed brand theme — see Sidebar.tsx for the same change and why
+    // (client explicitly asked for one consistent, non-customizable color
+    // per school). ThemeContext's headerBg/activeItemBg/headerText color-
+    // picker values are intentionally ignored here.
+    const isLight = true; // top bar stays a light cream panel against the navy sidebar
+    const bgClass = 'bg-white/95 border-[#EEEAE0]';
+    const activeBgClass = 'bg-[#15316B]';
+    const textClass = 'text-[#15316B]';
 
     // Helper: ghost icon button
     const iconBtn = cn(
         'relative h-9 w-9 rounded-xl transition-all duration-200',
         isLight
-            ? 'text-slate-600 hover:bg-slate-100 hover:text-blue-600'
+            ? 'text-slate-600 hover:bg-slate-100 hover:text-[#15316B]'
             : 'text-white/80 hover:bg-white/10 hover:text-white'
     );
 
@@ -144,8 +125,10 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
     return (
         <>
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');
-                .nb-root, .nb-root * { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+                @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&display=swap');
+                /* Body text inherits the app's global Inter font (index.css)
+                   — only the monospace face (term/session codes, etc.) is
+                   still overridden here as a deliberate detail. */
                 .nb-root .font-mono  { font-family: 'DM Mono', monospace !important; }
             `}</style>
 
@@ -156,18 +139,14 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                     'flex items-center justify-between px-4 lg:px-6',
                     'backdrop-blur-md transition-all duration-300',
                     bgClass, textClass,
-                    mounted ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0',
+                    mounted ? 'opacity-100' : '-translate-y-2 opacity-0',
                     'transition-all duration-500'
                 )}
             >
                 {/* ── Left: Logo + toggle ─────────────── */}
                 <div className="flex items-center gap-3">
                     <Link to="/" className="flex h-full shrink-0 items-center">
-                        <img
-                            src={logo}
-                            alt="Logo"
-                            className="h-20 w-24 object-contain sm:w-28"
-                        />
+                        <SkcoolyWordmark size="md" />
                     </Link>
 
                     <Button
@@ -188,7 +167,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                     <div className="hidden xl:flex items-center gap-2 mr-2">
                         <button className={cn(
                             'flex items-center gap-2 rounded-full px-4 py-2 text-[10px] font-semibold text-white transition-all hover:scale-[1.03]',
-                            'bg-teal-500 hover:bg-teal-600 shadow-sm shadow-teal-200'
+                            'bg-[#1E4DA6] hover:bg-[#173F8C] shadow-sm shadow-[#1E4DA6]/20'
                         )}>
                             <Apple className="h-3.5 w-3.5 fill-current" />
                             <span className="flex flex-col text-left leading-none">
@@ -197,8 +176,8 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                             </span>
                         </button>
                         <button className={cn(
-                            'flex items-center gap-2 rounded-full px-4 py-2 text-[10px] font-semibold text-white transition-all hover:scale-[1.03]',
-                            'bg-blue-600 hover:bg-blue-700 shadow-sm shadow-blue-200'
+                            'flex items-center gap-2 rounded-full px-4 py-2 text-[10px] font-semibold text-[#15316B] transition-all hover:scale-[1.03]',
+                            'bg-[#F5B800] hover:bg-[#FFC72C] shadow-sm shadow-[#F5B800]/25'
                         )}>
                             <Play className="h-3.5 w-3.5 fill-current" />
                             <span className="flex flex-col text-left leading-none">
@@ -246,7 +225,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                                         setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
                                                     } catch {}
                                                 }}
-                                                className="text-[10px] font-semibold text-blue-600 hover:text-blue-800"
+                                                className="text-[10px] font-semibold text-[#15316B] hover:text-[#0E2450]"
                                             >
                                                 Mark all read
                                             </button>
@@ -262,11 +241,11 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                                     onClick={() => handleReadNotification(notif)}
                                                     className={cn(
                                                         'w-full text-left p-3 rounded-xl transition-colors hover:bg-slate-50',
-                                                        !notif.isRead ? 'bg-blue-50/50' : 'bg-transparent'
+                                                        !notif.isRead ? 'bg-[#F5B800]/8' : 'bg-transparent'
                                                     )}
                                                 >
                                                     <div className="flex gap-3">
-                                                        <div className={cn('mt-0.5 h-2 w-2 rounded-full flex-shrink-0', !notif.isRead ? 'bg-blue-500' : 'bg-transparent')} />
+                                                        <div className={cn('mt-0.5 h-2 w-2 rounded-full flex-shrink-0', !notif.isRead ? 'bg-[#F5B800]' : 'bg-transparent')} />
                                                         <div>
                                                             <p className="text-[11px] font-bold text-slate-800">{notif.title}</p>
                                                             <p className="text-[10px] text-slate-500 leading-tight mt-0.5">{notif.message}</p>
@@ -301,7 +280,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                             }}
                             className={cn(
                                 'cursor-pointer appearance-none rounded-xl border px-3 py-1.5 font-mono text-xs font-semibold',
-                                'transition-all focus:outline-none focus:ring-2 focus:ring-blue-300',
+                                'transition-all focus:outline-none focus:ring-2 focus:ring-[#15316B]/30',
                                 'bg-white/80 border-slate-200 text-slate-700 hover:border-slate-300',
                                 'pr-7 shadow-sm'
                             )}
@@ -331,13 +310,13 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                 value={activeSchoolType || ''}
                                 onChange={(e) => setActiveSchoolType(e.target.value)}
                                 className={cn(
-                                    'cursor-pointer appearance-none rounded-xl border px-3 py-1.5 font-mono text-xs font-bold text-indigo-700',
-                                    'transition-all focus:outline-none focus:ring-2 focus:ring-indigo-300',
-                                    'bg-indigo-50 border-indigo-200 hover:border-indigo-300 hover:bg-indigo-100',
+                                    'cursor-pointer appearance-none rounded-xl border px-3 py-1.5 font-mono text-xs font-bold text-[#8a6a00]',
+                                    'transition-all focus:outline-none focus:ring-2 focus:ring-[#F5B800]/40',
+                                    'bg-[#F5B800]/10 border-[#F5B800]/30 hover:border-[#F5B800]/50 hover:bg-[#F5B800]/15',
                                     'pr-7 shadow-sm'
                                 )}
                                 style={{
-                                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234338ca'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238a6a00'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundPosition: 'right 0.4rem center',
                                     backgroundSize: '0.9em 0.9em',
@@ -362,13 +341,13 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                 value={activeBranchId || 'all'}
                                 onChange={(e) => switchBranch(e.target.value)}
                                 className={cn(
-                                    'cursor-pointer appearance-none rounded-xl border px-3 py-1.5 font-mono text-xs font-bold text-teal-700',
-                                    'transition-all focus:outline-none focus:ring-2 focus:ring-teal-300',
-                                    'bg-teal-50 border-teal-200 hover:border-teal-300 hover:bg-teal-100',
+                                    'cursor-pointer appearance-none rounded-xl border px-3 py-1.5 font-mono text-xs font-bold text-[#7C3559]',
+                                    'transition-all focus:outline-none focus:ring-2 focus:ring-[#7C3559]/30',
+                                    'bg-[#7C3559]/8 border-[#7C3559]/25 hover:border-[#7C3559]/40 hover:bg-[#7C3559]/12',
                                     'pr-7 shadow-sm'
                                 )}
                                 style={{
-                                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230f766e'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237C3559'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundPosition: 'right 0.4rem center',
                                     backgroundSize: '0.9em 0.9em',
@@ -404,7 +383,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                             onClick={() => setShowProfileDropdown(!showProfileDropdown)}
                             className="flex h-9 items-center gap-2 rounded-xl border border-transparent px-2 transition-all hover:bg-slate-100 dark:hover:bg-white/10"
                         >
-                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-50 font-bold text-teal-600 shadow-sm border border-teal-100">
+                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#15316B]/8 font-bold text-[#15316B] shadow-sm border border-[#15316B]/15">
                                 {userInit}
                             </div>
                         </button>
@@ -458,7 +437,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                         className={cn(iconBtn, 'xl:hidden ml-1')}
                         aria-label="Open mobile menu"
                     >
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-teal-50 font-bold text-teal-600 shadow-sm border border-teal-100">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#15316B]/8 font-bold text-[#15316B] shadow-sm border border-[#15316B]/15">
                             {userInit}
                         </div>
                     </Button>
@@ -512,7 +491,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                             <div className="space-y-1 px-4 py-3">
                                 {/* User info */}
                                 <div className="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 mb-3">
-                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-50 font-bold text-teal-600 shadow-sm border border-teal-100">
+                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#15316B]/8 font-bold text-[#15316B] shadow-sm border border-[#15316B]/15">
                                         {userInit}
                                     </div>
                                     <div className="min-w-0">
@@ -538,7 +517,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                             const term = terms.find((t: any) => t.id === e.target.value);
                                             if (term) setViewingTerm(term);
                                         }}
-                                        className="w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 font-mono text-sm font-semibold text-slate-700 shadow-sm transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                                        className="w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 font-mono text-sm font-semibold text-slate-700 shadow-sm transition-all focus:border-[#15316B]/40 focus:outline-none focus:ring-2 focus:ring-[#15316B]/15"
                                     >
                                         {terms.map((term: any) => (
                                             <option key={term.id} value={term.id}>
@@ -558,7 +537,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                         <select
                                             value={activeSchoolType || ''}
                                             onChange={(e) => setActiveSchoolType(e.target.value)}
-                                            className="w-full cursor-pointer appearance-none rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-2.5 font-mono text-sm font-bold text-indigo-700 shadow-sm transition-all focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+                                            className="w-full cursor-pointer appearance-none rounded-xl border border-[#F5B800]/30 bg-[#F5B800]/10 px-4 py-2.5 font-mono text-sm font-bold text-[#8a6a00] shadow-sm transition-all focus:border-[#F5B800]/50 focus:outline-none focus:ring-2 focus:ring-[#F5B800]/20"
                                         >
                                             {schoolTypes.map((st) => (
                                                 <option key={st.id} value={st.name}>
@@ -578,7 +557,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                         <select
                                             value={activeBranchId || 'all'}
                                             onChange={(e) => switchBranch(e.target.value)}
-                                            className="w-full cursor-pointer appearance-none rounded-xl border border-teal-200 bg-teal-50 px-4 py-2.5 font-mono text-sm font-bold text-teal-700 shadow-sm transition-all focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-100"
+                                            className="w-full cursor-pointer appearance-none rounded-xl border border-[#7C3559]/25 bg-[#7C3559]/8 px-4 py-2.5 font-mono text-sm font-bold text-[#7C3559] shadow-sm transition-all focus:border-[#7C3559]/40 focus:outline-none focus:ring-2 focus:ring-[#7C3559]/15"
                                         >
                                             <option value="all">🏢 All Branches</option>
                                             {availableBranches.map((branch) => (
@@ -596,7 +575,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                         <Apple className="h-4 w-4 fill-current" />
                                         App Store
                                     </button>
-                                    <button className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-xs font-semibold text-white shadow-sm transition-all hover:bg-blue-700 active:scale-95">
+                                    <button className="flex items-center justify-center gap-2 rounded-xl bg-[#1E4DA6] px-4 py-3 text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#173F8C] active:scale-95">
                                         <Play className="h-4 w-4 fill-current" />
                                         Google Play
                                     </button>

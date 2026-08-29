@@ -22,7 +22,7 @@ const groupByCategory = (levels: ClassLevel[]) => {
     return map;
 };
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
 export function EditClass() {
     const { id } = useParams();
@@ -88,17 +88,17 @@ export function EditClass() {
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-xs text-slate-400 font-mono mb-6">
                 <span>Dashboard</span><span>/</span>
-                <button onClick={() => navigate('/dashboard/classes/all')} className="hover:text-blue-600 transition-colors">Classes</button>
+                <button onClick={() => navigate('/dashboard/classes/all')} className="hover:text-[#1E4DA6] transition-colors">Classes</button>
                 <span>/</span><span>Edit Class</span>
             </div>
 
             {/* Header */}
             <div className="mb-8">
-                <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600 transition-colors mb-4">
+                <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-slate-500 hover:text-[#1E4DA6] transition-colors mb-4">
                     <ArrowLeft className="h-4 w-4" /> Back to Classes
                 </button>
                 <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-700 text-white shadow-lg">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#173F8C] text-white shadow-lg">
                         <GraduationCap className="h-6 w-6" />
                     </div>
                     <div>
@@ -110,7 +110,7 @@ export function EditClass() {
 
             {loadingData ? (
                 <div className="flex items-center justify-center py-24">
-                    <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                    <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
                 </div>
             ) : (
                 <form className="rounded-2xl border border-slate-200 bg-white shadow-sm p-8 flex flex-col gap-6" onSubmit={handleSubmit}>
@@ -118,14 +118,14 @@ export function EditClass() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Class Name */}
                         <div className="space-y-2 md:col-span-2">
-                            <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Class Name <span className="text-blue-600">*</span></label>
+                            <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Class Name <span className="text-[#1E4DA6]">*</span></label>
                             <input value={form.name} onChange={e => set('name', e.target.value.toUpperCase())}
-                                className={cn(inputCls, 'font-black text-blue-700')} placeholder="e.g. JSS1 A" required />
+                                className={cn(inputCls, 'font-black text-[#173F8C]')} placeholder="e.g. JSS1 A" required />
                         </div>
 
                         {/* Level picker */}
                         <div className="space-y-2">
-                            <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Section <span className="text-blue-600">*</span></label>
+                            <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Section <span className="text-[#1E4DA6]">*</span></label>
                             <Select value={form.level} onValueChange={val => set('level', val)}>
                                 <SelectTrigger className={inputCls}><SelectValue placeholder="Select section" /></SelectTrigger>
                                 <SelectContent>
@@ -167,7 +167,7 @@ export function EditClass() {
                             <ArrowLeft className="h-4 w-4 inline mr-1" />Cancel
                         </button>
                         <button type="submit" disabled={isSubmitting}
-                            className="flex items-center gap-2 rounded-xl bg-blue-700 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 disabled:opacity-50 transition-colors">
+                            className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69] disabled:opacity-50 transition-colors">
                             {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                             {isSubmitting ? 'Updating…' : 'Save Changes'}
                         </button>

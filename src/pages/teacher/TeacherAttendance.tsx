@@ -11,9 +11,9 @@
  * updated for the shadcn redesign. All inner components (MiniCalendar,
  * MarkAttendancePane, StudentHistoryPane, QRScannerPane) are untouched.
  */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ClipboardCheck, History, ChevronLeft, ChevronRight, Loader2, RefreshCw, ScanLine } from 'lucide-react';
+import { ClipboardCheck, History, ChevronLeft, ChevronRight, Loader2, RefreshCw } from 'lucide-react';
 import axios from 'axios';
 import useSWR from 'swr';
 import { fetcher } from '../../utils/fetcher';
@@ -27,7 +27,7 @@ import { Pagination } from '../../components/shared/Pagination';
 const API = '/api/v1';
 
 type AttendanceStatus = 'PRESENT' | 'ABSENT' | 'LATE' | 'EXCUSED';
-type Tab = 'mark' | 'history' | 'scan';
+type Tab = 'mark' | 'history';
 
 interface FormClass {
     id: string;
@@ -54,10 +54,10 @@ interface StudentHistory {
 }
 
 const STATUS_CONFIG: Record<AttendanceStatus, { label: string; bg: string; text: string; dot: string; abbr: string }> = {
-    PRESENT: { label: 'Present', bg: 'bg-[#6bc048]/10', text: 'text-[#6bc048]', dot: 'bg-[#6bc048]', abbr: 'P' },
+    PRESENT: { label: 'Present', bg: 'bg-[#10b981]/10', text: 'text-[#10b981]', dot: 'bg-[#10b981]', abbr: 'P' },
     ABSENT: { label: 'Absent', bg: 'bg-red-100', text: 'text-red-600', dot: 'bg-red-500', abbr: 'A' },
     LATE: { label: 'Late', bg: 'bg-[#ff9800]/10', text: 'text-[#ff9800]', dot: 'bg-[#ff9800]', abbr: 'L' },
-    EXCUSED: { label: 'Excused', bg: 'bg-blue-100', text: 'text-blue-600', dot: 'bg-blue-500', abbr: 'E' },
+    EXCUSED: { label: 'Excused', bg: 'bg-[#1E4DA6]/10', text: 'text-[#1E4DA6]', dot: 'bg-[#1E4DA6]', abbr: 'E' },
 };
 
 // ─── Mini Calendar ──────────────────────────────────────────────────────────────
@@ -80,7 +80,7 @@ function MiniCalendar({ classId, selectedDate, onSelectDate }: { classId: string
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
     const rateColor = (rate: number) => {
-        if (rate >= 0.9) return 'bg-[#6bc048]';
+        if (rate >= 0.9) return 'bg-[#10b981]';
         if (rate >= 0.7) return 'bg-[#ff9800]';
         if (rate > 0) return 'bg-red-400';
         return 'bg-gray-100';
@@ -117,7 +117,7 @@ function MiniCalendar({ classId, selectedDate, onSelectDate }: { classId: string
                             onClick={() => !isWeekend && !isFuture && onSelectDate(dateStr)}
                             disabled={isWeekend || isFuture}
                             className={`h-8 w-full rounded text-[10px] font-semibold transition-all
-                                ${isSelected ? 'ring-2 ring-[#0036a1] ring-offset-1' : ''}
+                                ${isSelected ? 'ring-2 ring-[#1E4DA6] ring-offset-1' : ''}
                                 ${isWeekend || isFuture ? 'opacity-25 cursor-default text-gray-400' :
                                     data ? `${rateColor(data.rate)} text-white hover:opacity-90 cursor-pointer` :
                                         'bg-gray-50 text-gray-500 hover:bg-gray-100 cursor-pointer'}`}>
@@ -127,7 +127,7 @@ function MiniCalendar({ classId, selectedDate, onSelectDate }: { classId: string
                 })}
             </div>
             <div className="flex items-center gap-2 mt-3 text-[10px] text-gray-400 flex-wrap">
-                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[#6bc048]" />≥90%</span>
+                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[#10b981]" />≥90%</span>
                 <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[#ff9800]" />70–89%</span>
                 <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-red-400" />&lt;70%</span>
                 <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-gray-100 border" />No data</span>
@@ -177,7 +177,7 @@ function MarkAttendancePane({ classId, className, date }: { classId: string; cla
         finally { setSaving(false); }
     };
 
-    if (loading) return <div className="flex items-center justify-center py-16"><Loader2 className="w-6 h-6 animate-spin text-[#0036a1]" /></div>;
+    if (loading) return <div className="flex items-center justify-center py-16"><Loader2 className="w-6 h-6 animate-spin text-[#1E4DA6]" /></div>;
 
     if (roster.length === 0) return (
         <Card className="p-10 text-center text-gray-400 bg-white border border-gray-100">
@@ -195,7 +195,7 @@ function MarkAttendancePane({ classId, className, date }: { classId: string; cla
                         All {STATUS_CONFIG[s].label}
                     </button>
                 ))}
-                <button onClick={() => mutate()} className="ml-auto text-gray-400 hover:text-[#0036a1] p-1.5 rounded">
+                <button onClick={() => mutate()} className="ml-auto text-gray-400 hover:text-[#1E4DA6] p-1.5 rounded">
                     <RefreshCw className="w-4 h-4" />
                 </button>
             </div>
@@ -219,7 +219,7 @@ function MarkAttendancePane({ classId, className, date }: { classId: string; cla
                                     <td className="px-4 py-3 text-sm text-gray-400">{(currentPage - 1) * PAGE_SIZE + idx + 1}</td>
                                     <td className="px-4 py-3">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-[#0036a1] flex items-center justify-center text-white text-xs font-bold shrink-0">
+                                            <div className="w-8 h-8 rounded-full bg-[#1E4DA6] flex items-center justify-center text-white text-xs font-bold shrink-0">
                                                 {s.name.substring(0, 2).toUpperCase()}
                                             </div>
                                             <span className="font-semibold text-gray-900 text-sm">{s.name}</span>
@@ -241,7 +241,7 @@ function MarkAttendancePane({ classId, className, date }: { classId: string; cla
                                         <input value={marks[s.studentId]?.note || ''}
                                             onChange={e => setMarks(m => ({ ...m, [s.studentId]: { ...m[s.studentId], note: e.target.value } }))}
                                             placeholder="e.g. sick, trip..."
-                                            className="border border-gray-200 rounded-lg px-2 py-1 text-xs w-36 outline-none focus:border-[#0036a1]" />
+                                            className="border border-gray-200 rounded-lg px-2 py-1 text-xs w-36 outline-none focus:border-[#1E4DA6]" />
                                     </td>
                                     {s.record && <td className="px-4 py-3 text-xs text-gray-500">{s.record.markedBy}</td>}
                                 </tr>
@@ -256,7 +256,7 @@ function MarkAttendancePane({ classId, className, date }: { classId: string; cla
                         <div key={s.studentId} className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm relative">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-[#0036a1] flex items-center justify-center text-white font-bold text-sm">
+                                    <div className="w-10 h-10 rounded-full bg-[#1E4DA6] flex items-center justify-center text-white font-bold text-sm">
                                         {s.name.substring(0, 2).toUpperCase()}
                                     </div>
                                     <div>
@@ -288,7 +288,7 @@ function MarkAttendancePane({ classId, className, date }: { classId: string; cla
                                     <input value={marks[s.studentId]?.note || ''}
                                         onChange={e => setMarks(m => ({ ...m, [s.studentId]: { ...m[s.studentId], note: e.target.value } }))}
                                         placeholder="e.g. sick, trip..."
-                                        className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#0036a1]" />
+                                        className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#1E4DA6]" />
                                 </div>
 
                                 {s.record && (
@@ -317,11 +317,11 @@ function MarkAttendancePane({ classId, className, date }: { classId: string; cla
                     <AnimatePresence mode="wait">
                         {saved ? (
                             <motion.div key="saved" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-                                className="flex items-center gap-2 text-[#6bc048] font-bold text-sm">
+                                className="flex items-center gap-2 text-[#10b981] font-bold text-sm">
                                 ✓ Attendance saved!
                             </motion.div>
                         ) : (
-                            <Button onClick={handleSave} disabled={saving || Object.keys(marks).length === 0} className="bg-[#0036a1] text-white">
+                            <Button onClick={handleSave} disabled={saving || Object.keys(marks).length === 0} className="bg-[#1E4DA6] text-white">
                                 {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                                 {saving ? 'Saving...' : 'Save Attendance'}
                             </Button>
@@ -343,7 +343,7 @@ function StudentHistoryPane({ classId }: { classId: string }) {
     const [currentPage, setCurrentPage] = useState(1);
     const PAGE_SIZE = 10;
 
-    if (loading) return <div className="flex items-center justify-center py-16"><Loader2 className="w-6 h-6 animate-spin text-[#0036a1]" /></div>;
+    if (loading) return <div className="flex items-center justify-center py-16"><Loader2 className="w-6 h-6 animate-spin text-[#1E4DA6]" /></div>;
     if (data.length === 0) return <Card className="p-10 text-center text-gray-400 bg-white border border-gray-100">No attendance history this month.</Card>;
 
     return (
@@ -355,10 +355,10 @@ function StudentHistoryPane({ classId }: { classId: string }) {
                             <tr>
                                 <th className="px-5 py-3">Student</th>
                                 <th className="px-5 py-3">Adm. No.</th>
-                                <th className="px-5 py-3 text-[#6bc048]">Present</th>
+                                <th className="px-5 py-3 text-[#10b981]">Present</th>
                                 <th className="px-5 py-3 text-red-500">Absent</th>
                                 <th className="px-5 py-3 text-[#ff9800]">Late</th>
-                                <th className="px-5 py-3 text-blue-500">Excused</th>
+                                <th className="px-5 py-3 text-[#1E4DA6]">Excused</th>
                                 <th className="px-5 py-3">Rate</th>
                             </tr>
                         </thead>
@@ -370,23 +370,23 @@ function StudentHistoryPane({ classId }: { classId: string }) {
                                     <tr key={s.studentId} className="hover:bg-gray-50/50 transition-colors">
                                         <td className="px-5 py-3">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-[#0036a1] flex items-center justify-center text-white text-xs font-bold shrink-0">
+                                                <div className="w-8 h-8 rounded-full bg-[#1E4DA6] flex items-center justify-center text-white text-xs font-bold shrink-0">
                                                     {s.name.substring(0, 2).toUpperCase()}
                                                 </div>
                                                 <span className="font-semibold text-gray-900 text-sm">{s.name}</span>
                                             </div>
                                         </td>
                                         <td className="px-5 py-3 text-sm text-gray-500">{s.admissionNo}</td>
-                                        <td className="px-5 py-3 text-sm font-bold text-[#6bc048]">{s.present}</td>
+                                        <td className="px-5 py-3 text-sm font-bold text-[#10b981]">{s.present}</td>
                                         <td className="px-5 py-3 text-sm font-bold text-red-500">{s.absent}</td>
                                         <td className="px-5 py-3 text-sm font-bold text-[#ff9800]">{s.late}</td>
-                                        <td className="px-5 py-3 text-sm font-bold text-blue-500">{s.excused}</td>
+                                        <td className="px-5 py-3 text-sm font-bold text-[#1E4DA6]">{s.excused}</td>
                                         <td className="px-5 py-3">
                                             <div className="flex items-center gap-2">
                                                 <div className="w-16 h-2 bg-gray-100 rounded-full overflow-hidden">
-                                                    <div className="h-full bg-[#6bc048] rounded-full" style={{ width: `${rate}%` }} />
+                                                    <div className="h-full bg-[#10b981] rounded-full" style={{ width: `${rate}%` }} />
                                                 </div>
-                                                <span className={`text-xs font-bold ${rate >= 90 ? 'text-[#6bc048]' : rate >= 70 ? 'text-[#ff9800]' : 'text-red-500'}`}>{rate}%</span>
+                                                <span className={`text-xs font-bold ${rate >= 90 ? 'text-[#10b981]' : rate >= 70 ? 'text-[#ff9800]' : 'text-red-500'}`}>{rate}%</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -405,7 +405,7 @@ function StudentHistoryPane({ classId }: { classId: string }) {
                             <div key={s.studentId} className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm relative">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-[#0036a1] flex items-center justify-center text-white font-bold text-sm">
+                                        <div className="w-10 h-10 rounded-full bg-[#1E4DA6] flex items-center justify-center text-white font-bold text-sm">
                                             {s.name.substring(0, 2).toUpperCase()}
                                         </div>
                                         <div>
@@ -419,9 +419,9 @@ function StudentHistoryPane({ classId }: { classId: string }) {
                                 </div>
 
                                 <div className="grid grid-cols-4 gap-2 mb-3">
-                                    <div className="bg-[#6bc048]/10 text-center py-2 rounded-xl border border-[#6bc048]/20">
-                                        <div className="text-[10px] font-bold text-[#6bc048] uppercase">P</div>
-                                        <div className="text-sm font-bold text-[#6bc048]">{s.present}</div>
+                                    <div className="bg-[#10b981]/10 text-center py-2 rounded-xl border border-[#10b981]/20">
+                                        <div className="text-[10px] font-bold text-[#10b981] uppercase">P</div>
+                                        <div className="text-sm font-bold text-[#10b981]">{s.present}</div>
                                     </div>
                                     <div className="bg-red-50 text-center py-2 rounded-xl border border-red-100">
                                         <div className="text-[10px] font-bold text-red-500 uppercase">A</div>
@@ -431,17 +431,17 @@ function StudentHistoryPane({ classId }: { classId: string }) {
                                         <div className="text-[10px] font-bold text-[#ff9800] uppercase">L</div>
                                         <div className="text-sm font-bold text-[#ff9800]">{s.late}</div>
                                     </div>
-                                    <div className="bg-blue-50 text-center py-2 rounded-xl border border-blue-100">
-                                        <div className="text-[10px] font-bold text-blue-500 uppercase">E</div>
-                                        <div className="text-sm font-bold text-blue-500">{s.excused}</div>
+                                    <div className="bg-[#1E4DA6]/5 text-center py-2 rounded-xl border border-[#1E4DA6]/10">
+                                        <div className="text-[10px] font-bold text-[#1E4DA6] uppercase">E</div>
+                                        <div className="text-sm font-bold text-[#1E4DA6]">{s.excused}</div>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-3">
                                     <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                                        <div className={`h-full rounded-full ${rate >= 90 ? 'bg-[#6bc048]' : rate >= 70 ? 'bg-[#ff9800]' : 'bg-red-500'}`} style={{ width: `${rate}%` }} />
+                                        <div className={`h-full rounded-full ${rate >= 90 ? 'bg-[#10b981]' : rate >= 70 ? 'bg-[#ff9800]' : 'bg-red-500'}`} style={{ width: `${rate}%` }} />
                                     </div>
-                                    <span className={`text-xs font-bold ${rate >= 90 ? 'text-[#6bc048]' : rate >= 70 ? 'text-[#ff9800]' : 'text-red-500'}`}>{rate}% Rate</span>
+                                    <span className={`text-xs font-bold ${rate >= 90 ? 'text-[#10b981]' : rate >= 70 ? 'text-[#ff9800]' : 'text-red-500'}`}>{rate}% Rate</span>
                                 </div>
                             </div>
                         );
@@ -458,82 +458,6 @@ function StudentHistoryPane({ classId }: { classId: string }) {
                     />
                 </div>
             )}
-        </Card>
-    );
-}
-
-// ─── QR Scanner Pane ────────────────────────────────────────────────────────
-function QRScannerPane() {
-    const [scanResult, setScanResult] = useState<{ msg: string; type: 'success' | 'error' | 'duplicate' } | null>(null);
-    const scanningRef = useRef(false);
-
-    useEffect(() => {
-        let html5QrCodeScanner: any = null;
-
-        const initScanner = async () => {
-            let token = localStorage.getItem('skooly_scanner_token');
-            if (!token) {
-                try {
-                    const { data } = await axios.post(`${API}/school/attendance/scanner/register`, { deviceInfo: navigator.userAgent }, { withCredentials: true });
-                    localStorage.setItem('skooly_scanner_token', data.token);
-                    token = data.token;
-                } catch (err) {
-                    console.error('Failed to register scanner', err);
-                    setScanResult({ msg: 'Scanner module initialization failed. Cannot verify device.', type: 'error' });
-                    return;
-                }
-            }
-
-            import('html5-qrcode').then(({ Html5QrcodeScanner }) => {
-                html5QrCodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 6, qrbox: 250 }, false);
-
-                html5QrCodeScanner.render(async (decodedText: string) => {
-                    if (scanningRef.current) return;
-                    scanningRef.current = true;
-                    html5QrCodeScanner.pause(true);
-                    try {
-                        const { data } = await axios.post(`${API}/school/attendance/scan`, { qrToken: decodedText, scannerToken: token, deviceInfo: navigator.userAgent }, { withCredentials: true });
-                        setScanResult({ msg: data.msg, type: data.duplicate ? 'duplicate' : 'success' });
-                    } catch (err: any) {
-                        setScanResult({ msg: err.response?.data?.msg || 'Error scanning QR', type: 'error' });
-                        // Clear invalid tokens enforcing re-register
-                        if (err.response?.status === 401) {
-                            localStorage.removeItem('skooly_scanner_token');
-                        }
-                    }
-                    setTimeout(() => {
-                        setScanResult(null);
-                        scanningRef.current = false;
-                        try { html5QrCodeScanner.resume(); } catch(e){}
-                    }, 3000);
-                }, (err: any) => {
-                    // ignore frequent scan frame errors
-                });
-            });
-        };
-        initScanner();
-
-        return () => {
-            if (html5QrCodeScanner) {
-                try { html5QrCodeScanner.clear().catch(console.error); } catch(e){}
-            }
-        };
-    }, []);
-
-    return (
-        <Card className="bg-white border border-gray-100 shadow-sm p-8 text-center max-w-2xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-900 mb-2">Scan Attendance QR</h2>
-            <p className="text-gray-500 text-sm mb-6">Hold the staff or student QR code up to the camera.</p>
-            <div id="qr-reader" className="mx-auto w-full max-w-sm rounded-xl overflow-hidden border-2 border-gray-100 shadow-inner"></div>
-            
-            <AnimatePresence>
-                {scanResult && (
-                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                        className={`mt-6 p-4 rounded-xl text-sm font-bold ${scanResult.type === 'success' ? 'bg-[#6bc048]/10 text-[#6bc048]' : scanResult.type === 'error' ? 'bg-red-100 text-red-600' : 'bg-[#ff9800]/10 text-[#ff9800]'}`}>
-                        {scanResult.msg}
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </Card>
     );
 }
@@ -601,13 +525,10 @@ export default function TeacherAttendance() {
             <div className="mb-6">
                 <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)}>
                     <TabsList className="bg-slate-100 p-1 h-10">
-                        <TabsTrigger value="mark" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm">
+                        <TabsTrigger value="mark" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-[#173F8C] data-[state=active]:shadow-sm">
                             <ClipboardCheck size={14} /> Mark Attendance
                         </TabsTrigger>
-                        <TabsTrigger value="scan" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm">
-                            <ScanLine size={14} /> QR Scanner
-                        </TabsTrigger>
-                        <TabsTrigger value="history" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-blue-700 data-[state=active]:shadow-sm">
+                        <TabsTrigger value="history" className="flex items-center gap-1.5 text-sm data-[state=active]:bg-white data-[state=active]:text-[#173F8C] data-[state=active]:shadow-sm">
                             <History size={14} /> Student History
                         </TabsTrigger>
                     </TabsList>
@@ -648,7 +569,6 @@ export default function TeacherAttendance() {
                             </div>
                         </div>
                     )}
-                    {tab === 'scan' && <QRScannerPane />}
                     {tab === 'history' && <StudentHistoryPane classId={selectedClassId} />}
                 </motion.div>
             )}

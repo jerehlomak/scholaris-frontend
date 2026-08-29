@@ -39,7 +39,7 @@ interface ClassData {
 
 // Color palette cycling for sections
 const SECTION_COLOR_PALETTE = [
-    { bg: 'bg-blue-50', border: 'border-blue-200', header: 'bg-blue-600', text: 'text-blue-700', badge: 'bg-blue-100 text-blue-700' },
+    { bg: 'bg-[#1E4DA6]/5', border: 'border-[#1E4DA6]/20', header: 'bg-[#1E4DA6]', text: 'text-[#173F8C]', badge: 'bg-[#1E4DA6]/10 text-[#173F8C]' },
     { bg: 'bg-indigo-50', border: 'border-indigo-200', header: 'bg-indigo-600', text: 'text-indigo-700', badge: 'bg-indigo-100 text-indigo-700' },
     { bg: 'bg-violet-50', border: 'border-violet-200', header: 'bg-violet-600', text: 'text-violet-700', badge: 'bg-violet-100 text-violet-700' },
     { bg: 'bg-emerald-50', border: 'border-emerald-200', header: 'bg-emerald-600', text: 'text-emerald-700', badge: 'bg-emerald-100 text-emerald-700' },
@@ -238,7 +238,7 @@ export function AllClasses() {
                     <div className="flex items-center gap-1 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
                         <Users className="w-3 h-3" /> Students
                     </div>
-                    <span className="font-mono text-sm font-semibold text-blue-600 underline decoration-blue-200 underline-offset-2">{cls.students?.length ?? 0}</span>
+                    <span className="font-mono text-sm font-semibold text-[#1E4DA6] underline decoration-[#1E4DA6]/20 underline-offset-2">{cls.students?.length ?? 0}</span>
                 </div>
                 <div className="rounded-xl bg-slate-50 p-2.5 flex flex-col gap-0.5">
                     <div className="flex items-center gap-1 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
@@ -253,7 +253,7 @@ export function AllClasses() {
                     {cls.sectionRel?.name ?? 'No section'}
                 </span>
                 <div className="flex items-center gap-1">
-                    <button onClick={() => setEditingClassId(cls.id)} className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-blue-600 transition-colors">
+                    <button onClick={() => setEditingClassId(cls.id)} className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-[#1E4DA6] transition-colors">
                         <Edit3 className="h-4 w-4" />
                     </button>
                     <AlertDialog>
@@ -303,7 +303,7 @@ export function AllClasses() {
                 </button>
                 <button
                     onClick={() => navigate('/dashboard/classes/add-class')}
-                    className="flex items-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 transition-colors shrink-0"
+                    className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69] transition-colors shrink-0"
                 >
                     <Plus className="h-4 w-4" /> Add New Class
                 </button>
@@ -313,7 +313,7 @@ export function AllClasses() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 w-full">
                     {[
-                        { icon: <GraduationCap className="h-5 w-5" />, label: 'Total Classes', value: totalRecords, color: 'bg-blue-100 text-blue-700' },
+                        { icon: <GraduationCap className="h-5 w-5" />, label: 'Total Classes', value: totalRecords, color: 'bg-[#1E4DA6]/10 text-[#173F8C]' },
                         { icon: <BookOpen className="h-5 w-5" />, label: 'With Subjects', value: classes.filter(c => c.subjects.length > 0).length, color: 'bg-emerald-100 text-emerald-700' },
                         { icon: <Users className="h-5 w-5" />, label: 'Active Classes', value: classes.filter(c => c.status === 'Active').length, color: 'bg-violet-100 text-violet-700' },
                     ].map((k) => (
@@ -383,7 +383,7 @@ export function AllClasses() {
             )}
 
             {isLoading ? (
-                <div className="flex justify-center p-20"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>
+                <div className="flex justify-center p-20"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>
             ) : classes.length === 0 ? (
                 <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
                     <GraduationCap className="mx-auto h-12 w-12 text-slate-300 mb-3" />
@@ -391,7 +391,7 @@ export function AllClasses() {
                     <p className="text-slate-500 mt-1 mb-5 text-sm max-w-md mx-auto">
                         Create your first class to get started. Make sure you have set up sections in <strong>Settings → Sections</strong> first.
                     </p>
-                    <button onClick={() => navigate('/dashboard/classes/add-class')} className="rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800">
+                    <button onClick={() => navigate('/dashboard/classes/add-class')} className="rounded-xl bg-[#173F8C] px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69]">
                         Add First Class
                     </button>
                 </div>
@@ -449,7 +449,7 @@ export function AllClasses() {
                                                         <td className="px-5 py-3">
                                                             <button 
                                                                 onClick={() => navigate('/dashboard/classes/roster/' + cls.id, { state: { className: cls.name } })}
-                                                                className="flex items-center gap-1 text-blue-600 hover:text-blue-800 font-bold hover:bg-blue-50 px-2 py-1 rounded-lg transition-colors"
+                                                                className="flex items-center gap-1 text-[#1E4DA6] hover:text-[#122F69] font-bold hover:bg-[#1E4DA6]/5 px-2 py-1 rounded-lg transition-colors"
                                                                 title="View Class Roster"
                                                             >
                                                                 <Users className="w-3.5 h-3.5" /> {cls.students?.length ?? 0}
@@ -505,13 +505,13 @@ export function AllClasses() {
                     {/* Add class CTA card at bottom */}
                     <button
                         onClick={() => navigate('/dashboard/classes/add-class')}
-                        className="print:hidden w-full flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-blue-200 bg-blue-50/30 hover:bg-blue-50 py-6 transition-colors group"
+                        className="print:hidden w-full flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-[#1E4DA6]/20 bg-[#1E4DA6]/8 hover:bg-[#1E4DA6]/5 py-6 transition-colors group"
                     >
-                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 group-hover:bg-blue-200 transition-colors">
-                            <Plus className="h-5 w-5 text-blue-600" />
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1E4DA6]/10 group-hover:bg-[#1E4DA6]/20 transition-colors">
+                            <Plus className="h-5 w-5 text-[#1E4DA6]" />
                         </div>
-                        <span className="text-sm font-bold text-blue-600">Add New Class</span>
-                        <ChevronRight className="h-4 w-4 text-blue-400" />
+                        <span className="text-sm font-bold text-[#1E4DA6]">Add New Class</span>
+                        <ChevronRight className="h-4 w-4 text-[#1E4DA6]/60" />
                     </button>
                 </div>
             )}

@@ -132,7 +132,7 @@ export function AcademicSessions() {
     if (isLoading) {
         return (
             <SettingsShell breadcrumbCurrent="Academic Sessions" tabLabel="Academic Sessions" tabIcon={<CalendarRange className="h-3.5 w-3.5" />}>
-                <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>
+                <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>
             </SettingsShell>
         );
     }
@@ -146,30 +146,30 @@ export function AcademicSessions() {
             />
 
             <div className="mb-6 flex justify-end">
-                <button onClick={() => setIsAdding(!isAdding)} className={cn('flex items-center gap-2 rounded-xl border-2 border-dashed px-5 py-2.5 text-sm font-semibold transition-all', isAdding ? 'border-red-200 bg-red-50 text-red-600' : 'border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100')}>
+                <button onClick={() => setIsAdding(!isAdding)} className={cn('flex items-center gap-2 rounded-xl border-2 border-dashed px-5 py-2.5 text-sm font-semibold transition-all', isAdding ? 'border-red-200 bg-red-50 text-red-600' : 'border-[#1E4DA6]/20 bg-[#1E4DA6]/5 text-[#1E4DA6] hover:bg-[#1E4DA6]/10')}>
                     {isAdding ? <><X className="h-4 w-4" /> Cancel</> : <><Plus className="h-4 w-4" /> Add New Session</>}
                 </button>
             </div>
 
             {isAdding && (
-                <form onSubmit={handleAddSession} className="mb-8 rounded-2xl border border-blue-100 bg-blue-50/50 p-6">
+                <form onSubmit={handleAddSession} className="mb-8 rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-6">
                     <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4">Create Academic Session</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="md:col-span-3">
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Session Name <span className="text-red-500">*</span></label>
-                            <input required value={name} onChange={e => setName(e.target.value)} placeholder="e.g. 2024/2025" className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold outline-none focus:border-blue-400" />
+                            <input required value={name} onChange={e => setName(e.target.value)} placeholder="e.g. 2024/2025" className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold outline-none focus:border-[#1E4DA6]/60" />
                         </div>
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Start Date</label>
-                            <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-blue-400" />
+                            <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60" />
                         </div>
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">End Date</label>
-                            <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-blue-400" />
+                            <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60" />
                         </div>
                     </div>
                     <div className="flex justify-end pt-4">
-                        <button type="submit" disabled={isSaving} className="rounded-xl bg-blue-700 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 disabled:opacity-70 flex items-center gap-2">
+                        <button type="submit" disabled={isSaving} className="rounded-xl bg-[#173F8C] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69] disabled:opacity-70 flex items-center gap-2">
                             {isSaving && <Loader2 className="h-4 w-4 animate-spin" />}
                             {isSaving ? 'Saving...' : 'Create Session'}
                         </button>
@@ -184,13 +184,13 @@ export function AcademicSessions() {
                     const hasActiveTerm = sessionTerms.some(t => t.isActive);
 
                     return (
-                        <div key={session.id} className={cn('rounded-2xl border transition-all overflow-hidden bg-white', isExpanded ? 'border-blue-200 shadow-md' : 'border-slate-200 hover:border-blue-300')}>
+                        <div key={session.id} className={cn('rounded-2xl border transition-all overflow-hidden bg-white', isExpanded ? 'border-[#1E4DA6]/20 shadow-md' : 'border-slate-200 hover:border-[#1E4DA6]/35')}>
                             <div 
-                                className={cn("px-5 py-4 flex flex-wrap gap-4 items-center justify-between cursor-pointer", isExpanded ? "bg-blue-50/30" : "")}
+                                className={cn("px-5 py-4 flex flex-wrap gap-4 items-center justify-between cursor-pointer", isExpanded ? "bg-[#1E4DA6]/8" : "")}
                                 onClick={() => setExpandedSession(isExpanded ? null : session.id)}
                             >
                                 <div className="flex items-center gap-3">
-                                    <div className={cn("h-8 w-8 rounded-full flex items-center justify-center", isExpanded ? "bg-blue-100 text-blue-600" : "bg-slate-100 text-slate-400")}>
+                                    <div className={cn("h-8 w-8 rounded-full flex items-center justify-center", isExpanded ? "bg-[#1E4DA6]/10 text-[#1E4DA6]" : "bg-slate-100 text-slate-400")}>
                                         {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
                                     </div>
                                     <div>
@@ -231,7 +231,7 @@ export function AcademicSessions() {
                                                     
                                                     <div className="flex items-center gap-2">
                                                         {!term.isActive ? (
-                                                            <button disabled={isOpeningTerm === term.id} onClick={() => handleOpenTerm(term.id)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-xs font-bold hover:bg-blue-100 disabled:opacity-60 disabled:cursor-not-allowed">
+                                                            <button disabled={isOpeningTerm === term.id} onClick={() => handleOpenTerm(term.id)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1E4DA6]/5 text-[#173F8C] text-xs font-bold hover:bg-[#1E4DA6]/10 disabled:opacity-60 disabled:cursor-not-allowed">
                                                                 {isOpeningTerm === term.id ? <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Processing...</> : <><Users className="h-3.5 w-3.5" /> Set as Current Term & Open</>}
                                                             </button>
                                                         ) : (
@@ -252,22 +252,22 @@ export function AcademicSessions() {
                                         <div className="flex flex-col gap-3 p-4 bg-white border border-slate-200 rounded-xl mt-2">
                                             <h4 className="text-xs font-bold uppercase text-slate-500">New Term Details</h4>
                                             <div className="flex flex-col md:flex-row gap-3">
-                                                <input autoFocus value={termName} onChange={e => setTermName(e.target.value)} placeholder="Term Name (e.g. First Term)" className="flex-1 rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:border-blue-400" />
+                                                <input autoFocus value={termName} onChange={e => setTermName(e.target.value)} placeholder="Term Name (e.g. First Term)" className="flex-1 rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none focus:border-[#1E4DA6]/60" />
                                                 <div className="flex flex-wrap gap-2">
-                                                    <input type="date" value={termStartDate} onChange={e => setTermStartDate(e.target.value)} title="Start Date" className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-blue-400 w-36" />
-                                                    <input type="date" value={termEndDate} onChange={e => setTermEndDate(e.target.value)} title="End Date" className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-blue-400 w-36" />
+                                                    <input type="date" value={termStartDate} onChange={e => setTermStartDate(e.target.value)} title="Start Date" className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1E4DA6]/60 w-36" />
+                                                    <input type="date" value={termEndDate} onChange={e => setTermEndDate(e.target.value)} title="End Date" className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1E4DA6]/60 w-36" />
                                                 </div>
                                             </div>
                                             <div className="flex justify-end gap-2 mt-2">
                                                 <button onClick={() => setIsAddingTerm(null)} className="rounded-xl bg-slate-100 px-4 py-2 text-sm font-bold text-slate-600 hover:bg-slate-200">Cancel</button>
-                                                <button onClick={() => handleAddTerm(session.id)} disabled={isSaving || !termName} className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-70 flex items-center gap-2">
+                                                <button onClick={() => handleAddTerm(session.id)} disabled={isSaving || !termName} className="rounded-xl bg-[#1E4DA6] px-4 py-2 text-sm font-bold text-white hover:bg-[#173F8C] disabled:opacity-70 flex items-center gap-2">
                                                     {isSaving && <Loader2 className="h-3 w-3 animate-spin" />}
                                                     {isSaving ? 'Saving...' : 'Save Term'}
                                                 </button>
                                             </div>
                                         </div>
                                     ) : (
-                                        <button onClick={() => setIsAddingTerm(session.id)} className="flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700">
+                                        <button onClick={() => setIsAddingTerm(session.id)} className="flex items-center gap-2 text-sm font-bold text-[#1E4DA6] hover:text-[#173F8C]">
                                             <Plus className="h-4 w-4" /> Add Term to Session
                                         </button>
                                     )}

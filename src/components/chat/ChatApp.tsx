@@ -43,7 +43,7 @@ function makeMsg(id: string, senderId: string, text: string, time: string, date 
 
 const CONVERSATIONS_TEACHER: Conversation[] = [
     {
-        id: 'c1', name: 'SS 1A – Class Group', avatar: '1A', avatarColor: 'bg-[#0036a1]',
+        id: 'c1', name: 'SS 1A – Class Group', avatar: '1A', avatarColor: 'bg-[#1E4DA6]',
         isGroup: true, isOnline: false, lastMessage: 'When is the math test?', lastTime: '10:32', unread: 3,
         messages: [
             makeMsg('m1', 'other', 'Good morning sir!', '10:15'),
@@ -52,7 +52,7 @@ const CONVERSATIONS_TEACHER: Conversation[] = [
         ],
     },
     {
-        id: 'c2', name: 'Ayomide Balogun', avatar: 'AB', avatarColor: 'bg-purple-500',
+        id: 'c2', name: 'Ayomide Balogun', avatar: 'AB', avatarColor: 'bg-[#1E4DA6]',
         isGroup: false, isOnline: true, lastMessage: 'Thank you sir!', lastTime: '09:45', unread: 0,
         messages: [
             makeMsg('m4', 'other', 'Good morning sir, I missed class yesterday. Can I get the notes?', '09:40'),
@@ -81,7 +81,7 @@ const CONVERSATIONS_TEACHER: Conversation[] = [
 
 const CONVERSATIONS_STUDENT: Conversation[] = [
     {
-        id: 's1', name: 'Mr. Adebayo (Maths)', avatar: 'MA', avatarColor: 'bg-[#0036a1]',
+        id: 's1', name: 'Mr. Adebayo (Maths)', avatar: 'MA', avatarColor: 'bg-[#1E4DA6]',
         isGroup: false, isOnline: true, lastMessage: 'Good luck with your revision!', lastTime: '10:30', unread: 1,
         messages: [
             makeMsg('sm1', 'other', 'Please revise chapters 5 and 6 before Friday.', '10:00'),
@@ -90,7 +90,7 @@ const CONVERSATIONS_STUDENT: Conversation[] = [
         ],
     },
     {
-        id: 's2', name: 'SS 1A – Class Group', avatar: '1A', avatarColor: 'bg-[#6bc048]',
+        id: 's2', name: 'SS 1A – Class Group', avatar: '1A', avatarColor: 'bg-[#10b981]',
         isGroup: true, isOnline: false, lastMessage: 'Anyone have the chemistry notes?', lastTime: '09:55', unread: 5,
         messages: [
             makeMsg('sm4', 'other', 'Good morning everyone!', '09:30'),
@@ -98,7 +98,7 @@ const CONVERSATIONS_STUDENT: Conversation[] = [
         ],
     },
     {
-        id: 's3', name: 'Mrs. Chukwu (English)', avatar: 'EC', avatarColor: 'bg-[#6bc048]',
+        id: 's3', name: 'Mrs. Chukwu (English)', avatar: 'EC', avatarColor: 'bg-[#10b981]',
         isGroup: false, isOnline: false, lastMessage: 'Please complete your essay draft.', lastTime: 'Yesterday', unread: 0,
         messages: [
             makeMsg('sm6', 'other', 'Please complete your essay draft and submit by Monday.', '13:00', 'yesterday'),
@@ -118,7 +118,7 @@ const CONVERSATIONS_STUDENT: Conversation[] = [
 // ─── Sub-components ───────────────────────────────────────────────────────────
 function OnlineDot({ isOnline }: { isOnline: boolean }) {
     if (!isOnline) return null;
-    return <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#6bc048] rounded-full border-2 border-white" />;
+    return <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#10b981] rounded-full border-2 border-white" />;
 }
 
 interface Props {
@@ -183,7 +183,7 @@ export function ChatApp({ role, userName: _userName = role === 'teacher' ? 'Mr. 
                     <div className="flex items-center justify-between mb-3">
                         <h3 className="font-bold text-gray-900 text-base">Messages</h3>
                         {totalUnread > 0 && (
-                            <span className="bg-[#0036a1] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{totalUnread}</span>
+                            <span className="bg-[#1E4DA6] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{totalUnread}</span>
                         )}
                     </div>
                     <div className="relative">
@@ -192,7 +192,7 @@ export function ChatApp({ role, userName: _userName = role === 'teacher' ? 'Mr. 
                             value={search}
                             onChange={e => setSearch(e.target.value)}
                             placeholder="Search conversations..."
-                            className="w-full pl-8 pr-3 py-2 bg-gray-50 border border-gray-100 rounded-lg text-xs outline-none focus:border-[#0036a1]"
+                            className="w-full pl-8 pr-3 py-2 bg-gray-50 border border-gray-100 rounded-lg text-xs outline-none focus:border-[#1E4DA6]"
                         />
                     </div>
                 </div>
@@ -203,7 +203,7 @@ export function ChatApp({ role, userName: _userName = role === 'teacher' ? 'Mr. 
                         <button
                             key={conv.id}
                             onClick={() => setSelected(conv.id)}
-                            className={`w-full flex items-center gap-3 px-4 py-3.5 hover:bg-gray-50 transition-colors text-left border-b border-gray-50 ${selected === conv.id ? 'bg-[#0036a1]/5 border-l-2 border-[#0036a1]' : ''}`}
+                            className={`w-full flex items-center gap-3 px-4 py-3.5 hover:bg-gray-50 transition-colors text-left border-b border-gray-50 ${selected === conv.id ? 'bg-[#1E4DA6]/5 border-l-2 border-[#1E4DA6]' : ''}`}
                         >
                             <div className="relative shrink-0">
                                 <div className={`w-10 h-10 ${conv.avatarColor} rounded-full flex items-center justify-center text-white text-xs font-bold`}>
@@ -219,7 +219,7 @@ export function ChatApp({ role, userName: _userName = role === 'teacher' ? 'Mr. 
                                 <div className="flex items-center justify-between mt-0.5">
                                     <p className="text-xs text-gray-400 truncate">{conv.lastMessage}</p>
                                     {conv.unread > 0 && (
-                                        <span className="ml-1 bg-[#0036a1] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shrink-0">
+                                        <span className="ml-1 bg-[#1E4DA6] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shrink-0">
                                             {conv.unread}
                                         </span>
                                     )}
@@ -250,7 +250,7 @@ export function ChatApp({ role, userName: _userName = role === 'teacher' ? 'Mr. 
                                 {activeConvo.isGroup
                                     ? <><Users className="w-3 h-3" /> Group</>
                                     : activeConvo.isOnline
-                                        ? <><Circle className="w-2 h-2 fill-[#6bc048] text-[#6bc048]" /> Online</>
+                                        ? <><Circle className="w-2 h-2 fill-[#10b981] text-[#10b981]" /> Online</>
                                         : 'Offline'}
                             </p>
                         </div>
@@ -281,7 +281,7 @@ export function ChatApp({ role, userName: _userName = role === 'teacher' ? 'Mr. 
                                     )}
                                     <div className={`max-w-[70%] flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                                         <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${isMe
-                                            ? 'bg-[#0036a1] text-white rounded-br-sm'
+                                            ? 'bg-[#1E4DA6] text-white rounded-br-sm'
                                             : 'bg-gray-100 text-gray-800 rounded-bl-sm'
                                             }`}>
                                             {msg.text}
@@ -304,12 +304,12 @@ export function ChatApp({ role, userName: _userName = role === 'teacher' ? 'Mr. 
                         onChange={e => setInput(e.target.value)}
                         onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                         placeholder={`Message ${activeConvo.name}...`}
-                        className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#0036a1] transition-colors"
+                        className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#1E4DA6] transition-colors"
                     />
                     <button
                         onClick={sendMessage}
                         disabled={!input.trim()}
-                        className="w-10 h-10 bg-[#0036a1] disabled:bg-gray-200 rounded-xl flex items-center justify-center text-white transition-colors hover:bg-[#001761]"
+                        className="w-10 h-10 bg-[#1E4DA6] disabled:bg-gray-200 rounded-xl flex items-center justify-center text-white transition-colors hover:bg-[#173F8C]"
                     >
                         <Send className="w-4 h-4" />
                     </button>

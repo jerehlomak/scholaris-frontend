@@ -24,9 +24,9 @@ const ACTIVITIES = [
 ];
 
 const ACTIVITY_COLORS: Record<string, string> = {
-    SCORE_ENTRY: 'border-blue-200 bg-blue-50 text-blue-700',
+    SCORE_ENTRY: 'border-[#1E4DA6]/20 bg-[#1E4DA6]/5 text-[#173F8C]',
     FEE_ENTRY: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-    ATTENDANCE: 'border-purple-200 bg-purple-50 text-purple-700',
+    ATTENDANCE: 'border-[#1E4DA6]/20 bg-[#1E4DA6]/5 text-[#173F8C]',
     CBT: 'border-orange-200 bg-orange-50 text-orange-700',
 };
 
@@ -114,7 +114,7 @@ export function ActivityDeadlines() {
     if (isLoading) {
         return (
             <SettingsShell breadcrumbCurrent="Activity Deadlines" tabLabel="Activity Deadlines" tabIcon={<Clock className="h-3.5 w-3.5" />}>
-                <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>
+                <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>
             </SettingsShell>
         );
     }
@@ -130,9 +130,9 @@ export function ActivityDeadlines() {
             />
 
             {/* Info banner */}
-            <div className="mb-6 flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50 p-4">
-                <Info className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
-                <div className="text-sm text-blue-700">
+            <div className="mb-6 flex items-start gap-3 rounded-xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/5 p-4">
+                <Info className="h-5 w-5 text-[#1E4DA6] shrink-0 mt-0.5" />
+                <div className="text-sm text-[#173F8C]">
                     <span className="font-bold">How it works:</span> When a deadline is set, the system automatically locks the activity at the exact minute. Staff see a warning banner on their dashboard within your specified lead time (e.g. 48 hours before). The admin is never locked out.
                 </div>
             </div>
@@ -142,7 +142,7 @@ export function ActivityDeadlines() {
                 <button
                     onClick={() => setIsAdding(!isAdding)}
                     className={cn('flex items-center gap-2 rounded-xl border-2 border-dashed px-5 py-2.5 text-sm font-semibold transition-all',
-                        isAdding ? 'border-red-200 bg-red-50 text-red-600' : 'border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100')}
+                        isAdding ? 'border-red-200 bg-red-50 text-red-600' : 'border-[#1E4DA6]/20 bg-[#1E4DA6]/5 text-[#1E4DA6] hover:bg-[#1E4DA6]/10')}
                 >
                     {isAdding ? <><X className="h-4 w-4" /> Cancel</> : <><Plus className="h-4 w-4" /> Set New Deadline</>}
                 </button>
@@ -150,7 +150,7 @@ export function ActivityDeadlines() {
 
             {/* Add Form */}
             {isAdding && (
-                <form onSubmit={handleSave} className="mb-8 rounded-2xl border border-blue-100 bg-blue-50/40 p-6 space-y-5">
+                <form onSubmit={handleSave} className="mb-8 rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-6 space-y-5">
                     <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Configure Deadline</h3>
 
                     {/* Activity Type */}
@@ -160,7 +160,7 @@ export function ActivityDeadlines() {
                             {ACTIVITIES.map(act => (
                                 <button key={act.value} type="button" onClick={() => setFActivity(act.value)}
                                     className={cn('flex flex-col items-center gap-1 p-3 rounded-xl border-2 text-center transition-all text-xs font-bold',
-                                        fActivity === act.value ? 'border-blue-500 bg-blue-100 text-blue-700' : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200')}>
+                                        fActivity === act.value ? 'border-[#1E4DA6] bg-[#1E4DA6]/10 text-[#173F8C]' : 'border-slate-200 bg-white text-slate-600 hover:border-[#1E4DA6]/20')}>
                                     <span className="text-xl">{act.icon}</span>
                                     {act.label}
                                 </button>
@@ -174,7 +174,7 @@ export function ActivityDeadlines() {
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Academic Term <span className="text-red-500">*</span></label>
                             <select required value={fTermId} onChange={e => setFTermId(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-400">
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60">
                                 <option value="">Select a Term...</option>
                                 {terms.map(t => (
                                     <option key={t.id} value={t.id}>{t.session?.name} — {t.name}</option>
@@ -185,27 +185,27 @@ export function ActivityDeadlines() {
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Deadline Date & Time <span className="text-red-500">*</span></label>
                             <input required type="datetime-local" value={fDeadline} onChange={e => setFDeadline(e.target.value)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-400" />
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60" />
                         </div>
                         {/* Optional label */}
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Label (optional)</label>
                             <input type="text" value={fLabel} onChange={e => setFLabel(e.target.value)}
                                 placeholder="e.g. First Term Score Deadline"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-400" />
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60" />
                         </div>
                         {/* Warning lead time */}
                         <div>
                             <label className="text-xs font-bold text-slate-500 mb-1 block">Warning Lead Time (hours)</label>
                             <input type="number" min={1} max={168} value={fWarningHours} onChange={e => setFWarningHours(parseInt(e.target.value) || 48)}
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-400" />
+                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1E4DA6]/60" />
                             <p className="text-xs text-slate-400 mt-1">Staff will see a warning banner {fWarningHours} hour(s) before the deadline.</p>
                         </div>
                     </div>
 
                     <div className="flex justify-end pt-2">
                         <button type="submit" disabled={isSaving}
-                            className="rounded-xl bg-blue-700 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 disabled:opacity-70 flex items-center gap-2">
+                            className="rounded-xl bg-[#173F8C] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69] disabled:opacity-70 flex items-center gap-2">
                             {isSaving && <Loader2 className="h-4 w-4 animate-spin" />}
                             {isSaving ? 'Saving...' : 'Set Deadline'}
                         </button>

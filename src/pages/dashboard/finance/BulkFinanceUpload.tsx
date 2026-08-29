@@ -101,7 +101,7 @@ export default function BulkFinanceUpload() {
                         <button 
                             onClick={handleUpload}
                             disabled={!file || uploading}
-                            className="w-full mt-6 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium hover:from-blue-700 hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-blue-500/20 text-sm"
+                            className="w-full mt-6 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-[#1E4DA6] to-indigo-600 text-white font-medium hover:from-[#173F8C] hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-[#1E4DA6]/20 text-sm"
                         >
                             {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
                             {uploading ? 'Processing Upload...' : 'Upload & Process Records'}

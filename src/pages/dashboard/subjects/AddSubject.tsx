@@ -63,8 +63,12 @@ export function AddSubject() {
                 teacherId: form.teacherId === 'none' ? undefined : form.teacherId,
                 classIds: selectedClassIds
             }, { withCredentials: true });
-            toast.success(`Subject "${form.name}" created successfully!`);
-            navigate('/dashboard/subjects/all');
+            toast.success(`Subject "${form.name}" created successfully! Ready for the next one.`);
+            // Stay on this page instead of bouncing back to the list — keep the
+            // category and class assignment (the common case is adding several
+            // subjects to the same set of classes in one sitting) and only
+            // clear the per-subject fields.
+            setForm(f => ({ ...f, name: '', code: 'Auto-generated on save', description: '', teacherId: 'none' }));
         } catch (error: any) {
             toast.error(error.response?.data?.msg || 'Failed to create subject');
         } finally {
@@ -98,13 +102,13 @@ export function AddSubject() {
                 {/* Section 1: Subject Info */}
                 <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-4 sm:p-6">
                     <div className="flex items-center gap-2 mb-5">
-                        <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">1</div>
+                        <div className="w-6 h-6 rounded-full bg-[#1E4DA6] text-white flex items-center justify-center text-xs font-bold">1</div>
                         <h2 className="text-base font-bold text-slate-800">Subject Information</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
                         <div className="space-y-1.5">
-                            <Label className="font-semibold">Subject Name <span className="text-blue-600">*</span></Label>
+                            <Label className="font-semibold">Subject Name <span className="text-[#1E4DA6]">*</span></Label>
                             <Input value={form.name} onChange={e => set('name', e.target.value)}
                                 className={inputCls} placeholder="e.g. Mathematics" />
                         </div>
@@ -129,7 +133,7 @@ export function AddSubject() {
                         </div>
 
                         <div className="space-y-1.5">
-                            <Label className="font-semibold">Subject Type <span className="text-blue-600">*</span></Label>
+                            <Label className="font-semibold">Subject Type <span className="text-[#1E4DA6]">*</span></Label>
                             <Select value={form.type} onValueChange={val => set('type', val)}>
                                 <SelectTrigger className={inputCls}><SelectValue /></SelectTrigger>
                                 <SelectContent>
@@ -166,12 +170,12 @@ export function AddSubject() {
                     <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-4 sm:p-6">
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2">
-                                <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">2</div>
-                                <h2 className="text-base font-bold text-slate-800">Assign to Classes <span className="text-blue-600">*</span></h2>
+                                <div className="w-6 h-6 rounded-full bg-[#1E4DA6] text-white flex items-center justify-center text-xs font-bold">2</div>
+                                <h2 className="text-base font-bold text-slate-800">Assign to Classes <span className="text-[#1E4DA6]">*</span></h2>
                             </div>
                             <button type="button" 
                                 onClick={() => setSelectedClassIds(selectedClassIds.length === classes.length ? [] : classes.map(c => c.id))}
-                                className="text-xs font-bold text-blue-600 hover:text-blue-800">
+                                className="text-xs font-bold text-[#1E4DA6] hover:text-[#122F69]">
                                 {selectedClassIds.length === classes.length ? 'Deselect All' : 'Select All'}
                             </button>
                         </div>
@@ -185,7 +189,7 @@ export function AddSubject() {
                                     <div className="flex flex-wrap gap-2">
                                         {classes.filter(c => c.level === level).map(cls => (
                                             <button key={cls.id} type="button" onClick={() => toggleClass(cls.id)}
-                                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border-2 transition-all ${selectedClassIds.includes(cls.id) ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300'}`}>
+                                                className={`px-3 py-1.5 rounded-xl text-xs font-bold border-2 transition-all ${selectedClassIds.includes(cls.id) ? 'bg-[#1E4DA6] text-white border-[#1E4DA6]' : 'bg-white text-slate-600 border-slate-200 hover:border-[#1E4DA6]/35'}`}>
                                                 {cls.name}
                                             </button>
                                         ))}
@@ -195,7 +199,7 @@ export function AddSubject() {
                         </div>
 
                         {selectedClassIds.length > 0 && (
-                            <p className="text-xs text-blue-600 mt-4 ml-8 font-medium">{selectedClassIds.length} class{selectedClassIds.length > 1 ? 'es' : ''} selected</p>
+                            <p className="text-xs text-[#1E4DA6] mt-4 ml-8 font-medium">{selectedClassIds.length} class{selectedClassIds.length > 1 ? 'es' : ''} selected</p>
                         )}
                         {selectedClassIds.length === 0 && isSubmitting && (
                             <p className="text-xs text-red-500 mt-4 ml-8 font-bold">Please select at least one class.</p>
@@ -207,7 +211,7 @@ export function AddSubject() {
                     <Button type="button" variant="outline" onClick={() => navigate(-1)} className="w-full sm:w-auto h-11 px-6 rounded-xl font-semibold">
                         <ArrowLeft className="w-4 h-4 mr-1" /> Cancel
                     </Button>
-                    <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto h-11 px-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold flex items-center justify-center gap-2">
+                    <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto h-11 px-8 rounded-xl bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold flex items-center justify-center gap-2">
                         {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                         {isSubmitting ? 'Saving...' : 'Save Subject'}
                     </Button>

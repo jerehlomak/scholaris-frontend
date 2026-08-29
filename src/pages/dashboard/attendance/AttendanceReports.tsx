@@ -31,7 +31,7 @@ export default function AttendanceReports() {
         }
     };
 
-    const inputCls = 'flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+    const inputCls = 'flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
     return (
         <SettingsShell breadcrumbParent="Attendance" breadcrumbCurrent="Analytics & Reports" tabLabel="Data Export" tabIcon={<FileText className="h-3.5 w-3.5" />}>
@@ -90,7 +90,7 @@ export default function AttendanceReports() {
                 <button 
                     disabled={isGenerating}
                     onClick={handleDownload}
-                    className="flex items-center gap-2 px-8 py-3.5 bg-blue-700 hover:bg-blue-800 text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 px-8 py-3.5 bg-[#173F8C] hover:bg-[#122F69] text-white text-sm font-bold rounded-xl shadow-lg shadow-[#0E2450]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
                     {isGenerating ? 'Assembling Package...' : 'Download Telemetry Package'}

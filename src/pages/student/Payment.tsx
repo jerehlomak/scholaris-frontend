@@ -46,10 +46,10 @@ interface WalletData {
 }
 
 const STATUS_CFG: Record<string, { label: string; color: string; bg: string; icon: React.ReactNode }> = {
-    PAID: { label: 'Paid', color: 'text-[#6bc048]', bg: 'bg-[#6bc048]/10', icon: <CheckCircle2 className="w-3.5 h-3.5" /> },
+    PAID: { label: 'Paid', color: 'text-[#10b981]', bg: 'bg-[#10b981]/10', icon: <CheckCircle2 className="w-3.5 h-3.5" /> },
     PARTIAL: { label: 'Partial', color: 'text-[#ff9800]', bg: 'bg-[#ff9800]/10', icon: <Clock className="w-3.5 h-3.5" /> },
     OPEN: { label: 'Unpaid', color: 'text-red-600', bg: 'bg-red-50', icon: <AlertCircle className="w-3.5 h-3.5" /> },
-    SENT: { label: 'Sent', color: 'text-blue-600', bg: 'bg-blue-50', icon: <AlertCircle className="w-3.5 h-3.5" /> },
+    SENT: { label: 'Sent', color: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5', icon: <AlertCircle className="w-3.5 h-3.5" /> },
     OVERDUE: { label: 'Overdue', color: 'text-red-600', bg: 'bg-red-50', icon: <AlertCircle className="w-3.5 h-3.5" /> },
 };
 
@@ -93,7 +93,7 @@ export default function Payment() {
     if (loading) {
         return (
             <div className="flex items-center justify-center p-20">
-                <div className="w-8 h-8 border-4 border-slate-200 border-t-blue-600 rounded-full animate-spin" />
+                <div className="w-8 h-8 border-4 border-slate-200 border-t-[#1E4DA6] rounded-full animate-spin" />
             </div>
         );
     }
@@ -105,7 +105,7 @@ export default function Payment() {
                     <h1 className="text-2xl font-bold text-slate-900">Fees & Payments</h1>
                     <div className="flex items-center text-xs text-slate-400 gap-1 mt-1">
                         <HomeIcon size={12} />
-                        <Link to="/student" className="hover:text-blue-600 transition-colors">Home</Link>
+                        <Link to="/student" className="hover:text-[#1E4DA6] transition-colors">Home</Link>
                         <ChevronRight size={12} className="opacity-50" />
                         <span>Fees & Payments</span>
                     </div>
@@ -150,19 +150,19 @@ export default function Payment() {
                 <Card className="p-5 bg-white border border-gray-100 shadow-sm flex flex-col justify-between">
                     <div>
                         <p className="text-xs text-gray-500 font-medium mb-1">Amount Paid</p>
-                        <p className="text-3xl font-black text-[#6bc048]">{fmt(totalPaid)}</p>
+                        <p className="text-3xl font-black text-[#10b981]">{fmt(totalPaid)}</p>
                     </div>
                     <div className="mt-3">
                         <div className="flex justify-between text-xs text-gray-400 mb-1"><span>Overall Progress</span><span>{progress}%</span></div>
                         <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                            <div className="h-full bg-[#6bc048] rounded-full transition-all" style={{ width: `${progress}%` }} />
+                            <div className="h-full bg-[#10b981] rounded-full transition-all" style={{ width: `${progress}%` }} />
                         </div>
                     </div>
                 </Card>
                 <Card className={`p-5 border shadow-sm flex flex-col justify-between ${outstanding > 0 ? 'bg-red-50 border-red-100' : 'bg-white border-gray-100'}`}>
                     <div>
                         <p className="text-xs text-gray-500 font-medium mb-1">Outstanding Balance</p>
-                        <p className={`text-3xl font-black ${outstanding > 0 ? 'text-red-600' : 'text-[#6bc048]'}`}>{outstanding > 0 ? fmt(outstanding) : 'Cleared ✓'}</p>
+                        <p className={`text-3xl font-black ${outstanding > 0 ? 'text-red-600' : 'text-[#10b981]'}`}>{outstanding > 0 ? fmt(outstanding) : 'Cleared ✓'}</p>
                     </div>
                     <p className="text-xs text-gray-500 mt-2">{outstanding > 0 ? `${invoices.filter(i => i.balanceDue > 0).length} invoice(s) pending payment` : 'All invoices cleared!'}</p>
                 </Card>
@@ -195,12 +195,12 @@ export default function Payment() {
                                 const cfg = STATUS_CFG[inv.status === 'PARTIAL' ? 'PARTIAL' : inv.status] || STATUS_CFG['OPEN'];
                                 return (
                                     <tr key={inv.id} className="hover:bg-gray-50/40 transition-colors">
-                                        <td className="px-5 py-3.5 font-semibold text-blue-700 font-mono">{inv.invoiceNumber}</td>
+                                        <td className="px-5 py-3.5 font-semibold text-[#173F8C] font-mono">{inv.invoiceNumber}</td>
                                         <td className="px-5 py-3.5 text-gray-700 text-xs">
                                             {inv.term?.replace(/_/g, ' ')} <br/><span className="text-gray-400">{inv.academicYear}</span>
                                         </td>
                                         <td className="px-5 py-3.5 text-right font-bold text-gray-900">{fmt(inv.totalAmount)}</td>
-                                        <td className="px-5 py-3.5 text-right text-[#6bc048] font-semibold">{fmt(inv.amountPaid)}</td>
+                                        <td className="px-5 py-3.5 text-right text-[#10b981] font-semibold">{fmt(inv.amountPaid)}</td>
                                         <td className={`px-5 py-3.5 text-right font-bold ${inv.balanceDue > 0 ? 'text-red-600' : 'text-gray-300'}`}>{inv.balanceDue > 0 ? fmt(inv.balanceDue) : '—'}</td>
                                         <td className="px-5 py-3.5 text-center text-gray-500 text-xs">{fmtDate(inv.dueDate)}</td>
                                         <td className="px-5 py-3.5 text-center">
@@ -239,13 +239,13 @@ export default function Payment() {
                                 <tr key={p.id} className="hover:bg-gray-50/40 transition-colors">
                                     <td className="px-5 py-3 font-mono font-semibold text-slate-600">{p.reference}</td>
                                     <td className="px-5 py-3">
-                                        <span className="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] uppercase font-bold rounded-full">{p.method}</span>
+                                        <span className="px-2 py-0.5 bg-[#1E4DA6]/5 text-[#1E4DA6] text-[10px] uppercase font-bold rounded-full">{p.method}</span>
                                     </td>
-                                    <td className="px-5 py-3 text-right font-bold text-[#6bc048]">{fmt(p.amount)}</td>
+                                    <td className="px-5 py-3 text-right font-bold text-[#10b981]">{fmt(p.amount)}</td>
                                     <td className="px-5 py-3 text-center text-gray-500 text-xs">{fmtDate(p.paidAt)}</td>
                                     <td className="px-5 py-3 text-center">
                                         {p.receipt?.receiptNumber ? (
-                                            <span className="text-xs text-blue-600 font-medium hover:underline cursor-pointer">{p.receipt.receiptNumber}</span>
+                                            <span className="text-xs text-[#1E4DA6] font-medium hover:underline cursor-pointer">{p.receipt.receiptNumber}</span>
                                         ) : (
                                             <span className="text-gray-300">—</span>
                                         )}

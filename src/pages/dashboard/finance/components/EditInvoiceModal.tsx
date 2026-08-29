@@ -115,7 +115,7 @@ export default function EditInvoiceModal({ invoice, onClose, onSuccess }: EditIn
 
                     <DialogFooter>
                         <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
-                        <Button type="submit" disabled={loading} className="bg-blue-600 hover:bg-blue-700">
+                        <Button type="submit" disabled={loading} className="bg-[#1E4DA6] hover:bg-[#173F8C]">
                             {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                             Save Changes
                         </Button>

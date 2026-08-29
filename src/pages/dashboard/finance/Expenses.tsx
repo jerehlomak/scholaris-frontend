@@ -324,10 +324,10 @@ export default function Expenses() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-rose-50/20 to-orange-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
             <div className="relative z-10 mx-auto max-w-6xl space-y-6">
                 {/* Breadcrumbs */}
-                <div className={cn('flex items-center gap-1.5 transition-all duration-500', pageVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0')}>
+                <div className={cn('flex items-center gap-1.5 transition-all duration-500', pageVisible ? 'opacity-100' : '-translate-y-2 opacity-0')}>
                     <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                     <ChevronRight className="h-3 w-3 text-slate-400" />
                     <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Income & Expenses</span>
@@ -338,7 +338,7 @@ export default function Expenses() {
                 <div id="expenses-print-area">
 
                 {/* Header Banner */}
-                <div className={cn('overflow-hidden rounded-2xl border border-rose-200/80 bg-white/90 shadow-xl shadow-rose-900/5 backdrop-blur-xl transition-all duration-500', pageVisible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0')}>
+                <div className={cn('overflow-hidden rounded-2xl border border-rose-200/80 bg-white/90 shadow-xl shadow-rose-900/5 transition-all duration-500', pageVisible ? 'opacity-100' : 'translate-y-3 opacity-0')}>
                     <div className="p-6 sm:p-8">
                         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex items-start gap-4">
@@ -415,10 +415,10 @@ export default function Expenses() {
                             <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-slate-600">
-                                        <User className="h-3.5 w-3.5 text-blue-600" />
+                                        <User className="h-3.5 w-3.5 text-[#1E4DA6]" />
                                         <span>Manual Outflow</span>
                                     </div>
-                                    <span className="rounded-md bg-blue-50 px-2 py-0.5 font-mono text-[10px] font-bold text-blue-700">{metrics.manualCount} entries</span>
+                                    <span className="rounded-md bg-[#1E4DA6]/5 px-2 py-0.5 font-mono text-[10px] font-bold text-[#173F8C]">{metrics.manualCount} entries</span>
                                 </div>
                                 <p className="mt-2 text-2xl font-black text-slate-800">{fmt(metrics.manualAmount)}</p>
                                 <p className="mt-1 text-xs text-slate-400">
@@ -611,7 +611,7 @@ export default function Expenses() {
                                                         <span>AUTO</span>
                                                     </span>
                                                 ) : (
-                                                    <span className="inline-flex items-center gap-1 rounded-md bg-blue-50 px-2 py-0.5 font-mono text-[10px] font-bold text-blue-700 border border-blue-200/60">
+                                                    <span className="inline-flex items-center gap-1 rounded-md bg-[#1E4DA6]/5 px-2 py-0.5 font-mono text-[10px] font-bold text-[#173F8C] border border-[#1E4DA6]/60">
                                                         <User className="h-3 w-3" />
                                                         <span>MANUAL</span>
                                                     </span>
@@ -737,7 +737,7 @@ export default function Expenses() {
                                         <div className="mt-0.5">
                                             <span className={cn(
                                                 'inline-flex items-center gap-1 rounded-md px-2 py-0.5 font-mono text-[10px] font-bold',
-                                                selectedRecord.source === 'AUTO' ? 'bg-rose-100 text-rose-800' : 'bg-blue-100 text-blue-800'
+                                                selectedRecord.source === 'AUTO' ? 'bg-rose-100 text-rose-800' : 'bg-[#1E4DA6]/10 text-[#122F69]'
                                             )}>
                                                 {selectedRecord.source}
                                             </span>

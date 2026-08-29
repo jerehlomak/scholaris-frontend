@@ -123,9 +123,9 @@ export default function TakeExam() {
         return (
             <div className="max-w-2xl mx-auto space-y-6 pt-10 font-dash">
                 <Card className="p-8 bg-white border border-gray-100 text-center space-y-6 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-[#0036a1]" />
-                    <div className="w-20 h-20 bg-[#0036a1]/5 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <ShieldAlert className="w-10 h-10 text-[#0036a1]" />
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-[#1E4DA6]" />
+                    <div className="w-20 h-20 bg-[#1E4DA6]/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <ShieldAlert className="w-10 h-10 text-[#1E4DA6]" />
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900">{exam.title}</h2>
@@ -160,7 +160,7 @@ export default function TakeExam() {
 
                     <Button
                         onClick={() => setStarted(true)}
-                        className="w-full h-12 text-lg font-bold bg-[#6bc048] hover:bg-[#5aa33c] text-white shadow-md shadow-[#6bc048]/20"
+                        className="w-full h-12 text-lg font-bold bg-[#10b981] hover:bg-[#5aa33c] text-white shadow-md shadow-[#10b981]/20"
                     >
                         I am ready, Start Exam
                     </Button>
@@ -178,7 +178,7 @@ export default function TakeExam() {
             {/* Strict Exam Header */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex items-center justify-between sticky top-[72px] z-30">
                 <div className="flex items-center gap-4">
-                    <div className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-lg border ${isWarningTime ? 'bg-red-50 text-red-600 border-red-200 animate-pulse' : 'bg-blue-50 text-[#0036a1] border-blue-100'}`}>
+                    <div className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-lg border ${isWarningTime ? 'bg-red-50 text-red-600 border-red-200 animate-pulse' : 'bg-[#1E4DA6]/5 text-[#1E4DA6] border-[#1E4DA6]/10'}`}>
                         <Timer className="w-5 h-5" />
                         <span className="font-mono tracking-wider">{formatTime(timeLeftSeconds)}</span>
                     </div>
@@ -191,7 +191,7 @@ export default function TakeExam() {
                     <Button
                         onClick={handleManualSubmit}
                         disabled={isSubmitting}
-                        className="bg-[#0036a1] hover:bg-[#001761] text-white"
+                        className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white"
                     >
                         {isSubmitting ? 'Grading...' : 'Submit Test'}
                     </Button>
@@ -200,7 +200,7 @@ export default function TakeExam() {
 
             {/* Question Card */}
             <Card className="bg-white border-2 border-gray-100 shadow-sm overflow-hidden relative">
-                <div className="absolute top-0 left-0 w-1.5 h-full bg-[#0036a1]" />
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-[#1E4DA6]" />
 
                 <div className="p-8 sm:p-10 pl-12">
                     <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
@@ -222,18 +222,18 @@ export default function TakeExam() {
                                     key={idx}
                                     onClick={() => handleSelectOption(currentQ.id, option)}
                                     className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all group ${isSelected
-                                        ? 'border-[#0036a1] bg-blue-50/50'
-                                        : 'border-gray-100 bg-white hover:border-[#0036a1]/30 hover:bg-gray-50'
+                                        ? 'border-[#1E4DA6] bg-[#1E4DA6]/8'
+                                        : 'border-gray-100 bg-white hover:border-[#1E4DA6]/30 hover:bg-gray-50'
                                         }`}
                                 >
-                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 font-bold transition-colors ${isSelected ? 'bg-[#0036a1] text-white' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
+                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 font-bold transition-colors ${isSelected ? 'bg-[#1E4DA6] text-white' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
                                         }`}>
                                         {letter}
                                     </div>
-                                    <span className={`text-base font-medium ${isSelected ? 'text-[#0036a1]' : 'text-gray-700'}`}>
+                                    <span className={`text-base font-medium ${isSelected ? 'text-[#1E4DA6]' : 'text-gray-700'}`}>
                                         {option}
                                     </span>
-                                    {isSelected && <CheckCircle2 className="w-5 h-5 text-[#0036a1] ml-auto" />}
+                                    {isSelected && <CheckCircle2 className="w-5 h-5 text-[#1E4DA6] ml-auto" />}
                                 </button>
                             );
                         })}
@@ -257,9 +257,9 @@ export default function TakeExam() {
                                 key={q.id}
                                 onClick={() => setCurrentQuestionIdx(idx)}
                                 className={`w-8 h-8 rounded-full text-xs font-bold transition-all flex items-center justify-center shrink-0 ${currentQuestionIdx === idx
-                                    ? 'ring-2 ring-offset-2 ring-[#0036a1] bg-[#0036a1] text-white'
+                                    ? 'ring-2 ring-offset-2 ring-[#1E4DA6] bg-[#1E4DA6] text-white'
                                     : answers[q.id]
-                                        ? 'bg-blue-100 text-[#0036a1] hover:bg-blue-200'
+                                        ? 'bg-[#1E4DA6]/10 text-[#1E4DA6] hover:bg-[#1E4DA6]/20'
                                         : 'bg-white border border-gray-200 text-gray-400 hover:bg-gray-50'
                                     }`}
                             >

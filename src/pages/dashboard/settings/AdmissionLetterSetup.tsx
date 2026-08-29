@@ -28,7 +28,7 @@ const DEFAULT_CONTENT = `
 
 const QUILL_CSS = `
 .ql-toolbar.ql-snow { border: none !important; border-bottom: 1px solid #e2e8f0 !important; background: #f8fafc; padding: 10px 14px !important; border-radius: 16px 16px 0 0; }
-.ql-container.ql-snow { border: none !important; font-family: 'Plus Jakarta Sans', inherit !important; }
+.ql-container.ql-snow { border: none !important; }
 .ql-editor { min-height: 250px; padding: 22px 24px !important; color: #334155; line-height: 1.7; font-size: 0.9375rem; }
 `;
 
@@ -90,7 +90,7 @@ export function AdmissionLetterSetup() {
     if (loading) {
         return (
             <div className="flex h-64 items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
             </div>
         );
     }
@@ -115,7 +115,7 @@ export function AdmissionLetterSetup() {
                                 type="checkbox" 
                                 checked={template.showLogo}
                                 onChange={(e) => setTemplate(p => ({ ...p, showLogo: e.target.checked }))}
-                                className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                                className="w-4 h-4 text-[#1E4DA6] border-slate-300 rounded focus:ring-[#1E4DA6]"
                             />
                             <span className="text-sm font-medium text-slate-700">Display School Logo</span>
                         </label>
@@ -125,7 +125,7 @@ export function AdmissionLetterSetup() {
                                 type="checkbox" 
                                 checked={template.showSchoolName}
                                 onChange={(e) => setTemplate(p => ({ ...p, showSchoolName: e.target.checked }))}
-                                className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                                className="w-4 h-4 text-[#1E4DA6] border-slate-300 rounded focus:ring-[#1E4DA6]"
                             />
                             <span className="text-sm font-medium text-slate-700">Display School Name</span>
                         </label>
@@ -135,7 +135,7 @@ export function AdmissionLetterSetup() {
                 <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
                     <h3 className="font-bold text-slate-800">Letter Body</h3>
                     <p className="text-sm text-slate-500">Draft the main content of the admission letter. This will appear below the header and above the signature. Use <code>{'{ApplicantName}'}</code> to insert the applicant's name dynamically.</p>
-                    <div className="overflow-hidden rounded-xl border border-slate-200 focus-within:border-blue-300 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+                    <div className="overflow-hidden rounded-xl border border-slate-200 focus-within:border-[#1E4DA6]/35 focus-within:ring-2 focus-within:ring-[#1E4DA6]/10 transition-all">
                         <ReactQuill
                             theme="snow"
                             value={template.body}
@@ -155,7 +155,7 @@ export function AdmissionLetterSetup() {
                                 value={template.signatoryName}
                                 onChange={(e) => setTemplate(p => ({ ...p, signatoryName: e.target.value }))}
                                 placeholder="e.g. Dr. John Doe"
-                                className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                             />
                         </div>
                         <div>
@@ -165,7 +165,7 @@ export function AdmissionLetterSetup() {
                                 value={template.signatoryTitle}
                                 onChange={(e) => setTemplate(p => ({ ...p, signatoryTitle: e.target.value }))}
                                 placeholder="e.g. Principal / Director"
-                                className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                             />
                         </div>
                         <div className="md:col-span-2">

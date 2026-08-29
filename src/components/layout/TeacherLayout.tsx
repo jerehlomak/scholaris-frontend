@@ -5,8 +5,8 @@ import {
     Menu, Settings,
     LayoutDashboard, BookOpen, Users,
     ClipboardList, Calendar, FileText, Bell,
-    ChevronRight, MessageSquare, Video, ClipboardCheck, LayoutTemplate,
-    LogOut, Scan, GraduationCap, X, Banknote
+    ChevronRight, MessageSquare, ClipboardCheck, LayoutTemplate,
+    LogOut, GraduationCap, X, Banknote
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import logo from '../../assets/SkcoolyPlus.png';
@@ -24,7 +24,6 @@ const NAV_GROUPS = [
             { title: 'Subjects', path: '/teacher/subjects', icon: BookOpen },
             { title: 'Assignments', path: '/teacher/assignments', icon: ClipboardList },
             { title: 'Attendance', path: '/teacher/attendance', icon: Calendar, exact: true },
-            { title: 'Scanner Terminal', path: '/teacher/attendance/scanner', icon: Scan },
             { title: 'Results', path: '/teacher/results', icon: FileText },
         ]
     },
@@ -33,7 +32,6 @@ const NAV_GROUPS = [
         items: [
             { title: 'LMS Hub', path: '/teacher/lms', icon: LayoutTemplate },
             { title: 'CBT Manager', path: '/teacher/cbt', icon: ClipboardCheck },
-            { title: 'Live Class', path: '/teacher/live-class', icon: Video },
             { title: 'Messaging', path: '/teacher/messaging', icon: MessageSquare },
             { title: 'My Payroll & Payslips', path: '/teacher/payroll', icon: Banknote },
         ]
@@ -47,12 +45,10 @@ const ROUTE_TITLES: Record<string, string> = {
     '/teacher/subjects': 'Subjects',
     '/teacher/assignments': 'Assignments',
     '/teacher/attendance': 'Attendance',
-    '/teacher/attendance/scanner': 'Scanner Terminal',
     '/teacher/results': 'Results',
     '/teacher/lms': 'LMS Hub',
     '/teacher/cbt': 'CBT Manager',
     '/teacher/cbt/create': 'Create Exam',
-    '/teacher/live-class': 'Live Class',
     '/teacher/messaging': 'Messaging',
     '/teacher/payroll': 'My Payroll & Payslips',
 };
@@ -74,7 +70,7 @@ function NavItem({ item, isActive }: { item: typeof NAV_GROUPS[0]['items'][0]; i
             className={cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group',
                 isActive
-                    ? 'bg-blue-50 text-blue-700'
+                    ? 'bg-[#1E4DA6]/5 text-[#173F8C]'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             )}
         >
@@ -82,12 +78,12 @@ function NavItem({ item, isActive }: { item: typeof NAV_GROUPS[0]['items'][0]; i
                 size={16}
                 className={cn(
                     'shrink-0 transition-colors',
-                    isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'
+                    isActive ? 'text-[#1E4DA6]' : 'text-slate-400 group-hover:text-slate-600'
                 )}
             />
             <span className="truncate">{item.title}</span>
             {isActive && (
-                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#1E4DA6] shrink-0" />
             )}
         </Link>
     );
@@ -152,7 +148,7 @@ function Sidebar({
                 {/* ── School chip ── */}
                 <div className="px-4 py-3 border-b border-slate-100 shrink-0">
                     <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-slate-50 border border-slate-200">
-                        <div className="w-7 h-7 rounded-md bg-blue-600 flex items-center justify-center shrink-0">
+                        <div className="w-7 h-7 rounded-md bg-[#1E4DA6] flex items-center justify-center shrink-0">
                             <GraduationCap size={14} className="text-white" />
                         </div>
                         <div className="min-w-0">

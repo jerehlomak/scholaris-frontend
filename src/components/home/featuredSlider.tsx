@@ -1,95 +1,50 @@
+import { GraduationCap, FileCheck2, CalendarCheck2, Wallet, MessageSquare, CalendarClock, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-import { Star } from 'lucide-react';
+const NAVY = '#15316B';
+const GOLD = '#F5B800';
+
+const FEATURES = [
+    { icon: GraduationCap, title: 'Admissions & Enrollment', description: 'Take applications online and move accepted students straight into class rosters — no re-typing.' },
+    { icon: FileCheck2, title: 'Result Management', description: 'Configure your grading scale once, then generate and print report cards for every class in minutes.' },
+    { icon: CalendarCheck2, title: 'Attendance Tracking', description: 'Mark student and staff attendance daily, with a live dashboard showing who\'s in and who\'s out.' },
+    { icon: Wallet, title: 'Fees & Finance', description: 'Track fee collection by class, record payments, and keep a clear ledger of income and expenses.' },
+    { icon: MessageSquare, title: 'Parent Communication', description: 'Send announcements and results updates straight to parents — no separate app for them to install.' },
+    { icon: CalendarClock, title: 'Timetable & Scheduling', description: 'Build a conflict-free timetable for every class and teacher, and keep it up to date all term.' },
+];
 
 export function FeaturedSlider() {
-    const products = [
-        {
-            id: 1,
-            title: "Student Information System",
-            description: "Manage student data securely from enrollment to graduation.",
-            price: "Included",
-            oldPrice: "",
-            rating: 4.9,
-            reviews: 1245,
-            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: 2,
-            title: "Automated Grading",
-            description: "Powerful grading tools tailored to modern teaching standards.",
-            price: "Premium",
-            rating: 4.8,
-            reviews: 890,
-            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: 3,
-            title: "Parent Communication HUB",
-            description: "Keep parents informed with real-time updates and messaging.",
-            price: "Core Feature",
-            rating: 5.0,
-            reviews: 2130,
-            image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: 4,
-            title: "Smart Scheduling",
-            description: "Conflict-free timetabling with AI-driven schedule generation.",
-            price: "Add-on",
-            rating: 4.7,
-            reviews: 540,
-            image: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&q=80&w=600"
-        }
-    ];
-
     return (
-        <section id="features-section" className="py-16 bg-white overflow-hidden">
+        <section id="features-section" className="py-20 sm:py-24 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <div className="flex justify-between items-end mb-8">
-                    <h2 className="text-3xl md:text-4xl font-heading text-brand-dark">Featured Modules</h2>
-                    <a href="#" className="hidden sm:block text-brand-teal font-medium border-b-2 border-brand-green hover:text-brand-dark transition-colors pb-1">
-                        View All Features
-                    </a>
+                <div className="max-w-2xl mb-14">
+                    <span className="text-xs font-bold uppercase tracking-[0.14em]" style={{ color: NAVY }}>What's included</span>
+                    <h2 className="text-3xl md:text-4xl font-heading font-medium text-[#1C2333] mt-3 tracking-tight">
+                        Everything your school office needs, in one place
+                    </h2>
                 </div>
 
-                {/* CSS Scroll Snap Container for Slider */}
-                <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                    {products.map((product) => (
-                        <div key={product.id} className="min-w-[280px] w-full snap-start bg-brand-gray-light p-4 rounded-sm flex flex-col group cursor-pointer relative transition-transform hover:-translate-y-1 hover:shadow-lg">
-
-                            {/* Image */}
-                            <div className="aspect-square w-full mb-4 bg-white rounded-sm overflow-hidden flex items-center justify-center p-4">
-                                <img src={product.image} alt={product.title} className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {FEATURES.map((feature) => (
+                        <div key={feature.title} className="rounded-2xl border border-[#EEEAE0] bg-[#FBF9F5] p-7 transition-all hover:border-[#15316B]/20 hover:shadow-sm">
+                            <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style={{ backgroundColor: `${NAVY}12` }}>
+                                <feature.icon className="w-5 h-5" style={{ color: NAVY }} />
                             </div>
-
-                            {/* Content */}
-                            <div className="flex flex-col flex-grow">
-                                <div className="flex items-center gap-1 mb-2">
-                                    <Star className="w-4 h-4 fill-brand-green text-brand-green" />
-                                    <span className="text-sm font-bold text-brand-dark">{product.rating}</span>
-                                    <span className="text-xs text-gray-500">({product.reviews})</span>
-                                </div>
-
-                                <h3 className="font-bold text-brand-dark text-[15px] mb-1 leading-tight">{product.title}</h3>
-                                <p className="text-xs text-brand-dark opacity-70 mb-4 line-clamp-2">{product.description}</p>
-
-                                <div className="mt-auto pt-4 flex flex-col gap-3">
-                                    <div className="flex items-end gap-2 text-brand-dark">
-                                        <span className="font-bold text-lg">{product.price}</span>
-                                        {product.oldPrice && (
-                                            <span className="text-sm line-through opacity-50 mb-0.5">{product.oldPrice}</span>
-                                        )}
-                                    </div>
-
-                                    <button className="w-full bg-brand-teal text-white py-3 rounded-sm font-bold text-sm tracking-wide hover:bg-brand-dark transition-colors">
-                                        Learn More
-                                    </button>
-                                </div>
-                            </div>
-
+                            <h3 className="font-heading text-lg font-medium text-[#1C2333] mb-2">{feature.title}</h3>
+                            <p className="text-sm text-slate-500 leading-relaxed">{feature.description}</p>
                         </div>
                     ))}
+                </div>
+
+                <div className="mt-12 text-center">
+                    <Link
+                        to="/get-started"
+                        className="inline-flex items-center gap-2 font-bold border-b-2 pb-1 transition-colors"
+                        style={{ color: NAVY, borderColor: GOLD }}
+                    >
+                        See the full feature list <ArrowRight className="w-4 h-4" />
+                    </Link>
                 </div>
             </div>
         </section>

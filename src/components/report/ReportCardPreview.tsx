@@ -245,8 +245,8 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
     // Use a sensible default if no template is assigned, but preserve `false` if set
     
     const cfg = _templateConfig ?? {
-        primaryColor: '#0036a1',
-        headerBg: '#0036a1',
+        primaryColor: '#1E4DA6',
+        headerBg: '#1E4DA6',
         tableBorderColor: '#d1d5db',
         fontFamily: 'sans',
         showSchoolLogo: true,
@@ -279,8 +279,8 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
         return <div className="p-10 text-center text-gray-500 font-dash">Unable to render report card: Missing student or school data.</div>;
     }
 
-    const primary = cfg.primaryColor || '#0036a1';
-    const headerBg = cfg.headerBg || '#0036a1';
+    const primary = cfg.primaryColor || '#1E4DA6';
+    const headerBg = cfg.headerBg || '#1E4DA6';
     const showBorder = school.resultShowBorder ?? true;
     const showSignature = school.resultShowSignature ?? true;
     const borderColor = cfg.tableBorderColor || '#d1d5db';

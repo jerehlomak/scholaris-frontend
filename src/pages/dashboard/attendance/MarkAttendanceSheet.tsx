@@ -162,7 +162,7 @@ export function MarkAttendanceSheet({ classLevel, date, teacherName = 'Teacher',
                                             placeholder="Optional note..."
                                             value={entry.note}
                                             onChange={e => setDraft(prev => prev.map(d => d.studentId === student.id ? { ...d, note: e.target.value } : d))}
-                                            className="w-full text-xs border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-[#0036a1]"
+                                            className="w-full text-xs border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-[#1E4DA6]"
                                         />
                                     </td>
                                 </tr>
@@ -175,7 +175,7 @@ export function MarkAttendanceSheet({ classLevel, date, teacherName = 'Teacher',
             {/* Footer */}
             <div className="p-4 border-t border-gray-100 flex items-center justify-between bg-[#f8fafc]">
                 <p className="text-xs text-gray-500">{students.length} students · {date}</p>
-                <Button onClick={handleSave} className={`flex items-center gap-2 ${saved ? 'bg-[#6bc048]' : 'bg-[#0036a1]'} text-white`}>
+                <Button onClick={handleSave} className={`flex items-center gap-2 ${saved ? 'bg-[#10b981]' : 'bg-[#1E4DA6]'} text-white`}>
                     {saved ? <><CheckCircle2 className="w-4 h-4" /> Saved!</> : <><Save className="w-4 h-4" /> Save Attendance</>}
                 </Button>
             </div>

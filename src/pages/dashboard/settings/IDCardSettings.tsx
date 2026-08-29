@@ -5,13 +5,13 @@ import { SettingsHero } from './shared/SettingsHero';
 import { SaveButton } from './shared/SaveButton';
 import { cn } from '../../../lib/utils';
 
-const COLORS = ['#0036a1', '#16a34a', '#dc2626', '#7c3aed', '#0891b2', '#ea580c', '#1e293b'];
+const COLORS = ['#1E4DA6', '#16a34a', '#dc2626', '#7c3aed', '#0891b2', '#ea580c', '#1e293b'];
 
 export function IDCardSettings() {
     const [saved, setSaved] = useState(false);
     const [config, setConfig] = useState({
         layout: 'vertical',
-        primaryColor: '#0036a1',
+        primaryColor: '#1E4DA6',
         showBarcode: true,
         showBloodGroup: true,
         showEmergencyContact: false,
@@ -23,7 +23,7 @@ export function IDCardSettings() {
     const handleSave = () => { setSaved(true); setTimeout(() => setSaved(false), 3000); };
 
     const toggleCls = (active: boolean) =>
-        `relative inline-flex h-5 w-9 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors ${active ? 'bg-blue-600' : 'bg-slate-200'}`;
+        `relative inline-flex h-5 w-9 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors ${active ? 'bg-[#1E4DA6]' : 'bg-slate-200'}`;
     const thumbCls = (active: boolean) =>
         `inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${active ? 'translate-x-4' : 'translate-x-0'}`;
 
@@ -41,7 +41,7 @@ export function IDCardSettings() {
                     {/* Layout */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4">
                         <div className="flex items-center gap-2">
-                            <LayoutTemplate className="h-4 w-4 text-blue-600" />
+                            <LayoutTemplate className="h-4 w-4 text-[#1E4DA6]" />
                             <h3 className="font-bold text-slate-700 text-sm">Card Layout</h3>
                         </div>
                         <div className="flex gap-3">
@@ -49,7 +49,7 @@ export function IDCardSettings() {
                                 <button
                                     key={l}
                                     onClick={() => update('layout', l)}
-                                    className={cn('flex-1 rounded-xl border-2 py-3 text-sm font-bold capitalize transition-all', config.layout === l ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-slate-200 text-slate-500 hover:border-slate-300')}
+                                    className={cn('flex-1 rounded-xl border-2 py-3 text-sm font-bold capitalize transition-all', config.layout === l ? 'border-[#1E4DA6] bg-[#1E4DA6]/5 text-[#173F8C]' : 'border-slate-200 text-slate-500 hover:border-slate-300')}
                                 >
                                     {l}
                                 </button>
@@ -60,7 +60,7 @@ export function IDCardSettings() {
                     {/* Color */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4">
                         <div className="flex items-center gap-2">
-                            <Palette className="h-4 w-4 text-blue-600" />
+                            <Palette className="h-4 w-4 text-[#1E4DA6]" />
                             <h3 className="font-bold text-slate-700 text-sm">Primary Color</h3>
                         </div>
                         <div className="flex gap-3 flex-wrap">
@@ -105,7 +105,7 @@ export function IDCardSettings() {
                                 max={5}
                                 value={config.validityYears}
                                 onChange={e => update('validityYears', e.target.value)}
-                                className="w-20 rounded-xl border border-slate-200 px-3 py-2.5 text-center text-lg font-black text-blue-700 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                                className="w-20 rounded-xl border border-slate-200 px-3 py-2.5 text-center text-lg font-black text-[#173F8C] outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10"
                             />
                             <span className="text-sm text-slate-500 font-semibold">year(s) from date of issue</span>
                         </div>

@@ -11,7 +11,7 @@ export function SettingsHero({ icon, title, subtitle, children }: SettingsHeroPr
         <div className="mb-10 text-center">
             <div className="relative mx-auto mb-5 h-16 w-16">
                 <div
-                    className="absolute inset-0 rounded-2xl bg-blue-400/20"
+                    className="absolute inset-0 rounded-2xl bg-[#1E4DA6]/20"
                     style={{ animation: 'ss-pulse 2.4s ease-out infinite' }}
                 />
                 <style>{`
@@ -25,7 +25,7 @@ export function SettingsHero({ icon, title, subtitle, children }: SettingsHeroPr
                     }
                     .ss-float { animation: ss-float 3.5s ease-in-out infinite; }
                 `}</style>
-                <div className="ss-float relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 shadow-lg shadow-blue-200 text-white">
+                <div className="ss-float relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-[#1E4DA6] shadow-lg shadow-[#1E4DA6]/20 text-white">
                     {icon}
                 </div>
             </div>

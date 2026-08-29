@@ -130,7 +130,7 @@ export function AssessmentStructure() {
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mb-2 overflow-x-auto whitespace-nowrap pb-1">
                 <span className="font-semibold text-gray-900">Settings</span>
                 <span>/</span>
-                <span className="text-[#0036a1]">Assessment Structure</span>
+                <span className="text-[#1E4DA6]">Assessment Structure</span>
             </div>
 
             <div className="w-full">
@@ -139,13 +139,13 @@ export function AssessmentStructure() {
                     <Button 
                         variant="ghost" 
                         onClick={() => setSelectedResultType('SCORE_BASED')}
-                        className={`font-semibold text-sm px-6 py-6 rounded-none rounded-t-xl z-10 -mb-px transition-colors ${selectedResultType === 'SCORE_BASED' ? 'bg-white border hover:bg-white border-b-0 border-gray-200 text-[#0036a1] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]' : 'bg-gray-50 text-gray-500 border border-transparent hover:bg-gray-100'}`}>
+                        className={`font-semibold text-sm px-6 py-6 rounded-none rounded-t-xl z-10 -mb-px transition-colors ${selectedResultType === 'SCORE_BASED' ? 'bg-white border hover:bg-white border-b-0 border-gray-200 text-[#1E4DA6] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]' : 'bg-gray-50 text-gray-500 border border-transparent hover:bg-gray-100'}`}>
                         Score-Based
                     </Button>
                     <Button 
                         variant="ghost" 
                         onClick={() => setSelectedResultType('COMMENT_BASED')}
-                        className={`font-semibold text-sm px-6 py-6 rounded-none rounded-t-xl z-10 -mb-px transition-colors ${selectedResultType === 'COMMENT_BASED' ? 'bg-white border hover:bg-white border-b-0 border-gray-200 text-[#0036a1] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]' : 'bg-gray-50 text-gray-500 border border-transparent hover:bg-gray-100'}`}>
+                        className={`font-semibold text-sm px-6 py-6 rounded-none rounded-t-xl z-10 -mb-px transition-colors ${selectedResultType === 'COMMENT_BASED' ? 'bg-white border hover:bg-white border-b-0 border-gray-200 text-[#1E4DA6] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]' : 'bg-gray-50 text-gray-500 border border-transparent hover:bg-gray-100'}`}>
                         Comment-Based
                     </Button>
                 </div>
@@ -190,7 +190,7 @@ export function AssessmentStructure() {
                                             <div className="w-full flex-1 space-y-1">
                                                 <Label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Assessment Name</Label>
                                                 <Input
-                                                    className="h-10 bg-white border-gray-200 shadow-sm focus-visible:ring-[#0036a1]/20 font-medium w-full"
+                                                    className="h-10 bg-white border-gray-200 shadow-sm focus-visible:ring-[#1E4DA6]/20 font-medium w-full"
                                                     value={part.name}
                                                     onChange={e => handleUpdate(part.id, 'name', e.target.value)}
                                                     placeholder="e.g. Mid-Term Test"
@@ -203,7 +203,7 @@ export function AssessmentStructure() {
                                                         type="number"
                                                         min="0"
                                                         max="100"
-                                                        className="h-10 bg-white border-gray-200 shadow-sm pr-8 focus-visible:ring-[#0036a1]/20 font-bold text-center w-full"
+                                                        className="h-10 bg-white border-gray-200 shadow-sm pr-8 focus-visible:ring-[#1E4DA6]/20 font-bold text-center w-full"
                                                         value={part.weight || ''}
                                                         onChange={e => handleUpdate(part.id, 'weight', e.target.value)}
                                                     />
@@ -225,7 +225,7 @@ export function AssessmentStructure() {
                                 <Button
                                     variant="outline"
                                     onClick={handleAdd}
-                                    className="bg-gray-50/50 border-dashed border-2 hover:bg-[#0036a1]/5 hover:border-[#0036a1]/30 hover:text-[#0036a1] text-gray-500 py-6"
+                                    className="bg-gray-50/50 border-dashed border-2 hover:bg-[#1E4DA6]/5 hover:border-[#1E4DA6]/30 hover:text-[#1E4DA6] text-gray-500 py-6"
                                 >
                                     <Plus className="w-4 h-4 mr-2" /> Add Assessment Segment
                                 </Button>
@@ -237,7 +237,7 @@ export function AssessmentStructure() {
                                             <h4 className="font-bold text-gray-900">Total Allocation</h4>
                                             <p className="text-xs text-gray-500">Combined weight must exactly equal 100%.</p>
                                         </div>
-                                        <span className={`text-xl sm:text-2xl font-bold ${totalWeight === 100 ? 'text-[#6bc048]' : totalWeight > 100 ? 'text-red-500' : 'text-[#ff9800]'}`}>
+                                        <span className={`text-xl sm:text-2xl font-bold ${totalWeight === 100 ? 'text-[#10b981]' : totalWeight > 100 ? 'text-red-500' : 'text-[#ff9800]'}`}>
                                             {totalWeight}%
                                         </span>
                                     </div>
@@ -247,7 +247,7 @@ export function AssessmentStructure() {
                                             <div
                                                 key={p.id}
                                                 className={`h-full border-r border-white/20 transition-all ${totalWeight > 100 ? 'bg-red-400' :
-                                                    i % 2 === 0 ? 'bg-[#0036a1]' : 'bg-[#6bc048]'
+                                                    i % 2 === 0 ? 'bg-[#1E4DA6]' : 'bg-[#10b981]'
                                                     }`}
                                                 style={{ width: `${(p.weight / Math.max(100, totalWeight)) * 100}%` }}
                                                 title={`${p.name}: ${p.weight}%`}
@@ -272,8 +272,8 @@ export function AssessmentStructure() {
                                     <Button
                                         onClick={handleSave}
                                         disabled={!isValid}
-                                        className={`px-8 py-5 rounded-full font-bold shadow-md transition-all flex items-center gap-2 text-sm tracking-wide ${saved ? 'bg-[#6bc048] text-white hover:bg-[#5da93e]' :
-                                            isValid ? 'bg-[#0036a1] text-white hover:bg-[#001761]' :
+                                        className={`px-8 py-5 rounded-full font-bold shadow-md transition-all flex items-center gap-2 text-sm tracking-wide ${saved ? 'bg-[#10b981] text-white hover:bg-[#5da93e]' :
+                                            isValid ? 'bg-[#1E4DA6] text-white hover:bg-[#173F8C]' :
                                                 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                             }`}
                                     >

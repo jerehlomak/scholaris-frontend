@@ -69,11 +69,11 @@ export function CommunicationTemplates() {
                             onClick={() => setActiveId(t.id)}
                             className={cn(
                                 'w-full rounded-xl border-2 p-3.5 text-left transition-all',
-                                activeId === t.id ? 'border-blue-200 bg-blue-50/60 shadow-sm' : 'border-transparent bg-slate-50/60 hover:bg-slate-100/60'
+                                activeId === t.id ? 'border-[#1E4DA6]/20 bg-[#1E4DA6]/8 shadow-sm' : 'border-transparent bg-slate-50/60 hover:bg-slate-100/60'
                             )}
                         >
                             <div className="flex items-start justify-between gap-2">
-                                <span className={cn('font-bold text-sm leading-snug', activeId === t.id ? 'text-blue-700' : 'text-slate-700')}>{t.trigger}</span>
+                                <span className={cn('font-bold text-sm leading-snug', activeId === t.id ? 'text-[#173F8C]' : 'text-slate-700')}>{t.trigger}</span>
                                 <div className={cn('mt-1 h-2 w-2 shrink-0 rounded-full', t.isActive ? 'bg-emerald-400' : 'bg-slate-300')} />
                             </div>
                             <p className="mt-1 text-[10px] text-slate-400 leading-tight line-clamp-2">{t.description}</p>
@@ -86,7 +86,7 @@ export function CommunicationTemplates() {
                     <div className="flex-1 space-y-5">
                         <div className="w-full flex flex-col md:flex-row items-start justify-center md:justify-between gap-4 border-b border-slate-100 pb-4">
                             <div>
-                                <h2 className="flex items-center gap-2 font-black text-slate-800"><Settings2 className="h-4 w-4 text-blue-600" />{active.trigger}</h2>
+                                <h2 className="flex items-center gap-2 font-black text-slate-800"><Settings2 className="h-4 w-4 text-[#1E4DA6]" />{active.trigger}</h2>
                                 <p className="mt-1 text-xs text-slate-500">{active.description}</p>
                             </div>
                             <button
@@ -104,7 +104,7 @@ export function CommunicationTemplates() {
                                     {active.content.length} / 160 chars
                                 </span>
                             </div>
-                            <div className="overflow-hidden rounded-2xl border-2 border-slate-200 bg-white focus-within:border-blue-400 transition-colors">
+                            <div className="overflow-hidden rounded-2xl border-2 border-slate-200 bg-white focus-within:border-[#1E4DA6]/60 transition-colors">
                                 <textarea
                                     value={active.content}
                                     onChange={e => handleUpdate('content', e.target.value)}
@@ -116,7 +116,7 @@ export function CommunicationTemplates() {
                                     <div className="flex flex-wrap gap-1.5">
                                         {VARIABLES.map(v => (
                                             <button key={v} onClick={() => insertVar(v)} disabled={!active.isActive}
-                                                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-blue-600 hover:border-blue-300 hover:bg-blue-50 disabled:opacity-40 transition-colors">
+                                                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-[#1E4DA6] hover:border-[#1E4DA6]/35 hover:bg-[#1E4DA6]/5 disabled:opacity-40 transition-colors">
                                                 {v}
                                             </button>
                                         ))}
@@ -126,8 +126,8 @@ export function CommunicationTemplates() {
                         </div>
 
                         {/* Preview */}
-                        <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
-                            <p className="mb-2 flex items-center gap-2 font-bold text-blue-700 text-sm"><MessageSquare className="h-4 w-4" />Live Preview</p>
+                        <div className="rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-4">
+                            <p className="mb-2 flex items-center gap-2 font-bold text-[#173F8C] text-sm"><MessageSquare className="h-4 w-4" />Live Preview</p>
                             <p className="text-sm italic text-slate-600">"{preview(active.content)}"</p>
                         </div>
 

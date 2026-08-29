@@ -10,7 +10,7 @@ const API_CLASSES = '/api/v1/classes';
 
 interface Section { id: string; name: string; type: string | null; shortCode: string | null; }
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
 interface EditClassModalProps {
     classId: string | null;
@@ -91,7 +91,7 @@ export function EditClassModal({ classId, onClose, onSuccess }: EditClassModalPr
         <Dialog open={!!classId} onOpenChange={(open) => !open && onClose()}>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0">
                 <DialogHeader className="p-6 pb-4 sticky top-0 bg-white z-10 border-b border-gray-100 flex flex-row items-center gap-4 space-y-0">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-700 text-white shadow-md">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#173F8C] text-white shadow-md">
                         <GraduationCap className="h-6 w-6" />
                     </div>
                     <div>
@@ -102,16 +102,16 @@ export function EditClassModal({ classId, onClose, onSuccess }: EditClassModalPr
 
                 {loadingData ? (
                     <div className="flex items-center justify-center py-24">
-                        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                        <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
                     </div>
                 ) : (
                     <form className="p-6 flex flex-col gap-6" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Class Name */}
                             <div className="space-y-2 md:col-span-2">
-                                <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Class Name <span className="text-blue-600">*</span></label>
+                                <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Class Name <span className="text-[#1E4DA6]">*</span></label>
                                 <input value={form.name} onChange={e => set('name', e.target.value.toUpperCase())}
-                                    className={cn(inputCls, 'font-black text-blue-700')} placeholder="e.g. JSS1 A" required />
+                                    className={cn(inputCls, 'font-black text-[#173F8C]')} placeholder="e.g. JSS1 A" required />
                             </div>
 
                             {/* Section picker */}
@@ -159,7 +159,7 @@ export function EditClassModal({ classId, onClose, onSuccess }: EditClassModalPr
                                 Cancel
                             </button>
                             <button type="submit" disabled={isSubmitting}
-                                className="flex items-center gap-2 rounded-xl bg-blue-700 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 disabled:opacity-50 transition-colors">
+                                className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69] disabled:opacity-50 transition-colors">
                                 {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                                 {isSubmitting ? 'Updating…' : 'Save Changes'}
                             </button>

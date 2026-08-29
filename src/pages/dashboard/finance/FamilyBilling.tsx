@@ -137,24 +137,23 @@ export default function FamilyBilling() {
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');.fb-root,.fb-root *{font-family:'Plus Jakarta Sans',sans-serif!important}.fb-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="fb-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.18]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');.fb-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="fb-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-6xl">
 
                     {/* Breadcrumb */}
                     <div className="mb-5 flex items-center gap-1.5 flex-wrap">
                         <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <button onClick={() => setView('families')} className={cn("mono text-[10px] font-bold uppercase tracking-widest", view === 'families' ? 'text-blue-600' : 'text-slate-400 hover:text-blue-500')}>Family Billing</button>
-                        {profile && view === 'profile' && <><ChevronRight className="h-3 w-3 text-slate-400" /><span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">{profile.parent.name}</span></>}
+                        <button onClick={() => setView('families')} className={cn("mono text-[10px] font-bold uppercase tracking-widest", view === 'families' ? 'text-[#1E4DA6]' : 'text-slate-400 hover:text-[#1E4DA6]')}>Family Billing</button>
+                        {profile && view === 'profile' && <><ChevronRight className="h-3 w-3 text-slate-400" /><span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">{profile.parent.name}</span></>}
                     </div>
 
                     {/* Header */}
                     <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
                             {view !== 'families' && <button onClick={() => setView('families')} className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 hover:bg-slate-50 shadow-sm"><ArrowLeft className="h-4 w-4" /></button>}
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 shadow-lg shadow-indigo-200"><UsersRound className="h-6 w-6 text-white" /></div>
+                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-[#1E4DA6] shadow-lg shadow-indigo-200"><UsersRound className="h-6 w-6 text-white" /></div>
                             <div>
                                 <h1 className="text-xl font-extrabold text-slate-900">{view === 'families' ? 'Family Billing' : profile?.parent.name}</h1>
                                 <p className="mono text-[10px] text-slate-400 uppercase tracking-widest">{view === 'families' ? 'Consolidated parent statements' : profile?.parent.email || profile?.parent.phone || 'Parent Profile'}</p>
@@ -174,10 +173,10 @@ export default function FamilyBilling() {
                                     />
                                 </div>
                             )}
-                            <select value={term} onChange={e => setTerm(e.target.value)} className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400">
+                            <select value={term} onChange={e => setTerm(e.target.value)} className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60">
                                 {metaTerms.map(t => <option key={t} value={t}>{t}</option>)}
                             </select>
-                            <select value={year} onChange={e => setYear(e.target.value)} className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400">
+                            <select value={year} onChange={e => setYear(e.target.value)} className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60">
                                 {metaSessions.map(s => <option key={s.id} value={s.name}>{s.name}</option>)}
                             </select>
                         </div>
@@ -185,7 +184,7 @@ export default function FamilyBilling() {
 
                     {/* ── FAMILIES LIST VIEW ── */}
                     {view === 'families' && (
-                        <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl backdrop-blur-xl">
+                        <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl">
                             <div className="border-b border-slate-100 px-6 py-4 flex items-center justify-between">
                                 <h2 className="font-bold text-slate-800">Parents & Families</h2>
                                 <span className="mono text-[10px] text-slate-400">{families.length} families</span>
@@ -255,7 +254,7 @@ export default function FamilyBilling() {
                                         {profile.children.map(child => {
                                             const hasInvoices = child.invoices.length > 0;
                                             return (
-                                                <div key={child.id} className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-lg backdrop-blur-xl flex flex-col">
+                                                <div key={child.id} className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-lg flex flex-col">
                                                     <div className="border-b border-slate-100 px-6 py-4 bg-slate-50/50 flex justify-between items-center shrink-0">
                                                         <div>
                                                             <h3 className="font-bold text-slate-900">{child.name}</h3>
@@ -278,11 +277,11 @@ export default function FamilyBilling() {
                                                                     <div key={inv.id} className="rounded-xl border border-slate-100 p-4">
                                                                         <div className="flex items-center justify-between mb-3 border-b border-slate-50 pb-3">
                                                                             <div>
-                                                                                <p className="mono text-xs font-bold text-blue-700">{inv.invoiceNumber}</p>
+                                                                                <p className="mono text-xs font-bold text-[#173F8C]">{inv.invoiceNumber}</p>
                                                                                 <span className={cn("inline-flex items-center gap-1 mt-1 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase",
                                                                                     inv.status === 'PAID' ? 'bg-emerald-50 text-emerald-700' :
                                                                                         inv.status === 'PARTIALLY_PAID' ? 'bg-amber-50 text-amber-700' :
-                                                                                            ['OPEN', 'SENT'].includes(inv.status) ? 'bg-blue-50 text-blue-700' :
+                                                                                            ['OPEN', 'SENT'].includes(inv.status) ? 'bg-[#1E4DA6]/5 text-[#173F8C]' :
                                                                                                 'bg-red-50 text-red-600'
                                                                                 )}>
                                                                                     {inv.status.replace(/_/g, ' ')}

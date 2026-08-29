@@ -26,7 +26,7 @@ export default function CBTManager() {
         if (status === 'PUBLISHED') return 'bg-green-100 text-green-700';
         if (status === 'DRAFT') return 'bg-yellow-100 text-yellow-700';
         if (status === 'CONCLUDED') return 'bg-gray-100 text-gray-600';
-        return 'bg-blue-100 text-blue-700';
+        return 'bg-[#1E4DA6]/10 text-[#173F8C]';
     };
 
     const handleAction = async (examId: string, action: 'publish' | 'delete' | 'unpublish') => {
@@ -53,14 +53,14 @@ export default function CBTManager() {
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900 tracking-tight">CBT Manager</h2>
                     <div className="flex items-center text-xs text-gray-400 gap-1 mt-1">
-                        <Link to="/teacher" className="hover:text-[#0036a1] transition-colors">Home</Link>
+                        <Link to="/teacher" className="hover:text-[#1E4DA6] transition-colors">Home</Link>
                         <ChevronRight size={12} className="opacity-50" />
                         <span>CBT Manager</span>
                     </div>
                 </div>
                 <Button
                     onClick={() => navigate('/teacher/cbt/create')}
-                    className="flex items-center gap-2 bg-[#0036a1] hover:bg-[#001761] text-white shadow-sm"
+                    className="flex items-center gap-2 bg-[#1E4DA6] hover:bg-[#173F8C] text-white shadow-sm"
                 >
                     <Plus className="w-4 h-4" /> Create New Exam
                 </Button>
@@ -69,7 +69,7 @@ export default function CBTManager() {
             {/* Quick Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {[
-                    { icon: <BookOpen className="w-5 h-5" />, label: 'Total Exams', value: exams.length, color: 'bg-[#0036a1]/10 text-[#0036a1]' },
+                    { icon: <BookOpen className="w-5 h-5" />, label: 'Total Exams', value: exams.length, color: 'bg-[#1E4DA6]/10 text-[#1E4DA6]' },
                     { icon: <Activity className="w-5 h-5" />, label: 'Published', value: exams.filter(e => e.status === 'PUBLISHED').length, color: 'bg-green-100 text-green-700' },
                     { icon: <CalendarClock className="w-5 h-5" />, label: 'Drafts', value: exams.filter(e => e.status === 'DRAFT').length, color: 'bg-yellow-100 text-yellow-700' },
                 ].map((k, i) => (
@@ -94,7 +94,7 @@ export default function CBTManager() {
                             placeholder="Search exams..."
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
-                            className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-[#0036a1]"
+                            className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:border-[#1E4DA6]"
                         />
                     </div>
                 </div>
@@ -136,10 +136,10 @@ export default function CBTManager() {
                                         </td>
                                         <td className="px-5 py-3 text-right">
                                             <div className="flex items-center justify-end gap-2">
-                                                <Button size="sm" variant="ghost" title="View Results" onClick={() => navigate(`/teacher/cbt/results/${exam.id}`)} className="h-8 w-8 p-0 text-gray-500 hover:text-[#0036a1]">
+                                                <Button size="sm" variant="ghost" title="View Results" onClick={() => navigate(`/teacher/cbt/results/${exam.id}`)} className="h-8 w-8 p-0 text-gray-500 hover:text-[#1E4DA6]">
                                                     <Eye className="w-4 h-4" />
                                                 </Button>
-                                                <Button size="sm" variant="ghost" title="Edit Exam" onClick={() => navigate(`/teacher/cbt/edit/${exam.id}`)} className="h-8 w-8 p-0 text-gray-500 hover:text-blue-600">
+                                                <Button size="sm" variant="ghost" title="Edit Exam" onClick={() => navigate(`/teacher/cbt/edit/${exam.id}`)} className="h-8 w-8 p-0 text-gray-500 hover:text-[#1E4DA6]">
                                                     <Edit className="w-4 h-4" />
                                                 </Button>
                                                 {exam.status === 'DRAFT' ? (

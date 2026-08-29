@@ -17,20 +17,20 @@ function Skeleton({ className }: { className?: string }) {
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: any }> = {
     PENDING: { label: 'Pending', color: 'bg-amber-100 text-amber-700', icon: Clock },
-    PROCESSING: { label: 'Processing', color: 'bg-blue-100 text-blue-700', icon: Clock },
+    PROCESSING: { label: 'Processing', color: 'bg-[#1E4DA6]/10 text-[#173F8C]', icon: Clock },
     SUCCESSFUL: { label: 'Successful', color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
     FAILED: { label: 'Failed', color: 'bg-red-100 text-red-700', icon: XCircle },
     CANCELLED: { label: 'Cancelled', color: 'bg-slate-100 text-slate-500', icon: XCircle },
-    UNDER_REVIEW: { label: 'Under Review', color: 'bg-purple-100 text-purple-700', icon: Clock },
+    UNDER_REVIEW: { label: 'Under Review', color: 'bg-[#1E4DA6]/10 text-[#173F8C]', icon: Clock },
     REVERSED: { label: 'Reversed', color: 'bg-orange-100 text-orange-700', icon: ArrowUpCircle },
 };
 
 const METHOD_COLORS: Record<string, string> = {
     PAYSTACK: 'bg-indigo-100 text-indigo-700',
-    BANK_TRANSFER: 'bg-blue-100 text-blue-700',
+    BANK_TRANSFER: 'bg-[#1E4DA6]/10 text-[#173F8C]',
     CASH: 'bg-green-100 text-green-700',
     POS: 'bg-teal-100 text-teal-700',
-    WALLET: 'bg-purple-100 text-purple-700',
+    WALLET: 'bg-[#1E4DA6]/10 text-[#173F8C]',
     MANUAL_ADJUSTMENT: 'bg-slate-100 text-slate-600',
 };
 
@@ -82,16 +82,15 @@ export default function PaymentRecords() {
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root,.fd-root *{font-family:'Plus Jakarta Sans',sans-serif!important} .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="fd-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-full space-y-6">
 
                     {/* Breadcrumb */}
                     <div className="flex items-center gap-1.5">
                         <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Payment Records</span>
+                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Payment Records</span>
                     </div>
 
                     {/* Header */}
@@ -262,7 +261,7 @@ export default function PaymentRecords() {
                                             <td className="px-4 py-3 text-xs text-slate-500">
                                                 {tx.receipt?.receiptNumber ? (
                                                     <div className="flex flex-col items-start gap-1">
-                                                        <button onClick={() => setPrintReceiptTx(tx)} className="text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium bg-blue-50 px-2 py-1 rounded-lg">
+                                                        <button onClick={() => setPrintReceiptTx(tx)} className="text-[#1E4DA6] hover:text-[#122F69] flex items-center gap-1 font-medium bg-[#1E4DA6]/5 px-2 py-1 rounded-lg">
                                                             <Printer className="h-3 w-3" />
                                                             {tx.receipt.receiptNumber}
                                                         </button>
@@ -323,7 +322,7 @@ export default function PaymentRecords() {
                                                         {tx.receipt.isSent && <span title="Sent" className="text-indigo-500 bg-indigo-50 rounded-full p-0.5"><Send className="w-3 h-3"/></span>}
                                                         {tx.receipt.isPrinted && <span title="Printed" className="text-slate-500 bg-slate-100 rounded-full p-0.5"><Printer className="w-3 h-3"/></span>}
                                                     </div>
-                                                    <button onClick={() => setPrintReceiptTx(tx)} className="font-mono text-blue-600 hover:text-blue-800 flex items-center gap-1 bg-blue-50 px-2 py-0.5 rounded">
+                                                    <button onClick={() => setPrintReceiptTx(tx)} className="font-mono text-[#1E4DA6] hover:text-[#122F69] flex items-center gap-1 bg-[#1E4DA6]/5 px-2 py-0.5 rounded">
                                                         <Printer className="h-3 w-3" /> {tx.receipt.receiptNumber}
                                                     </button>
                                                 </div>

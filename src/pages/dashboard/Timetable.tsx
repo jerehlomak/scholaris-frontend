@@ -19,10 +19,10 @@ const API = '/api/v1/school';
 
 // ─── Constants & Types ──────────────────────────────────────────────────────
 const SLOT_COLORS = [
-    'bg-blue-100 text-blue-700 border-blue-200',
+    'bg-[#1E4DA6]/10 text-[#173F8C] border-[#1E4DA6]/20',
     'bg-emerald-100 text-emerald-700 border-emerald-200',
     'bg-amber-100 text-amber-700 border-amber-200',
-    'bg-purple-100 text-purple-700 border-purple-200',
+    'bg-[#1E4DA6]/10 text-[#173F8C] border-[#1E4DA6]/20',
     'bg-pink-100 text-pink-700 border-pink-200',
     'bg-teal-100 text-teal-700 border-teal-200',
     'bg-red-100 text-red-700 border-red-200',
@@ -54,7 +54,7 @@ const parseTime = (timeStr: string) => {
 const formatTime = (d: Date) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(/^0/, '');
 
 // ─── Field style ────────────────────────────────────────────────────────────
-const fieldCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 shadow-sm transition-all outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 placeholder:text-slate-400';
+const fieldCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 shadow-sm transition-all outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 placeholder:text-slate-400';
 
 // ─── Stat Card ───────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, iconBg, iconText, delay }: {
@@ -67,7 +67,7 @@ function StatCard({ icon, label, value, iconBg, iconText, delay }: {
         <div className={cn(
             'flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-500',
             'hover:shadow-md hover:-translate-y-0.5',
-            vis ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+            vis ? 'opacity-100' : 'translate-y-3 opacity-0'
         )}>
             <div className={cn('flex h-10 w-10 shrink-0 items-center justify-center rounded-xl', iconBg, iconText)}>{icon}</div>
             <div>
@@ -313,7 +313,6 @@ export default function Timetable() {
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');
-                .tt-root, .tt-root * { font-family: 'Plus Jakarta Sans', sans-serif !important; }
                 .tt-root .font-mono  { font-family: 'DM Mono', monospace !important; }
                 @keyframes tt-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
                 @keyframes tt-pulse { 0%{transform:scale(0.9);opacity:.4} 100%{transform:scale(1.5);opacity:0} }
@@ -326,11 +325,9 @@ export default function Timetable() {
                 .tt-print-header { display: none; }
             `}</style>
 
-            <div className="tt-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+            <div className="tt-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
 
                 {/* Dot grid */}
-                <div className="pointer-events-none fixed inset-0 opacity-[0.25]"
-                    style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
 
                 {/* Error toast */}
                 <AnimatePresence>
@@ -349,10 +346,10 @@ export default function Timetable() {
 
                     {/* Breadcrumb */}
                     <div className={cn('tt-no-print mb-6 flex items-center gap-1.5 transition-all duration-500',
-                        pageVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0')}>
+                        pageVisible ? 'opacity-100' : '-translate-y-2 opacity-0')}>
                         <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Academics</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Timetable Manager</span>
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Timetable Manager</span>
                     </div>
 
                     {/* Print header */}
@@ -362,14 +359,14 @@ export default function Timetable() {
 
                     {/* Main panel */}
                     <div className={cn(
-                        'tt-no-print overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl transition-all duration-500',
-                        pageVisible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+                        'tt-no-print overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-all duration-500',
+                        pageVisible ? 'opacity-100' : 'translate-y-3 opacity-0'
                     )}>
                         {/* Tab bar */}
                         <div className="border-b border-slate-100 bg-slate-50/80 px-6">
-                            <div className="inline-flex items-center gap-2 border-b-2 border-blue-600 pb-3 pt-3.5">
-                                <Calendar className="h-3.5 w-3.5 text-blue-600" />
-                                <span className="text-xs font-bold tracking-tight text-blue-600">Weekly Schedule</span>
+                            <div className="inline-flex items-center gap-2 border-b-2 border-[#1E4DA6] pb-3 pt-3.5">
+                                <Calendar className="h-3.5 w-3.5 text-[#1E4DA6]" />
+                                <span className="text-xs font-bold tracking-tight text-[#1E4DA6]">Weekly Schedule</span>
                             </div>
                         </div>
 
@@ -378,8 +375,8 @@ export default function Timetable() {
                             {/* Hero + actions */}
                             <div className="mb-8 flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left sm:gap-6">
                                 <div className="tt-float relative mb-5 h-16 w-16 shrink-0 sm:mb-0">
-                                    <div className="tt-pulse absolute inset-0 rounded-2xl bg-blue-400/25" />
-                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 shadow-lg shadow-blue-200">
+                                    <div className="tt-pulse absolute inset-0 rounded-2xl bg-[#1E4DA6]/8" />
+                                    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-[#173F8C] to-[#1E4DA6] shadow-lg shadow-[#1E4DA6]/20">
                                         <Calendar className="h-7 w-7 text-white" />
                                     </div>
                                 </div>
@@ -394,7 +391,7 @@ export default function Timetable() {
                                     <select
                                         value={selectedClass}
                                         onChange={e => setSelectedClass(e.target.value)}
-                                        className="h-9 cursor-pointer rounded-xl border border-slate-200 bg-white px-3 font-mono text-xs font-semibold text-slate-700 shadow-sm transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                                        className="h-9 cursor-pointer rounded-xl border border-slate-200 bg-white px-3 font-mono text-xs font-semibold text-slate-700 shadow-sm transition-all focus:border-[#1E4DA6]/60 focus:outline-none focus:ring-2 focus:ring-[#1E4DA6]/10"
                                     >
                                         {classes.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                                     </select>
@@ -406,7 +403,7 @@ export default function Timetable() {
                                         { icon: <Settings2 className="h-4 w-4" />, onClick: () => setShowSetup(true), title: 'Setup' },
                                     ].map(({ icon, onClick, title }) => (
                                         <button key={title} onClick={onClick} title={title}
-                                            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-slate-300 hover:text-blue-600 hover:shadow-md">
+                                            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-slate-300 hover:text-[#1E4DA6] hover:shadow-md">
                                             {icon}
                                         </button>
                                     ))}
@@ -415,7 +412,7 @@ export default function Timetable() {
                                     <div className="relative">
                                         <Button
                                             onClick={() => setShowOptions(v => !v)}
-                                            className="h-9 gap-2 rounded-xl bg-blue-700 px-4 text-xs font-bold text-white shadow-md shadow-blue-200 transition-all hover:scale-[1.02] hover:bg-blue-800"
+                                            className="h-9 gap-2 rounded-xl bg-[#173F8C] px-4 text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 transition-all hover:scale-[1.02] hover:bg-[#122F69]"
                                         >
                                             <Wand2 className="h-3.5 w-3.5" /> Create Timetable
                                         </Button>
@@ -446,11 +443,11 @@ export default function Timetable() {
                                                             </button>
                                                             <button
                                                                 onClick={() => { setShowOptions(false); setShowAIModal(true); setGenStep(0); }}
-                                                                className="flex w-full items-start gap-3 rounded-xl p-3 text-left transition-all hover:bg-blue-50/50"
+                                                                className="flex w-full items-start gap-3 rounded-xl p-3 text-left transition-all hover:bg-[#1E4DA6]/8"
                                                             >
-                                                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600"><Sparkles className="h-4 w-4" /></div>
+                                                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#1E4DA6]/5 text-[#1E4DA6]"><Sparkles className="h-4 w-4" /></div>
                                                                 <div>
-                                                                    <p className="text-sm font-bold text-blue-700">Auto-Generate</p>
+                                                                    <p className="text-sm font-bold text-[#173F8C]">Auto-Generate</p>
                                                                     <p className="mt-0.5 font-mono text-[11px] text-slate-400">Fill all classes & save to DB</p>
                                                                 </div>
                                                             </button>
@@ -466,10 +463,10 @@ export default function Timetable() {
                             {/* Stat cards */}
                             <div className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                                 {[
-                                    { icon: <BookOpen className="h-5 w-5" />, label: 'Classes', value: classNames.length, iconBg: 'bg-blue-50', iconText: 'text-blue-600' },
+                                    { icon: <BookOpen className="h-5 w-5" />, label: 'Classes', value: classNames.length, iconBg: 'bg-[#1E4DA6]/5', iconText: 'text-[#1E4DA6]' },
                                     { icon: <Clock className="h-5 w-5" />, label: 'Periods / Day', value: periods.filter(p => !p.isBreak).length, iconBg: 'bg-emerald-50', iconText: 'text-emerald-600' },
                                     { icon: <Edit2 className="h-5 w-5" />, label: 'Scheduled', value: totalScheduled, iconBg: 'bg-amber-50', iconText: 'text-amber-600' },
-                                    { icon: <Calendar className="h-5 w-5" />, label: 'Free Periods', value: (DAYS.length * periods.filter(p => !p.isBreak).length) - totalScheduled, iconBg: 'bg-purple-50', iconText: 'text-purple-600' },
+                                    { icon: <Calendar className="h-5 w-5" />, label: 'Free Periods', value: (DAYS.length * periods.filter(p => !p.isBreak).length) - totalScheduled, iconBg: 'bg-[#1E4DA6]/5', iconText: 'text-[#1E4DA6]' },
                                 ].map((s, i) => <StatCard key={s.label} {...s} delay={80 + i * 60} />)}
                             </div>
 
@@ -478,7 +475,7 @@ export default function Timetable() {
                             {/* ── DESKTOP TABLE ────────────────────── */}
                             {loading ? (
                                 <div className="flex items-center justify-center py-20">
-                                    <Loader2 className="h-7 w-7 animate-spin text-blue-600" />
+                                    <Loader2 className="h-7 w-7 animate-spin text-[#1E4DA6]" />
                                 </div>
                             ) : (
                                 <>
@@ -537,7 +534,7 @@ export default function Timetable() {
                                                                             ) : (
                                                                                 <button
                                                                                     onClick={() => { setAdding({ day, period: periodObj.id }); setAddForm({ subject: '', teacherName: '', teacherId: '', color: SLOT_COLORS[Math.floor(Math.random() * SLOT_COLORS.length)] }); }}
-                                                                                    className="flex h-full w-full items-center justify-center rounded-xl border-2 border-dashed border-slate-100 text-slate-300 opacity-0 transition-all hover:border-blue-200 hover:bg-blue-50/40 hover:text-blue-500 group-hover/row:opacity-100"
+                                                                                    className="flex h-full w-full items-center justify-center rounded-xl border-2 border-dashed border-slate-100 text-slate-300 opacity-0 transition-all hover:border-[#1E4DA6]/20 hover:bg-[#1E4DA6]/8 hover:text-[#1E4DA6] group-hover/row:opacity-100"
                                                                                 >
                                                                                     <Plus className="h-5 w-5" />
                                                                                 </button>
@@ -564,7 +561,7 @@ export default function Timetable() {
                                                     className={cn(
                                                         'flex-1 rounded-lg py-2 font-mono text-[10px] font-bold uppercase tracking-wide transition-all whitespace-nowrap',
                                                         mobileDay === i
-                                                            ? 'bg-white text-blue-700 shadow-sm ring-1 ring-slate-200'
+                                                            ? 'bg-white text-[#173F8C] shadow-sm ring-1 ring-slate-200'
                                                             : 'text-slate-400 hover:text-slate-600'
                                                     )}
                                                 >
@@ -606,7 +603,7 @@ export default function Timetable() {
                                                         ) : (
                                                             <button
                                                                 onClick={() => { setAdding({ day, period: periodObj.id }); setAddForm({ subject: '', teacherName: '', teacherId: '', color: SLOT_COLORS[Math.floor(Math.random() * SLOT_COLORS.length)] }); }}
-                                                                className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-100 py-2 text-slate-300 transition-all hover:border-blue-200 hover:bg-blue-50/40 hover:text-blue-500"
+                                                                className="flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-100 py-2 text-slate-300 transition-all hover:border-[#1E4DA6]/20 hover:bg-[#1E4DA6]/8 hover:text-[#1E4DA6]"
                                                             >
                                                                 <Plus className="h-4 w-4" />
                                                                 <span className="font-mono text-[10px]">Add</span>
@@ -636,9 +633,9 @@ export default function Timetable() {
                         <div className="space-y-4 p-6">
                             {/* Context pill */}
                             <div className="flex items-center gap-2 rounded-xl border border-slate-100 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-600">
-                                <Calendar className="h-4 w-4 text-blue-500" />{adding.day}
+                                <Calendar className="h-4 w-4 text-[#1E4DA6]" />{adding.day}
                                 <span className="text-slate-300">·</span>
-                                <Clock className="h-4 w-4 text-blue-500" />{adding.period}
+                                <Clock className="h-4 w-4 text-[#1E4DA6]" />{adding.period}
                             </div>
 
                             <div>
@@ -668,7 +665,7 @@ export default function Timetable() {
                                 <div className="flex flex-wrap gap-2">
                                     {SLOT_COLORS.map((c, i) => (
                                         <button key={i} onClick={() => setAddForm(f => ({ ...f, color: c }))}
-                                            className={cn('flex h-8 w-8 items-center justify-center rounded-xl border-2 transition-all', c, addForm.color === c ? 'ring-2 ring-blue-600 ring-offset-1 scale-110' : 'hover:scale-105')}>
+                                            className={cn('flex h-8 w-8 items-center justify-center rounded-xl border-2 transition-all', c, addForm.color === c ? 'ring-2 ring-[#1E4DA6] ring-offset-1 scale-110' : 'hover:scale-105')}>
                                             {addForm.color === c && <span className="h-2 w-2 rounded-full bg-current" />}
                                         </button>
                                     ))}
@@ -680,7 +677,7 @@ export default function Timetable() {
                             <Button
                                 onClick={handleAddSlot}
                                 disabled={!addForm.subject || !addForm.teacherName || saving}
-                                className="flex-1 gap-2 rounded-xl bg-blue-700 text-xs font-bold text-white shadow-md shadow-blue-200 hover:bg-blue-800 disabled:opacity-50"
+                                className="flex-1 gap-2 rounded-xl bg-[#173F8C] text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#122F69] disabled:opacity-50"
                             >
                                 {saving && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                                 {saving ? 'Saving…' : 'Save Slot'}
@@ -697,7 +694,7 @@ export default function Timetable() {
                         {!isGenerating && genStep === 0 ? (
                             <>
                                 {/* Gradient hero */}
-                                <div className="flex flex-col items-center bg-gradient-to-br from-blue-700 to-blue-900 p-8 text-center text-white">
+                                <div className="flex flex-col items-center bg-gradient-to-br from-[#173F8C] to-[#0E2450] p-8 text-center text-white">
                                     <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md">
                                         <Sparkles className="h-8 w-8 text-white" />
                                     </div>
@@ -723,7 +720,7 @@ export default function Timetable() {
                                 </div>
                                 <div className="flex gap-2 border-t border-slate-100 bg-slate-50/50 px-6 py-4">
                                     <Button variant="outline" onClick={() => setShowAIModal(false)} className="flex-1 rounded-xl text-xs font-semibold">Cancel</Button>
-                                    <Button onClick={runGeneration} className="flex-1 gap-2 rounded-xl bg-blue-700 text-xs font-bold text-white shadow-md shadow-blue-200 hover:bg-blue-800">
+                                    <Button onClick={runGeneration} className="flex-1 gap-2 rounded-xl bg-[#173F8C] text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#122F69]">
                                         <Settings2 className="h-3.5 w-3.5" /> Start Generation
                                     </Button>
                                 </div>
@@ -732,11 +729,11 @@ export default function Timetable() {
                             <div className="flex flex-col items-center p-12 text-center">
                                 {/* Spinner */}
                                 <div className="relative mb-8 h-24 w-24">
-                                    <div className="absolute inset-0 rounded-full border-4 border-blue-100" />
+                                    <div className="absolute inset-0 rounded-full border-4 border-[#1E4DA6]/10" />
                                     <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }}
-                                        className="absolute inset-0 rounded-full border-4 border-blue-600 border-l-transparent border-b-transparent" />
+                                        className="absolute inset-0 rounded-full border-4 border-[#1E4DA6] border-l-transparent border-b-transparent" />
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <Sparkles className="h-8 w-8 animate-pulse text-blue-600" />
+                                        <Sparkles className="h-8 w-8 animate-pulse text-[#1E4DA6]" />
                                     </div>
                                 </div>
                                 <h3 className="mb-2 text-xl font-extrabold text-slate-900">Generating Timetables…</h3>
@@ -750,7 +747,7 @@ export default function Timetable() {
                                 </div>
                                 <div className="mt-8 flex gap-2">
                                     {[1, 2, 3, 4, 5].map(s => (
-                                        <div key={s} className={cn('h-2 w-2 rounded-full transition-colors duration-300', s <= genStep ? 'bg-blue-600' : 'bg-slate-200')} />
+                                        <div key={s} className={cn('h-2 w-2 rounded-full transition-colors duration-300', s <= genStep ? 'bg-[#1E4DA6]' : 'bg-slate-200')} />
                                     ))}
                                 </div>
                             </div>
@@ -794,7 +791,7 @@ export default function Timetable() {
                             </div>
 
                             <Separator className="bg-slate-100" />
-                            <p className="flex items-center gap-2 font-bold text-sm text-slate-800"><Clock className="h-4 w-4 text-purple-500" /> Long Break / Lunch</p>
+                            <p className="flex items-center gap-2 font-bold text-sm text-slate-800"><Clock className="h-4 w-4 text-[#1E4DA6]" /> Long Break / Lunch</p>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <Label className="mb-1.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Start (Optional)</Label>
@@ -807,11 +804,11 @@ export default function Timetable() {
                             </div>
                         </div>
                         <div className="flex flex-col gap-2 border-t border-slate-100 bg-slate-50/50 px-6 py-4">
-                            <Button onClick={() => handleSaveSetup(false)} disabled={saving} className="w-full gap-2 rounded-xl bg-blue-700 text-xs font-bold text-white shadow-md shadow-blue-200 hover:bg-blue-800">
+                            <Button onClick={() => handleSaveSetup(false)} disabled={saving} className="w-full gap-2 rounded-xl bg-[#173F8C] text-xs font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#122F69]">
                                 {saving && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                                 Save to {selectedClass}
                             </Button>
-                            <Button onClick={() => handleSaveSetup(true)} disabled={saving} variant="outline" className="w-full rounded-xl text-xs font-semibold text-blue-700 border-blue-200 hover:bg-blue-50">
+                            <Button onClick={() => handleSaveSetup(true)} disabled={saving} variant="outline" className="w-full rounded-xl text-xs font-semibold text-[#173F8C] border-[#1E4DA6]/20 hover:bg-[#1E4DA6]/5">
                                 Apply to All Classes
                             </Button>
                         </div>

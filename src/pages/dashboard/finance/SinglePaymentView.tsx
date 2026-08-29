@@ -44,21 +44,20 @@ export default function SinglePaymentView() {
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root,.fd-root *{font-family:'Plus Jakarta Sans',sans-serif!important} .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap'); .fd-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="fd-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-full space-y-6">
                     {/* Breadcrumb */}
             <div className="flex items-center gap-1.5">
                 <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                 <ChevronRight className="h-3 w-3 text-slate-400" />
-                <span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Single Payment</span>
+                <span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Single Payment</span>
             </div>
 
             {/* Header */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-200">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#1E4DA6] text-white shadow-lg shadow-[#1E4DA6]/20">
                         <CreditCard className="h-6 w-6" />
                     </div>
                     <div>

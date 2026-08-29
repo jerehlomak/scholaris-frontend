@@ -13,7 +13,7 @@ export function PrintBlankForm({ formType, onClose }: PrintBlankFormProps) {
     const { user } = useAuth();
     const { data: settingsData, isLoading } = useSWR('/api/v1/school-settings', fetcher);
     
-    if (isLoading) return <div className="fixed inset-0 z-[200] bg-white flex items-center justify-center"><Loader2 className="animate-spin text-blue-600 h-8 w-8" /></div>;
+    if (isLoading) return <div className="fixed inset-0 z-[200] bg-white flex items-center justify-center"><Loader2 className="animate-spin text-[#1E4DA6] h-8 w-8" /></div>;
 
     const schoolName = (user as any)?.schoolName || (user as any)?.school?.name || (user as any)?.schoolDetails?.name || 'School Name';
     const logoUrl = (user as any)?.school?.logoUrl || (user as any)?.schoolDetails?.logoUrl;
@@ -32,7 +32,7 @@ export function PrintBlankForm({ formType, onClose }: PrintBlankFormProps) {
                     <h2 className="text-lg font-bold tracking-widest">Print Blank Form</h2>
                 </div>
                 <div className="flex gap-4">
-                    <button onClick={() => { window.print(); onClose(); }} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors flex items-center gap-2 shadow-sm">
+                    <button onClick={() => { window.print(); onClose(); }} className="px-6 py-2 bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold rounded-lg transition-colors flex items-center gap-2 shadow-sm">
                         <Printer className="h-4 w-4" /> Print Now
                     </button>
                     <button onClick={onClose} className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition-colors">

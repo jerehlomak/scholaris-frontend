@@ -11,7 +11,7 @@ export default function PlaceholderPage({ title }: PlaceholderProps) {
             <Header />
             <main className="flex-grow flex items-center justify-center bg-gray-50">
                 <div className="text-center px-4 max-w-2xl mx-auto">
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-[#1a2fa0] font-heading mb-6">
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-[#1E4DA6] font-heading mb-6">
                         {title}
                     </h1>
                     <p className="text-lg text-gray-600 mb-8">

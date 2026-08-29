@@ -107,7 +107,7 @@ export function EditSubject() {
     };
 
     if (isLoading) {
-        return <div className="p-20 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#0036a1]" /></div>;
+        return <div className="p-20 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" /></div>;
     }
 
     return (
@@ -134,7 +134,7 @@ export function EditSubject() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
                         <div className="space-y-1.5">
-                            <Label className="font-semibold">Subject Name <span className="text-[#0036a1]">*</span></Label>
+                            <Label className="font-semibold">Subject Name <span className="text-[#1E4DA6]">*</span></Label>
                             <Input value={form.name} onChange={e => set('name', e.target.value)}
                                 className={inputCls} placeholder="e.g. Mathematics" />
                         </div>
@@ -146,7 +146,7 @@ export function EditSubject() {
                         </div>
 
                         <div className="space-y-1.5">
-                            <Label className="font-semibold">Subject Type <span className="text-[#0036a1]">*</span></Label>
+                            <Label className="font-semibold">Subject Type <span className="text-[#1E4DA6]">*</span></Label>
                             <Select value={form.type} onValueChange={val => set('type', val)}>
                                 <SelectTrigger className={inputCls}><SelectValue /></SelectTrigger>
                                 <SelectContent>
@@ -201,8 +201,8 @@ export function EditSubject() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                         {STREAM_OPTIONS.map(opt => (
                             <button key={opt.value} type="button" onClick={() => set('stream', opt.value)}
-                                className={`p-4 rounded-xl border-2 text-left transition-all ${form.stream === opt.value ? 'border-[#0036a1] bg-[#0036a1]/5' : 'border-gray-100 hover:border-gray-200 bg-white'}`}>
-                                <p className={`text-sm font-bold ${form.stream === opt.value ? 'text-[#0036a1]' : 'text-gray-700'}`}>{opt.label}</p>
+                                className={`p-4 rounded-xl border-2 text-left transition-all ${form.stream === opt.value ? 'border-[#1E4DA6] bg-[#1E4DA6]/5' : 'border-gray-100 hover:border-gray-200 bg-white'}`}>
+                                <p className={`text-sm font-bold ${form.stream === opt.value ? 'text-[#1E4DA6]' : 'text-gray-700'}`}>{opt.label}</p>
                                 <p className="text-[10px] text-gray-400 mt-1">{streamInfo[opt.value]}</p>
                             </button>
                         ))}
@@ -220,13 +220,13 @@ export function EditSubject() {
                         <div className="flex flex-wrap gap-2">
                             {classes.map(cls => (
                                 <button key={cls.id} type="button" onClick={() => toggleClass(cls.id)}
-                                    className={`px-3 py-1.5 rounded-xl text-xs font-bold border-2 transition-all ${selectedClassIds.includes(cls.id) ? 'bg-[#0036a1] text-white border-[#0036a1]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#0036a1]/40'}`}>
+                                    className={`px-3 py-1.5 rounded-xl text-xs font-bold border-2 transition-all ${selectedClassIds.includes(cls.id) ? 'bg-[#1E4DA6] text-white border-[#1E4DA6]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#1E4DA6]/40'}`}>
                                     {cls.name}
                                 </button>
                             ))}
                         </div>
                         {selectedClassIds.length > 0 && (
-                            <p className="text-xs text-[#0036a1] mt-3 font-medium">{selectedClassIds.length} class{selectedClassIds.length > 1 ? 'es' : ''} selected</p>
+                            <p className="text-xs text-[#1E4DA6] mt-3 font-medium">{selectedClassIds.length} class{selectedClassIds.length > 1 ? 'es' : ''} selected</p>
                         )}
                     </div>
                 )}
@@ -235,7 +235,7 @@ export function EditSubject() {
                     <Button type="button" variant="outline" onClick={() => navigate(-1)} className="h-11 px-6 rounded-xl font-semibold">
                         <ArrowLeft className="w-4 h-4 mr-1" /> Cancel
                     </Button>
-                    <Button type="submit" disabled={isSubmitting} className="h-11 px-8 rounded-xl bg-[#0036a1] hover:bg-[#001761] text-white font-bold flex items-center gap-2">
+                    <Button type="submit" disabled={isSubmitting} className="h-11 px-8 rounded-xl bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold flex items-center gap-2">
                         {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                         {isSubmitting ? 'Saving...' : 'Update Subject'}
                     </Button>

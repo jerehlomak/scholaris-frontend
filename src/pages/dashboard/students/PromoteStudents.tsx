@@ -131,13 +131,13 @@ export function PromoteStudents() {
                 {/* Search Filter */}
                 <div className="lg:col-span-1 rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
                     <div className="flex items-center justify-center gap-2 mb-6">
-                        <div className="h-9 w-9 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 shrink-0"><Search className="h-4 w-4" /></div>
+                        <div className="h-9 w-9 rounded-xl bg-[#1E4DA6]/10 flex items-center justify-center text-[#1E4DA6] shrink-0"><Search className="h-4 w-4" /></div>
                         <h2 className="text-base font-black text-slate-800">Search</h2>
                     </div>
                     <div className="space-y-4">
                         <div className="space-y-2">
                             <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Search Student</label>
-                            <input value={searchStudent} onChange={e => setSearchStudent(e.target.value)} placeholder="Search Student" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all" />
+                            <input value={searchStudent} onChange={e => setSearchStudent(e.target.value)} placeholder="Search Student" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all" />
                         </div>
                         <div className="space-y-2">
                             <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Filter By Class</label>
@@ -149,7 +149,7 @@ export function PromoteStudents() {
                                 </SelectContent>
                             </Select>
                         </div>
-                        <button onClick={fetchStudents} className="w-full text-center text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors mt-2">Reload Students</button>
+                        <button onClick={fetchStudents} className="w-full text-center text-sm font-bold text-[#1E4DA6] hover:text-[#173F8C] transition-colors mt-2">Reload Students</button>
                     </div>
                 </div>
 
@@ -167,7 +167,7 @@ export function PromoteStudents() {
                                     <th className="px-5 py-3 text-left">Current Class</th>
                                     <th className="px-5 py-3 text-right">
                                         <div className="flex items-center justify-end gap-2">
-                                            <input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-400"
+                                            <input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-[#1E4DA6] focus:ring-[#1E4DA6]/60"
                                                 onChange={handleSelectAll} checked={selectedStudents.length === displayedStudents.length && displayedStudents.length > 0} />
                                             <span className="text-[10px]">Select All</span>
                                         </div>
@@ -176,14 +176,14 @@ export function PromoteStudents() {
                             </thead>
                             <tbody className="divide-y divide-slate-50">
                                 {isLoading ? (
-                                    <tr><td colSpan={3} className="px-5 py-8 text-center text-slate-500"><Loader2 className="h-5 w-5 animate-spin mx-auto text-blue-600" /></td></tr>
+                                    <tr><td colSpan={3} className="px-5 py-8 text-center text-slate-500"><Loader2 className="h-5 w-5 animate-spin mx-auto text-[#1E4DA6]" /></td></tr>
                                 ) : displayedStudents.length === 0 ? (
                                     <tr><td colSpan={3} className="px-5 py-8 text-center text-slate-500">No students found.</td></tr>
                                 ) : displayedStudents.map(student => (
                                     <tr key={student.id} className="hover:bg-slate-50/60 transition-colors">
                                         <td className="px-5 py-4 font-bold text-slate-800">{student.user?.name}</td>
-                                        <td className="px-5 py-4"><span className="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-bold">{student.classArm?.name || 'None'}</span></td>
-                                        <td className="px-5 py-4 text-right"><input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-400" checked={selectedStudents.includes(student.id)} onChange={() => handleSelect(student.id)} /></td>
+                                        <td className="px-5 py-4"><span className="px-2.5 py-1 bg-[#1E4DA6]/5 text-[#173F8C] rounded-lg text-xs font-bold">{student.classArm?.name || 'None'}</span></td>
+                                        <td className="px-5 py-4 text-right"><input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-[#1E4DA6] focus:ring-[#1E4DA6]/60" checked={selectedStudents.includes(student.id)} onChange={() => handleSelect(student.id)} /></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -200,7 +200,7 @@ export function PromoteStudents() {
                     </div>
                     <div className="space-y-4">
                         <div className="space-y-2">
-                            <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Target Session <span className="text-blue-600">*</span></label>
+                            <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Target Session <span className="text-[#1E4DA6]">*</span></label>
                             <Select value={targetSessionId} onValueChange={setTargetSessionId}>
                                 <SelectTrigger className="w-full rounded-xl border border-slate-200 px-4 py-3 h-12 bg-white text-slate-700 font-semibold"><SelectValue placeholder="Select Session" /></SelectTrigger>
                                 <SelectContent>
@@ -210,7 +210,7 @@ export function PromoteStudents() {
                         </div>
                         
                         <div className="space-y-2">
-                            <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Status <span className="text-blue-600">*</span></label>
+                            <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Status <span className="text-[#1E4DA6]">*</span></label>
                             <Select value={targetStatus} onValueChange={setTargetStatus}>
                                 <SelectTrigger className="w-full rounded-xl border border-slate-200 px-4 py-3 h-12 bg-white text-slate-700 font-semibold"><SelectValue placeholder="Select Status" /></SelectTrigger>
                                 <SelectContent>
@@ -223,7 +223,7 @@ export function PromoteStudents() {
 
                         {targetStatus !== 'GRADUATED' && (
                             <div className="space-y-2">
-                                <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Target Class <span className="text-blue-600">*</span></label>
+                                <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Target Class <span className="text-[#1E4DA6]">*</span></label>
                                 <Select value={targetClass} onValueChange={setTargetClass}>
                                     <SelectTrigger className="w-full rounded-xl border border-slate-200 px-4 py-3 h-12 bg-white text-slate-700 font-semibold"><SelectValue placeholder="Select target class" /></SelectTrigger>
                                     <SelectContent>
@@ -236,7 +236,7 @@ export function PromoteStudents() {
                         <button 
                             onClick={handlePromote}
                             disabled={selectedStudents.length === 0 || !targetSessionId || isSaving}
-                            className={cn('w-full flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold text-white shadow-md transition-colors', selectedStudents.length > 0 && targetSessionId ? 'bg-blue-700 hover:bg-blue-800' : 'bg-slate-300 cursor-not-allowed')}>
+                            className={cn('w-full flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold text-white shadow-md transition-colors', selectedStudents.length > 0 && targetSessionId ? 'bg-[#173F8C] hover:bg-[#122F69]' : 'bg-slate-300 cursor-not-allowed')}>
                             {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} 
                             {isSaving ? 'Processing...' : 'Save Changes'}
                         </button>

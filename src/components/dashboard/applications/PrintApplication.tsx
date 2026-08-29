@@ -28,7 +28,7 @@ export function PrintApplication({ application, onClose }: PrintApplicationProps
                     <h2 className="text-lg font-bold tracking-widest">Print Application Details</h2>
                 </div>
                 <div className="flex gap-4">
-                    <button onClick={() => { window.print(); onClose(); }} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors">
+                    <button onClick={() => { window.print(); onClose(); }} className="px-6 py-2 bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold rounded-lg transition-colors">
                         Print Now
                     </button>
                     <button onClick={onClose} className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition-colors">
@@ -75,7 +75,7 @@ export function PrintApplication({ application, onClose }: PrintApplicationProps
                                 <div className="font-bold text-slate-700 text-xs uppercase mb-1">{formatKey(key)}</div>
                                 <div className="text-slate-900 border-b border-slate-100 pb-1">
                                     {isCloudinaryUrl(value) ? (
-                                        <a href={String(value)} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                                        <a href={String(value)} target="_blank" rel="noopener noreferrer" className="text-[#1E4DA6] underline">
                                             [View Attached Document]
                                         </a>
                                     ) : (

@@ -9,7 +9,7 @@ import { SaveButton } from './shared/SaveButton';
 
 const API = '/api/v1/school-settings';
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
 export function InstituteProfile() {
     const [logoPreview, setLogoPreview] = useState<string | null>(null);
@@ -66,7 +66,7 @@ export function InstituteProfile() {
     };
 
     if (isLoading) {
-        return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>;
+        return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>;
     }
 
     return (
@@ -84,7 +84,7 @@ export function InstituteProfile() {
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                         <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">School Logo <span className="text-red-500">*</span></p>
                         <div className="flex flex-col sm:flex-row items-center gap-5">
-                            <div className="h-24 w-24 shrink-0 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden hover:border-blue-300 transition-colors">
+                            <div className="h-24 w-24 shrink-0 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden hover:border-[#1E4DA6]/35 transition-colors">
                                 {logoPreview
                                     ? <img src={logoPreview} alt="Logo" className="h-full w-full object-cover" />
                                     : <div className="text-center"><Upload className="h-6 w-6 text-slate-300 mx-auto mb-1" /><span className="text-[10px] text-slate-400">No logo</span></div>
@@ -93,7 +93,7 @@ export function InstituteProfile() {
                             <div className="flex-1 space-y-2">
                                 <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Choose Image File</label>
                                 <input type="file" accept="image/*" onChange={handleLogoChange}
-                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm cursor-pointer file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-1 file:text-xs file:font-bold file:text-blue-600 hover:file:bg-blue-100" />
+                                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm cursor-pointer file:mr-3 file:rounded-lg file:border-0 file:bg-[#1E4DA6]/5 file:px-3 file:py-1 file:text-xs file:font-bold file:text-[#1E4DA6] hover:file:bg-[#1E4DA6]/10" />
                                 <p className="text-xs text-slate-500">Recommended: 256×256px. Max 2MB (JPG, PNG).</p>
                             </div>
                         </div>
@@ -150,7 +150,7 @@ export function InstituteProfile() {
                                     { icon: <Hash className="h-3.5 w-3.5" />, value: form.country.toUpperCase(), label: 'Country' },
                                 ].map(row => (
                                     <div key={row.label} className="flex items-start gap-2 text-xs">
-                                        <span className="text-blue-500 mt-0.5">{row.icon}</span>
+                                        <span className="text-[#1E4DA6] mt-0.5">{row.icon}</span>
                                         <div><p className="text-slate-400 leading-none">{row.label}</p><p className="font-semibold text-slate-700 mt-0.5 break-all">{row.value}</p></div>
                                     </div>
                                 ))}

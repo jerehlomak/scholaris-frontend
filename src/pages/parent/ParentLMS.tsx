@@ -38,7 +38,7 @@ export default function ParentLMS() {
                     <h1 className="text-2xl font-bold text-gray-900">Learning Hub (LMS)</h1>
                     <div className="flex items-center text-xs text-gray-400 gap-1 mt-1">
                         <HomeIcon size={12} />
-                        <Link to="/parent" className="hover:text-blue-700 transition-colors">Home</Link>
+                        <Link to="/parent" className="hover:text-[#173F8C] transition-colors">Home</Link>
                         <ChevronRight size={12} className="opacity-50" />
                         <span>Assignments</span>
                     </div>
@@ -49,7 +49,7 @@ export default function ParentLMS() {
                     <select 
                         value={childId} 
                         onChange={e => setChildId(e.target.value)} 
-                        className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 shadow-sm font-semibold text-blue-700"
+                        className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6] shadow-sm font-semibold text-[#173F8C]"
                     >
                         {children.map((c: any) => <option key={c.studentProfileId} value={c.studentProfileId}>{c.user.name}</option>)}
                         {children.length === 0 && <option value="">No children found</option>}
@@ -75,7 +75,7 @@ export default function ParentLMS() {
                             <motion.div key={a.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                                 <Card className={`p-5 bg-white border shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all hover:shadow-md ${overdue ? 'border-red-100' : submitted ? 'border-emerald-100' : 'border-slate-100'}`}>
                                     <div className="flex gap-4 items-start">
-                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${overdue ? 'bg-red-100 text-red-600' : submitted ? 'bg-emerald-100 text-emerald-600' : 'bg-blue-100 text-blue-700'}`}>
+                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${overdue ? 'bg-red-100 text-red-600' : submitted ? 'bg-emerald-100 text-emerald-600' : 'bg-[#1E4DA6]/10 text-[#173F8C]'}`}>
                                             {submitted ? <CheckCircle2 className="w-5 h-5" /> : overdue ? <AlertCircle className="w-5 h-5" /> : <BookOpen className="w-5 h-5" />}
                                         </div>
                                         <div>
@@ -83,7 +83,7 @@ export default function ParentLMS() {
                                             <p className="text-xs text-gray-500 mt-0.5">{a.subject?.name}</p>
                                             {a.description && <p className="text-sm text-gray-600 mt-2 line-clamp-2">{a.description}</p>}
                                             <div className="flex gap-2 mt-3 items-center">
-                                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${submitted ? 'bg-emerald-100 text-emerald-700' : overdue ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
+                                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${submitted ? 'bg-emerald-100 text-emerald-700' : overdue ? 'bg-red-100 text-red-700' : 'bg-[#1E4DA6]/10 text-[#173F8C]'}`}>
                                                     {submitted ? 'Submitted' : overdue ? 'Overdue' : 'Active'}
                                                 </span>
                                                 <span className="text-xs text-gray-400">Due: <span className="font-medium text-gray-600">{formatDate(a.dueDate)}</span></span>

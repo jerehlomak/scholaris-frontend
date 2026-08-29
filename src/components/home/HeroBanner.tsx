@@ -1,53 +1,80 @@
-import { useState, useEffect } from 'react';
+import { ArrowRight, Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const IMAGES = [
-    'https://images.unsplash.com/photo-1617056239820-8ce90ba48193?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1628198661856-102874fb9d82?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=2000&auto=format&fit=crop'
-];
+const NAVY = '#0B1F4E';
+const NAVY_DEEP = '#081634';
+const GOLD = '#F5B800';
+
+/** Abstract network-of-nodes graphic — replaces the old stock-photo slideshow.
+ *  Evokes a connected school community (admins, teachers, parents, students)
+ *  without pretending to show real people. */
+function NetworkGraphic() {
+    const nodes = [
+        { x: 70, y: 80, r: 5 }, { x: 200, y: 40, r: 7 }, { x: 320, y: 110, r: 4 },
+        { x: 150, y: 190, r: 6 }, { x: 300, y: 230, r: 5 }, { x: 60, y: 260, r: 4 },
+        { x: 380, y: 60, r: 4 }, { x: 250, y: 300, r: 5 }, { x: 400, y: 200, r: 6 },
+    ];
+    const edges = [[0, 1], [1, 2], [1, 3], [3, 4], [3, 5], [4, 7], [2, 6], [4, 8], [2, 8]];
+    return (
+        <svg viewBox="0 0 440 340" className="w-full h-full" fill="none" aria-hidden="true">
+            {edges.map(([a, b], i) => (
+                <line key={i} x1={nodes[a].x} y1={nodes[a].y} x2={nodes[b].x} y2={nodes[b].y}
+                    stroke={GOLD} strokeOpacity={0.35} strokeWidth={1.5} />
+            ))}
+            {nodes.map((n, i) => (
+                <circle key={i} cx={n.x} cy={n.y} r={n.r} fill={i % 3 === 0 ? GOLD : '#FFFFFF'} fillOpacity={i % 3 === 0 ? 0.9 : 0.5} />
+            ))}
+        </svg>
+    );
+}
 
 export function HeroBanner() {
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % IMAGES.length);
-        }, 5000);
-        return () => clearInterval(timer);
-    }, []);
-
     const scrollToFeatures = () => {
         const el = document.getElementById('features-section');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
     };
 
     return (
-        <section className="relative w-full h-[600px] md:h-[700px] lg:h-[800px] flex items-center overflow-hidden bg-gradient-to-br from-[#1a2fa0] to-[#121f6e]/50">
-            {/* Background Slideshow */}
-            {IMAGES.map((img, idx) => (
-                <div
-                    key={img}
-                    className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${idx === currentIndex ? 'opacity-80' : 'opacity-0'}`}
-                    style={{ backgroundImage: `url("${img}")` }}
-                ></div>
-            ))}
+        <section className="relative w-full overflow-hidden" style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_DEEP} 100%)` }}>
+            {/* Decorative network graphic — top right, partially bleeding off */}
+            <div className="pointer-events-none absolute -top-10 -right-16 w-[420px] h-[340px] opacity-90 hidden md:block">
+                <NetworkGraphic />
+            </div>
+            {/* Soft dot-grid texture across the whole section */}
+            <div
+                className="pointer-events-none absolute inset-0 opacity-[0.15]"
+                style={{ backgroundImage: 'radial-gradient(circle, #FFFFFF 1px, transparent 1px)', backgroundSize: '26px 26px' }}
+            />
 
-            {/* Dark overlay for text readability */}
-            <div className="absolute inset-0 bg-black/30 z-10"></div>
-
-            {/* Content Container */}
-            <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center sm:text-left">
-                <h1 className="text-white text-2xl sm:text-3xl md:text-5xl lg:text-[80px] font-heading leading-tight mb-6 max-w-4xl drop-shadow-md">
-                    Empower your <br className="hidden sm:block" /> entire school <br className="hidden sm:block" /> with Skooly Plus.
-                </h1>
-                <p className="text-white text-lg sm:text-xl font-secondary mb-8 max-w-2xl drop-shadow-sm">
-                    Discover the all-in-one platform built to simplify administration, engage parents, and inspire students.
-                </p>
-                <button
-                    onClick={scrollToFeatures}
-                    className="bg-brand-green text-white cursor-pointer px-8 py-4 rounded-sm text-base font-bold hover:bg-white hover:text-brand-green transition-colors uppercase tracking-wider shadow-lg">
-                    Explore Platform Features
-                </button>
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36">
+                <div className="max-w-3xl">
+                    <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] mb-6"
+                        style={{ backgroundColor: `${GOLD}1A`, color: GOLD, border: `1px solid ${GOLD}40` }}>
+                        Built for Nigerian schools
+                    </span>
+                    <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-heading font-medium leading-[1.05] mb-6 tracking-tight">
+                        One platform to run your <span style={{ color: GOLD }}>entire school.</span>
+                    </h1>
+                    <p className="text-white/80 text-lg sm:text-xl mb-10 max-w-2xl leading-relaxed">
+                        Skcooly brings admissions, results, attendance, fees, and communication into a single
+                        cloud platform — built for the way Nigerian schools actually run.
+                    </p>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                        <Link
+                            to="/get-started"
+                            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-bold transition-transform hover:scale-[1.02] shadow-lg"
+                            style={{ backgroundColor: GOLD, color: NAVY_DEEP }}
+                        >
+                            Get Started <ArrowRight className="w-4 h-4" />
+                        </Link>
+                        <button
+                            onClick={scrollToFeatures}
+                            className="inline-flex items-center gap-2 px-6 py-4 rounded-full text-base font-semibold text-white border border-white/25 hover:bg-white/10 transition-colors"
+                        >
+                            <Play className="w-4 h-4 fill-current" /> See how it works
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
     );

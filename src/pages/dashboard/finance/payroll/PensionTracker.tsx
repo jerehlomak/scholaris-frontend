@@ -27,7 +27,7 @@ interface SchoolPensionSummary {
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function fmt(n: number) { return '₦' + (n || 0).toLocaleString('en-NG', { minimumFractionDigits: 2 }); }
 function fmtDate(d: string) { return new Date(d).toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' }); }
-const AC = ['bg-teal-500','bg-blue-500','bg-violet-500','bg-rose-500','bg-amber-500','bg-indigo-500'];
+const AC = ['bg-teal-500','bg-[#1E4DA6]','bg-violet-500','bg-rose-500','bg-amber-500','bg-indigo-500'];
 function avBg(n: string) { return AC[n.charCodeAt(0) % AC.length]; }
 
 export default function PensionTracker() {
@@ -142,9 +142,8 @@ export default function PensionTracker() {
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');.pt-root,.pt-root *{font-family:'Plus Jakarta Sans',sans-serif!important}.pt-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="pt-root min-h-screen bg-gradient-to-br from-slate-50 via-teal-50/20 to-emerald-50/20 px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.2]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;700&display=swap');.pt-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="pt-root min-h-screen bg-[#FBF9F5] px-3 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-5xl">
 
                     {/* Breadcrumb */}
@@ -178,18 +177,18 @@ export default function PensionTracker() {
                                 </div>
                                 <p className="mono text-base sm:text-lg font-black text-emerald-700">{summary.uniqueContributors} Staff</p>
                             </div>
-                            <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-blue-200 bg-white/90 backdrop-blur shadow-sm">
+                            <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-[#1E4DA6]/20 bg-white/90 backdrop-blur shadow-sm">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <Calendar className="w-4 h-4 text-blue-600" />
+                                    <Calendar className="w-4 h-4 text-[#1E4DA6]" />
                                     <p className="mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-500">This Year Total</p>
                                 </div>
-                                <p className="mono text-base sm:text-lg font-black text-blue-700">{fmt(summary.thisYearTotal)}</p>
+                                <p className="mono text-base sm:text-lg font-black text-[#173F8C]">{fmt(summary.thisYearTotal)}</p>
                             </div>
                         </div>
                     )}
 
                     {/* Staff selector */}
-                    <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl backdrop-blur-xl transition-all duration-500', vis ? 'opacity-100' : 'opacity-0 translate-y-3')}>
+                    <div className={cn('mb-5 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl transition-all duration-500', vis ? 'opacity-100' : 'opacity-0 translate-y-3')}>
                         <div className="flex items-center gap-2.5 sm:gap-3 border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
                             <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-teal-100 text-teal-600">
                                 <Users className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
@@ -266,7 +265,7 @@ export default function PensionTracker() {
                                 </div>
 
                                 {/* Contribution timeline */}
-                                <div className="overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50 backdrop-blur-xl">
+                                <div className="overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-100/50">
                                     <div className="border-b border-slate-100 bg-slate-50/60 px-4 py-3 sm:px-6 sm:py-4">
                                         <h3 className="text-xs sm:text-sm font-bold text-slate-800">Contribution History</h3>
                                     </div>

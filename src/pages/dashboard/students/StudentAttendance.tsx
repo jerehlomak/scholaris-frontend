@@ -60,7 +60,7 @@ export function StudentAttendance() {
                 </div>
                 <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col justify-center">
                     <p className="text-sm font-bold text-slate-500 mb-1">Excused</p>
-                    <p className="text-3xl font-bold text-blue-500">{stats.excused}</p>
+                    <p className="text-3xl font-bold text-[#1E4DA6]">{stats.excused}</p>
                 </div>
             </div>
 
@@ -121,7 +121,7 @@ export function StudentAttendance() {
                                             ${record.status === 'PRESENT' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100/50' : 
                                             record.status === 'ABSENT' ? 'bg-red-50 text-red-600 border border-red-100/50' : 
                                             record.status === 'LATE' ? 'bg-orange-50 text-orange-600 border border-orange-100/50' : 
-                                            'bg-blue-50 text-blue-600 border border-blue-100/50'}
+                                            'bg-[#1E4DA6]/5 text-[#1E4DA6] border border-[#1E4DA6]/50'}
                                         `}>
                                             <div className="w-1.5 h-1.5 rounded-full bg-current" />
                                             {record.status}

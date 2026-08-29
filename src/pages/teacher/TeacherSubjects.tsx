@@ -23,7 +23,7 @@ interface Subject {
 }
 
 const SUBJECT_THEMES = [
-    { color: 'text-blue-700', bg: 'bg-blue-50', border: 'border-l-blue-500' },
+    { color: 'text-[#173F8C]', bg: 'bg-[#1E4DA6]/5', border: 'border-l-[#1E4DA6]' },
     { color: 'text-violet-700', bg: 'bg-violet-50', border: 'border-l-violet-500' },
     { color: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-l-emerald-500' },
     { color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-l-amber-500' },
@@ -78,7 +78,7 @@ export default function TeacherSubjects() {
     if (loading) {
         return (
             <div className="py-20 flex justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" />
             </div>
         );
     }
@@ -96,7 +96,7 @@ export default function TeacherSubjects() {
             {/* ── KPI Cards ── */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-7">
                 {[
-                    { icon: BookOpen, label: 'Subjects', value: mySubjects.length, color: 'text-blue-600', bg: 'bg-blue-50' },
+                    { icon: BookOpen, label: 'Subjects', value: mySubjects.length, color: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5' },
                     { icon: Users, label: 'Total Students', value: mySubjects.reduce((s, sub) => s + sub.totalStudents, 0), color: 'text-emerald-600', bg: 'bg-emerald-50' },
                     { icon: Clock, label: 'Periods / Week', value: mySubjects.reduce((s, sub) => s + sub.periodsPerWeek, 0), color: 'text-amber-600', bg: 'bg-amber-50' },
                 ].map((k) => (
@@ -142,8 +142,8 @@ export default function TeacherSubjects() {
                                     </p>
                                 </div>
                             </div>
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all ${expanded === sub.id ? 'bg-blue-50' : 'bg-slate-100'}`}>
-                                <ChevronDown size={16} className={`transition-transform text-slate-400 ${expanded === sub.id ? 'rotate-180 text-blue-600' : ''}`} />
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all ${expanded === sub.id ? 'bg-[#1E4DA6]/5' : 'bg-slate-100'}`}>
+                                <ChevronDown size={16} className={`transition-transform text-slate-400 ${expanded === sub.id ? 'rotate-180 text-[#1E4DA6]' : ''}`} />
                             </div>
                         </button>
 

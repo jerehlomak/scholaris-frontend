@@ -24,7 +24,7 @@ export function StudentIdCards() {
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
                     <input type="text" placeholder="Search students..." value={search} onChange={e => setSearch(e.target.value)}
-                        className="pl-9 pr-4 h-10 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all w-56" />
+                        className="pl-9 pr-4 h-10 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all w-56" />
                 </div>
                 <button className="flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-colors">
                     <RefreshCw className="h-4 w-4" />
@@ -40,7 +40,7 @@ export function StudentIdCards() {
                 <div className="flex items-center flex-wrap gap-2 ml-auto">
                     {CARD_STYLES.map(style => (
                         <button key={style} onClick={() => setActiveStyle(style)}
-                            className={cn('rounded-xl px-4 py-2.5 text-xs font-bold transition-colors', activeStyle === style ? 'bg-blue-700 text-white shadow-md' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50')}>
+                            className={cn('rounded-xl px-4 py-2.5 text-xs font-bold transition-colors', activeStyle === style ? 'bg-[#173F8C] text-white shadow-md' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50')}>
                             {style}
                         </button>
                     ))}
@@ -52,15 +52,15 @@ export function StudentIdCards() {
                 {/* ID Card */}
                 <div className="relative w-72 h-[450px] bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
                     {/* Top accent */}
-                    <div className="absolute top-0 left-0 w-full h-2 bg-blue-700" />
+                    <div className="absolute top-0 left-0 w-full h-2 bg-[#173F8C]" />
                     {/* Dot pattern background */}
                     <div className="pointer-events-none absolute inset-0"
-                        style={{ backgroundImage: 'radial-gradient(circle, #0036a108 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+                        style={{ backgroundImage: 'radial-gradient(circle, #1E4DA608 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
 
                     <div className="relative z-10 flex flex-col items-center pt-10 pb-6 px-5 h-full">
                         {/* Avatar */}
-                        <div className="h-24 w-24 rounded-full bg-blue-100 border-4 border-white shadow-md flex items-center justify-center mb-3 overflow-hidden relative">
-                            <svg className="w-full h-full text-blue-700 mt-4" viewBox="0 0 24 24" fill="currentColor">
+                        <div className="h-24 w-24 rounded-full bg-[#1E4DA6]/10 border-4 border-white shadow-md flex items-center justify-center mb-3 overflow-hidden relative">
+                            <svg className="w-full h-full text-[#173F8C] mt-4" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
                             </svg>
                             <div className="absolute top-1 right-3 h-3 w-3 bg-emerald-500 rounded-full border-2 border-white" />
@@ -100,8 +100,8 @@ export function StudentIdCards() {
                 </div>
 
                 {/* Add more cards placeholder */}
-                <div className="flex h-[450px] w-72 items-center justify-center rounded-2xl border-2 border-dashed border-blue-200 bg-blue-50/30 text-slate-400">
-                    <span className="text-sm font-bold text-blue-400">More cards will appear here</span>
+                <div className="flex h-[450px] w-72 items-center justify-center rounded-2xl border-2 border-dashed border-[#1E4DA6]/20 bg-[#1E4DA6]/8 text-slate-400">
+                    <span className="text-sm font-bold text-[#1E4DA6]/60">More cards will appear here</span>
                 </div>
             </div>
         </SettingsShell>

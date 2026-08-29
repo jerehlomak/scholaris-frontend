@@ -1,16 +1,32 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
     Users, Briefcase, Activity, AlertTriangle,
-    Plus, FileText, Settings, BookOpen, GraduationCap, ChevronRight,
+    Plus, FileText, Settings, GraduationCap, ArrowUpRight,
     CalendarDays, MessageSquare
 } from 'lucide-react';
+import {
+    ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
+} from 'recharts';
 import { PermissionGate } from '../../components/auth/PermissionGate';
+import { Card } from '../../components/ui/card';
+import { Button } from '../../components/ui/button';
 import { useAuth } from '../../context/AuthContext';
 import { usePermissions } from '../../hooks/usePermissions';
 import { menuItems } from '../../config/menu';
 import { filterMenuTree, findFirstPath } from '../../utils/permissions';
+
+const NAVY = '#15316B';
+const NAVY_DEEP = '#0E2450';
+const GOLD = '#F5B800';
+const INK = '#1C2333';
+// Brighter navy reserved for solid button fills — feedback was that the
+// darker NAVY above (fine for text/icon accents) read as too dark once
+// used as a filled button background.
+const BTN_NAVY = '#1E4DA6';
+const BTN_NAVY_HOVER = '#173F8C';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface AdminStats {
@@ -39,95 +55,154 @@ function useCountUp(target: number, duration = 900, delay = 0) {
     return val;
 }
 
-// ─── Stat Card ────────────────────────────────────────────────────────────────
-interface StatCardProps {
-    title: string;
-    value: number | undefined;
-    subtitle: string;
-    icon: React.ElementType;
-    colorClass: string;
-    bgClass: string;
-    delay: number;
-    loading: boolean;
+// ─── Section Panel (shared hairline-bordered shell) ──────────────────────────
+function SectionPanel({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: delay / 1000, ease: 'easeOut' }}
+        >
+            <Card className={`rounded-2xl border border-slate-200 shadow-none p-6 sm:p-7 ${className}`}>
+                {children}
+            </Card>
+        </motion.div>
+    );
 }
 
-function StatCard({
-    title, value, subtitle, icon: Icon, colorClass, bgClass, delay, loading
-}: StatCardProps) {
-    const displayed = useCountUp(value ?? 0, 900, delay + 300);
-
+function SectionHeading({ children, action }: { children: React.ReactNode; action?: React.ReactNode }) {
     return (
-        <div 
-            className="relative bg-white rounded-2xl p-5 border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1"
-            style={{ animation: `dashRise 0.5s ease ${delay}ms both` }}
-        >
-            <div className="flex justify-between items-start mb-4">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${bgClass}`}>
-                    <Icon className={`w-5 h-5 ${colorClass}`} strokeWidth={2} />
-                </div>
-            </div>
-
-            <div className="text-3xl font-bold text-gray-900 tracking-tight leading-none mb-1.5">
-                {loading ? (
-                    <span className="inline-block w-24 h-8 bg-gray-100 rounded animate-pulse" />
-                ) : (
-                    displayed.toLocaleString()
-                )}
-            </div>
-            <div className="text-sm font-medium text-gray-500">{title}</div>
-            <div className={`text-xs mt-3 font-semibold ${colorClass}`}>{subtitle}</div>
+        <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-100">
+            <h2 className="font-heading text-[17px] font-medium text-slate-900">{children}</h2>
+            {action}
         </div>
     );
 }
 
-// ─── Bar Chart ────────────────────────────────────────────────────────────────
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'];
-const S_DATA = [820, 940, 880, 1050, 1100, 1200, 1240, 1284];
-const T_DATA = [38, 40, 41, 43, 44, 45, 46, 47];
+// ─── KPI Strip ────────────────────────────────────────────────────────────────
+interface KpiColumnProps {
+    title: string;
+    value: number | undefined;
+    subtitle: string;
+    icon: React.ElementType;
+    accent: string;
+    delay: number;
+    loading: boolean;
+}
 
-function StatisticsChartInner() {
-    const [ready, setReady] = useState(false);
-    useEffect(() => { const t = setTimeout(() => setReady(true), 400); return () => clearTimeout(t); }, []);
-    const maxS = Math.max(...S_DATA);
+function KpiColumn({ title, value, subtitle, icon: Icon, accent, delay, loading }: KpiColumnProps) {
+    const displayed = useCountUp(value ?? 0, 900, delay + 300);
+    const isPositive = subtitle.startsWith('+');
 
     return (
-        <div>
-            <div className="flex items-end gap-2 h-48 mt-4 border-b border-gray-100 pb-2">
-                {MONTHS.map((m, i) => {
-                    const sh = Math.round((S_DATA[i] / maxS) * 160);
-                    const th = Math.round((T_DATA[i] / 50) * 160);
-                    return (
-                        <div key={m} className="flex-1 flex flex-col items-center gap-2 group">
-                            <div className="flex gap-1 items-end w-full px-1">
-                                <div
-                                    className="flex-1 rounded-t bg-blue-500 transition-all duration-700 ease-out group-hover:bg-blue-600"
-                                    style={{
-                                        height: ready ? sh : 0,
-                                        transitionDelay: `${i * 60}ms`,
-                                    }}
-                                />
-                                <div
-                                    className="flex-1 rounded-t bg-emerald-400 opacity-80 transition-all duration-700 ease-out group-hover:bg-emerald-500 group-hover:opacity-100"
-                                    style={{
-                                        height: ready ? th : 0,
-                                        transitionDelay: `${i * 60 + 30}ms`,
-                                    }}
-                                />
-                            </div>
-                            <span className="text-xs font-medium text-gray-400">{m}</span>
-                        </div>
-                    );
-                })}
+        <div className="p-6 sm:p-7">
+            <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.13em] text-slate-400 mb-4">
+                <Icon className="w-3.5 h-3.5" style={{ color: accent }} strokeWidth={2.25} />
+                {title}
             </div>
-            <div className="flex gap-6 mt-4 justify-center">
+            <div className="font-heading text-[32px] sm:text-[34px] leading-none tracking-tight text-slate-900 tabular-nums mb-2.5">
+                {loading ? (
+                    <span className="inline-block w-20 h-8 bg-slate-100 rounded animate-pulse" />
+                ) : (
+                    displayed.toLocaleString()
+                )}
+            </div>
+            <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: accent }}>
+                {isPositive && <ArrowUpRight className="w-3 h-3" strokeWidth={2.5} />}
+                {subtitle}
+            </div>
+        </div>
+    );
+}
+
+// ─── Enrollment Chart ─────────────────────────────────────────────────────────
+// Note: sample trend data (matches what this panel shipped with) — wiring
+// this to a real /api/v1/dashboard/enrollment-trend endpoint is a data task,
+// not a visual one; left as-is for this redesign pass. Dual Y-axis is a real
+// fix though: students (~800-1300) and staff (~38-47) live on completely
+// different scales, so plotting both against one axis would visually imply
+// a comparison that doesn't exist.
+const TREND_DATA = [
+    { month: 'Jan', Students: 820, Staff: 38 },
+    { month: 'Feb', Students: 940, Staff: 40 },
+    { month: 'Mar', Students: 880, Staff: 41 },
+    { month: 'Apr', Students: 1050, Staff: 43 },
+    { month: 'May', Students: 1100, Staff: 44 },
+    { month: 'Jun', Students: 1200, Staff: 45 },
+    { month: 'Jul', Students: 1240, Staff: 46 },
+    { month: 'Aug', Students: 1284, Staff: 47 },
+];
+
+function EnrollmentChart() {
+    return (
+        <div className="h-64 -ml-2">
+            <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={TREND_DATA} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+                    <defs>
+                        <linearGradient id="studentsFill" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor={NAVY} stopOpacity={0.16} />
+                            <stop offset="100%" stopColor={NAVY} stopOpacity={0} />
+                        </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1EDE3" />
+                    <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: '#A6A196', fontSize: 11, fontWeight: 600 }} dy={8} />
+                    <YAxis
+                        yAxisId="students" axisLine={false} tickLine={false}
+                        tick={{ fill: '#A6A196', fontSize: 11 }} width={40}
+                    />
+                    <YAxis
+                        yAxisId="staff" orientation="right" axisLine={false} tickLine={false}
+                        tick={{ fill: '#A6A196', fontSize: 11 }} width={32}
+                    />
+                    <Tooltip
+                        contentStyle={{ borderRadius: 10, border: '1px solid #EEEAE0', boxShadow: '0 8px 24px -8px rgba(21,49,107,0.18)', fontSize: 13 }}
+                        labelStyle={{ fontWeight: 700, color: NAVY, marginBottom: 4 }}
+                    />
+                    <Area
+                        yAxisId="students" type="monotone" dataKey="Students"
+                        stroke={NAVY} strokeWidth={2.5} fill="url(#studentsFill)"
+                        activeDot={{ r: 5, fill: NAVY, strokeWidth: 0 }}
+                    />
+                    <Area
+                        yAxisId="staff" type="monotone" dataKey="Staff"
+                        stroke={GOLD} strokeWidth={2.5} fill="none"
+                        activeDot={{ r: 5, fill: GOLD, strokeWidth: 0 }}
+                    />
+                </AreaChart>
+            </ResponsiveContainer>
+            <div className="flex gap-6 mt-1 justify-center">
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-sm bg-blue-500" />
-                    <span className="text-sm font-medium text-gray-600">Students</span>
+                    <div className="w-3 h-1.5 rounded-sm" style={{ backgroundColor: NAVY }} />
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Students</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-sm bg-emerald-400" />
-                    <span className="text-sm font-medium text-gray-600">Staff</span>
+                    <div className="w-3 h-1.5 rounded-sm" style={{ backgroundColor: GOLD }} />
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Staff</span>
                 </div>
+            </div>
+        </div>
+    );
+}
+
+// ─── Attendance Ring ──────────────────────────────────────────────────────────
+function AttendanceRing({ percent }: { percent: number }) {
+    const r = 42;
+    const c = 2 * Math.PI * r;
+    const offset = c - (percent / 100) * c;
+    return (
+        <div className="relative w-[100px] h-[100px] shrink-0">
+            <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+                <circle cx="50" cy="50" r={r} fill="none" stroke="#EEEAE0" strokeWidth="8" />
+                <motion.circle
+                    cx="50" cy="50" r={r} fill="none" stroke="#0F9D6A" strokeWidth="8" strokeLinecap="round"
+                    strokeDasharray={c}
+                    initial={{ strokeDashoffset: c }}
+                    animate={{ strokeDashoffset: offset }}
+                    transition={{ duration: 1.1, delay: 0.5, ease: 'easeOut' }}
+                />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-heading text-lg font-medium text-slate-900 tabular-nums">{percent}%</span>
             </div>
         </div>
     );
@@ -143,51 +218,42 @@ interface AttendeeRowProps {
 function AttendeeRow({ name, meta, variant }: AttendeeRowProps) {
     const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2);
     const isAbsent = variant === 'absent';
-    
+
     return (
-        <div className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-b-0">
-            <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${isAbsent ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-600'}`}>
+        <div className="flex items-center gap-3.5 py-3.5 border-b border-slate-100 last:border-b-0">
+            <div
+                className="w-9 h-9 rounded-full border-[1.5px] flex items-center justify-center text-xs font-bold text-slate-600 flex-shrink-0"
+                style={{ borderColor: isAbsent ? '#FCA5A5' : '#86EFAC' }}
+            >
                 {initials}
             </div>
             <div className="min-w-0 flex-1">
-                <div className="text-sm font-semibold text-gray-800 truncate">{name}</div>
-                <div className="text-xs text-gray-500 font-medium">{meta}</div>
+                <div className="text-sm font-semibold text-slate-800 truncate">{name}</div>
+                <div className="text-xs text-slate-500 font-medium">{meta}</div>
             </div>
-            <span className={`text-xs px-2.5 py-1 rounded-md font-semibold flex-shrink-0 ${isAbsent ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-emerald-50 text-emerald-600 border border-emerald-100'}`}>
+            <div className={`flex items-center gap-1.5 text-xs font-semibold flex-shrink-0 ${isAbsent ? 'text-rose-600' : 'text-emerald-600'}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${isAbsent ? 'bg-rose-500' : 'bg-emerald-500'}`} />
                 {isAbsent ? 'Absent' : 'Present'}
-            </span>
+            </div>
         </div>
     );
 }
 
-// ─── Quick Action Button ──────────────────────────────────────────────────────
-function QuickActionBtn({ icon: Icon, label, desc, onClick, colorClass, bgClass }: { icon: any, label: string, desc: string, onClick: () => void, colorClass: string, bgClass: string }) {
+// ─── Quick Action Row ─────────────────────────────────────────────────────────
+function QuickActionRow({ index, icon: Icon, label, desc, onClick, accent }: { index: string, icon: any, label: string, desc: string, onClick: () => void, accent: string }) {
     return (
-        <button 
+        <button
             onClick={onClick}
-            className="flex items-center gap-4 p-4 rounded-xl border border-gray-100 bg-gray-50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all text-left w-full group"
+            className="group flex items-center gap-3.5 w-full py-4 text-left border-b border-slate-100 last:border-b-0"
         >
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-105 ${bgClass} ${colorClass}`}>
-                <Icon className="w-5 h-5" strokeWidth={2.5} />
-            </div>
+            <span className="font-heading text-base text-slate-300 tabular-nums w-5 shrink-0">{index}</span>
+            <Icon className="w-4 h-4 shrink-0" style={{ color: accent }} strokeWidth={2.25} />
             <div className="flex-1 min-w-0">
-                <div className="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{label}</div>
-                <div className="text-xs text-gray-500 mt-0.5 truncate">{desc}</div>
+                <div className="text-sm font-semibold text-slate-900">{label}</div>
+                <div className="text-xs text-slate-500 mt-0.5 truncate">{desc}</div>
             </div>
-            <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
+            <ArrowUpRight className="w-4 h-4 text-slate-300 transition-all group-hover:text-slate-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
         </button>
-    );
-}
-
-// ─── Panel Card ───────────────────────────────────────────────────────────────
-function PanelCard({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number, className?: string }) {
-    return (
-        <div
-            className={`bg-white rounded-2xl p-5 sm:p-6 border border-gray-200 shadow-sm ${className}`}
-            style={{ animation: `dashRise 0.5s ease ${delay}ms both` }}
-        >
-            {children}
-        </div>
     );
 }
 
@@ -225,10 +291,10 @@ export default function DashboardHome() {
             return <Navigate to={firstPath} replace />;
         }
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center bg-slate-50">
+            <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center bg-[#FBF9F5]">
                 <AlertTriangle className="w-10 h-10 text-amber-500 mb-3" />
-                <h2 className="text-lg font-bold text-gray-800">No menu access configured yet</h2>
-                <p className="text-sm text-gray-500 mt-1 max-w-sm">Your role doesn't have any menu items enabled. Contact your school administrator to set up your access.</p>
+                <h2 className="text-lg font-bold text-slate-800">No menu access configured yet</h2>
+                <p className="text-sm text-slate-500 mt-1 max-w-sm">Your role doesn't have any menu items enabled. Contact your school administrator to set up your access.</p>
             </div>
         );
     }
@@ -250,175 +316,159 @@ export default function DashboardHome() {
     ];
 
     return (
-        <>
-            <style>{`
-                @keyframes dashRise {
-                  from { opacity: 0; transform: translateY(12px); }
-                  to   { opacity: 1; transform: translateY(0); }
-                }
-            `}</style>
-
-            <div className="flex flex-col gap-6 w-full min-h-screen p-4 sm:p-8 bg-slate-50 font-sans">
+        <div className="flex flex-col w-full min-h-screen bg-[#FBF9F5]">
+            <div className="max-w-[1360px] w-full mx-auto flex flex-col gap-8 p-4 sm:p-8 lg:p-10">
 
                 {/* ── Header ── */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2">
+                <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 pb-7 border-b border-slate-200">
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-                            Admin Dashboard
-                        </h1>
-                        <p className="text-sm font-medium text-gray-500 mt-1 flex items-center gap-2">
-                            <CalendarDays className="w-4 h-4" />
+                        <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-400 mb-2.5">
+                            <CalendarDays className="w-3.5 h-3.5" />
                             {dateStr}
                         </p>
+                        <h1 className="font-heading text-[34px] sm:text-[42px] font-medium tracking-tight leading-none" style={{ color: INK }}>
+                            Admin Dashboard
+                        </h1>
                     </div>
-                    
-                    <div className="flex items-center gap-3">
-                        <button onClick={() => navigate('/dashboard/students/add')} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold transition-all shadow-sm">
-                            <Plus className="w-4 h-4" /> Add Student
+
+                    <Button
+                        onClick={() => navigate('/dashboard/students/add')}
+                        className="gap-2 text-white font-semibold rounded-full px-5 py-2.5 h-auto shadow-none"
+                        style={{ backgroundColor: BTN_NAVY }}
+                        onMouseEnter={e => (e.currentTarget.style.backgroundColor = BTN_NAVY_HOVER)}
+                        onMouseLeave={e => (e.currentTarget.style.backgroundColor = BTN_NAVY)}
+                    >
+                        <Plus className="w-4 h-4" /> Add Student
+                    </Button>
+                </header>
+
+                {/* ── KPI Strip ── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45, ease: 'easeOut' }}
+                >
+                    <Card className="rounded-2xl border border-slate-200 shadow-none py-0 gap-0 overflow-hidden">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-slate-200">
+                            <PermissionGate permissions={['std_view']}>
+                                <KpiColumn
+                                    title="Total Students" value={stats?.totalStudents} subtitle="+12% from last term"
+                                    icon={GraduationCap} accent={NAVY}
+                                    delay={50} loading={loading}
+                                />
+                            </PermissionGate>
+                            <PermissionGate permissions={['adm_staff']}>
+                                <KpiColumn
+                                    title="Total Staff" value={stats?.totalTeachers} subtitle="Active teaching staff"
+                                    icon={Briefcase} accent="#B8860B"
+                                    delay={100} loading={loading}
+                                />
+                            </PermissionGate>
+                            <PermissionGate permissions={['std_view']}>
+                                <KpiColumn
+                                    title="Total Parents" value={stats?.totalParents} subtitle="Registered accounts"
+                                    icon={Users} accent="#0F766E"
+                                    delay={150} loading={loading}
+                                />
+                            </PermissionGate>
+                            <PermissionGate permissions={['acd_view']}>
+                                <KpiColumn
+                                    title="Total Classes" value={stats?.totalClasses} subtitle="Active classrooms"
+                                    icon={Activity} accent="#7C3559"
+                                    delay={200} loading={loading}
+                                />
+                            </PermissionGate>
+                        </div>
+                    </Card>
+                </motion.div>
+
+                {/* ── Row: Chart + Quick Actions ── */}
+                <div className="grid grid-cols-1 xl:grid-cols-[1.7fr_1fr] gap-8">
+
+                    <SectionPanel delay={300}>
+                        <SectionHeading action={<span className="text-xs font-semibold text-slate-400">This year</span>}>
+                            Enrollment Growth
+                        </SectionHeading>
+                        <EnrollmentChart />
+                    </SectionPanel>
+
+                    <SectionPanel delay={350}>
+                        <SectionHeading>Quick Actions</SectionHeading>
+                        <div className="flex flex-col">
+                            <PermissionGate permissions={['std_add']}>
+                                <QuickActionRow
+                                    index="01" icon={Plus} label="Enroll New Student" desc="Add a single student profile"
+                                    onClick={() => navigate('/dashboard/students/add')}
+                                    accent={NAVY}
+                                />
+                            </PermissionGate>
+                            <PermissionGate permissions={['acd_manage', 'cbt_grade']}>
+                                <QuickActionRow
+                                    index="02" icon={FileText} label="Record Scores" desc="Enter CA and Exam scores"
+                                    onClick={() => navigate('/dashboard/results/record')}
+                                    accent="#0F766E"
+                                />
+                            </PermissionGate>
+                            <PermissionGate permissions={['adm_settings']}>
+                                <QuickActionRow
+                                    index="03" icon={Settings} label="Result Settings" desc="Configure grading & templates"
+                                    onClick={() => navigate('/dashboard/results/settings')}
+                                    accent="#7C3559"
+                                />
+                            </PermissionGate>
+                            <PermissionGate permissions={['adm_sms']}>
+                                <QuickActionRow
+                                    index="04" icon={MessageSquare} label="Send Message" desc="Notify parents or staff"
+                                    onClick={() => navigate('/dashboard/messaging/communication-templates')}
+                                    accent="#B8860B"
+                                />
+                            </PermissionGate>
+                        </div>
+                    </SectionPanel>
+
+                </div>
+
+                {/* ── Row: Attendance Today ── */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                    <SectionPanel delay={400}>
+                        <SectionHeading action={
+                            <span className="flex items-center gap-1.5 text-xs font-semibold text-rose-600">
+                                <span className="w-1.5 h-1.5 rounded-full bg-rose-500" /> Today
+                            </span>
+                        }>
+                            Absent Students
+                        </SectionHeading>
+                        <div className="flex flex-col">
+                            {absentStudents.map(s => (
+                                <AttendeeRow key={s.name} name={s.name} meta={s.meta} variant="absent" />
+                            ))}
+                        </div>
+                        <button className="w-full mt-4 py-2.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-sm font-semibold text-slate-700 transition-colors">
+                            View Full Report
                         </button>
-                    </div>
-                </div>
+                    </SectionPanel>
 
-                {/* ── Alert Banner ── */}
-                {/* <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 border-l-4 border-l-amber-500 rounded-xl px-4 py-3 shadow-sm animate-[dashRise_0.5s_ease_100ms_both]">
-                    <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0" />
-                    <p className="text-sm font-medium text-amber-900">
-                        <span className="font-bold">Attention: </span>
-                        3 unresolved student attendance flags need review before the end of the week.
-                    </p>
-                </div> */}
-
-                {/* ── Stat Cards ── */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-                    <PermissionGate permissions={['std_view']}>
-                        <StatCard
-                            title="Total Students" value={stats?.totalStudents} subtitle="+12% from last term"
-                            icon={GraduationCap} colorClass="text-blue-600" bgClass="bg-blue-50"
-                            delay={50} loading={loading}
-                        />
-                    </PermissionGate>
-                    <PermissionGate permissions={['adm_staff']}>
-                        <StatCard
-                            title="Total Staff" value={stats?.totalTeachers} subtitle="Active teaching staff"
-                            icon={Briefcase} colorClass="text-indigo-600" bgClass="bg-indigo-50"
-                            delay={100} loading={loading}
-                        />
-                    </PermissionGate>
-                    <PermissionGate permissions={['std_view']}>
-                        <StatCard
-                            title="Total Parents" value={stats?.totalParents} subtitle="Registered accounts"
-                            icon={Users} colorClass="text-emerald-600" bgClass="bg-emerald-50"
-                            delay={150} loading={loading}
-                        />
-                    </PermissionGate>
-                    <PermissionGate permissions={['acd_view']}>
-                        <StatCard
-                            title="Total Classes" value={stats?.totalClasses} subtitle="Active classrooms"
-                            icon={Activity} colorClass="text-violet-600" bgClass="bg-violet-50"
-                            delay={200} loading={loading}
-                        />
-                    </PermissionGate>
-                </div>
-
-                {/* ── Main Layout ── */}
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-
-                    {/* Left Column (Wider) */}
-                    <div className="xl:col-span-2 flex flex-col gap-6">
-                        
-                        {/* Quick Actions Panel */}
-                        <PanelCard delay={300}>
-                            <h2 className="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
-                                <Activity className="w-5 h-5 text-blue-600" />
-                                Quick Actions
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <PermissionGate permissions={['std_add']}>
-                                    <QuickActionBtn 
-                                        icon={Plus} label="Enroll New Student" desc="Add a single student profile" 
-                                        onClick={() => navigate('/dashboard/students/add')}
-                                        colorClass="text-blue-600" bgClass="bg-blue-50 border-blue-100"
-                                    />
-                                </PermissionGate>
-                                <PermissionGate permissions={['acd_manage', 'cbt_grade']}>
-                                    <QuickActionBtn 
-                                        icon={FileText} label="Record Scores" desc="Enter CA and Exam scores" 
-                                        onClick={() => navigate('/dashboard/results/record')}
-                                        colorClass="text-emerald-600" bgClass="bg-emerald-50 border-emerald-100"
-                                    />
-                                </PermissionGate>
-                                <PermissionGate permissions={['adm_settings']}>
-                                    <QuickActionBtn 
-                                        icon={Settings} label="Result Settings" desc="Configure grading & templates" 
-                                        onClick={() => navigate('/dashboard/results/settings')}
-                                        colorClass="text-violet-600" bgClass="bg-violet-50 border-violet-100"
-                                    />
-                                </PermissionGate>
-                                <PermissionGate permissions={['adm_sms']}>
-                                    <QuickActionBtn 
-                                        icon={MessageSquare} label="Send Message" desc="Notify parents or staff" 
-                                        onClick={() => navigate('/dashboard/messaging/communication-templates')}
-                                        colorClass="text-indigo-600" bgClass="bg-indigo-50 border-indigo-100"
-                                    />
-                                </PermissionGate>
+                    <SectionPanel delay={450}>
+                        <SectionHeading action={<span className="text-xs font-semibold text-slate-400 tabular-nums">24 / 27</span>}>
+                            Present Staff
+                        </SectionHeading>
+                        <div className="flex items-center gap-5 pb-4 mb-1 border-b border-slate-100">
+                            <AttendanceRing percent={88.9} />
+                            <div>
+                                <div className="text-sm font-semibold text-slate-800">Attendance rate today</div>
+                                <div className="text-xs text-slate-500 mt-1">3 staff currently absent</div>
                             </div>
-                        </PanelCard>
+                        </div>
+                        <div className="flex flex-col">
+                            {presentStaff.map(s => (
+                                <AttendeeRow key={s.name} name={s.name} meta={s.meta} variant="present" />
+                            ))}
+                        </div>
+                    </SectionPanel>
 
-                        {/* Chart Panel */}
-                        <PanelCard delay={400}>
-                            <div className="flex items-center justify-between mb-2">
-                                <h2 className="text-base font-bold text-gray-900">Enrollment Growth</h2>
-                                <span className="bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full border border-blue-100">
-                                    Current Year
-                                </span>
-                            </div>
-                            <StatisticsChartInner />
-                        </PanelCard>
-                        
-                    </div>
-
-                    {/* Right Column */}
-                    <div className="flex flex-col gap-6">
-
-                        <PanelCard delay={450}>
-                            <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-base font-bold text-gray-900">Absent Students</h2>
-                                <span className="bg-red-50 text-red-600 text-xs font-bold px-2 py-0.5 rounded-md border border-red-100">Today</span>
-                            </div>
-                            <div className="flex flex-col">
-                                {absentStudents.map(s => (
-                                    <AttendeeRow key={s.name} name={s.name} meta={s.meta} variant="absent" />
-                                ))}
-                            </div>
-                            <button className="w-full mt-4 py-2.5 rounded-xl bg-gray-50 hover:bg-gray-100 text-sm font-semibold text-gray-700 transition-colors">
-                                View Full Report
-                            </button>
-                        </PanelCard>
-
-                        <PanelCard delay={500}>
-                            <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-base font-bold text-gray-900">Present Staff</h2>
-                                <span className="bg-emerald-50 text-emerald-600 text-xs font-bold px-2 py-0.5 rounded-md border border-emerald-100">24 / 27</span>
-                            </div>
-                            <div className="flex flex-col">
-                                {presentStaff.map(s => (
-                                    <AttendeeRow key={s.name} name={s.name} meta={s.meta} variant="present" />
-                                ))}
-                            </div>
-                            <div className="mt-5 pt-4 border-t border-gray-100">
-                                <div className="flex justify-between text-sm mb-2">
-                                    <span className="font-medium text-gray-500">Attendance Rate</span>
-                                    <span className="font-bold text-emerald-600">88.9%</span>
-                                </div>
-                                <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
-                                    <div className="h-full bg-emerald-500 rounded-full w-[88.9%] transition-all duration-1000 ease-out" />
-                                </div>
-                            </div>
-                        </PanelCard>
-
-                    </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

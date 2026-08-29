@@ -1,83 +1,54 @@
+import { ShieldCheck, Smartphone, Headset, LayoutGrid } from 'lucide-react';
 
-import { Star, CheckCircle } from 'lucide-react';
+const NAVY = '#15316B';
+
+const PILLARS = [
+    {
+        icon: LayoutGrid,
+        title: 'One platform, not five',
+        text: 'Admissions, results, attendance, and fees used to live in separate spreadsheets and apps. Skcooly brings them under one roof, so nothing falls through the cracks.',
+    },
+    {
+        icon: Smartphone,
+        title: 'Built for how your staff actually work',
+        text: 'A teacher marking attendance from a phone in the classroom. An admin printing report cards for 30 classes at once. Every screen is designed around the task, not the org chart.',
+    },
+    {
+        icon: ShieldCheck,
+        title: 'Your data, kept secure',
+        text: "Student and staff records are encrypted and backed up automatically — no more single spreadsheet that's one lost laptop away from disaster.",
+    },
+    {
+        icon: Headset,
+        title: 'Support that understands Nigerian schools',
+        text: "From term structures to WAEC-style grading, Skcooly is set up around how Nigerian schools actually run — and our support team speaks that language.",
+    },
+];
 
 export function ReviewsSection() {
-    const reviews = [
-        {
-            id: 1,
-            name: "Sarah M. (Principal)",
-            verified: true,
-            text: "Skooly Plus completely transformed how we manage our administrative tasks. Our teachers save hours every week, and parents love the real-time updates.",
-            rating: 5,
-            date: "2 days ago"
-        },
-        {
-            id: 2,
-            name: "Thomas K. (IT Director)",
-            verified: true,
-            text: "The cloud infrastructure is incredibly robust. Implementation was seamless, and the support team was with us every step of the way.",
-            rating: 5,
-            date: "1 week ago"
-        },
-        {
-            id: 3,
-            name: "Julia R. (Teacher)",
-            verified: true,
-            text: "Finally, a grading system that actually makes sense! The automated reports are a lifesaver during parent-teacher conferences.",
-            rating: 5,
-            date: "2 weeks ago"
-        }
-    ];
-
     return (
-        <section id="testimonial" className="py-20 bg-brand-gray-light">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section id="why-skcooly" className="py-20 sm:py-24 bg-[#FBF9F5]">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <div className="mb-12">
-                    <div className="flex justify-center flex-wrap gap-1 mb-4">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                            <Star key={star} className="w-8 h-8 fill-brand-green text-brand-green" />
-                        ))}
-                    </div>
-                    <h2 className="text-3xl md:text-5xl font-heading text-brand-dark mb-4">Trusted by over<br />5,000 schools worldwide</h2>
-                    <p className="text-brand-dark/70 max-w-2xl mx-auto">
-                        Based on verified feedback from educators and administrators.
-                        See why schools are switching to Skooly Plus.
-                    </p>
+                <div className="max-w-2xl mb-14">
+                    <span className="text-xs font-bold uppercase tracking-[0.14em]" style={{ color: NAVY }}>Why Skcooly</span>
+                    <h2 className="text-3xl md:text-4xl font-heading font-medium text-[#1C2333] mt-3 tracking-tight">
+                        Built to replace the spreadsheet chaos
+                    </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                    {reviews.map((review) => (
-                        <div key={review.id} className="bg-white p-8 rounded-sm shadow-sm flex flex-col h-full relative">
-                            <div className="flex gap-0.5 mb-4">
-                                {[...Array(review.rating)].map((_, i) => (
-                                    <Star key={i} className="w-4 h-4 fill-brand-green text-brand-green" />
-                                ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
+                    {PILLARS.map((pillar) => (
+                        <div key={pillar.title} className="flex gap-5">
+                            <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${NAVY}12` }}>
+                                <pillar.icon className="w-5 h-5" style={{ color: NAVY }} />
                             </div>
-
-                            <h4 className="font-bold text-lg text-brand-dark mb-1 flex items-center gap-2">
-                                {review.name}
-                                {review.verified && <CheckCircle className="w-4 h-4 text-green-500" />}
-                            </h4>
-                            <p className="text-xs text-gray-500 mb-4">{review.date}</p>
-
-                            <p className="text-brand-dark leading-relaxed italic opacity-90 relative mb-4 flex-grow">
-                                "{review.text}"
-                            </p>
-
-                            <div className="mt-auto flex items-center gap-2 pt-4 border-t border-gray-100">
-                                <div className="flex bg-blue-100 p-1 rounded-full items-center">
-                                    <span className="text-[10px] font-bold text-blue-800 px-2">Verified Educator</span>
-                                </div>
+                            <div>
+                                <h3 className="font-heading text-lg font-medium text-[#1C2333] mb-2">{pillar.title}</h3>
+                                <p className="text-sm text-slate-500 leading-relaxed">{pillar.text}</p>
                             </div>
                         </div>
                     ))}
-                </div>
-
-                <div className="mt-12">
-                    <button className="border-2 border-brand-teal text-brand-teal px-8 py-3 rounded-sm font-bold hover:bg-brand-teal hover:text-white transition-colors">
-                        Read All Success Stories
-                    </button>
                 </div>
 
             </div>

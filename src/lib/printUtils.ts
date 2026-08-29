@@ -5,8 +5,12 @@
  * spooler from crashing when the parent window or component unmounts early.
  *
  * @param elementId The ID of the DOM element to print.
+ * @param extraStyles Optional raw CSS injected into the print document's
+ *   <style> block, for pages with print-specific styling of their own
+ *   (e.g. a custom table layout) that isn't covered by the app's global
+ *   stylesheets.
  */
-export const mobileSafePrint = (elementId: string) => {
+export const mobileSafePrint = (elementId: string, extraStyles?: string) => {
     const el = document.getElementById(elementId);
     if (!el) {
         console.error(`Element with id ${elementId} not found for printing.`);
@@ -74,6 +78,7 @@ export const mobileSafePrint = (elementId: string) => {
                         .shadow-lg { box-shadow: none !important; }
                     }
                 </style>
+                ${extraStyles ? `<style>${extraStyles}</style>` : ''}
             </head>
             <body class="bg-white">
                 ${clone.outerHTML}

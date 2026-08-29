@@ -169,11 +169,11 @@ export default function SubjectResultsBlock({ data, config, design, toggles, glo
                                         {s.parts[p.name] !== undefined ? s.parts[p.name] : '-'}
                                     </td>
                                 ))}
-                                {showCols.score && <td className={`${padClass} border-b border-gray-100 text-center font-bold text-[#0036a1]`}>{s.score}</td>}
+                                {showCols.score && <td className={`${padClass} border-b border-gray-100 text-center font-bold text-[#1E4DA6]`}>{s.score}</td>}
                                 {showSubjectClassAverage && <td className={`${padClass} border-b border-gray-100 text-center text-gray-500`}>{s.avg}</td>}
                                 {showHighestAvgSubj && <td className={`${padClass} border-b border-gray-100 text-center text-emerald-600 font-semibold`}>{s.high}</td>}
                                 {showLowestAvgSubj && <td className={`${padClass} border-b border-gray-100 text-center text-red-500 font-semibold`}>{s.low}</td>}
-                                {showSubjectPosition && <td className={`${padClass} border-b border-gray-100 text-center text-blue-600 font-semibold`}>{s.pos}</td>}
+                                {showSubjectPosition && <td className={`${padClass} border-b border-gray-100 text-center text-[#1E4DA6] font-semibold`}>{s.pos}</td>}
                                 {showCols.grade && (
                                     <td className={`${padClass} border-b border-gray-100 text-center`}>
                                         <span className={`inline-block px-1.5 py-0.5 rounded-full ${isUltraCompact ? 'text-[8px]' : 'text-[10px]'} font-bold leading-none`} style={{ background: g.bg, color: g.fg }}>{g.label}</span>

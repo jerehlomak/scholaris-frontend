@@ -14,11 +14,9 @@ import {
   AccountsFeesInvoice,
   RulesRegulations,
   MarksGrading,
-  ThemeLanguage,
   AccountSettings,
   AcademicTerms,
   AssessmentStructure,
-  BehavioralTraits,
   ReportCardBuilder,
   FeeRules,
   RolePermissions,
@@ -65,7 +63,6 @@ import {
   AllSubjects,
   AddSubject,
   EditSubject,
-  ManageSubjects,
   SubjectAllocation
 } from './pages/dashboard/subjects';
 
@@ -83,9 +80,6 @@ import {
 import BulkImport from './pages/dashboard/shared/BulkImport';
 
 import Messaging from './pages/dashboard/messaging/Messaging';
-import SMSServices from './pages/dashboard/SMSServices';
-import LiveClass from './pages/dashboard/live/LiveClass';
-import MeetingRoom from './pages/dashboard/live/MeetingRoom';
 
 // Student Portal
 import { StudentLayout } from './components/layout/StudentLayout';
@@ -155,11 +149,9 @@ import StaffAttendance from './pages/dashboard/attendance/StaffAttendance';
 import QRManagement from './pages/dashboard/attendance/QRManagement';
 import AttendanceSettings from './pages/dashboard/attendance/AttendanceSettings';
 import AttendanceReports from './pages/dashboard/attendance/AttendanceReports';
-import ScannerApp from './pages/dashboard/attendance/ScannerApp';
 import Timetable from './pages/dashboard/Timetable';
 import Homework from './pages/dashboard/Homework';
-import Behaviour from './pages/dashboard/Behaviour';
-import { Curriculum, LessonNotes, TeacherAssignments as AdminTeacherAssignments } from './pages/dashboard/academics';
+import { TeacherAssignments as AdminTeacherAssignments } from './pages/dashboard/academics';
 import AdminCBTOverview from './pages/dashboard/academics/AdminCBTOverview';
 // Admin Results
 import AdminResults from './pages/dashboard/results/AdminResults';
@@ -199,9 +191,7 @@ import ScholarshipManager from './pages/dashboard/finance/ScholarshipManager';
 import SingleBilling from './pages/dashboard/finance/SingleBilling';
 import FamilyBilling from './pages/dashboard/finance/FamilyBilling';
 import FinanceReports from './pages/dashboard/finance/FinanceReports';
-import AssetsManagement from './pages/dashboard/finance/AssetsManagement';
 import InventoryManagement from './pages/dashboard/finance/InventoryManagement';
-import PointOfSale from './pages/dashboard/finance/PointOfSale';
 import ApplicationList from './pages/dashboard/applications/ApplicationList';
 import ManualApplicationForm from './pages/dashboard/applications/ManualApplicationForm';
 import ParentApply from './pages/parent/ParentApply';
@@ -269,12 +259,8 @@ function App() {
                           <Route path="cbt" element={<StudentCBT />} />
                           <Route path="cbt/take/:id" element={<StudentCBT />} />
                           <Route path="lms" element={<StudentLMS />} />
-                          <Route path="live-class" element={<LiveClass />} />
                           <Route path="messaging" element={<StudentMessaging />} />
                         </Route>
-
-                        {/* Student standalone room (full-screen, outside StudentLayout) */}
-                        <Route path="/student/live-class/room/:roomId" element={<MeetingRoom />} />
                       </Route>
 
                       {/* Teacher Portal */}
@@ -285,19 +271,14 @@ function App() {
                           <Route path="subjects" element={<TeacherSubjects />} />
                           <Route path="assignments" element={<TeacherAssignments />} />
                           <Route path="attendance" element={<TeacherAttendance />} />
-                          <Route path="attendance/scanner" element={<ScannerApp isTeacherDashboard />} />
                           <Route path="results" element={<TeacherResults />} />
                           <Route path="messaging" element={<TeacherMessaging />} />
                           <Route path="cbt" element={<CBTManager />} />
                           <Route path="cbt/create" element={<CreateExam />} />
                           <Route path="cbt/edit/:id" element={<CreateExam />} />
                           <Route path="lms" element={<TeacherLMS />} />
-                          <Route path="live-class" element={<LiveClass />} />
                           <Route path="payroll" element={<TeacherPayroll />} />
                         </Route>
-
-                        {/* Teacher standalone meeting room (full-screen) */}
-                        <Route path="/teacher/live-class/room/:roomId" element={<MeetingRoom />} />
                       </Route>
 
                       {/* Parent Portal */}
@@ -340,7 +321,6 @@ function App() {
                             <Route path="subject-categories" element={<SubjectCategories />} />
                             <Route path="school-setup" element={<SchoolSetup />} />
                             <Route path="sections" element={<Sections />} />
-                            <Route path="theme-language" element={<ThemeLanguage />} />
                             <Route path="rules-regulations" element={<RulesRegulations />} />
                             <Route path="account-settings" element={<AccountSettings />} />
                             <Route path="smtp-setup" element={<SmtpSetup />} />
@@ -385,7 +365,6 @@ function App() {
                               <Route path="all" element={<AllSubjects />} />
                               <Route path="allocation" element={<SubjectAllocation />} />
                               <Route path="add" element={<AddSubject />} />
-                              <Route path="manage" element={<ManageSubjects />} />
                             </Route>
                           </Route>
 
@@ -406,7 +385,6 @@ function App() {
                               <Route path="settings" element={<RequirePlan plan="Pro" featureKey="Result Management"><ResultSettings /></RequirePlan>} />
                               <Route path="export" element={<ExportResults />} />
                               {/* Legacy routes kept for backward compatibility */}
-                              <Route path="behavioral-traits" element={<RequirePlan plan="Pro" featureKey="Behaviour & Skills"><BehavioralTraits /></RequirePlan>} />
                               <Route path="report-card-builder" element={<RequirePlan plan="Pro" featureKey="Result Management"><ReportCardBuilder /></RequirePlan>} />
                               <Route path="marks-grading" element={<MarksGrading />} />
                               <Route path="assessment-structure" element={<AssessmentStructure />} />
@@ -417,14 +395,6 @@ function App() {
                           {/* Academics (Core) */}
                           <Route path="academics">
                             <Route path="assignments" element={<AdminTeacherAssignments />} />
-                          </Route>
-
-                          {/* Academics (AI) */}
-                          <Route element={<RequirePlan featureKey="Academics (AI)"><Outlet /></RequirePlan>}>
-                            <Route path="academics">
-                              <Route path="curriculum" element={<Curriculum />} />
-                              <Route path="lesson-notes" element={<LessonNotes />} />
-                            </Route>
                           </Route>
 
                           {/* Parents */}
@@ -482,8 +452,6 @@ function App() {
                               <Route path="payroll/pension" element={<PensionTracker />} />
                               <Route path="payroll/payslip" element={<PayslipGenerator />} />
                               <Route path="inventory" element={<InventoryManagement />} />
-                              <Route path="assets" element={<AssetsManagement />} />
-                              <Route path="pos" element={<PointOfSale />} />
                               <Route path="reports" element={<FinanceReports />} />
                             </Route>
                           </Route>
@@ -501,7 +469,6 @@ function App() {
                               <Route path="students" element={<StudentAttendance />} />
                               <Route path="staff" element={<StaffAttendance />} />
                               <Route path="qr" element={<RequirePlan plan="Pro" featureKey="Attendance"><QRManagement /></RequirePlan>} />
-                              <Route path="scanner" element={<RequirePlan plan="Pro" featureKey="Attendance"><ScannerApp /></RequirePlan>} />
                               <Route path="reports" element={<AttendanceReports />} />
                               <Route path="settings" element={<RequirePlan plan="Pro" featureKey="Attendance"><AttendanceSettings /></RequirePlan>} />
                               <Route path="codes" element={<RequirePlan plan="Pro" featureKey="Attendance"><AttendanceCodes /></RequirePlan>} />
@@ -517,14 +484,8 @@ function App() {
                           </Route>
                           <Route path="timetable" element={<RequirePlan plan="Pro" featureKey="Timetable"><Timetable /></RequirePlan>} />
                           <Route path="homework" element={<RequirePlan plan="Pro" featureKey="Homework"><Homework /></RequirePlan>} />
-                          <Route path="behaviour" element={<RequirePlan plan="Pro" featureKey="Behaviour & Skills"><Behaviour /></RequirePlan>} />
-                          <Route path="sms" element={<RequirePlan plan="Premium" featureKey="SMS Services"><SMSServices /></RequirePlan>} />
-                          <Route path="live-class" element={<RequirePlan plan="Premium" featureKey="Live Class"><LiveClass /></RequirePlan>} />
                         </Route>
                       </Route>
-
-                      {/* Standalone full-screen meeting room (outside dashboard layout) */}
-                      <Route path="/dashboard/live-class/room/:roomId" element={<MeetingRoom />} />
 
                       {/* Print Batch Route for Puppeteer */}
                       <Route path="/print-batch" element={<PrintBatch />} />

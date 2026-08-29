@@ -84,7 +84,7 @@ export function TeacherHome() {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-[60vh]">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" />
             </div>
         );
     }
@@ -106,28 +106,28 @@ export function TeacherHome() {
         >
             {/* ── Welcome Hero ── */}
             <motion.div variants={itemVariants}>
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 p-6 text-white shadow-lg">
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#173F8C] via-[#122F69] to-indigo-900 p-6 text-white shadow-lg">
                     {/* Subtle pattern overlay */}
                     <div className="absolute inset-0 opacity-10"
                         style={{ backgroundImage: 'radial-gradient(circle at 80% 20%, white 1px, transparent 1px)', backgroundSize: '24px 24px' }}
                     />
                     <div className="relative flex items-start justify-between gap-4">
                         <div>
-                            <p className="text-blue-200 text-sm font-medium mb-1">{today}</p>
+                            <p className="text-white/70 text-sm font-medium mb-1">{today}</p>
                             <h1 className="text-2xl font-bold tracking-tight text-white">
                                 Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 17 ? 'afternoon' : 'evening'},{' '}
                                 {profile?.user?.name || profile?.name || 'Teacher'} 👋
                             </h1>
-                            <p className="mt-1 text-blue-200 text-sm">{profile?.user?.email}</p>
+                            <p className="mt-1 text-white/70 text-sm">{profile?.user?.email}</p>
                         </div>
                         <div className="hidden sm:flex items-center gap-2 shrink-0">
                             <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 text-center border border-white/20">
                                 <p className="text-2xl font-bold">{stats?.classesAssigned ?? 0}</p>
-                                <p className="text-[11px] text-blue-200 font-medium">Classes</p>
+                                <p className="text-[11px] text-white/70 font-medium">Classes</p>
                             </div>
                             <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 text-center border border-white/20">
                                 <p className="text-2xl font-bold">{stats?.totalStudents ?? 0}</p>
-                                <p className="text-[11px] text-blue-200 font-medium">Students</p>
+                                <p className="text-[11px] text-white/70 font-medium">Students</p>
                             </div>
                         </div>
                     </div>
@@ -158,7 +158,7 @@ export function TeacherHome() {
             {/* ── KPI Stats ── */}
             <motion.div variants={containerVariants} className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                    { label: 'Classes Assigned', value: stats.classesAssigned, icon: BookOpen, color: 'text-blue-600', bg: 'bg-blue-50' },
+                    { label: 'Classes Assigned', value: stats.classesAssigned, icon: BookOpen, color: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5' },
                     { label: 'Subjects Teaching', value: stats.subjectsTeaching, icon: Activity, color: 'text-violet-600', bg: 'bg-violet-50' },
                     { label: 'Total Students', value: stats.totalStudents, icon: Users, color: 'text-emerald-600', bg: 'bg-emerald-50' },
                     { label: 'Status', value: 'ACTIVE', icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50' },
@@ -183,8 +183,8 @@ export function TeacherHome() {
                             {/* Staff ID */}
                             <div>
                                 <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Staff ID</p>
-                                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-blue-200 bg-blue-50">
-                                    <span className="text-sm font-mono font-bold text-blue-700 tracking-wider">
+                                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#1E4DA6]/20 bg-[#1E4DA6]/5">
+                                    <span className="text-sm font-mono font-bold text-[#173F8C] tracking-wider">
                                         {profile.employeeId || '—'}
                                     </span>
                                 </div>
@@ -212,7 +212,7 @@ export function TeacherHome() {
                                 Payroll & Payslips
                             </CardTitle>
                             <Link to="/teacher/payroll">
-                                <Button variant="ghost" size="sm" className="text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50 -mr-2 h-7 px-2 gap-1">
+                                <Button variant="ghost" size="sm" className="text-xs text-[#1E4DA6] hover:text-[#173F8C] hover:bg-[#1E4DA6]/5 -mr-2 h-7 px-2 gap-1">
                                     Full Portal <ArrowRight size={12} />
                                 </Button>
                             </Link>
@@ -224,13 +224,13 @@ export function TeacherHome() {
                                 <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Recent Payslip</p>
                                 {data.payroll?.recentSlip ? (
                                     <Link to="/teacher/payroll" className="block group">
-                                        <div className="flex items-center justify-between p-3 rounded-lg border border-slate-100 bg-slate-50 group-hover:border-blue-200 group-hover:bg-blue-50/40 transition-all">
+                                        <div className="flex items-center justify-between p-3 rounded-lg border border-slate-100 bg-slate-50 group-hover:border-[#1E4DA6]/20 group-hover:bg-[#1E4DA6]/8 transition-all">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
                                                     <Receipt className="w-4 h-4 text-emerald-600" />
                                                 </div>
                                                 <div>
-                                                    <p className="text-xs font-bold text-slate-800 group-hover:text-blue-600 transition-colors">
+                                                    <p className="text-xs font-bold text-slate-800 group-hover:text-[#1E4DA6] transition-colors">
                                                         {new Date(0, data.payroll.recentSlip.payrollRun.month - 1).toLocaleString('en', { month: 'long' })} {data.payroll.recentSlip.payrollRun.year}
                                                     </p>
                                                     <p className="text-[10px] font-medium text-emerald-600 uppercase tracking-widest mt-0.5">
@@ -242,14 +242,14 @@ export function TeacherHome() {
                                                 <p className="text-sm font-bold text-slate-800">
                                                     ₦{data.payroll.recentSlip.net?.toLocaleString()}
                                                 </p>
-                                                <span className="text-[10px] text-blue-600 font-semibold group-hover:underline">View & Print →</span>
+                                                <span className="text-[10px] text-[#1E4DA6] font-semibold group-hover:underline">View & Print →</span>
                                             </div>
                                         </div>
                                     </Link>
                                 ) : (
                                     <div className="p-3 rounded-lg border border-dashed border-slate-200 bg-slate-50 text-center">
                                         <p className="text-xs text-slate-500">No payslips issued yet.</p>
-                                        <Link to="/teacher/payroll" className="text-xs text-blue-600 font-semibold hover:underline mt-1 inline-block">
+                                        <Link to="/teacher/payroll" className="text-xs text-[#1E4DA6] font-semibold hover:underline mt-1 inline-block">
                                             Open Payroll Dashboard →
                                         </Link>
                                     </div>
@@ -258,10 +258,10 @@ export function TeacherHome() {
                             
                             <div className="grid grid-cols-2 gap-3">
                                 {/* Total Pension */}
-                                <div className="p-3 rounded-lg border border-blue-100 bg-blue-50">
+                                <div className="p-3 rounded-lg border border-[#1E4DA6]/10 bg-[#1E4DA6]/5">
                                     <div className="flex items-center gap-2 mb-1">
-                                        <PiggyBank className="w-3.5 h-3.5 text-blue-600" />
-                                        <p className="text-[10px] font-bold uppercase tracking-wider text-blue-800">Pension</p>
+                                        <PiggyBank className="w-3.5 h-3.5 text-[#1E4DA6]" />
+                                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#122F69]">Pension</p>
                                     </div>
                                     <p className="text-sm font-bold text-slate-800">
                                         ₦{(data.payroll?.totalPensionAccumulated || 0).toLocaleString()}
@@ -289,7 +289,7 @@ export function TeacherHome() {
                         <CardHeader className="pb-3 flex-row items-center justify-between space-y-0">
                             <CardTitle className="text-sm font-semibold text-slate-700">Today's Schedule</CardTitle>
                             <Link to="/teacher/schedule">
-                                <Button variant="ghost" size="sm" className="text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50 -mr-2 h-7 px-2 gap-1">
+                                <Button variant="ghost" size="sm" className="text-xs text-[#1E4DA6] hover:text-[#173F8C] hover:bg-[#1E4DA6]/5 -mr-2 h-7 px-2 gap-1">
                                     View Full <ArrowRight size={12} />
                                 </Button>
                             </Link>
@@ -300,7 +300,7 @@ export function TeacherHome() {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                     {schedule.map((cls: any, i: number) => (
                                         <div key={i} className="p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors">
-                                            <p className="text-[10px] font-bold uppercase tracking-wider text-blue-500 mb-1">{cls.time}</p>
+                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1E4DA6] mb-1">{cls.time}</p>
                                             <p className="text-sm font-bold text-slate-800 leading-tight">{cls.subject}</p>
                                             <p className="text-xs text-slate-500 mt-0.5">{cls.class} · Room {cls.room}</p>
                                         </div>
@@ -324,7 +324,7 @@ export function TeacherHome() {
                         <CardContent className="pt-4">
                             <div className="grid grid-cols-3 gap-3">
                                 {[
-                                    { to: '/teacher/assignments', icon: ClipboardCheck, label: 'Assignments', color: 'text-blue-600', bg: 'bg-blue-50 hover:bg-blue-100' },
+                                    { to: '/teacher/assignments', icon: ClipboardCheck, label: 'Assignments', color: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5 hover:bg-[#1E4DA6]/10' },
                                     { to: '/teacher/attendance', icon: Users, label: 'Attendance', color: 'text-emerald-600', bg: 'bg-emerald-50 hover:bg-emerald-100' },
                                     { to: '/teacher/messaging', icon: MessageSquare, label: 'Messaging', color: 'text-violet-600', bg: 'bg-violet-50 hover:bg-violet-100' },
                                 ].map(a => (
@@ -346,7 +346,7 @@ export function TeacherHome() {
                         <CardHeader className="pb-3 flex-row items-center justify-between space-y-0">
                             <CardTitle className="text-sm font-semibold text-slate-700">Top Performing Students</CardTitle>
                             <Link to="/teacher/classes">
-                                <Button variant="ghost" size="sm" className="text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50 -mr-2 h-7 px-2 gap-1">
+                                <Button variant="ghost" size="sm" className="text-xs text-[#1E4DA6] hover:text-[#173F8C] hover:bg-[#1E4DA6]/5 -mr-2 h-7 px-2 gap-1">
                                     View Roster <ArrowRight size={12} />
                                 </Button>
                             </Link>
@@ -370,7 +370,7 @@ export function TeacherHome() {
                                         <tr key={i} className="hover:bg-slate-50 transition-colors">
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                                                    <div className="w-8 h-8 rounded-full bg-[#1E4DA6] flex items-center justify-center text-white text-xs font-bold shrink-0">
                                                         {s.name?.substring(0, 2).toUpperCase()}
                                                     </div>
                                                     <span className="font-semibold text-slate-800">{s.name}</span>
@@ -404,7 +404,7 @@ export function TeacherHome() {
                             {recentStudents && recentStudents.length > 0 ? recentStudents.map((s: any, i: number) => (
                                 <div key={i} className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                                        <div className="w-9 h-9 rounded-full bg-[#1E4DA6] flex items-center justify-center text-white text-xs font-bold shrink-0">
                                             {s.name?.substring(0, 2).toUpperCase()}
                                         </div>
                                         <div>

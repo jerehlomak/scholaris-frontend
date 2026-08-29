@@ -17,7 +17,7 @@ import { jsPDF } from 'jspdf';
 
 const TABS = [
     { id: 'executive', label: 'Executive Overview', shortLabel: 'Overview', icon: BarChart3, color: 'text-indigo-600', bg: 'bg-indigo-50 border-indigo-200' },
-    { id: 'bills', label: 'School Fees & Invoices', shortLabel: 'Fees & Invoices', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-200' },
+    { id: 'bills', label: 'School Fees & Invoices', shortLabel: 'Fees & Invoices', icon: FileText, color: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5 border-[#1E4DA6]/20' },
     { id: 'payments', label: 'Fee Collections', shortLabel: 'Collections', icon: CreditCard, color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-200' },
     { id: 'outstanding', label: 'Debtors Ledger', shortLabel: 'Debtors', icon: Users, color: 'text-rose-600', bg: 'bg-rose-50 border-rose-200' },
     { id: 'payroll', label: 'Staff Payroll', shortLabel: 'Payroll', icon: Briefcase, color: 'text-violet-600', bg: 'bg-violet-50 border-violet-200' },
@@ -622,7 +622,6 @@ export default function FinanceReports() {
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap');
-                .fd-root, .fd-root * { font-family: 'Plus Jakarta Sans', sans-serif !important; }
                 .fd-root .mono { font-family: 'DM Mono', monospace !important; }
                 @media print {
                     body * { visibility: hidden; }
@@ -634,8 +633,7 @@ export default function FinanceReports() {
                 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
             `}</style>
 
-            <div className="fd-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <div className="fd-root min-h-screen bg-[#FBF9F5] px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-7xl">
 
                     {/* Breadcrumb */}
@@ -646,10 +644,10 @@ export default function FinanceReports() {
                     </div>
 
                     {/* Header Banner - Responsive */}
-                    <div className="mb-4 sm:mb-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 p-4 sm:p-6 shadow-xl shadow-slate-100/50 backdrop-blur-xl no-print">
+                    <div className="mb-4 sm:mb-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 p-4 sm:p-6 shadow-xl shadow-slate-100/50 no-print">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex items-start sm:items-center gap-3 sm:gap-4">
-                                <div className="flex h-12 w-12 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-tr from-indigo-700 via-blue-600 to-indigo-500 shadow-lg shadow-indigo-200 text-white">
+                                <div className="flex h-12 w-12 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-tr from-indigo-700 via-[#1E4DA6] to-indigo-500 shadow-lg shadow-indigo-200 text-white">
                                     <BarChart3 className="h-6 w-6 sm:h-8 sm:w-8" />
                                 </div>
                                 <div>
@@ -732,9 +730,9 @@ export default function FinanceReports() {
                             <div className="rounded-xl sm:rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm">
                                 <div className="flex items-center justify-between text-slate-400">
                                     <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider">Collection Rate</span>
-                                    <CheckCircle2 className="h-3.5 w-3.5 text-blue-500" />
+                                    <CheckCircle2 className="h-3.5 w-3.5 text-[#1E4DA6]" />
                                 </div>
-                                <p className="mono mt-0.5 sm:mt-1 text-base sm:text-lg font-black text-blue-700">{executiveSummary.summary?.collectionRate || 0}%</p>
+                                <p className="mono mt-0.5 sm:mt-1 text-base sm:text-lg font-black text-[#173F8C]">{executiveSummary.summary?.collectionRate || 0}%</p>
                                 <p className="text-[9px] sm:text-[10px] font-semibold text-slate-500 mt-0.5 truncate">Of Invoiced Total</p>
                             </div>
 
@@ -778,7 +776,7 @@ export default function FinanceReports() {
                     </div>
 
                     {/* Comprehensive Filter & Search Bar - Responsive */}
-                    <div className="mb-4 sm:mb-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 p-3 sm:p-4 shadow-sm backdrop-blur-xl no-print">
+                    <div className="mb-4 sm:mb-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 p-3 sm:p-4 shadow-sm no-print">
                         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
 
                             {/* Mobile Filter Toggle and Search Header */}
@@ -926,7 +924,7 @@ export default function FinanceReports() {
                     </div>
 
                     {/* Main Report Container */}
-                    <div id="printable-report" className="overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white shadow-xl backdrop-blur-xl print:border-none print:shadow-none">
+                    <div id="printable-report" className="overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white shadow-xl print:border-none print:shadow-none">
 
                         {/* Print Header */}
                         <div className="hidden print:block border-b border-slate-200 p-6 text-center">
@@ -1006,7 +1004,7 @@ export default function FinanceReports() {
                                                 <div className="grid grid-cols-2 gap-2 text-center">
                                                     <div className="bg-white p-2.5 rounded-xl border border-slate-100">
                                                         <p className="text-[9px] font-bold text-slate-400 uppercase">Collection Rate</p>
-                                                        <p className="mono text-xs sm:text-sm font-bold text-blue-700">{data.summary?.collectionRate || 0}%</p>
+                                                        <p className="mono text-xs sm:text-sm font-bold text-[#173F8C]">{data.summary?.collectionRate || 0}%</p>
                                                     </div>
                                                     <div className="bg-white p-2.5 rounded-xl border border-slate-100">
                                                         <p className="text-[9px] font-bold text-slate-400 uppercase">Debtors Bal</p>

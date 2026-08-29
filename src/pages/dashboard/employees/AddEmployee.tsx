@@ -23,13 +23,13 @@ const BLANK: FormState = {
     salary: '', subjects: '', bankName: '', accountName: '', accountNumber: '', staffType: 'ACADEMIC', employeeId: '', customRoleId: '', canEnterPastScores: false
 };
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 const labelCls = 'font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1.5 block';
 
 const SectionCard = ({ icon, title, sub, children }: { icon: React.ReactNode; title: string; sub: string; children: React.ReactNode }) => (
     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
         <div className="px-3 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-3">
-            <div className="h-8 w-8 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600">{icon}</div>
+            <div className="h-8 w-8 bg-[#1E4DA6]/10 rounded-xl flex items-center justify-center text-[#1E4DA6]">{icon}</div>
             <div><h2 className="font-bold text-slate-800">{title}</h2><p className="text-xs text-slate-400">{sub}</p></div>
         </div>
         <div className="px-3 py-6">{children}</div>
@@ -140,7 +140,7 @@ export default function AddStaff() {
         } finally { setIsSubmitting(false); }
     };
 
-    if (isFetching) return <div className="flex items-center justify-center min-h-64"><Loader2 className="h-10 w-10 animate-spin text-blue-600" /></div>;
+    if (isFetching) return <div className="flex items-center justify-center min-h-64"><Loader2 className="h-10 w-10 animate-spin text-[#1E4DA6]" /></div>;
 
     if (submitted && createdCredentials) {
         return (
@@ -153,11 +153,19 @@ export default function AddStaff() {
                         {[{ label: 'Staff ID', val: createdCredentials.employeeId }, { label: 'Login Email', val: createdCredentials.loginEmail }, { label: 'Temporary Password', val: createdCredentials.generatedPassword }].map(c => (
                             <div key={c.label}>
                                 <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">{c.label}</p>
-                                <p className="font-mono text-base font-black text-blue-700 bg-blue-50 px-4 py-2.5 rounded-xl border border-blue-100 break-all">{c.val}</p>
+                                <p className="font-mono text-base font-black text-[#173F8C] bg-[#1E4DA6]/5 px-4 py-2.5 rounded-xl border border-[#1E4DA6]/10 break-all">{c.val}</p>
                             </div>
                         ))}
                     </div>
-                    <button onClick={() => navigate('/dashboard/employees/all')} className="mt-8 px-6 py-3 bg-blue-700 text-white rounded-xl font-bold hover:bg-blue-800 transition-colors">Done — Return to Staff List</button>
+                    <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                        <button
+                            onClick={() => { setForm(BLANK); setPhoto(null); setPhotoPreview(null); setCreatedCredentials(null); setSubmitted(false); }}
+                            className="px-6 py-3 bg-[#173F8C] text-white rounded-xl font-bold hover:bg-[#122F69] transition-colors"
+                        >
+                            + Add Another Staff Member
+                        </button>
+                        <button onClick={() => navigate('/dashboard/employees/all')} className="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-50 transition-colors">Done — Return to Staff List</button>
+                    </div>
                 </div>
             </SettingsShell>
         );
@@ -176,7 +184,7 @@ export default function AddStaff() {
 
     return (
         <SettingsShell breadcrumbParent="Employees" breadcrumbCurrent="Add Staff" tabLabel="Add Staff" tabIcon={<User className="h-3.5 w-3.5" />}>
-            <Link to="/dashboard/employees/all" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600 mb-6 transition-colors">
+            <Link to="/dashboard/employees/all" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[#1E4DA6] mb-6 transition-colors">
                 <ArrowLeft className="h-4 w-4" /> Back to All Staffs
             </Link>
             <div className="mb-6">
@@ -202,7 +210,7 @@ export default function AddStaff() {
                             <div className="text-center sm:text-left">
                                 <h3 className="text-sm font-bold text-slate-800">Profile Photo</h3>
                                 <p className="text-xs text-slate-500 mb-3">Optional. Max size 2MB (JPG, PNG, WebP).</p>
-                                <label className="cursor-pointer text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors inline-block">
+                                <label className="cursor-pointer text-xs font-bold text-[#1E4DA6] bg-[#1E4DA6]/5 px-3 py-1.5 rounded-lg border border-[#1E4DA6]/10 hover:bg-[#1E4DA6]/10 transition-colors inline-block">
                                     Browse Files
                                     <input type="file" accept="image/jpeg, image/png, image/webp" className="hidden" onChange={handlePhotoChange} />
                                 </label>
@@ -235,7 +243,7 @@ export default function AddStaff() {
 
                         <div className="md:col-span-2">
                             <label className="flex items-center gap-3 p-4 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors">
-                                <input type="checkbox" checked={form.canEnterPastScores} onChange={e => setForm(f => ({ ...f, canEnterPastScores: e.target.checked }))} className="w-5 h-5 text-blue-600 rounded" />
+                                <input type="checkbox" checked={form.canEnterPastScores} onChange={e => setForm(f => ({ ...f, canEnterPastScores: e.target.checked }))} className="w-5 h-5 text-[#1E4DA6] rounded" />
                                 <div>
                                     <p className="font-bold text-slate-800 text-sm">Allow entering past scores (Override Lock)</p>
                                     <p className="text-xs text-slate-500">If enabled, this teacher can select past terms/sessions when entering scores. Otherwise, they are locked to the current active term.</p>
@@ -283,7 +291,7 @@ export default function AddStaff() {
                 <div className="flex items-center justify-end gap-3 pt-2">
                     <Link to="/dashboard/employees/all" className="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white hover:bg-slate-50 rounded-xl border border-slate-200 transition-colors">Cancel</Link>
                     <button type="submit" disabled={isSubmitting}
-                        className="px-5 py-2.5 text-sm font-bold text-white bg-blue-700 hover:bg-blue-800 rounded-xl transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                        className="px-5 py-2.5 text-sm font-bold text-white bg-[#173F8C] hover:bg-[#122F69] rounded-xl transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
                         {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
                         {isSubmitting ? 'Saving...' : isEditMode ? 'Update Staff' : 'Save Staff'}
                     </button>

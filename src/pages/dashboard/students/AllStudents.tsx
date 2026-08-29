@@ -41,12 +41,12 @@ interface StudentData {
     parent?: { fatherName?: string; fatherPhone?: string; motherName?: string; motherPhone?: string } | null;
 }
 
-const AVATAR_COLORS = ['bg-blue-700', 'bg-purple-600', 'bg-emerald-600', 'bg-orange-500', 'bg-teal-600', 'bg-pink-600', 'bg-indigo-600'];
+const AVATAR_COLORS = ['bg-[#15316B]', 'bg-[#7C3559]', 'bg-[#0F766E]', 'bg-[#B8860B]', 'bg-[#3D5A80]', 'bg-[#9D4E4E]', 'bg-[#556B2F]'];
 const STATUS_COLORS: Record<string, string> = {
-    Active: 'bg-emerald-100 text-emerald-700',
+    Active: 'bg-emerald-50 text-emerald-700',
     Inactive: 'bg-slate-100 text-slate-500',
-    Suspended: 'bg-red-100 text-red-600',
-    Graduated: 'bg-blue-100 text-blue-600',
+    Suspended: 'bg-rose-50 text-rose-600',
+    Graduated: 'bg-[#15316B]/10 text-[#15316B]',
 };
 
 function downloadCSV(students: StudentData[]) {
@@ -95,7 +95,7 @@ function TransferStudentModal({ student, classes, onSuccess }: { student: Studen
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <button className="p-1.5 text-slate-400 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors" title="Transfer Class">
+                <button className="p-1.5 text-slate-400 hover:text-[#7C3559] hover:bg-[#7C3559]/10 rounded-lg transition-colors" title="Transfer Class">
                     <ArrowRightLeft className="h-4 w-4" />
                 </button>
             </DialogTrigger>
@@ -109,7 +109,7 @@ function TransferStudentModal({ student, classes, onSuccess }: { student: Studen
                     </p>
                     <div>
                         <label className="block text-sm font-bold text-slate-700 mb-1">Destination Class</label>
-                        <select className="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-400"
+                        <select className="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#15316B]"
                             value={targetClass} onChange={e => setTargetClass(e.target.value)}>
                             <option value="">Select a class...</option>
                             {classes.map((c: any) => (
@@ -119,7 +119,7 @@ function TransferStudentModal({ student, classes, onSuccess }: { student: Studen
                     </div>
                     <div className="flex justify-end gap-2 mt-6">
                         <button onClick={() => setOpen(false)} className="px-4 py-2 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200">Cancel</button>
-                        <button onClick={handleTransfer} disabled={loading} className="px-4 py-2 text-sm font-bold text-white bg-blue-600 rounded-xl hover:bg-blue-700 flex items-center gap-2">
+                        <button onClick={handleTransfer} disabled={loading} className="px-4 py-2 text-sm font-bold text-white bg-[#1E4DA6] rounded-xl hover:bg-[#173F8C] flex items-center gap-2">
                             {loading && <Loader2 className="h-4 w-4 animate-spin" />} Transfer
                         </button>
                     </div>
@@ -160,7 +160,7 @@ function BulkPromoteModal({ selectedIds, classes, onSuccess, onClearSelection }:
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <button className="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-indigo-700 transition-colors whitespace-nowrap">
+                <button className="flex items-center gap-2 rounded-xl bg-[#1E4DA6] px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-[#173F8C] transition-colors whitespace-nowrap">
                     <ArrowRightLeft className="h-4 w-4" /> Bulk Change Class ({selectedIds.length})
                 </button>
             </DialogTrigger>
@@ -170,11 +170,11 @@ function BulkPromoteModal({ selectedIds, classes, onSuccess, onClearSelection }:
                 </DialogHeader>
                 <div className="py-4 space-y-4">
                     <p className="text-sm text-slate-500">
-                        You are moving <span className="font-bold text-indigo-600">{selectedIds.length}</span> students.
+                        You are moving <span className="font-bold text-[#1E4DA6]">{selectedIds.length}</span> students.
                     </p>
                     <div>
                         <label className="block text-sm font-bold text-slate-700 mb-1">Action</label>
-                        <select className="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-400 mb-4"
+                        <select className="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#15316B] mb-4"
                             value={status} onChange={e => setStatus(e.target.value)}>
                             <option value="Active">Move to another class</option>
                             <option value="GRADUATED">Graduate students</option>
@@ -183,7 +183,7 @@ function BulkPromoteModal({ selectedIds, classes, onSuccess, onClearSelection }:
                     {status === 'Active' && (
                         <div>
                             <label className="block text-sm font-bold text-slate-700 mb-1">Destination Class</label>
-                            <select className="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-400"
+                            <select className="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#15316B]"
                                 value={targetClass} onChange={e => setTargetClass(e.target.value)}>
                                 <option value="">Select a class...</option>
                                 {classes.map((c: any) => (
@@ -194,7 +194,7 @@ function BulkPromoteModal({ selectedIds, classes, onSuccess, onClearSelection }:
                     )}
                     <div className="flex justify-end gap-2 mt-6">
                         <button onClick={() => setOpen(false)} className="px-4 py-2 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200">Cancel</button>
-                        <button onClick={handleBulkPromote} disabled={loading} className="px-4 py-2 text-sm font-bold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 flex items-center gap-2">
+                        <button onClick={handleBulkPromote} disabled={loading} className="px-4 py-2 text-sm font-bold text-white bg-[#1E4DA6] rounded-xl hover:bg-[#173F8C] flex items-center gap-2">
                             {loading && <Loader2 className="h-4 w-4 animate-spin" />} Apply Changes
                         </button>
                     </div>
@@ -329,7 +329,7 @@ export function AllStudents() {
         <div className="flex flex-wrap items-center justify-end gap-1">
             <Dialog>
                 <DialogTrigger asChild>
-                    <button className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View Profile">
+                    <button className="p-1.5 text-slate-400 hover:text-[#15316B] hover:bg-[#15316B]/10 rounded-lg transition-colors" title="View Profile">
                         <Eye className="h-4 w-4" />
                     </button>
                 </DialogTrigger>
@@ -339,7 +339,7 @@ export function AllStudents() {
                     </DialogHeader>
                     <div className="py-4">
                         <div className="flex items-center gap-4 mb-6">
-                            <div className={cn('h-16 w-16 rounded-full flex items-center justify-center text-white font-black text-2xl bg-blue-600')}>
+                            <div className={cn('h-16 w-16 rounded-full flex items-center justify-center text-white font-black text-2xl bg-[#15316B]')}>
                                 {student.user.name.charAt(0)}
                             </div>
                             <div>
@@ -374,7 +374,7 @@ export function AllStudents() {
                     <Edit className="h-4 w-4" />
                 </button>
             </Link>
-            <button onClick={() => setEditCredTarget(student)} className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="Edit Credentials">
+            <button onClick={() => setEditCredTarget(student)} className="p-1.5 text-slate-400 hover:text-[#0F766E] hover:bg-[#0F766E]/10 rounded-lg transition-colors" title="Edit Credentials">
                 <Key className="h-4 w-4" />
             </button>
             <button onClick={() => setRestrictTarget(student)}
@@ -409,26 +409,26 @@ export function AllStudents() {
 
     return (
         <SettingsShell breadcrumbParent="Students" breadcrumbCurrent="All Students" tabLabel="All Students" tabIcon={<Users className="h-3.5 w-3.5" />}>
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-6 border-b border-slate-200">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-800">All Students</h1>
-                    <p className="text-sm text-slate-500 mt-1">Manage all student enrollments and profiles.</p>
+                    <h1 className="font-heading text-[32px] font-medium tracking-tight text-[#1C2333]">All Students</h1>
+                    <p className="text-sm text-slate-500 mt-1.5">Manage all student enrollments and profiles.</p>
                 </div>
-                <Link to="/dashboard/students/add" className="flex items-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 transition-colors shrink-0">
+                <Link to="/dashboard/students/add" className="flex items-center gap-2 rounded-full bg-[#1E4DA6] hover:bg-[#173F8C] px-5 py-2.5 text-sm font-semibold text-white transition-colors shrink-0">
                     <Plus className="h-4 w-4" /> Add New Student
                 </Link>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+            <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
                 <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row gap-3 items-center justify-between">
                     <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:max-w-xl">
                         <div className="relative flex-1 w-full">
                             <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                             <input type="text" placeholder="Search by name or admission no..." value={search} onChange={e => setSearch(e.target.value)}
-                                className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                                className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#15316B] focus:ring-2 focus:ring-[#15316B]/10" />
                         </div>
-                        <select 
-                            className="border border-slate-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-400 w-full sm:w-auto min-w-[140px]"
+                        <select
+                            className="border border-slate-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-[#15316B] w-full sm:w-auto min-w-[140px]"
                             value={classFilter}
                             onChange={e => { setClassFilter(e.target.value); setPage(1); }}
                         >
@@ -440,9 +440,9 @@ export function AllStudents() {
                     </div>
                     <div className="flex items-center gap-3 w-full sm:w-auto flex-wrap justify-end">
                         {view === 'grid' && students.length > 0 && (
-                            <label className="flex items-center gap-2 text-sm font-bold text-slate-600 cursor-pointer bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors">
-                                <input type="checkbox" className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" 
-                                    checked={selectedIds.length === students.length && students.length > 0} 
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-600 cursor-pointer bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors">
+                                <input type="checkbox" className="rounded border-slate-300 text-[#15316B] focus:ring-[#15316B] w-4 h-4 cursor-pointer"
+                                    checked={selectedIds.length === students.length && students.length > 0}
                                     onChange={toggleSelectAll} />
                                 Select All
                             </label>
@@ -466,7 +466,7 @@ export function AllStudents() {
                 </div>
 
                 {isLoading ? (
-                    <div className="py-20 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>
+                    <div className="py-20 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#15316B]" /></div>
                 ) : students.length === 0 ? (
                     <div className="py-16 text-center">
                         <GraduationCap className="mx-auto h-12 w-12 text-slate-200 mb-3" />
@@ -477,11 +477,11 @@ export function AllStudents() {
                         {view === 'table' ? (
                             <div className="overflow-x-auto pb-4">
                                 <table className="w-full text-sm text-left min-w-[800px] whitespace-nowrap">
-                                    <thead className="bg-slate-50 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    <thead className="text-[11px] font-semibold text-slate-400 uppercase tracking-[0.1em] border-b border-slate-200">
                                         <tr>
                                             <th className="px-4 py-3 w-10">
-                                                <input type="checkbox" className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" 
-                                                    checked={selectedIds.length === students.length && students.length > 0} 
+                                                <input type="checkbox" className="rounded border-slate-300 text-[#15316B] focus:ring-[#15316B] w-4 h-4 cursor-pointer"
+                                                    checked={selectedIds.length === students.length && students.length > 0}
                                                     onChange={toggleSelectAll} />
                                             </th>
                                             <th className="px-4 py-3">Student</th>
@@ -493,9 +493,9 @@ export function AllStudents() {
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
                                         {students.map((student, i) => (
-                                            <tr key={student.id} className={cn("hover:bg-slate-50/50 transition-colors", selectedIds.includes(student.id) ? "bg-blue-50/30" : "")}>
+                                            <tr key={student.id} className={cn("hover:bg-slate-50/50 transition-colors", selectedIds.includes(student.id) ? "bg-[#15316B]/5" : "")}>
                                                 <td className="px-4 py-3">
-                                                    <input type="checkbox" className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" 
+                                                    <input type="checkbox" className="rounded border-slate-300 text-[#15316B] focus:ring-[#15316B] w-4 h-4 cursor-pointer" 
                                                         checked={selectedIds.includes(student.id)} 
                                                         onChange={() => toggleSelect(student.id)} />
                                                 </td>
@@ -529,9 +529,9 @@ export function AllStudents() {
                         ) : (
                             <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 {students.map((student, i) => (
-                                    <div key={student.id} className={cn("border rounded-2xl p-4 hover:shadow-md transition-all flex flex-col relative", selectedIds.includes(student.id) ? "border-blue-400 bg-blue-50/20 shadow-sm" : "border-slate-200 bg-white")}>
+                                    <div key={student.id} className={cn("border rounded-2xl p-4 hover:shadow-md transition-all flex flex-col relative", selectedIds.includes(student.id) ? "border-[#15316B]/30 bg-[#15316B]/5 shadow-sm" : "border-slate-200 bg-white")}>
                                         <div className="absolute top-4 left-4 z-10">
-                                            <input type="checkbox" className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-5 h-5 cursor-pointer shadow-sm" 
+                                            <input type="checkbox" className="rounded border-slate-300 text-[#15316B] focus:ring-[#15316B] w-5 h-5 cursor-pointer shadow-sm" 
                                                 checked={selectedIds.includes(student.id)} 
                                                 onChange={() => toggleSelect(student.id)} />
                                         </div>

@@ -58,7 +58,7 @@ export default function FeesSetup() {
                             onClick={() => handleTabChange(tab.id as TabKey)}
                             className={`${
                                 activeTab === tab.id
-                                    ? 'bg-blue-50 text-blue-700'
+                                    ? 'bg-[#1E4DA6]/5 text-[#173F8C]'
                                     : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
                             } px-4 py-2.5 rounded-lg text-sm font-medium transition-colors`}
                         >

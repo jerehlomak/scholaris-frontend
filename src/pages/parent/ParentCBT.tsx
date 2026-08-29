@@ -35,7 +35,7 @@ export default function ParentCBT() {
                     <h1 className="text-2xl font-bold text-gray-900">CBT Assessments</h1>
                     <div className="flex items-center text-xs text-gray-400 gap-1 mt-1">
                         <HomeIcon size={12} />
-                        <Link to="/parent" className="hover:text-blue-700 transition-colors">Home</Link>
+                        <Link to="/parent" className="hover:text-[#173F8C] transition-colors">Home</Link>
                         <ChevronRight size={12} className="opacity-50" />
                         <span>CBT Results</span>
                     </div>
@@ -46,7 +46,7 @@ export default function ParentCBT() {
                     <select 
                         value={childId} 
                         onChange={e => setChildId(e.target.value)} 
-                        className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 shadow-sm font-semibold text-blue-700"
+                        className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1E4DA6] focus:ring-1 focus:ring-[#1E4DA6] shadow-sm font-semibold text-[#173F8C]"
                     >
                         {children.map((c: any) => <option key={c.studentProfileId} value={c.studentProfileId}>{c.user.name}</option>)}
                         {children.length === 0 && <option value="">No children found</option>}

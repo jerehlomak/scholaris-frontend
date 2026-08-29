@@ -36,9 +36,9 @@ const fetcher = (url: string) =>
 
 // ─── Color palette — assigned deterministically by subject index ─────────────
 const PALETTE = [
-    { icon: '📐', color: 'text-blue-600',   bg: 'bg-blue-50',   bar: 'bg-blue-500',   teacher: 'bg-blue-600' },
+    { icon: '📐', color: 'text-[#1E4DA6]',   bg: 'bg-[#1E4DA6]/5',   bar: 'bg-[#1E4DA6]',   teacher: 'bg-[#1E4DA6]' },
     { icon: '📝', color: 'text-green-600',  bg: 'bg-green-50',  bar: 'bg-green-500',  teacher: 'bg-green-600' },
-    { icon: '⚡', color: 'text-purple-600', bg: 'bg-purple-50', bar: 'bg-purple-500', teacher: 'bg-purple-600' },
+    { icon: '⚡', color: 'text-[#1E4DA6]', bg: 'bg-[#1E4DA6]/5', bar: 'bg-[#1E4DA6]', teacher: 'bg-[#1E4DA6]' },
     { icon: '🧪', color: 'text-orange-600', bg: 'bg-orange-50', bar: 'bg-orange-500', teacher: 'bg-orange-600' },
     { icon: '🔬', color: 'text-teal-600',   bg: 'bg-teal-50',   bar: 'bg-teal-500',   teacher: 'bg-teal-600' },
     { icon: '🌍', color: 'text-rose-600',   bg: 'bg-rose-50',   bar: 'bg-rose-500',   teacher: 'bg-rose-600' },
@@ -102,7 +102,7 @@ export default function Course() {
     if (isLoading) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-                <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
+                <Loader2 className="w-10 h-10 text-[#1E4DA6] animate-spin" />
                 <p className="text-slate-500 font-medium">Loading your subjects…</p>
             </div>
         );
@@ -140,7 +140,7 @@ export default function Course() {
                     <h1 className="text-2xl font-bold text-slate-900">My Subjects</h1>
                     <div className="flex items-center text-xs text-slate-400 gap-1 mt-1">
                         <HomeIcon size={12} />
-                        <Link to="/student" className="hover:text-blue-600 transition-colors">Home</Link>
+                        <Link to="/student" className="hover:text-[#1E4DA6] transition-colors">Home</Link>
                         <ChevronRight size={12} className="opacity-50" />
                         <span>My Subjects</span>
                     </div>
@@ -149,10 +149,10 @@ export default function Course() {
 
             {/* KPI Summary */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <KpiCard icon={<BookOpen className="w-5 h-5" />} label="Total Subjects" value={count} color="bg-blue-50 text-blue-600" />
+                <KpiCard icon={<BookOpen className="w-5 h-5" />} label="Total Subjects" value={count} color="bg-[#1E4DA6]/5 text-[#1E4DA6]" />
                 <KpiCard icon={<BarChart2 className="w-5 h-5" />} label="Core Subjects" value={subjects.filter(s => s.category === 'CORE').length} color="bg-emerald-50 text-emerald-600" />
                 <KpiCard icon={<Award className="w-5 h-5" />} label="Electives" value={subjects.filter(s => s.category !== 'CORE').length} color="bg-amber-50 text-amber-600" />
-                <KpiCard icon={<Calendar className="w-5 h-5" />} label="With Teacher" value={subjects.filter(s => s.teacher).length} color="bg-purple-100 text-purple-600" />
+                <KpiCard icon={<Calendar className="w-5 h-5" />} label="With Teacher" value={subjects.filter(s => s.teacher).length} color="bg-[#1E4DA6]/10 text-[#1E4DA6]" />
             </div>
 
             {/* Subject Cards */}
@@ -181,7 +181,7 @@ export default function Course() {
                                                     {sub.code}
                                                 </span>
                                             )}
-                                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${sub.category === 'CORE' ? 'bg-blue-50 text-blue-600' : 'bg-amber-50 text-amber-600'}`}>
+                                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${sub.category === 'CORE' ? 'bg-[#1E4DA6]/5 text-[#1E4DA6]' : 'bg-amber-50 text-amber-600'}`}>
                                                 {sub.category}
                                             </span>
                                         </div>
@@ -255,13 +255,8 @@ export default function Course() {
                                                     <h4 className="font-bold text-gray-700 text-sm mb-2">Quick Actions</h4>
                                                     <div className="flex flex-wrap gap-2">
                                                         <Link to="/student/cbt">
-                                                            <Button size="sm" className="bg-blue-600 text-white hover:bg-blue-700 text-xs flex items-center gap-1.5">
+                                                            <Button size="sm" className="bg-[#1E4DA6] text-white hover:bg-[#173F8C] text-xs flex items-center gap-1.5">
                                                                 <BookOpen className="w-3.5 h-3.5" /> Take CBT
-                                                            </Button>
-                                                        </Link>
-                                                        <Link to="/student/live-class">
-                                                            <Button size="sm" variant="outline" className="text-xs flex items-center gap-1.5">
-                                                                <Calendar className="w-3.5 h-3.5" /> Live Class
                                                             </Button>
                                                         </Link>
                                                         <Link to="/student/lms">

@@ -128,7 +128,7 @@ export default function FeeDefinitionModal({ open, onOpenChange, editData, onSuc
 
                     <DialogFooter className="mt-6">
                         <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-                        <Button type="submit" disabled={loading} className="bg-blue-600">
+                        <Button type="submit" disabled={loading} className="bg-[#1E4DA6]">
                             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             {editData ? "Save Changes" : "Create Fee"}
                         </Button>

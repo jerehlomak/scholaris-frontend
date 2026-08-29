@@ -63,9 +63,9 @@ export default function AttendanceSettings() {
         }
     };
 
-    if (isLoading) return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>;
+    if (isLoading) return <div className="flex h-64 items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>;
 
-    const inputCls = 'flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+    const inputCls = 'flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
     return (
         <SettingsShell breadcrumbParent="Attendance" breadcrumbCurrent="Configuration" tabLabel="Attendance Config" tabIcon={<SettingsIcon className="h-3.5 w-3.5" />}>
@@ -82,7 +82,7 @@ export default function AttendanceSettings() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex items-start justify-between gap-4 p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
                         <div className="flex-1">
-                            <h4 className="flex items-center gap-2 text-sm font-bold text-slate-800"><ShieldCheck className="h-4 w-4 text-blue-500" /> QR Code Scanners Active</h4>
+                            <h4 className="flex items-center gap-2 text-sm font-bold text-slate-800"><ShieldCheck className="h-4 w-4 text-[#1E4DA6]" /> QR Code Scanners Active</h4>
                             <p className="mt-1 text-xs text-slate-500 leading-relaxed">Allow students and staff to mark attendance autonomously using distributed physical or web-based QR scanners.</p>
                         </div>
                         <Switch checked={qrEnabled} onCheckedChange={setQrEnabled} />
@@ -106,7 +106,7 @@ export default function AttendanceSettings() {
 
                     <div className="flex items-start justify-between gap-4 p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
                         <div className="flex-1">
-                            <h4 className="flex items-center gap-2 text-sm font-bold text-slate-800"><ShieldCheck className="h-4 w-4 text-purple-500" /> Staff Strict Check-Out</h4>
+                            <h4 className="flex items-center gap-2 text-sm font-bold text-slate-800"><ShieldCheck className="h-4 w-4 text-[#1E4DA6]" /> Staff Strict Check-Out</h4>
                             <p className="mt-1 text-xs text-slate-500 leading-relaxed">Require staff members to scan twice daily (Check-In & Check-Out) to complete their 100% daily footprint metric.</p>
                         </div>
                         <Switch checked={staffCheckOutRequired} onCheckedChange={setStaffCheckOutRequired} />
@@ -145,7 +145,7 @@ export default function AttendanceSettings() {
 
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-6 py-5">
                         <div className="flex-1">
-                            <h4 className="flex items-center gap-2 text-sm font-bold text-slate-800"><Globe className="h-4 w-4 text-blue-500" /> System Timezone</h4>
+                            <h4 className="flex items-center gap-2 text-sm font-bold text-slate-800"><Globe className="h-4 w-4 text-[#1E4DA6]" /> System Timezone</h4>
                             <p className="mt-0.5 text-xs text-slate-500">Determines native date parsing to resolve UTC timezone rollover collisions safely.</p>
                         </div>
                         <select value={timezone} onChange={e => setTimezone(e.target.value)} className={inputCls + ' sm:max-w-[200px] cursor-pointer'}>

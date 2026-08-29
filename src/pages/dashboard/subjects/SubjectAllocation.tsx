@@ -139,7 +139,7 @@ export function SubjectAllocation() {
                 <div className="p-6 border-b border-gray-100 bg-gray-50/50">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-1.5">
-                            <label className="text-sm font-semibold text-dash-dark">Target Class</label>
+                            <label className="text-sm font-semibold text-slate-700">Target Class</label>
                             <Select value={selectedClass} onValueChange={setSelectedClass}>
                                 <SelectTrigger className="bg-white h-11 border-gray-200">
                                     <SelectValue placeholder="Select Class" />
@@ -152,7 +152,7 @@ export function SubjectAllocation() {
                             </Select>
                         </div>
                         <div className="space-y-1.5">
-                            <label className="text-sm font-semibold text-dash-dark">Elective Subject</label>
+                            <label className="text-sm font-semibold text-slate-700">Elective Subject</label>
                             <Select value={selectedSubject} onValueChange={setSelectedSubject}>
                                 <SelectTrigger className="bg-white h-11 border-gray-200">
                                     <SelectValue placeholder="Select Subject" />
@@ -179,7 +179,7 @@ export function SubjectAllocation() {
                     </div>
                 ) : loading ? (
                     <div className="p-12 text-center flex flex-col items-center justify-center">
-                        <div className="w-8 h-8 border-4 border-brand-teal/20 border-t-brand-teal rounded-full animate-spin"></div>
+                        <div className="w-8 h-8 border-4 border-[#1E4DA6]/20 border-t-[#1E4DA6] rounded-full animate-spin"></div>
                         <p className="mt-4 text-sm text-gray-500 font-medium">Loading roster...</p>
                     </div>
                 ) : (
@@ -192,11 +192,11 @@ export function SubjectAllocation() {
                                     placeholder="Search students..." 
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal transition-all"
+                                    className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1E4DA6]/10 focus:border-[#1E4DA6] transition-all"
                                 />
                             </div>
                             <div className="text-sm font-medium text-gray-500">
-                                <span className="text-brand-teal font-bold">{selectedStudentIds.size}</span> of {students.length} Allocated
+                                <span className="text-[#1E4DA6] font-bold">{selectedStudentIds.size}</span> of {students.length} Allocated
                             </div>
                         </div>
 
@@ -206,7 +206,7 @@ export function SubjectAllocation() {
                                 <div className="flex items-center justify-center">
                                     <input 
                                         type="checkbox"
-                                        className="w-4 h-4 rounded border-gray-300 text-brand-teal focus:ring-brand-teal cursor-pointer"
+                                        className="w-4 h-4 rounded border-gray-300 text-[#1E4DA6] focus:ring-[#1E4DA6] cursor-pointer"
                                         checked={paginatedStudents.length > 0 && paginatedStudents.every(s => selectedStudentIds.has(s.studentId))}
                                         onChange={toggleAll}
                                     />
@@ -220,7 +220,7 @@ export function SubjectAllocation() {
                                 <span>Select All</span>
                                 <input 
                                     type="checkbox"
-                                    className="w-4 h-4 rounded border-gray-300 text-brand-teal focus:ring-brand-teal cursor-pointer"
+                                    className="w-4 h-4 rounded border-gray-300 text-[#1E4DA6] focus:ring-[#1E4DA6] cursor-pointer"
                                     checked={paginatedStudents.length > 0 && paginatedStudents.every(s => selectedStudentIds.has(s.studentId))}
                                     onChange={toggleAll}
                                 />
@@ -235,14 +235,14 @@ export function SubjectAllocation() {
                                     paginatedStudents.map((student) => (
                                         <div 
                                             key={student.studentId} 
-                                            className="flex flex-col md:grid md:grid-cols-[60px_1fr_2fr] gap-3 md:gap-4 p-4 md:p-3 hover:bg-brand-teal/5 transition-colors group cursor-pointer" 
+                                            className="flex flex-col md:grid md:grid-cols-[60px_1fr_2fr] gap-3 md:gap-4 p-4 md:p-3 hover:bg-[#1E4DA6]/5 transition-colors group cursor-pointer"
                                             onClick={() => toggleStudent(student.studentId)}
                                         >
                                             <div className="flex items-center justify-between md:justify-center order-1 md:order-none">
                                                 <span className="text-xs font-semibold text-gray-400 uppercase md:hidden">Status</span>
                                                 <input 
                                                     type="checkbox"
-                                                    className="w-4 h-4 rounded border-gray-300 text-brand-teal focus:ring-brand-teal cursor-pointer"
+                                                    className="w-4 h-4 rounded border-gray-300 text-[#1E4DA6] focus:ring-[#1E4DA6] cursor-pointer"
                                                     checked={selectedStudentIds.has(student.studentId)}
                                                     onChange={() => {}} // Handled by parent onClick
                                                 />
@@ -254,7 +254,7 @@ export function SubjectAllocation() {
                                             <div className="flex items-center justify-between md:justify-start order-2 md:order-none">
                                                 <span className="text-xs font-semibold text-gray-400 uppercase md:hidden">Student</span>
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-teal/20 to-brand-teal/10 flex items-center justify-center text-brand-teal font-bold text-xs uppercase border border-brand-teal/20">
+                                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#1E4DA6]/20 to-[#1E4DA6]/10 flex items-center justify-center text-[#1E4DA6] font-bold text-xs uppercase border border-[#1E4DA6]/20">
                                                         {student.name.substring(0, 2)}
                                                     </div>
                                                     <span className="font-semibold text-gray-700 text-sm">{student.name}</span>
@@ -299,7 +299,7 @@ export function SubjectAllocation() {
                             <Button 
                                 onClick={handleSave} 
                                 disabled={saving}
-                                className="bg-brand-teal hover:bg-brand-teal/90 text-white shadow-sm rounded-full px-8 gap-2 font-bold transition-all"
+                                className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white shadow-sm rounded-full px-8 gap-2 font-bold transition-all"
                             >
                                 {saving ? (
                                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

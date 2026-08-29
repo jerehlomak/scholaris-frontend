@@ -30,7 +30,7 @@ export function SaveButton({
                         ? 'scale-[1.03] bg-emerald-500 shadow-emerald-200 hover:bg-emerald-600 text-white'
                         : disabled
                         ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                        : 'bg-blue-700 shadow-blue-200 hover:scale-[1.02] hover:bg-blue-800 hover:shadow-blue-300 text-white'
+                        : 'bg-[#173F8C] shadow-[#1E4DA6]/20 hover:scale-[1.02] hover:bg-[#122F69] hover:shadow-[#1E4DA6]/35 text-white'
                 )}
             >
                 {saving ? (

@@ -98,13 +98,13 @@ export default function QRManagement() {
             <div className="flex flex-wrap items-start gap-3 mb-6">
                 <button
                     onClick={() => setUserType('student')}
-                    className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-colors ${userType === 'student' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
+                    className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-colors ${userType === 'student' ? 'bg-[#1E4DA6] text-white shadow-sm' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
                 >
                     <Users className="h-4 w-4" /> Students
                 </button>
                 <button
                     onClick={() => setUserType('staff')}
-                    className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-colors ${userType === 'staff' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
+                    className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-colors ${userType === 'staff' ? 'bg-[#1E4DA6] text-white shadow-sm' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
                 >
                     <User className="h-4 w-4" /> Staff
                 </button>
@@ -129,9 +129,9 @@ export default function QRManagement() {
                             No QR Token Yet — {usersWithout.length} {userType === 'student' ? 'Student' : 'Staff Member'}{usersWithout.length > 1 ? 's' : ''}
                         </h3>
                     </div>
-                    <div className="rounded-2xl border border-[#e5e5e5] bg-white overflow-x-auto shadow-sm">
+                    <div className="rounded-2xl border border-amber-200 bg-white overflow-x-auto shadow-sm">
                         <table className="w-full text-left">
-                            <thead className="bg-[#e5e5e5] border-b border-[#e5e5e5]">
+                            <thead className="bg-amber-50 border-b border-amber-100">
                                 <tr>
                                     <th className="px-5 py-3 text-[10px] font-bold uppercase tracking-widest text-amber-700">Name</th>
                                     <th className="px-5 py-3 text-[10px] font-bold uppercase tracking-widest text-amber-700">Type</th>
@@ -140,10 +140,10 @@ export default function QRManagement() {
                             </thead>
                             <tbody className="divide-y divide-amber-100">
                                 {usersWithout.map(u => (
-                                    <tr key={u.userId} className="hover:bg-amber-100/50 transition-colors">
+                                    <tr key={u.userId} className="hover:bg-amber-50/50 transition-colors">
                                         <td className="px-5 py-3 text-sm font-semibold text-slate-700">{u.userName}</td>
                                         <td className="px-5 py-3">
-                                            <span className="text-[10px] uppercase font-bold text-amber-700 bg-amber-200 px-2 py-0.5 rounded-full">
+                                            <span className="text-[10px] uppercase font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
                                                 {u.userType}
                                             </span>
                                         </td>
@@ -151,7 +151,7 @@ export default function QRManagement() {
                                             <button
                                                 onClick={() => handleGenerateSingle(u.userId, u.userType)}
                                                 disabled={generatingSingle === u.userId}
-                                                className="flex items-center gap-2 ml-auto text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 px-4 py-1.5 rounded-lg transition-colors"
+                                                className="flex items-center gap-2 ml-auto text-xs font-bold text-white bg-[#1E4DA6] hover:bg-[#173F8C] disabled:opacity-50 px-4 py-1.5 rounded-lg transition-colors"
                                             >
                                                 {generatingSingle === u.userId
                                                     ? <Loader2 className="w-3 h-3 animate-spin" />
@@ -171,7 +171,7 @@ export default function QRManagement() {
             <section>
                 {qrCodes.length > 0 && (
                     <div className="flex items-center gap-2 mb-3">
-                        <QrCode className="w-4 h-4 text-indigo-500" />
+                        <QrCode className="w-4 h-4 text-[#1E4DA6]" />
                         <h3 className="text-sm font-bold text-slate-700">
                             Active Cryptographic Pool — {qrCodes.length} Record{qrCodes.length > 1 ? 's' : ''}
                         </h3>
@@ -180,7 +180,7 @@ export default function QRManagement() {
                 <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm">
                     {isLoading ? (
                         <div className="flex h-48 items-center justify-center">
-                            <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+                            <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
                         </div>
                     ) : error ? (
                         <div className="flex h-48 items-center justify-center text-slate-400 font-medium">Failed to load QR records.</div>
@@ -231,7 +231,7 @@ export default function QRManagement() {
                                                                 <AlertDialogHeader>
                                                                     <AlertDialogTitle className="flex items-center gap-2"><AlertTriangle className="h-5 w-5 text-red-500" /> Revoke QR Token?</AlertDialogTitle>
                                                                     <AlertDialogDescription>
-                                                                        The holder of this printed ID card will immediately be blocked at all scan terminals.
+                                                                        The holder of this printed ID card will immediately be invalidated for any feature that verifies this QR token.
                                                                     </AlertDialogDescription>
                                                                 </AlertDialogHeader>
                                                                 <AlertDialogFooter>
@@ -244,7 +244,7 @@ export default function QRManagement() {
 
                                                     <AlertDialog>
                                                         <AlertDialogTrigger asChild>
-                                                            <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-700 font-semibold text-xs hover:bg-indigo-100 transition-colors">
+                                                            <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#1E4DA6]/20 bg-[#1E4DA6]/5 text-[#173F8C] font-semibold text-xs hover:bg-[#1E4DA6]/10 transition-colors">
                                                                 <RotateCcw className="h-4 w-4" /> Regenerate
                                                             </button>
                                                         </AlertDialogTrigger>
@@ -257,7 +257,7 @@ export default function QRManagement() {
                                                             </AlertDialogHeader>
                                                             <AlertDialogFooter>
                                                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                                <AlertDialogAction onClick={() => handleRegenerate(qr.id)} className="bg-indigo-600 hover:bg-indigo-700">Spin New Token</AlertDialogAction>
+                                                                <AlertDialogAction onClick={() => handleRegenerate(qr.id)} className="bg-[#1E4DA6] hover:bg-[#173F8C]">Spin New Token</AlertDialogAction>
                                                             </AlertDialogFooter>
                                                         </AlertDialogContent>
                                                     </AlertDialog>

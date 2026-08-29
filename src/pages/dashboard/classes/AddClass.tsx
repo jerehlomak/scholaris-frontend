@@ -13,8 +13,8 @@ const API_CLASSES = '/api/v1/classes';
 interface Section { id: string; name: string; type: string | null; shortCode: string | null; }
 interface ClassLevel { id: string; name: string; category: string | null; }
 
-const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
-const miniInputCls = 'rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all';
+const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
+const miniInputCls = 'rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10 transition-all';
 
 export function AddClass() {
     const navigate = useNavigate();
@@ -166,8 +166,12 @@ export function AddClass() {
                 sessionId: form.sessionId || undefined
             }, { withCredentials: true });
 
-            toast.success(`Class${armsArray.length > 1 ? 'es' : ''} created successfully!`);
-            navigate('/dashboard/classes/all');
+            toast.success(`Class${armsArray.length > 1 ? 'es' : ''} created successfully! Ready for the next one.`);
+            // Stay on this page instead of bouncing back to the list — keep the
+            // section/session selected (the common case is adding several class
+            // levels to the same section in one sitting) and only clear the
+            // per-class fields, so the next entry doesn't start from scratch.
+            setForm(f => ({ ...f, name: '', arms: '', nextTermFee: '' }));
         } catch (e) {
             const err = e as { response?: { data?: { msg?: string } } };
             toast.error(err.response?.data?.msg || 'Failed to create class');
@@ -183,7 +187,7 @@ export function AddClass() {
             <SettingsHero icon={<GraduationCap className="h-7 w-7" />} title="Add New Class" subtitle="Select a section and fill in the class details below." />
 
             {loadingData ? (
-                <div className="flex items-center justify-center py-24"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>
+                <div className="flex items-center justify-center py-24"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>
             ) : (
                 <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
                     <div className="rounded-2xl border border-slate-200/80 bg-white shadow-sm px-3 py-6">
@@ -192,19 +196,19 @@ export function AddClass() {
                             {/* Section picker */}
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between">
-                                    <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Section <span className="text-blue-600">*</span></label>
-                                    <button type="button" onClick={() => setShowAddSection(v => !v)} className={cn('flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold transition-all', showAddSection ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-blue-50 text-blue-600 hover:bg-blue-100')}>
+                                    <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Section <span className="text-[#1E4DA6]">*</span></label>
+                                    <button type="button" onClick={() => setShowAddSection(v => !v)} className={cn('flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold transition-all', showAddSection ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-[#1E4DA6]/5 text-[#1E4DA6] hover:bg-[#1E4DA6]/10')}>
                                         {showAddSection ? <><X className="h-3 w-3" /> Cancel</> : <><Plus className="h-3 w-3" /> New Section</>}
                                     </button>
                                 </div>
                                 {showAddSection ? (
-                                    <div className="rounded-xl border border-blue-200 bg-blue-50/60 p-4 space-y-3">
-                                        <p className="text-xs font-bold text-blue-700">Create a new section</p>
+                                    <div className="rounded-xl border border-[#1E4DA6]/20 bg-[#1E4DA6]/8 p-4 space-y-3">
+                                        <p className="text-xs font-bold text-[#173F8C]">Create a new section</p>
                                         <div className="flex flex-col md:flex-row gap-4">
                                             <input ref={sectionInputRef} value={newSectionName} onChange={e => setNewSectionName(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleCreateSection(); } if (e.key === 'Escape') setShowAddSection(false); }} placeholder="e.g. Primary" className={cn(miniInputCls, 'flex-[2]')} />
                                             <input value={newSectionCode} onChange={e => setNewSectionCode(e.target.value.toUpperCase())} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleCreateSection(); } if (e.key === 'Escape') setShowAddSection(false); }} placeholder="Code" className={cn(miniInputCls, 'flex-1')} />
                                         </div>
-                                        <button type="button" onClick={handleCreateSection} disabled={isCreatingSection || !newSectionName.trim()} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 py-2 text-sm font-bold text-white hover:bg-blue-800 disabled:opacity-50 transition-colors">
+                                        <button type="button" onClick={handleCreateSection} disabled={isCreatingSection || !newSectionName.trim()} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#173F8C] px-4 py-2 text-sm font-bold text-white hover:bg-[#122F69] disabled:opacity-50 transition-colors">
                                             {isCreatingSection ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} {isCreatingSection ? 'Creating…' : 'Create Section'}
                                         </button>
                                     </div>
@@ -239,19 +243,19 @@ export function AddClass() {
                             {/* Class Level picker */}
                             <div className="space-y-2">
                                 <div className="flex flex-col gap-3 md:flex-row items-start md:items-center justify-between">
-                                    <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Class Level (Base Name) <span className="text-blue-600">*</span></label>
-                                    <button type="button" onClick={() => setShowAddClassLevel(v => !v)} className={cn('flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold transition-all', showAddClassLevel ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-blue-50 text-blue-600 hover:bg-blue-100')}>
+                                    <label className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Class Level (Base Name) <span className="text-[#1E4DA6]">*</span></label>
+                                    <button type="button" onClick={() => setShowAddClassLevel(v => !v)} className={cn('flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold transition-all', showAddClassLevel ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-[#1E4DA6]/5 text-[#1E4DA6] hover:bg-[#1E4DA6]/10')}>
                                         {showAddClassLevel ? <><X className="h-3 w-3" /> Cancel</> : <><Plus className="h-3 w-3" /> New Class Level</>}
                                     </button>
                                 </div>
                                 {showAddClassLevel ? (
-                                    <div className="rounded-xl border border-blue-200 bg-blue-50/60 p-4 space-y-3">
-                                        <p className="text-xs font-bold text-blue-700">Create a new class level</p>
+                                    <div className="rounded-xl border border-[#1E4DA6]/20 bg-[#1E4DA6]/8 p-4 space-y-3">
+                                        <p className="text-xs font-bold text-[#173F8C]">Create a new class level</p>
                                         <div className="flex flex-col md:flex-row gap-4">
                                             <input ref={classLevelInputRef} value={newClassLevelName} onChange={e => setNewClassLevelName(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleCreateClassLevel(); } if (e.key === 'Escape') setShowAddClassLevel(false); }} placeholder="e.g. Primary 1" className={cn(miniInputCls, 'flex-[2]')} />
                                             <input value={newClassLevelCategory} onChange={e => setNewClassLevelCategory(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleCreateClassLevel(); } if (e.key === 'Escape') setShowAddClassLevel(false); }} placeholder="Category (Opt)" className={cn(miniInputCls, 'flex-1')} />
                                         </div>
-                                        <button type="button" onClick={handleCreateClassLevel} disabled={isCreatingClassLevel || !newClassLevelName.trim()} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 py-2 text-sm font-bold text-white hover:bg-blue-800 disabled:opacity-50 transition-colors">
+                                        <button type="button" onClick={handleCreateClassLevel} disabled={isCreatingClassLevel || !newClassLevelName.trim()} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#173F8C] px-4 py-2 text-sm font-bold text-white hover:bg-[#122F69] disabled:opacity-50 transition-colors">
                                             {isCreatingClassLevel ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} {isCreatingClassLevel ? 'Creating…' : 'Create Class Level'}
                                         </button>
                                     </div>
@@ -262,7 +266,7 @@ export function AddClass() {
                                         <div className="flex gap-2">
                                             <div className="flex-1">
                                                 <Select value={form.name} onValueChange={val => set('name', val)}>
-                                                    <SelectTrigger className={cn(inputCls, 'font-black text-blue-700')}><SelectValue placeholder="Select class level" /></SelectTrigger>
+                                                    <SelectTrigger className={cn(inputCls, 'font-black text-[#173F8C]')}><SelectValue placeholder="Select class level" /></SelectTrigger>
                                                     <SelectContent>
                                                         {classLevels.map(lvl => <SelectItem key={lvl.id} value={lvl.name}>{lvl.name}</SelectItem>)}
                                                     </SelectContent>
@@ -301,7 +305,7 @@ export function AddClass() {
 
                     {/* Preview */}
                     {form.name && (
-                        <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-5 text-center">
+                        <div className="rounded-2xl border border-[#1E4DA6]/10 bg-[#1E4DA6]/8 p-5 text-center">
                             <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">
                                 Class Preview
                                 {selectedSection && <span className="ml-2 normal-case not-italic font-normal text-slate-400">— {selectedSection.name}</span>}
@@ -309,12 +313,12 @@ export function AddClass() {
                             <div className="flex flex-wrap justify-center gap-2 mt-2">
                                 {form.arms.split(',').filter(x => x.trim()).length > 0 ? (
                                     form.arms.split(',').filter(x => x.trim()).map((arm, i) => (
-                                        <span key={i} className="rounded-lg bg-blue-100 px-3 py-1.5 text-sm font-black text-blue-700">
+                                        <span key={i} className="rounded-lg bg-[#1E4DA6]/10 px-3 py-1.5 text-sm font-black text-[#173F8C]">
                                             {form.name.trim()} {arm.trim()}
                                         </span>
                                     ))
                                 ) : (
-                                    <span className="text-3xl font-black text-blue-700">{form.name.trim()}</span>
+                                    <span className="text-3xl font-black text-[#173F8C]">{form.name.trim()}</span>
                                 )}
                             </div>
                         </div>
@@ -324,7 +328,7 @@ export function AddClass() {
                         <button type="button" onClick={() => navigate(-1)} className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-colors">
                             <ArrowLeft className="h-4 w-4 inline mr-1" />Cancel
                         </button>
-                        <button type="submit" disabled={isSubmitting || !form.sectionId || !form.name.trim()} className="flex items-center gap-2 rounded-xl bg-blue-700 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 disabled:opacity-50 transition-colors">
+                        <button type="submit" disabled={isSubmitting || !form.sectionId || !form.name.trim()} className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:bg-[#122F69] disabled:opacity-50 transition-colors">
                             {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                             {isSubmitting ? 'Creating…' : 'Save Class'}
                         </button>

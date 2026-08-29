@@ -71,9 +71,9 @@ export default function StaffAttendance() {
                             <span className="text-2xl font-bold text-red-600">{stats.absent}</span>
                             <span className="text-[10px] font-bold uppercase tracking-widest text-red-500 mt-1">Absent</span>
                         </div>
-                        <div className="p-4 rounded-2xl bg-blue-50 border border-blue-100 shadow-sm flex flex-col justify-center text-center">
-                            <span className="text-2xl font-bold text-blue-600">{stats.halfDay}</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mt-1">Half Day</span>
+                        <div className="p-4 rounded-2xl bg-[#1E4DA6]/5 border border-[#1E4DA6]/10 shadow-sm flex flex-col justify-center text-center">
+                            <span className="text-2xl font-bold text-[#1E4DA6]">{stats.halfDay}</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6] mt-1">Half Day</span>
                         </div>
                     </div>
                 )}

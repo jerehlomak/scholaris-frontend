@@ -139,20 +139,19 @@ export default function BillingBroadsheet() {
 
     return (
         <>
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');.bb-root,.bb-root *{font-family:'Plus Jakarta Sans',sans-serif!important}.bb-root .mono{font-family:'DM Mono',monospace!important}`}</style>
-            <div className="bb-root min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-                <div className="pointer-events-none fixed inset-0 opacity-[0.22]" style={{ backgroundImage: 'radial-gradient(circle,#94a3b8 1px,transparent 1px)', backgroundSize: '28px 28px' }} />
+            <style>{`@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');.bb-root .mono{font-family:'DM Mono',monospace!important}`}</style>
+            <div className="bb-root min-h-screen bg-[#FBF9F5] px-4 pb-20 pt-8 sm:px-6 lg:px-8">
                 <div className="relative z-10 mx-auto max-w-[1400px]">
 
                     {/* Breadcrumb */}
                     <div className="mb-5 flex items-center gap-1.5">
                         <span className="mono text-[10px] font-bold uppercase tracking-widest text-slate-500">Finance</span>
                         <ChevronRight className="h-3 w-3 text-slate-400" />
-                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-blue-600">Broadsheet</span>
+                        <span className="mono text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6]">Broadsheet</span>
                     </div>
 
                     <div className="mb-6 flex items-center gap-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-700 to-purple-500 shadow-lg shadow-indigo-200">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-700 to-[#1E4DA6] shadow-lg shadow-indigo-200">
                             <Table2 className="h-6 w-6 text-white" />
                         </div>
                         <div>
@@ -161,7 +160,7 @@ export default function BillingBroadsheet() {
                         </div>
                     </div>
 
-                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-sm backdrop-blur-xl">
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
                         <div className="flex flex-wrap items-center gap-3">
                             <div className="relative flex-1 min-w-[180px]">
                                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -170,17 +169,17 @@ export default function BillingBroadsheet() {
                                     value={filters.search}
                                     onChange={e => setFilters(s => ({ ...s, search: e.target.value }))} />
                             </div>
-                            <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400"
+                            <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60"
                                 value={filters.classId} onChange={e => setFilters(s => ({ ...s, classId: e.target.value }))}>
                                 <option value="">All Classes</option>
                                 {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
-                            <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400"
+                            <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60"
                                 value={filters.term} onChange={e => setFilters(s => ({ ...s, term: e.target.value }))}>
                                 <option value="">All Terms</option>
                                 {metaTerms.map(t => <option key={t} value={t}>{t}</option>)}
                             </select>
-                            <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-blue-400"
+                            <select className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 outline-none focus:border-[#1E4DA6]/60"
                                 value={filters.academicYear} onChange={e => setFilters(s => ({ ...s, academicYear: e.target.value }))}>
                                 <option value="">All Sessions</option>
                                 {metaSessions.map(sess => <option key={sess.id} value={sess.name}>{sess.name}</option>)}
@@ -203,7 +202,7 @@ export default function BillingBroadsheet() {
                     </div>
 
                     {loading ? (
-                        <div className="flex justify-center py-20"><Loader2 className="w-8 h-8 animate-spin text-blue-600" /></div>
+                        <div className="flex justify-center py-20"><Loader2 className="w-8 h-8 animate-spin text-[#1E4DA6]" /></div>
                     ) : filteredData.length === 0 ? (
                         <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 py-20 bg-white/50">
                             <FileText className="h-12 w-12 text-slate-200 mb-3" />
@@ -217,7 +216,7 @@ export default function BillingBroadsheet() {
                                         <th className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 bg-slate-100 sticky left-0 z-10 w-16">Adm No</th>
                                         <th className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 bg-slate-100 sticky left-[120px] z-10 w-48">Student Name</th>
                                         <th className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">Class</th>
-                                        <th className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-blue-600 bg-blue-50">Expected (₦)</th>
+                                        <th className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[#1E4DA6] bg-[#1E4DA6]/5">Expected (₦)</th>
                                         <th className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50">Paid (₦)</th>
                                         <th className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-red-600 bg-red-50">Balance (₦)</th>
                                         {columns.map(col => (
@@ -231,7 +230,7 @@ export default function BillingBroadsheet() {
                                             <td className="px-4 py-2 mono text-xs text-slate-500 bg-white sticky left-0 z-10 shadow-[1px_0_0_0_#e2e8f0] w-[120px] truncate">{row.admissionNo}</td>
                                             <td className="px-4 py-2 font-semibold text-slate-800 bg-white sticky left-[120px] z-10 shadow-[1px_0_0_0_#e2e8f0] w-48 truncate">{row.name}</td>
                                             <td className="px-4 py-2 text-xs text-slate-600">{row.className}</td>
-                                            <td className="px-4 py-2 font-bold text-blue-700 bg-blue-50/30">{row.expected.toLocaleString()}</td>
+                                            <td className="px-4 py-2 font-bold text-[#173F8C] bg-[#1E4DA6]/8">{row.expected.toLocaleString()}</td>
                                             <td className="px-4 py-2 font-bold text-emerald-700 bg-emerald-50/30">{row.paid.toLocaleString()}</td>
                                             <td className="px-4 py-2 font-bold text-red-700 bg-red-50/30">{row.balance.toLocaleString()}</td>
                                             {columns.map(col => (

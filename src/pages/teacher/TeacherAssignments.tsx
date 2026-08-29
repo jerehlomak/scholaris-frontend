@@ -40,7 +40,7 @@ const INITIAL_ASSIGNMENTS: Assignment[] = [
         dueDate: '2025-03-05', maxMarks: 50, status: 'active', createdAt: '2025-02-28',
         instructions: 'Solve all problems in Chapter 5 exercises. Show all workings clearly.',
         submissions: [
-            { studentId: 's1', studentName: 'Ayomide Balogun', avatar: 'AB', avatarColor: 'bg-purple-500', submittedAt: '2025-03-03 09:30', grade: null, feedback: '' },
+            { studentId: 's1', studentName: 'Ayomide Balogun', avatar: 'AB', avatarColor: 'bg-[#1E4DA6]', submittedAt: '2025-03-03 09:30', grade: null, feedback: '' },
             { studentId: 's2', studentName: 'Chinoso Obi', avatar: 'CO', avatarColor: 'bg-orange-500', submittedAt: null, grade: null, feedback: '' },
             { studentId: 's3', studentName: 'Fatima Musa', avatar: 'FM', avatarColor: 'bg-pink-500', submittedAt: '2025-03-02 14:15', grade: 44, feedback: 'Excellent work!' },
             { studentId: 's4', studentName: 'Emmanuel Adeyemi', avatar: 'EA', avatarColor: 'bg-teal-500', submittedAt: null, grade: null, feedback: '' },
@@ -72,7 +72,7 @@ const STATUS_CFG: Record<AssignmentStatus, { label: string; color: string; bg: s
     draft: { label: 'Draft', color: 'text-slate-500', bg: 'bg-slate-100', border: 'border-slate-200' },
     active: { label: 'Active', color: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-200' },
     overdue: { label: 'Overdue', color: 'text-red-700', bg: 'bg-red-50', border: 'border-red-200' },
-    graded: { label: 'Graded', color: 'text-blue-700', bg: 'bg-blue-50', border: 'border-blue-200' },
+    graded: { label: 'Graded', color: 'text-[#173F8C]', bg: 'bg-[#1E4DA6]/5', border: 'border-[#1E4DA6]/20' },
 };
 
 interface NewForm { title: string; classLevel: string; subject: string; dueDate: string; maxMarks: number; instructions: string; }
@@ -124,7 +124,7 @@ export default function TeacherAssignments() {
                     <h1 className="text-2xl font-bold text-slate-900">Assignments</h1>
                     <p className="text-sm text-slate-500 mt-0.5">Create and manage student assignments</p>
                 </div>
-                <Button onClick={() => setShowCreate(true)} className="bg-blue-600 hover:bg-blue-700 text-white gap-1.5">
+                <Button onClick={() => setShowCreate(true)} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white gap-1.5">
                     <Plus size={16} /> New Assignment
                 </Button>
             </div>
@@ -140,7 +140,7 @@ export default function TeacherAssignments() {
                         graded: <Edit3 size={18} />,
                     };
                     const styles: Record<string, string> = {
-                        all: 'bg-blue-50 text-blue-600',
+                        all: 'bg-[#1E4DA6]/5 text-[#1E4DA6]',
                         active: 'bg-emerald-50 text-emerald-600',
                         overdue: 'bg-red-50 text-red-600',
                         graded: 'bg-violet-50 text-violet-600',
@@ -150,7 +150,7 @@ export default function TeacherAssignments() {
                         <button
                             key={s}
                             onClick={() => { setFilter(s); setCurrentPage(1); }}
-                            className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all shadow-sm bg-white ${isActive ? 'border-blue-400 ring-2 ring-blue-100' : 'border-slate-200 hover:border-slate-300'}`}
+                            className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all shadow-sm bg-white ${isActive ? 'border-[#1E4DA6]/60 ring-2 ring-[#1E4DA6]/10' : 'border-slate-200 hover:border-slate-300'}`}
                         >
                             <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${styles[s]}`}>
                                 {icons[s]}
@@ -175,7 +175,7 @@ export default function TeacherAssignments() {
                             <Card
                                 key={a.id}
                                 onClick={() => setSelected(a.id)}
-                                className={`p-4 cursor-pointer border transition-all hover:shadow-md ${selected === a.id ? 'border-blue-400 ring-2 ring-blue-50 bg-blue-50/30' : 'border-slate-200 bg-white hover:border-blue-300'}`}
+                                className={`p-4 cursor-pointer border transition-all hover:shadow-md ${selected === a.id ? 'border-[#1E4DA6]/60 ring-2 ring-[#1E4DA6]/5 bg-[#1E4DA6]/8' : 'border-slate-200 bg-white hover:border-[#1E4DA6]/35'}`}
                             >
                                 <div className="flex items-start justify-between gap-2 mb-2">
                                     <h4 className="font-bold text-slate-900 text-sm leading-tight">{a.title}</h4>
@@ -191,7 +191,7 @@ export default function TeacherAssignments() {
                                 <div className="flex items-center gap-2 text-xs text-slate-400">
                                     <div className="flex-1 bg-slate-100 rounded-full h-1.5 overflow-hidden">
                                         <div
-                                            className="bg-blue-500 h-full rounded-full"
+                                            className="bg-[#1E4DA6] h-full rounded-full"
                                             style={{ width: a.submissions.length ? `${(submitted / a.submissions.length) * 100}%` : '0%' }}
                                         />
                                     </div>
@@ -268,7 +268,7 @@ export default function TeacherAssignments() {
                                                     }
                                                 </td>
                                                 <td className="px-4 py-3 text-xs text-slate-500">{sub.submittedAt ?? '—'}</td>
-                                                <td className="px-4 py-3 font-bold text-blue-600">
+                                                <td className="px-4 py-3 font-bold text-[#1E4DA6]">
                                                     {sub.grade !== null ? `${sub.grade}/${selectedAssn.maxMarks}` : <span className="text-slate-300">—</span>}
                                                 </td>
                                                 <td className="px-4 py-3">
@@ -277,7 +277,7 @@ export default function TeacherAssignments() {
                                                             size="sm"
                                                             variant="outline"
                                                             onClick={() => setGrading({ assnId: selectedAssn.id, studentId: sub.studentId, grade: String(sub.grade ?? ''), feedback: sub.feedback })}
-                                                            className="h-7 text-xs border-slate-300 hover:border-blue-400 hover:text-blue-600"
+                                                            className="h-7 text-xs border-slate-300 hover:border-[#1E4DA6]/60 hover:text-[#1E4DA6]"
                                                         >
                                                             {sub.grade !== null ? 'Edit' : 'Grade'}
                                                         </Button>
@@ -377,7 +377,7 @@ export default function TeacherAssignments() {
                         <Button
                             onClick={handleCreate}
                             disabled={!form.title || !form.dueDate}
-                            className="bg-blue-600 hover:bg-blue-700 text-white gap-1.5"
+                            className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white gap-1.5"
                         >
                             <Send size={14} /> Create
                         </Button>
@@ -424,7 +424,7 @@ export default function TeacherAssignments() {
                             <Separator />
                             <div className="flex justify-end gap-2 pt-1">
                                 <Button variant="outline" onClick={() => setGrading(null)}>Cancel</Button>
-                                <Button onClick={handleGrade} className="bg-blue-600 hover:bg-blue-700 text-white">
+                                <Button onClick={handleGrade} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
                                     Save Grade
                                 </Button>
                             </div>

@@ -28,7 +28,7 @@ interface ParentData {
     students?: { user: { name: string }; admissionNo?: string }[];
 }
 
-const AVATAR_COLORS = ['bg-emerald-600', 'bg-blue-700', 'bg-teal-600', 'bg-orange-500', 'bg-purple-600', 'bg-pink-600', 'bg-indigo-600'];
+const AVATAR_COLORS = ['bg-emerald-600', 'bg-[#173F8C]', 'bg-teal-600', 'bg-orange-500', 'bg-[#1E4DA6]', 'bg-pink-600', 'bg-indigo-600'];
 
 function BulkRestrictModal({ selectedIds, onSuccess, onClearSelection }: { selectedIds: string[], onSuccess: () => void, onClearSelection: () => void }) {
     const [open, setOpen] = useState(false);
@@ -174,26 +174,26 @@ export default function AllParents() {
     return (
         <SettingsShell breadcrumbParent="Parents" breadcrumbCurrent="All Parents" tabLabel="All Parents" tabIcon={<Users className="h-3.5 w-3.5" />}>
             {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-6 border-b border-slate-200">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-800">All Parents</h1>
-                    <p className="text-sm text-slate-500 mt-1">Manage parent and guardian accounts.</p>
+                    <h1 className="font-heading text-[32px] font-medium tracking-tight text-[#1C2333]">All Parents</h1>
+                    <p className="text-sm text-slate-500 mt-1.5">Manage parent and guardian accounts.</p>
                 </div>
                 <Link to="/dashboard/parents/add"
-                    className="flex items-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-blue-800 transition-colors shrink-0">
+                    className="flex items-center gap-2 rounded-full bg-[#1E4DA6] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#173F8C] transition-colors shrink-0">
                     <Plus className="h-4 w-4" /> Add Parent
                 </Link>
             </div>
 
             {/* Data Panel */}
-            <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+            <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
                 {/* Toolbar */}
                 <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row justify-between gap-3 items-center">
                     <div className="relative flex-1 max-w-sm w-full">
                         <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                         <input type="text" placeholder="Search by name, ID or phone..."
                             value={search} onChange={e => setSearch(e.target.value)}
-                            className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                            className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#1E4DA6]/60 focus:ring-2 focus:ring-[#1E4DA6]/10" />
                     </div>
                     <div className="flex gap-2 w-full sm:w-auto items-center flex-wrap justify-end">
                         {view === 'grid' && parents.length > 0 && (
@@ -216,7 +216,7 @@ export default function AllParents() {
                 </div>
 
                 {isLoading ? (
-                    <div className="py-20 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>
+                    <div className="py-20 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" /></div>
                 ) : parents.length === 0 ? (
                     <div className="py-16 text-center">
                         <Users className="mx-auto h-12 w-12 text-slate-200 mb-3" />
@@ -228,7 +228,7 @@ export default function AllParents() {
                         {view === 'table' && (
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm whitespace-nowrap">
-                                    <thead className="bg-slate-50 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    <thead className="text-[11px] font-semibold text-slate-400 uppercase tracking-[0.1em] border-b border-slate-200">
                                         <tr>
                                             <th className="px-4 py-3 w-10">
                                                 <input type="checkbox" className="rounded border-slate-300 text-amber-600 focus:ring-amber-500 w-4 h-4 cursor-pointer" 
@@ -268,15 +268,15 @@ export default function AllParents() {
                                                 </td>
                                                 <td className="px-4 py-3"><span className="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded-lg">{parent.parentId}</span></td>
                                                 <td className="px-4 py-3">
-                                                    <a href={`mailto:${parent.user.email}`} className="flex items-center gap-1 text-xs text-slate-500 hover:text-blue-600"><Mail className="h-3 w-3" />{parent.user.email}</a>
-                                                    {parent.phone && <a href={`tel:${parent.phone}`} className="flex items-center gap-1 text-xs text-slate-400 hover:text-blue-600 mt-0.5"><Phone className="h-3 w-3" />{parent.phone}</a>}
+                                                    <a href={`mailto:${parent.user.email}`} className="flex items-center gap-1 text-xs text-slate-500 hover:text-[#1E4DA6]"><Mail className="h-3 w-3" />{parent.user.email}</a>
+                                                    {parent.phone && <a href={`tel:${parent.phone}`} className="flex items-center gap-1 text-xs text-slate-400 hover:text-[#1E4DA6] mt-0.5"><Phone className="h-3 w-3" />{parent.phone}</a>}
                                                 </td>
                                                 <td className="px-4 py-3 text-sm text-slate-600">{parent.occupation || <span className="text-slate-400 italic text-xs">Not specified</span>}</td>
                                                 <td className="px-4 py-3 text-right">
                                                     <div className="flex items-center justify-end gap-1 transition-opacity">
-                                                        <button onClick={() => setSelectedParent(parent)} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View Profile"><Eye className="h-4 w-4" /></button>
+                                                        <button onClick={() => setSelectedParent(parent)} className="p-1.5 text-slate-400 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded-lg transition-colors" title="View Profile"><Eye className="h-4 w-4" /></button>
                                                         <Link to={`/dashboard/parents/edit/${parent.user.id}`} className="p-1.5 text-slate-400 hover:text-emerald-600 transition-colors rounded-lg hover:bg-emerald-50" title="Edit"><Edit className="h-4 w-4" /></Link>
-                                                        <button onClick={() => setEditCredTarget(parent)} className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="Edit Credentials"><Key className="h-4 w-4" /></button>
+                                                        <button onClick={() => setEditCredTarget(parent)} className="p-1.5 text-slate-400 hover:text-[#0F766E] hover:bg-[#0F766E]/10 rounded-lg transition-colors" title="Edit Credentials"><Key className="h-4 w-4" /></button>
                                                         <button onClick={() => setRestrictTarget(parent)}
                                                             title={parent.user.isRestricted ? 'Lift restriction' : 'Restrict account'}
                                                             className={cn('p-1.5 rounded-lg transition-colors', parent.user.isRestricted ? 'text-amber-600 bg-amber-50 hover:bg-amber-100' : 'text-slate-400 hover:text-amber-600 hover:bg-amber-50')}>
@@ -316,15 +316,15 @@ export default function AllParents() {
                                             </div>
                                         </div>
                                         <div className="mt-3 space-y-1">
-                                            <a href={`mailto:${parent.user.email}`} className="flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600"><Mail className="h-3.5 w-3.5" />{parent.user.email}</a>
-                                            {parent.phone && <a href={`tel:${parent.phone}`} className="flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600"><Phone className="h-3.5 w-3.5" />{parent.phone}</a>}
+                                            <a href={`mailto:${parent.user.email}`} className="flex items-center gap-2 text-xs text-slate-500 hover:text-[#1E4DA6]"><Mail className="h-3.5 w-3.5" />{parent.user.email}</a>
+                                            {parent.phone && <a href={`tel:${parent.phone}`} className="flex items-center gap-2 text-xs text-slate-500 hover:text-[#1E4DA6]"><Phone className="h-3.5 w-3.5" />{parent.phone}</a>}
                                         </div>
                                         <div className="flex items-center justify-between mt-auto pt-3 border-t border-slate-50">
                                             <span className="text-xs text-slate-400 truncate">{parent.occupation || 'No occupation set'}</span>
                                             <div className="flex gap-1 transition-opacity shrink-0">
-                                                <button onClick={() => setSelectedParent(parent)} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg" title="View Profile"><Eye className="h-3.5 w-3.5" /></button>
+                                                <button onClick={() => setSelectedParent(parent)} className="p-1.5 text-slate-400 hover:text-[#1E4DA6] hover:bg-[#1E4DA6]/5 rounded-lg" title="View Profile"><Eye className="h-3.5 w-3.5" /></button>
                                                 <Link to={`/dashboard/parents/edit/${parent.user.id}`} className="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg"><Edit className="h-3.5 w-3.5" /></Link>
-                                                <button onClick={() => setEditCredTarget(parent)} className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="Edit Credentials"><Key className="h-3.5 w-3.5" /></button>
+                                                <button onClick={() => setEditCredTarget(parent)} className="p-1.5 text-slate-400 hover:text-[#0F766E] hover:bg-[#0F766E]/10 rounded-lg transition-colors" title="Edit Credentials"><Key className="h-3.5 w-3.5" /></button>
                                                 <button onClick={() => setRestrictTarget(parent)}
                                                     title={parent.user.isRestricted ? 'Lift restriction' : 'Restrict account'}
                                                     className={cn('p-1.5 rounded-lg transition-colors', parent.user.isRestricted ? 'text-amber-600 bg-amber-50 hover:bg-amber-100' : 'text-slate-400 hover:text-amber-600 hover:bg-amber-50')}>
@@ -422,7 +422,7 @@ export default function AllParents() {
                                 </div>
                             </div>
                             <div className="p-4 border-t border-slate-100 bg-slate-50 flex justify-end shrink-0">
-                                <Link to={`/dashboard/parents/edit/${selectedParent.user.id}`} onClick={() => setSelectedParent(null)} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700">
+                                <Link to={`/dashboard/parents/edit/${selectedParent.user.id}`} onClick={() => setSelectedParent(null)} className="flex items-center gap-2 px-4 py-2 bg-[#1E4DA6] text-white rounded-xl text-sm font-bold hover:bg-[#173F8C]">
                                     <Edit className="h-4 w-4" /> Edit Profile
                                 </Link>
                             </div>

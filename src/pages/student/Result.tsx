@@ -11,6 +11,7 @@ import ReportCardPreview from '../../components/report/ReportCardPreview';
 import type { TemplateConfig } from '../../components/report/ReportCardPreview';
 import ReportCard from '../../components/report-blocks/ReportCard';
 import PinValidationModal from '../../components/shared/PinValidationModal';
+import { mobileSafePrint } from '../../lib/printUtils';
 
 const TERMS = ['First Term', 'Second Term', 'Third Term'];
 const YEARS = ['2023/2024', '2024/2025', '2025/2026'];
@@ -25,7 +26,7 @@ const DEFAULT_CFG: TemplateConfig = {
     showNextTerm: true, showPromotedTo: false,
     reportTitle: 'End of Term Academic Report',
     principalTitle: 'Principal', headTeacherTitle: 'Head Teacher', formTeacherTitle: 'Form Teacher', principalName: '',
-    primaryColor: '#0036a1', headerBg: '#0036a1', fontFamily: 'serif',
+    primaryColor: '#1E4DA6', headerBg: '#1E4DA6', fontFamily: 'serif',
     tableBorderColor: '#d1d5db', pageMargin: '10mm', logoPosition: 'left', headerStyle: 'standard',
     subjectColumns: [
         { id: 'ca1', name: '1st CA', key: 'ca1', show: true },
@@ -39,8 +40,8 @@ const DEFAULT_CFG: TemplateConfig = {
 };
 
 const GRADE_COLOR: Record<string, string> = {
-    A: 'bg-[#6bc048]/10 text-[#6bc048]',
-    B: 'bg-blue-50 text-blue-600',
+    A: 'bg-[#10b981]/10 text-[#10b981]',
+    B: 'bg-[#1E4DA6]/5 text-[#1E4DA6]',
     C: 'bg-[#ff9800]/10 text-[#ff9800]',
     D: 'bg-orange-50 text-orange-600',
     E: 'bg-red-50 text-red-500',
@@ -120,12 +121,7 @@ export default function Result() {
 
     const handlePrint = () => {
         if (showCard) {
-            const el = document.getElementById('report-card-printable');
-            if (!el) return;
-            const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]')).map(s => s.outerHTML).join('');
-            const w = window.open('', '_blank', 'width=900,height=700');
-            w?.document.write(`<html><head><title>Report Card</title>${styles}<style>body{margin:0}@media print{@page{size:A4;margin:10mm}}</style></head><body class="bg-white">${el.outerHTML}</body></html>`);
-            w?.document.close(); w?.focus(); setTimeout(() => { w?.print(); w?.close(); }, 500);
+            mobileSafePrint('report-card-printable');
         } else { window.print(); }
     };
 
@@ -174,21 +170,21 @@ export default function Result() {
                     <h1 className="text-2xl font-bold text-slate-900">My Results</h1>
                     <div className="flex items-center text-xs text-slate-400 gap-1 mt-1">
                         <HomeIcon size={12} />
-                        <Link to="/student" className="hover:text-blue-600 transition-colors">Home</Link>
+                        <Link to="/student" className="hover:text-[#1E4DA6] transition-colors">Home</Link>
                         <ChevronRight size={12} className="opacity-50" />
                         <span>Results</span>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
                 <div className="flex items-center gap-3 flex-wrap">
-                    <select value={year} onChange={e => setYear(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-blue-600">
+                    <select value={year} onChange={e => setYear(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1E4DA6]">
                         {YEARS.map(y => <option key={y}>{y}</option>)}
                     </select>
-                    <select value={term} onChange={e => setTerm(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-blue-600">
+                    <select value={term} onChange={e => setTerm(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1E4DA6]">
                         {TERMS.map(t => <option key={t}>{t}</option>)}
                     </select>
                     <Button onClick={handlePrint} variant="outline" className="flex items-center gap-2 text-sm"><Printer className="w-4 h-4" /> Print</Button>
-                    <Button onClick={showCard ? () => setShowCard(false) : () => loadReportCard()} disabled={cardLoading} className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2 text-sm">
+                    <Button onClick={showCard ? () => setShowCard(false) : () => loadReportCard()} disabled={cardLoading} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white flex items-center gap-2 text-sm">
                         {showCard ? <><X className="w-4 h-4" />Back to Scores</> : cardLoading ? 'Loading…' : <><FileText className="w-4 h-4" />Official Report Card</>}
                     </Button>
                 </div>
@@ -198,13 +194,13 @@ export default function Result() {
             <div className="flex space-x-1 border-b border-gray-200 mb-6 print:hidden">
                 <button
                     onClick={() => setActiveTab('current')}
-                    className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'current' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
+                    className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'current' ? 'border-[#1E4DA6] text-[#1E4DA6]' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
                 >
                     Current Results
                 </button>
                 <button
                     onClick={() => setActiveTab('legacy')}
-                    className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'legacy' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
+                    className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'legacy' ? 'border-[#1E4DA6] text-[#1E4DA6]' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
                 >
                     Legacy Results (Previous App)
                 </button>
@@ -218,17 +214,17 @@ export default function Result() {
                     ) : legacyData?.legacyResults?.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {legacyData.legacyResults.map((lr: any) => (
-                                <div key={lr.id} className="border border-gray-200 rounded-lg p-4 flex flex-col hover:border-blue-300 transition-colors bg-slate-50/50">
+                                <div key={lr.id} className="border border-gray-200 rounded-lg p-4 flex flex-col hover:border-[#1E4DA6]/35 transition-colors bg-slate-50/50">
                                     <div className="flex justify-between items-start mb-2">
                                         <div>
                                             <p className="font-bold text-gray-800">{lr.academicYear}</p>
                                             <p className="text-sm text-gray-600">{lr.term}</p>
                                         </div>
-                                        <span className="bg-blue-100 text-blue-800 text-[10px] px-2 py-1 rounded font-bold">LEGACY</span>
+                                        <span className="bg-[#1E4DA6]/10 text-[#122F69] text-[10px] px-2 py-1 rounded font-bold">LEGACY</span>
                                     </div>
                                     {lr.sessionName && <p className="text-xs text-gray-500 mb-2">{lr.sessionName}</p>}
                                     <p className="text-xs text-gray-500 mb-4">Class: {lr.class?.name}</p>
-                                    <a href={lr.fileUrl} target="_blank" rel="noreferrer" className="mt-auto bg-blue-50 text-blue-700 font-semibold text-sm py-2 px-4 rounded-lg text-center flex items-center justify-center gap-2 hover:bg-blue-100 transition-colors">
+                                    <a href={lr.fileUrl} target="_blank" rel="noreferrer" className="mt-auto bg-[#1E4DA6]/5 text-[#173F8C] font-semibold text-sm py-2 px-4 rounded-lg text-center flex items-center justify-center gap-2 hover:bg-[#1E4DA6]/10 transition-colors">
                                         <Download className="w-4 h-4" /> Download PDF
                                     </a>
                                 </div>
@@ -298,7 +294,7 @@ export default function Result() {
                     </div>
 
                     {/* Student info card */}
-                    <Card className="p-5 mb-6 bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-lg print:shadow-none print:border-2 print:border-slate-800 print:bg-none print:bg-transparent print:text-black">
+                    <Card className="p-5 mb-6 bg-gradient-to-r from-[#173F8C] to-indigo-700 text-white shadow-lg print:shadow-none print:border-2 print:border-slate-800 print:bg-none print:bg-transparent print:text-black">
                         <div className="flex items-center justify-between flex-wrap gap-4">
                             <div className="flex items-center gap-4">
                                 {API_STUDENT.photo ? (
@@ -310,10 +306,10 @@ export default function Result() {
                                 )}
                                 <div>
                                     <p className="font-bold text-xl">{API_STUDENT.name || 'Student Name'}</p>
-                                    <p className="text-blue-200 print:text-gray-700 text-sm font-medium mt-0.5">
+                                    <p className="text-white/70 print:text-gray-700 text-sm font-medium mt-0.5">
                                         {API_STUDENT.admissionNo || 'N/A'} &nbsp;·&nbsp; {API_STUDENT.class || 'Class'} &nbsp;·&nbsp; {year} Session
                                     </p>
-                                    <p className="text-blue-200 print:text-gray-700 text-sm mt-0.5">{term}</p>
+                                    <p className="text-white/70 print:text-gray-700 text-sm mt-0.5">{term}</p>
                                 </div>
                             </div>
                             {/* Only show scores/position if not a purely comment-based result */}
@@ -321,14 +317,14 @@ export default function Result() {
                                 <div className="flex gap-6 print:gap-8 border-l border-white/20 print:border-black pl-6">
                                     <div className="text-center">
                                         <p className="text-3xl font-black print:text-black">{API_SUMMARY.average}%</p>
-                                        <p className="text-blue-200 print:text-gray-600 text-xs font-bold uppercase tracking-wider mt-1">Average</p>
+                                        <p className="text-white/70 print:text-gray-600 text-xs font-bold uppercase tracking-wider mt-1">Average</p>
                                     </div>
                                     <div className="text-center">
                                         <p className="text-3xl font-black print:text-black text-yellow-300">
                                             {ordinal(API_SUMMARY.classPos)}
                                             {API_SUMMARY.classPos > 0 && <span className="text-lg text-white print:text-black">/{API_SUMMARY.classTotal}</span>}
                                         </p>
-                                        <p className="text-blue-200 print:text-gray-600 text-xs font-bold uppercase tracking-wider mt-1">Position</p>
+                                        <p className="text-white/70 print:text-gray-600 text-xs font-bold uppercase tracking-wider mt-1">Position</p>
                                     </div>
                                 </div>
                             )}
@@ -375,14 +371,14 @@ export default function Result() {
                                         ))}
                                     </div>
                                     {data?.templateConfig?.resultType !== 'COMMENT_BASED' && (
-                                        <div style={gridStyle} className="bg-blue-50/50 print:bg-slate-100 px-5 py-3 grid gap-2 border-t border-slate-100 print:border-slate-800">
+                                        <div style={gridStyle} className="bg-[#1E4DA6]/8 print:bg-slate-100 px-5 py-3 grid gap-2 border-t border-slate-100 print:border-slate-800">
                                             <span className="font-black text-slate-900 print:text-black text-sm uppercase">Total</span>
                                             {API_KEYS.map((k: string) => <span key={`footer-${k}`} />)}
                                             <span />
-                                            <span className="text-center font-black text-blue-700 print:text-black">{API_SUMMARY.totalScore}</span>
-                                            <span className="text-center font-black text-blue-700 print:text-black">{API_SUMMARY.average}%</span>
+                                            <span className="text-center font-black text-[#173F8C] print:text-black">{API_SUMMARY.totalScore}</span>
+                                            <span className="text-center font-black text-[#173F8C] print:text-black">{API_SUMMARY.average}%</span>
                                             <span />
-                                            <span className="text-center font-black text-blue-700 print:text-black">{ordinal(API_SUMMARY.classPos)}</span>
+                                            <span className="text-center font-black text-[#173F8C] print:text-black">{ordinal(API_SUMMARY.classPos)}</span>
                                         </div>
                                     )}
                                 </Card>
@@ -446,11 +442,11 @@ export default function Result() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
                     <div className="bg-white dark:bg-[#1a1a2e] w-full max-w-md rounded-2xl shadow-2xl p-6 border border-gray-100 dark:border-white/5 relative overflow-hidden">
                         {/* Decorative Top Banner */}
-                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500" />
+                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#1E4DA6] to-indigo-500" />
                         
                         <div className="text-center mb-6">
-                            <div className="w-16 h-16 mx-auto bg-blue-50 dark:bg-blue-500/10 rounded-2xl flex items-center justify-center mb-4">
-                                <KeyRound className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                            <div className="w-16 h-16 mx-auto bg-[#1E4DA6]/5 dark:bg-[#1E4DA6]/10 rounded-2xl flex items-center justify-center mb-4">
+                                <KeyRound className="w-8 h-8 text-[#1E4DA6] dark:text-[#1E4DA6]/60" />
                             </div>
                             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Result Access PIN Required</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400">Please enter your result checking PIN to view the report card for {term}.</p>
@@ -467,7 +463,7 @@ export default function Result() {
                                         setPinCode(e.target.value.toUpperCase());
                                         setPinError(null);
                                     }}
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-black/20 text-gray-900 dark:text-white font-mono text-center tracking-widest outline-none focus:ring-2 focus:ring-blue-500/50 transition-all uppercase"
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-black/20 text-gray-900 dark:text-white font-mono text-center tracking-widest outline-none focus:ring-2 focus:ring-[#1E4DA6]/50 transition-all uppercase"
                                     autoFocus
                                 />
                                 {pinError && <p className="text-xs text-red-500 mt-2 flex items-center gap-1 justify-center"><AlertCircle className="w-3 h-3" /> {pinError}</p>}
@@ -478,7 +474,7 @@ export default function Result() {
                                     Cancel
                                 </Button>
                                 <Button 
-                                    className="flex-1 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 border-0"
+                                    className="flex-1 rounded-xl bg-gradient-to-r from-[#1E4DA6] to-indigo-600 text-white shadow-md shadow-[#1E4DA6]/20 hover:shadow-lg hover:shadow-[#1E4DA6]/30 border-0"
                                     onClick={() => {
                                         setSubmittedPin(pinCode);
                                     }}

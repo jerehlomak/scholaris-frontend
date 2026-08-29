@@ -100,7 +100,7 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
         return (
             <SettingsShell breadcrumbCurrent="New Application" tabLabel="New" tabIcon={<ClipboardList className="h-3.5 w-3.5" />}>
                 <div className="flex h-64 items-center justify-center">
-                    <Loader2 className="h-8 w-8 animate-spin text-[#1a2fa0]" />
+                    <Loader2 className="h-8 w-8 animate-spin text-[#1E4DA6]" />
                 </div>
             </SettingsShell>
         );
@@ -137,7 +137,7 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
                                     setApplicationType(e.target.value as "ADMISSION_APPLICATION" | "EMPLOYMENT");
                                     setFormData({}); // Reset dynamic data when changing types
                                 }}
-                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm transition-all"
+                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm transition-all"
                             >
                                 <option value="ADMISSION_APPLICATION">Student Admission</option>
                                 <option value="EMPLOYMENT">Employment Application</option>
@@ -157,7 +157,7 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
                                         required
                                         value={applicantName}
                                         onChange={(e) => setApplicantName(e.target.value)}
-                                        className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                        className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                         placeholder="John Doe"
                                     />
                                 </div>
@@ -167,7 +167,7 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
                                         type="email"
                                         value={applicantEmail}
                                         onChange={(e) => setApplicantEmail(e.target.value)}
-                                        className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                        className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                         placeholder="johndoe@example.com"
                                     />
                                 </div>
@@ -177,7 +177,7 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
                                         type="text"
                                         value={applicantPhone}
                                         onChange={(e) => setApplicantPhone(e.target.value)}
-                                        className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                        className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                         placeholder="+1234567890"
                                     />
                                 </div>
@@ -205,7 +205,7 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
                                                 required={field.isRequired}
                                                 value={formData[field.id] || ''}
                                                 onChange={handleDynamicFormChange}
-                                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm bg-white"
+                                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm bg-white"
                                             >
                                                 <option value="">Select option</option>
                                                 {field.options && field.options.length > 0 ? (
@@ -241,14 +241,14 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
                                                 value={formData[field.id] || ''}
                                                 onChange={handleDynamicFormChange}
                                                 rows={3}
-                                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                             />
                                         ) : field.type === 'Image' ? (
-                                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-[#1a2fa0] transition-colors cursor-pointer bg-slate-50/50">
+                                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-[#1E4DA6] transition-colors cursor-pointer bg-slate-50/50">
                                                 <div className="space-y-1 text-center">
                                                     <UploadCloud className="mx-auto h-8 w-8 text-slate-400" />
                                                     <div className="flex text-sm text-slate-600 justify-center">
-                                                        <label className="relative cursor-pointer rounded-md font-medium text-[#1a2fa0] hover:text-[#13227a]">
+                                                        <label className="relative cursor-pointer rounded-md font-medium text-[#1E4DA6] hover:text-[#13227a]">
                                                             <span>Upload a file</span>
                                                             <input type="file" name={field.id} required={field.isRequired} className="sr-only" accept="image/*,application/pdf,.doc,.docx" onChange={handleDynamicFileChange} />
                                                         </label>
@@ -265,7 +265,7 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
                                                 required={field.isRequired}
                                                 value={formData[field.id] || ''}
                                                 onChange={handleDynamicFormChange}
-                                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1a2fa0] focus:border-[#1a2fa0] sm:text-sm"
+                                                className="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E4DA6] focus:border-[#1E4DA6] sm:text-sm"
                                             />
                                         )}
                                     </div>
@@ -281,7 +281,7 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
                         <Button 
                             type="submit" 
                             disabled={isSubmitting} 
-                            className="w-full sm:w-auto bg-[#1a2fa0] hover:bg-[#121f6e] text-white px-8"
+                            className="w-full sm:w-auto bg-[#1E4DA6] hover:bg-[#173F8C] text-white px-8"
                         >
                             {isSubmitting ? (
                                 <>

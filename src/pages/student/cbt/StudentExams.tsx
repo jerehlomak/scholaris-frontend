@@ -43,7 +43,7 @@ export default function StudentExams() {
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Card className="p-6 bg-white border border-gray-100 flex items-center gap-4 shadow-sm">
-                    <div className="w-12 h-12 rounded-xl bg-[#6bc048]/10 flex items-center justify-center text-[#6bc048] transition-transform hover:scale-110">
+                    <div className="w-12 h-12 rounded-xl bg-[#10b981]/10 flex items-center justify-center text-[#10b981] transition-transform hover:scale-110">
                         <Play className="w-6 h-6 ml-1" />
                     </div>
                     <div>
@@ -61,7 +61,7 @@ export default function StudentExams() {
                     </div>
                 </Card>
                 <Card className="p-6 bg-white border border-gray-100 flex items-center gap-4 shadow-sm">
-                    <div className="w-12 h-12 rounded-xl bg-[#0036a1]/10 flex items-center justify-center text-[#0036a1] transition-transform hover:scale-110">
+                    <div className="w-12 h-12 rounded-xl bg-[#1E4DA6]/10 flex items-center justify-center text-[#1E4DA6] transition-transform hover:scale-110">
                         <Trophy className="w-6 h-6" />
                     </div>
                     <div>
@@ -85,7 +85,7 @@ export default function StudentExams() {
                                 placeholder="Search..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#0036a1]/20 focus:border-[#0036a1] bg-white transition-colors"
+                                className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#1E4DA6]/20 focus:border-[#1E4DA6] bg-white transition-colors"
                             />
                         </div>
                     </div>
@@ -104,16 +104,16 @@ export default function StudentExams() {
                                 return (
                                     <Card key={exam.id} className="p-5 bg-white border border-gray-100 hover:shadow-md transition-shadow relative overflow-hidden group">
                                         {/* Status Accent Left Border */}
-                                        <div className={`absolute left-0 top-0 bottom-0 w-1 ${taken ? 'bg-[#ff9800]' : isReady ? 'bg-[#6bc048]' : 'bg-[#0036a1]'}`} />
+                                        <div className={`absolute left-0 top-0 bottom-0 w-1 ${taken ? 'bg-[#ff9800]' : isReady ? 'bg-[#10b981]' : 'bg-[#1E4DA6]'}`} />
 
                                         <div className="flex flex-col sm:flex-row justify-between gap-6 sm:gap-4 pl-2">
                                             <div className="flex items-start gap-4">
-                                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${taken ? 'bg-[#ff9800]/10 text-[#ff9800]' : isReady ? 'bg-[#6bc048]/10 text-[#6bc048]' : 'bg-[#0036a1]/10 text-[#0036a1]'}`}>
+                                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${taken ? 'bg-[#ff9800]/10 text-[#ff9800]' : isReady ? 'bg-[#10b981]/10 text-[#10b981]' : 'bg-[#1E4DA6]/10 text-[#1E4DA6]'}`}>
                                                     {taken ? <CheckCircle2 className="w-6 h-6" /> : isReady ? <Play className="w-6 h-6 ml-1" /> : <CalendarClock className="w-6 h-6" />}
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center gap-2 mb-1">
-                                                        <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${taken ? 'bg-[#ff9800]/10 text-[#ff9800]' : isReady ? 'bg-[#6bc048]/10 text-[#6bc048]' : 'bg-[#0036a1]/10 text-[#0036a1]'}`}>
+                                                        <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${taken ? 'bg-[#ff9800]/10 text-[#ff9800]' : isReady ? 'bg-[#10b981]/10 text-[#10b981]' : 'bg-[#1E4DA6]/10 text-[#1E4DA6]'}`}>
                                                             {taken ? 'Completed' : isReady ? 'Active Now' : 'Scheduled'}
                                                         </span>
                                                         <span className="text-xs font-semibold text-gray-500">{exam.subject}</span>
@@ -130,7 +130,7 @@ export default function StudentExams() {
                                                 {taken ? (
                                                     <div className="text-center bg-gray-50 px-4 py-2 rounded-lg border border-gray-100">
                                                         <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Your Score</p>
-                                                        <p className={`text-xl font-bold ${(result?.percentage || 0) >= 50 ? 'text-[#6bc048]' : 'text-red-500'}`}>
+                                                        <p className={`text-xl font-bold ${(result?.percentage || 0) >= 50 ? 'text-[#10b981]' : 'text-red-500'}`}>
                                                             {result?.percentage}%
                                                         </p>
                                                     </div>
@@ -138,7 +138,7 @@ export default function StudentExams() {
                                                     <Button
                                                         disabled={!isReady}
                                                         onClick={() => navigate(`/student/cbt/take/${exam.id}`)}
-                                                        className={`w-full sm:w-auto shadow-sm ${isReady ? 'bg-[#6bc048] hover:bg-[#5aa33c] text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`}
+                                                        className={`w-full sm:w-auto shadow-sm ${isReady ? 'bg-[#10b981] hover:bg-[#5aa33c] text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`}
                                                     >
                                                         {isReady ? 'Start Examination' : 'Waiting for Teacher...'}
                                                     </Button>
@@ -154,7 +154,7 @@ export default function StudentExams() {
 
                 {/* Right Col: Leaderboard / Instructions */}
                 <div className="space-y-6">
-                    <Card className="p-6 bg-[#0036a1] text-white overflow-hidden relative">
+                    <Card className="p-6 bg-[#1E4DA6] text-white overflow-hidden relative">
                         {/* Decorative circle */}
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" />
 
@@ -163,7 +163,7 @@ export default function StudentExams() {
                                 <CheckCircle2 className="w-5 h-5 text-[#ff9800]" /> Testing Rules
                             </div>
                         </h3>
-                        <ul className="space-y-3 text-sm text-blue-100 relative z-10">
+                        <ul className="space-y-3 text-sm text-white/80 relative z-10">
                             <li className="flex gap-2">
                                 <span className="font-bold text-[#ff9800]">•</span>
                                 Exams must be completed in one sitting.
