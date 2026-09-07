@@ -19,7 +19,7 @@ export const CommentBasedReportCard: React.FC<ReportCardPreviewProps & { comment
     // Here we need to map the scores back to skills.
     const skillsScores: Record<string, string> = {};
     results.forEach(res => {
-        Object.entries(res.scores).forEach(([skillId, score]) => {
+        Object.entries(res.scores || {}).forEach(([skillId, score]) => {
             skillsScores[skillId] = score as string;
         });
     });
@@ -114,7 +114,7 @@ export const CommentBasedReportCard: React.FC<ReportCardPreviewProps & { comment
                         <div key={cat.id} className="mb-6">
                             <h4 className="font-bold uppercase mb-2 pb-1 border-b-2 border-gray-400">{cat.name}</h4>
                             <div className="space-y-1">
-                                {cat.skills.map((skill: any) => (
+                                {(cat.skills || []).map((skill: any) => (
                                     <div key={skill.id} className="flex justify-between items-end border-b border-dotted border-gray-300 pb-1 text-sm">
                                         <span className="uppercase">{skill.name}</span>
                                         <span className="font-bold w-8 text-center">{skillsScores[skill.id] || '-'}</span>
@@ -130,7 +130,7 @@ export const CommentBasedReportCard: React.FC<ReportCardPreviewProps & { comment
                         <div key={cat.id} className="mb-6">
                             <h4 className="font-bold uppercase mb-2 pb-1 border-b-2 border-gray-400">{cat.name}</h4>
                             <div className="space-y-1">
-                                {cat.skills.map((skill: any) => (
+                                {(cat.skills || []).map((skill: any) => (
                                     <div key={skill.id} className="flex justify-between items-end border-b border-dotted border-gray-300 pb-1 text-sm">
                                         <span className="uppercase">{skill.name}</span>
                                         <span className="font-bold w-8 text-center">{skillsScores[skill.id] || '-'}</span>

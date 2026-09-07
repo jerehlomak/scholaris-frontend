@@ -12,6 +12,7 @@ import type { TemplateConfig } from '../../components/report/ReportCardPreview';
 import ReportCard from '../../components/report-blocks/ReportCard';
 import PinValidationModal from '../../components/shared/PinValidationModal';
 import { mobileSafePrint } from '../../lib/printUtils';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 const TERMS = ['First Term', 'Second Term', 'Third Term'];
 const YEARS = ['2023/2024', '2024/2025', '2025/2026'];
@@ -259,20 +260,24 @@ export default function Result() {
                         <div className="min-w-[800px] print:min-w-0">
                             {(cardData.templateConfig || DEFAULT_CFG).blocks ? (
                                 <div className="mx-auto w-full max-w-[794px]">
-                                    <ReportCard config={{ ...(cardData.templateConfig || DEFAULT_CFG), globalSettings: { schoolSettings: cardData.schoolSettings } }} data={cardData} />
+                                    <ErrorBoundary errorMessage={`Failed to render report card for ${cardData.student?.name || 'this student'}.`}>
+                                        <ReportCard config={{ ...(cardData.templateConfig || DEFAULT_CFG), blocks: cardData.templateConfig?.blocks ?? DEFAULT_CFG.blocks ?? [], design: cardData.templateConfig?.design ?? DEFAULT_CFG.design ?? {}, globalSettings: { schoolSettings: cardData.schoolSettings } }} data={cardData} />
+                                    </ErrorBoundary>
                                 </div>
                             ) : (
-                                <ReportCardPreview 
-                                    templateConfig={cardData.templateConfig || DEFAULT_CFG}
-                                    student={cardData.student}
-                                    results={cardData.results}
-                                    gradingScale={cardData.gradingScale}
-                                    comments={cardData.comments}
-                                    attendance={cardData.attendance}
-                                    school={cardData.schoolSettings || { schoolName: 'School Name' }}
-                                    summary={cardData.summary}
-                                    annualResults={cardData.annualResults}
-                                />
+                                <ErrorBoundary errorMessage={`Failed to render report card for ${cardData.student?.name || 'this student'}.`}>
+                                    <ReportCardPreview
+                                        templateConfig={cardData.templateConfig || DEFAULT_CFG}
+                                        student={cardData.student}
+                                        results={cardData.results}
+                                        gradingScale={cardData.gradingScale}
+                                        comments={cardData.comments}
+                                        attendance={cardData.attendance}
+                                        school={cardData.schoolSettings || { schoolName: 'School Name' }}
+                                        summary={cardData.summary}
+                                        annualResults={cardData.annualResults}
+                                    />
+                                </ErrorBoundary>
                             )}
                         </div>
                     </div>

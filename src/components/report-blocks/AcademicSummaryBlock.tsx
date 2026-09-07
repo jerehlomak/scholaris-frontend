@@ -75,6 +75,27 @@ function ordinal(n: number): string {
     const isCompact = layoutDensity === 'COMPACT' || layoutDensity === 'ULTRA_COMPACT';
     const padClass = isCompact ? 'p-1' : 'p-2';
 
+    // "Bulletin" preset: a bordered box with a solid navy header bar and
+    // plain label:value rows, instead of the default colored stat-card grid.
+    if (config?.variant === 'NAVY_CARD') {
+        const primaryColor = design?.primaryColor || accentColor;
+        return (
+            <div className="border rounded overflow-hidden h-full" style={{ borderColor: primaryColor }}>
+                <div className="text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1" style={{ backgroundColor: primaryColor }}>
+                    {title}
+                </div>
+                <div className="divide-y" style={{ borderColor: `${primaryColor}25` }}>
+                    {cards.map((c, i) => (
+                        <div key={i} className="flex items-center justify-between px-2 py-1 text-[10px]">
+                            <span className="text-gray-500">{c.label}:</span>
+                            <span className="font-bold" style={{ color: primaryColor }}>{c.value}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div>
             <div className="text-[10px] font-bold uppercase tracking-widest pb-1.5 border-b-2 flex items-center gap-1.5 mb-2.5" style={{ color: accentColor, borderBottomColor: accentColor }}>

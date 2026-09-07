@@ -9,10 +9,10 @@ import {
     LogOut, GraduationCap, X, Banknote
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import logo from '../../assets/SkcoolyPlus.png';
 import { useAuth } from '../../context/AuthContext';
 import { ProfileSettingsModal } from '../shared/ProfileSettingsModal';
 import { Badge } from '../ui/badge';
+import { SkcoolyWordmark } from '../shared/SkcoolyWordmark';
 
 // ─── Nav Config ──────────────────────────────────────────────────────────────
 const NAV_GROUPS = [
@@ -70,20 +70,20 @@ function NavItem({ item, isActive }: { item: typeof NAV_GROUPS[0]['items'][0]; i
             className={cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group',
                 isActive
-                    ? 'bg-[#1E4DA6]/5 text-[#173F8C]'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                    ? 'bg-[#F5B800]/12 text-[#FFC72C]'
+                    : 'text-white/85 hover:bg-white/[0.06] hover:text-white'
             )}
         >
             <Icon
                 size={16}
                 className={cn(
                     'shrink-0 transition-colors',
-                    isActive ? 'text-[#1E4DA6]' : 'text-slate-400 group-hover:text-slate-600'
+                    isActive ? 'text-[#FFC72C]' : 'text-white/60 group-hover:text-white/90'
                 )}
             />
             <span className="truncate">{item.title}</span>
             {isActive && (
-                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#1E4DA6] shrink-0" />
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#F5B800] shrink-0" />
             )}
         </Link>
     );
@@ -125,35 +125,36 @@ function Sidebar({
 
             <aside
                 className={cn(
-                    'fixed inset-y-0 left-0 z-50 w-[260px] bg-white flex flex-col shrink-0',
-                    'border-r border-slate-200 shadow-sm',
+                    'fixed inset-y-0 left-0 z-50 w-[260px] flex flex-col shrink-0',
+                    'bg-gradient-to-b from-[#15316B] to-[#0E2450]',
+                    'shadow-[4px_0_32px_-4px_rgba(0,0,0,0.18)]',
                     'transition-transform duration-300 ease-in-out',
                     'md:relative md:translate-x-0',
                     !open && '-translate-x-full md:flex'
                 )}
             >
                 {/* ── Logo ── */}
-                <div className="flex items-center justify-between h-[60px] px-5 border-b border-slate-100 shrink-0">
+                <div className="flex items-center justify-between h-[60px] px-5 border-b border-white/[0.08] shrink-0">
                     <Link to="/" className="flex items-center gap-2">
-                        <img src={logo} alt="Skooly" className="h-12 object-contain" />
+                        <SkcoolyWordmark size="sm" variant="light" />
                     </Link>
                     <button
                         onClick={onClose}
-                        className="md:hidden p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors"
+                        className="md:hidden p-1.5 rounded-lg hover:bg-white/10 text-white/60 transition-colors"
                     >
                         <X size={16} />
                     </button>
                 </div>
 
                 {/* ── School chip ── */}
-                <div className="px-4 py-3 border-b border-slate-100 shrink-0">
-                    <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-slate-50 border border-slate-200">
-                        <div className="w-7 h-7 rounded-md bg-[#1E4DA6] flex items-center justify-center shrink-0">
-                            <GraduationCap size={14} className="text-white" />
+                <div className="px-4 py-3 border-b border-white/[0.08] shrink-0">
+                    <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-white/5 border border-white/10">
+                        <div className="w-7 h-7 rounded-md bg-[#F5B800] flex items-center justify-center shrink-0">
+                            <GraduationCap size={14} className="text-[#15316B]" />
                         </div>
                         <div className="min-w-0">
-                            <p className="text-[11px] font-semibold text-slate-800 truncate leading-tight">{schoolName}</p>
-                            <p className="text-[10px] text-slate-400 leading-tight">Teacher Portal</p>
+                            <p className="text-[11px] font-semibold text-white/90 truncate leading-tight">{schoolName}</p>
+                            <p className="text-[10px] text-white/50 leading-tight">Teacher Portal</p>
                         </div>
                     </div>
                 </div>
@@ -163,7 +164,7 @@ function Sidebar({
                     {NAV_GROUPS.map((group) => {
                         return (
                             <div key={group.label} className="mb-5">
-                                <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                                <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-widest text-white/50">
                                     {group.label}
                                 </p>
                                 <div className="space-y-0.5">
@@ -182,12 +183,12 @@ function Sidebar({
                 </div>
 
                 {/* ── User Card ── */}
-                <div className="px-3 pb-4 pt-2 border-t border-slate-100 shrink-0 space-y-2">
+                <div className="px-3 pb-4 pt-2 border-t border-white/[0.08] shrink-0 space-y-2">
                     {/* Staff Dashboard link for non-academic/custom role staff */}
                     {(user?.customRoleId || user?.teacherProfile?.staffType === 'NON_ACADEMIC') && (
                         <Link
                             to="/dashboard"
-                            className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors"
+                            className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm font-medium text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/15 transition-colors"
                         >
                             <Settings size={14} />
                             Staff Dashboard
@@ -197,27 +198,27 @@ function Sidebar({
                     {/* Teacher profile mini-card */}
                     <button
                         onClick={onProfileClick}
-                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all text-left"
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-left"
                     >
                         <div className="relative shrink-0">
                             <img
                                 src={teacherPhoto}
                                 alt={teacherName}
-                                className="w-8 h-8 rounded-full object-cover ring-2 ring-white shadow"
+                                className="w-8 h-8 rounded-full object-cover ring-2 ring-white/20 shadow"
                             />
-                            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white" />
+                            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#0E2450]" />
                         </div>
                         <div className="min-w-0 flex-1">
-                            <p className="text-sm font-semibold text-slate-800 truncate leading-tight">{teacherName}</p>
-                            <p className="text-[10px] text-slate-400 leading-tight">View Profile</p>
+                            <p className="text-sm font-semibold text-white truncate leading-tight">{teacherName}</p>
+                            <p className="text-[10px] text-white/50 leading-tight">View Profile</p>
                         </div>
-                        <Settings size={12} className="text-slate-400 shrink-0" />
+                        <Settings size={12} className="text-white/40 shrink-0" />
                     </button>
 
                     {/* Logout */}
                     <button
                         onClick={onLogout}
-                        className="flex items-center justify-center w-full gap-2 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        className="flex items-center justify-center w-full gap-2 px-3 py-2 text-sm font-medium text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
                     >
                         <LogOut size={14} />
                         Log Out
@@ -266,7 +267,7 @@ export function TeacherLayout() {
     const pageTitle = getPageTitle(location.pathname);
 
     return (
-        <div className="flex h-screen overflow-hidden" style={{ background: '#f1f5f9' }}>
+        <div className="flex h-screen overflow-hidden" style={{ background: '#FBF9F5' }}>
             <ProfileSettingsModal isOpen={profileModalOpen} onClose={() => setProfileModalOpen(false)} />
 
             <Sidebar
@@ -286,7 +287,7 @@ export function TeacherLayout() {
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
                 {/* ── Topbar ── */}
-                <header className="h-[60px] bg-white border-b border-slate-200 flex items-center justify-between px-5 shrink-0 z-30">
+                <header className="h-[60px] bg-white/95 backdrop-blur-md border-b border-[#EEEAE0] flex items-center justify-between px-5 shrink-0 z-30">
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -334,8 +335,8 @@ export function TeacherLayout() {
                     <main className="flex-1 p-5 md:p-6">
                         <Outlet />
                     </main>
-                    <footer className="shrink-0 text-center py-3 text-[12px] text-slate-400 bg-white border-t border-slate-200">
-                        © 2026 Skooly Plus · Teacher Portal · v1.0.0
+                    <footer className="shrink-0 text-center py-3 text-[12px] text-slate-400 bg-white/95 border-t border-[#EEEAE0]">
+                        © 2026 Skcooly · Teacher Portal
                     </footer>
                 </div>
             </div>

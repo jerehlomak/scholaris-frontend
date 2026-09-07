@@ -199,12 +199,12 @@ export function Header() {
                                 ) : (
                                     <>
                                         <Link
-                                            to="/get-started"
+                                            to="/portal/login"
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className="w-full h-12 flex items-center justify-center gap-2 text-white font-bold rounded-xl shadow-sm transition-colors"
-                                            style={{ backgroundColor: NAVY }}
+                                            className="w-full h-11 flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-50 transition-colors"
                                         >
-                                            Get Started <ArrowRight className="w-4 h-4" />
+                                            <User className="w-4 h-4" />
+                                            Login
                                         </Link>
                                         <Link
                                             to="/apply"
@@ -216,12 +216,12 @@ export function Header() {
                                             Apply
                                         </Link>
                                         <Link
-                                            to="/portal/login"
+                                            to="/get-started"
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className="w-full h-11 flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-50 transition-colors"
+                                            className="w-full h-12 flex items-center justify-center gap-2 text-white font-bold rounded-xl shadow-sm transition-colors"
+                                            style={{ backgroundColor: NAVY }}
                                         >
-                                            <User className="w-4 h-4" />
-                                            Login
+                                            Get Started <ArrowRight className="w-4 h-4" />
                                         </Link>
                                     </>
                                 )}

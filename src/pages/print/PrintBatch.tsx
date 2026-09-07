@@ -162,35 +162,51 @@ export default function PrintBatch() {
 
     return createPortal(
         <div className="bg-white min-h-screen">
-            <ErrorBoundary>
             {data.map((studentData, index) => {
+                const pageBreakStyle = { pageBreakAfter: index < data.length - 1 ? 'always' as const : 'auto' as const };
+
+                // The batch endpoint returns a labeled placeholder (rather
+                // than silently dropping the student) when one card fails to
+                // load — render that plainly instead of feeding an
+                // error-shaped object into ReportCard/ReportCardPreview.
+                if (studentData?.error) {
+                    return (
+                        <div key={studentData.studentProfileId || index} style={pageBreakStyle} className="mb-8 mx-auto w-[794px] p-8 text-center text-red-600 font-bold border-4 border-red-300">
+                            {studentData.message || 'Failed to load this report card.'}
+                        </div>
+                    );
+                }
+
                 const effectiveConfig = { ...(overrideConfig || studentData.templateConfig || DEFAULT_CFG), globalSettings };
                 return (
-                    <div
-                        key={studentData.student?.id || index}
-                        style={{ pageBreakAfter: index < data.length - 1 ? 'always' : 'auto' }}
-                        className="print:shadow-none shadow-lg mb-8 mx-auto w-[794px]"
-                    >
-                        {(effectiveConfig.blocks && effectiveConfig.blocks.length > 0) ? (
-                            <ReportCard config={effectiveConfig} data={studentData} />
-                        ) : (
-                            <ReportCardPreview
-                                templateConfig={effectiveConfig}
-                                student={studentData.student}
-                                results={studentData.results}
-                                gradingScale={studentData.gradingScale}
-                                comments={studentData.comments}
-                                attendance={studentData.attendance}
-                                school={studentData.schoolSettings}
-                                summary={studentData.summary}
-                                annualResults={studentData.annualResults}
-                                isCommentBased={isCommentBased}
-                            />
-                        )}
-                    </div>
+                    // One boundary per student, not one around the whole
+                    // batch — previously a single bad card took down every
+                    // other student's card in the same print job.
+                    <ErrorBoundary key={studentData.student?.id || index}>
+                        <div
+                            style={{ ...pageBreakStyle }}
+                            className="print:shadow-none shadow-lg mb-8 mx-auto w-[794px]"
+                        >
+                            {(effectiveConfig.blocks && effectiveConfig.blocks.length > 0) ? (
+                                <ReportCard config={effectiveConfig} data={studentData} />
+                            ) : (
+                                <ReportCardPreview
+                                    templateConfig={effectiveConfig}
+                                    student={studentData.student}
+                                    results={studentData.results}
+                                    gradingScale={studentData.gradingScale}
+                                    comments={studentData.comments}
+                                    attendance={studentData.attendance}
+                                    school={studentData.schoolSettings}
+                                    summary={studentData.summary}
+                                    annualResults={studentData.annualResults}
+                                    isCommentBased={isCommentBased}
+                                />
+                            )}
+                        </div>
+                    </ErrorBoundary>
                 );
             })}
-            </ErrorBoundary>
         </div>,
         document.body
     );

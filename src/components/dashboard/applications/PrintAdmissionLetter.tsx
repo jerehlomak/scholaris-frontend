@@ -22,6 +22,8 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
         signatoryTitle: 'Principal',
         signatureUrl: ''
     };
+    const signatureAlign: 'left' | 'center' | 'right' = template.signature?.align || 'right';
+    const signatureAlignClass = signatureAlign === 'left' ? 'items-start text-left' : signatureAlign === 'center' ? 'items-center text-center' : 'items-end text-right';
 
     const schoolName = (user as any)?.schoolName || (user as any)?.school?.name || (user as any)?.schoolDetails?.name || 'School Name';
     const logoUrl = (user as any)?.school?.logoUrl || (user as any)?.schoolDetails?.logoUrl;
@@ -44,7 +46,7 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
                 </div>
             </div>
 
-            <div id="print-letter-container" className="p-12 print:p-[20mm] mx-auto w-[210mm] min-h-[297mm] bg-white text-black font-sans flex flex-col relative overflow-hidden">
+            <div id="print-letter-container" className="p-12 print:p-[20mm] mx-auto w-[210mm] min-h-[297mm] bg-white text-black font-sans flex flex-col relative">
                 <div className="flex items-center mb-10 pb-6 border-b-2 border-[#1E4DA6]">
                     {template.showLogo ? (
                         logoUrl ? <img src={logoUrl} alt="School Logo" className="h-20 w-20 object-contain shrink-0" /> : <div className="h-20 w-20 shrink-0"></div>
@@ -60,17 +62,26 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
                     <div className="h-20 w-20 shrink-0"></div>
                 </div>
 
-                <div 
-                    className="flex-grow text-[15px] leading-relaxed text-black [&>p]:mb-4 [&>ul]:list-disc [&>ul]:pl-5 [&>ol]:list-decimal [&>ol]:pl-5" 
-                    dangerouslySetInnerHTML={{ __html: letterBody }} 
+                <div
+                    className="flex-grow text-[15px] leading-relaxed text-black [&>p]:mb-4 [&>ul]:list-disc [&>ul]:pl-5 [&>ol]:list-decimal [&>ol]:pl-5"
+                    dangerouslySetInnerHTML={{ __html: letterBody }}
                 />
 
-                <div className="mt-16 pt-8 flex flex-col items-end text-right break-inside-avoid">
-                    {template.signatureUrl && (
-                        <img src={template.signatureUrl} alt="Signature" className="h-16 object-contain mb-2" />
-                    )}
-                    <div className="font-bold text-lg text-slate-800">{template.signatoryName || '_________________'}</div>
-                    <div className="text-sm font-semibold text-slate-500 uppercase tracking-widest mt-1">{template.signatoryTitle || 'Principal'}</div>
+                {/* Kept whole rather than split across a page break — if it doesn't fit
+                    on the current page it flows entirely onto the next one instead of
+                    being cut off (see the print stylesheet below). */}
+                <div className={`mt-16 pt-8 flex flex-col ${signatureAlignClass} print-signature-block`}>
+                    <div className="w-64">
+                        {template.signatureUrl ? (
+                            <img src={template.signatureUrl} alt="Signature" className="h-16 object-contain mb-2 mx-auto" />
+                        ) : (
+                            <div className="h-16 border-b border-dashed border-slate-300 mb-2"></div>
+                        )}
+                        <div className="border-t-2 border-slate-800 pt-2">
+                            <div className="font-bold text-lg text-slate-800">{template.signatoryName || 'Authorized Signatory'}</div>
+                            <div className="text-sm font-semibold text-slate-500 uppercase tracking-widest mt-1">{template.signatoryTitle || 'Principal'}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -82,20 +93,19 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
                     #print-letter-container, #print-letter-container * {
                         visibility: visible;
                     }
+                    /* No max-height/overflow clamp here — a longer letter body is
+                       allowed to flow onto a second printed page instead of being
+                       silently cut off. Only the signature block itself is kept
+                       from splitting across a page boundary (below). */
                     .print\\:relative {
                         position: absolute;
                         left: 0;
                         top: 0;
                         width: 100%;
-                        max-height: 100vh !important;
-                        overflow: hidden !important;
                         display: block !important;
                         background: white !important;
-                        page-break-inside: avoid;
-                        break-inside: avoid;
                     }
-                    #print-letter-container {
-                        max-height: 260mm !important;
+                    .print-signature-block {
                         page-break-inside: avoid;
                         break-inside: avoid;
                     }

@@ -154,6 +154,67 @@ export const TEMPLATE_PRESETS: TemplatePreset[] = [
                 resultBorder: true
             }
         }
+    },
+    {
+        id: 'ledger',
+        name: 'Ledger',
+        description: 'A dense, all-on-one-page CA sheet built from an uploaded reference format: a bordered admission/attendance/grades grid, color-coded remark badges right in the subject table, and Affective/Psychomotor ratings alongside a grading-key legend in a sidebar next to the results — 20+ subjects on a single page without shrinking to fit two.',
+        tag: 'Legacy CA',
+        config: {
+            blocks: [
+                { id: 'b-header', type: 'SchoolHeaderBlock', isVisible: true, props: { accentColor: GOLD, primaryColor: NAVY, headerLayoutMode: 'BANNER', reportBadge: '{TERM} EXAM REPORT SHEET {SESSION}' } },
+                { id: 'b-student-info', type: 'BorderedStudentInfoBlock', isVisible: true, props: { primaryColor: NAVY } },
+                { id: 'b-subject-results', type: 'SubjectResultsBlock', isVisible: true, props: { accentColor: NAVY, primaryColor: NAVY, variant: 'BORDERED', remarkStyle: 'COLORED_BADGE', showTotalRow: true, highlightTop: false, showPassFail: false, showCols: { score: true, grade: true, progress: false, remark: true }, highestAverageInSubject: false, lowestAverageInSubject: false, subjectClassAverage: false, subjectPosition: false } },
+                { id: 'b-domain-ratings', type: 'DomainRatingsBlock', isVisible: true, props: { accentColor: GOLD, primaryColor: NAVY, layout: 'STACKED' } },
+                { id: 'b-grading-key', type: 'GradingKeyBlock', isVisible: true, props: { primaryColor: NAVY, style: 'LIST' } },
+                { id: 'b-remarks', type: 'RemarksBlock', isVisible: true, props: { accentColor: NAVY, remarkLayoutMode: 'CENTERED_LINE', showTeacherName: true, signatures: [{ roleName: 'Class Teacher' }, { roleName: 'Head Teacher' }] } },
+                { id: 'b-signatures', type: 'SignaturesBlock', isVisible: true, props: { signatures: [{ roleName: "Head Teacher's Signature" }, { roleName: "Director's Signature" }] } }
+            ],
+            design: {
+                primaryColor: NAVY,
+                accentColor: GOLD,
+                headerBg: NAVY,
+                fontFamily: 'sans',
+                tableBorderColor: NAVY,
+                pageMargin: '6mm',
+                logoPosition: 'left',
+                headerStyle: 'banner',
+                resultBorder: false,
+                mainLayout: 'SIDEBAR_RIGHT',
+                sidebarPairBlockType: 'SubjectResultsBlock',
+                sidebarBlockTypes: ['DomainRatingsBlock', 'GradingKeyBlock']
+            }
+        }
+    },
+    {
+        id: 'bulletin',
+        name: 'Bulletin',
+        description: 'A clean, modern layout with solid navy section banners, a two-column student info panel with a passport-photo slot, Grand Total/Percentage Average rows in the subject table, matching Summary and Attendance cards, and a three-column Form/Head/Principal remarks band with a colored grading-key pill row underneath.',
+        tag: 'Modern',
+        config: {
+            blocks: [
+                { id: 'b-header', type: 'SchoolHeaderBlock', isVisible: true, props: { accentColor: GOLD_LIGHT, primaryColor: NAVY_DEEP, headerLayoutMode: 'CENTER', badgeStyle: 'PLAIN_TEXT', borderStyle: 'THIN', reportBadge: 'END OF TERM ACADEMIC REPORT' } },
+                { id: 'b-student-info', type: 'StudentInfoBlock', isVisible: true, props: { layoutCols: 2, studentPicture: true } },
+                { id: 'b-subject-results', type: 'SubjectResultsBlock', isVisible: true, props: { accentColor: NAVY_DEEP, primaryColor: NAVY_DEEP, headerStyle: 'NAVY_BAR', showTotalRow: true, totalRowLabel: 'Grand Total / Average', showAverageRow: true, averageRowLabel: 'Percentage Average', highlightTop: false, showPassFail: false } },
+                { id: 'b-academic-summary', type: 'AcademicSummaryBlock', isVisible: true, props: { accentColor: NAVY_DEEP, primaryColor: NAVY_DEEP, variant: 'NAVY_CARD', title: 'Summary' } },
+                { id: 'b-attendance', type: 'AttendanceBlock', isVisible: true, props: { accentColor: NAVY_DEEP, primaryColor: NAVY_DEEP, variant: 'NAVY_CARD', title: 'Attendance' } },
+                { id: 'b-remarks', type: 'RemarksBlock', isVisible: true, props: { accentColor: NAVY_DEEP, primaryColor: NAVY_DEEP, remarkLayoutMode: 'ROW', bannerTitle: 'Remarks & Signatures', signatures: [{ roleName: 'Form Teacher' }, { roleName: 'Head Teacher' }, { roleName: 'Principal' }] } },
+                { id: 'b-grading-key', type: 'GradingKeyBlock', isVisible: true, props: { primaryColor: NAVY_DEEP, style: 'PILLS', title: 'Grading Key' } }
+            ],
+            design: {
+                primaryColor: NAVY_DEEP,
+                accentColor: GOLD_LIGHT,
+                headerBg: NAVY_DEEP,
+                fontFamily: 'sans',
+                tableBorderColor: '#e2e8f0',
+                pageMargin: '8mm',
+                logoPosition: 'center',
+                headerStyle: 'minimal',
+                resultBorder: false,
+                mainLayout: 'SUMMARY_ATTENDANCE_PAIR',
+                showGeneratedFooter: true
+            }
+        }
     }
 ];
 

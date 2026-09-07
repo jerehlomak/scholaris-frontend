@@ -17,6 +17,13 @@ export default function SignaturesBlock({ data, config, globalSettings }: { data
         if (rawSigs.showSignature3) sigs.push({ roleName: rawSigs.signature3Label || 'Director', url: rawSigs.signature3Url });
     }
 
+    // A legacy per-section signatures shape (e.g. rawSigs['ALL'] holding the
+    // old {showSignature1: ...} object instead of an array) can make `sigs`
+    // a non-array here — `sigs.length === 0` then silently passes
+    // (`undefined === 0` is false) and `.filter()` below throws. Normalize
+    // before either check runs.
+    if (!Array.isArray(sigs)) sigs = [];
+
     if (sigs.length === 0) {
        sigs = [{ roleName: 'Principal', url: '' }];
     }

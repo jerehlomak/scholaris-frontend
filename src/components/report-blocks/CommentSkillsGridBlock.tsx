@@ -11,7 +11,7 @@ export default function CommentSkillsGridBlock({ data, config }: { data: any, co
     // Fallback data if empty (for preview in editor)
     let finalCategories = categoriesFromSettings.length > 0 ? categoriesFromSettings.map((cat: any) => ({
         category: cat,
-        skills: cat.skills.map((skill: any) => ({
+        skills: (cat.skills || []).map((skill: any) => ({
             skill: skill,
             ratingScale: { label: skillsScores[skill.id] || '' }
         }))

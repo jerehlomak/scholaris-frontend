@@ -14,6 +14,33 @@ export default function AttendanceBlock({ data, config, design  }: { data: any, 
     const absentPct = Math.round(((att.absent || 0) / totalDays) * 100);
     const punctualityPct = Math.max(0, 100 - Math.round(((att.late || 0) / totalDays) * 100));
 
+    // "Bulletin" preset: a bordered box with a solid navy header bar and
+    // plain label:value rows — matches AcademicSummaryBlock's NAVY_CARD
+    // variant so the two sit side-by-side as a matching pair.
+    if (config?.variant === 'NAVY_CARD') {
+        const primaryColor = design?.primaryColor || accentColor;
+        const rows = [
+            { label: 'Number of Days Open', value: totalDays },
+            { label: 'Days Present', value: att.present || 0 },
+            { label: 'Days Absent', value: att.absent || 0 },
+        ];
+        return (
+            <div className="border rounded overflow-hidden h-full" style={{ borderColor: primaryColor }}>
+                <div className="text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1" style={{ backgroundColor: primaryColor }}>
+                    {title}
+                </div>
+                <div className="divide-y" style={{ borderColor: `${primaryColor}25` }}>
+                    {rows.map((r, i) => (
+                        <div key={i} className="flex items-center justify-between px-2 py-1 text-[10px]">
+                            <span className="text-gray-500">{r.label}:</span>
+                            <span className="font-bold" style={{ color: primaryColor }}>{r.value}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="mb-4">
             <div className="text-[9px] font-bold uppercase tracking-widest pb-1 border-b flex items-center gap-1.5 mb-1.5" style={{ color: accentColor, borderBottomColor: accentColor }}>

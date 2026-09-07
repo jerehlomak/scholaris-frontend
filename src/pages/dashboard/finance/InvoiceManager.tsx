@@ -11,6 +11,7 @@ import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { ViewToggle } from '../../../components/shared/ViewToggle';
 import { Pagination } from '../../../components/shared/Pagination';
+import RecordPaymentModal from './components/RecordPaymentModal';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 const fmt = (n: number) => '₦' + (n || 0).toLocaleString('en-NG');
@@ -359,102 +360,6 @@ function InvoicePrint({ inv, settings, onClose, onSuccess }: { inv: any; setting
 }
 
 // ─── Record Payment Modal ───────────────────────────────────────────────────
-function RecordPaymentModal({ inv, settings, onClose, onSuccess }: { inv: any; settings: any; onClose: () => void; onSuccess: () => void }) {
-    const [amount, setAmount] = useState(inv.balanceDue.toString());
-    const [method, setMethod] = useState('CASH');
-    const [discountAmount, setDiscountAmount] = useState('');
-    const [submitting, setSubmitting] = useState(false);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setSubmitting(true);
-        try {
-            if (method === 'WALLET') {
-                const res = await axios.post('/api/v1/finance-v2/wallet/apply', {
-                    studentId: inv.studentId,
-                    invoiceId: inv.id,
-                    amount: Number(amount)
-                }, { withCredentials: true });
-                toast.success(
-                    <div className="flex flex-col gap-1">
-                        <span className="font-bold text-sm">Payment from Wallet Successful</span>
-                        <span className="text-xs text-slate-500">Amount: ₦{Number(amount).toLocaleString('en-NG')}</span>
-                        <span className="text-xs text-slate-500">Balance Before: ₦{(res.data.balanceBefore || 0).toLocaleString('en-NG')}</span>
-                        <span className="text-xs font-semibold text-emerald-600">Balance After: ₦{(res.data.balanceAfter || 0).toLocaleString('en-NG')}</span>
-                    </div>,
-                    { duration: 5000 }
-                );
-            } else {
-                await axios.post(`/api/v1/finance-v2/invoices/${inv.id}/pay`, {
-                    amount: Number(amount),
-                    method,
-                    discountAmount: discountAmount ? Number(discountAmount) : 0
-                }, { withCredentials: true });
-                toast.success('Payment recorded successfully');
-            }
-            onSuccess();
-        } catch (err: any) {
-            toast.error(err.response?.data?.msg || 'Failed to record payment');
-        } finally {
-            setSubmitting(false);
-        }
-    };
-
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-            <div className="w-full max-w-md rounded-2xl bg-white shadow-2xl overflow-hidden">
-                <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-                    <h2 className="font-bold text-slate-900">Record Payment</h2>
-                    <button onClick={onClose} className="rounded-xl border border-slate-200 p-2 text-slate-500 hover:bg-slate-50">
-                        <X className="h-4 w-4" />
-                    </button>
-                </div>
-                <div className="bg-slate-50 px-6 py-4 flex justify-between items-center text-sm">
-                    <div>
-                        <p className="text-slate-500 text-xs uppercase tracking-wider font-semibold">Invoice</p>
-                        <p className="font-bold text-slate-900">{inv.invoiceNumber}</p>
-                    </div>
-                    <div className="text-right">
-                        <p className="text-slate-500 text-xs uppercase tracking-wider font-semibold">Balance Due</p>
-                        <p className="font-bold text-red-600">₦{inv.balanceDue.toLocaleString()}</p>
-                    </div>
-                </div>
-                <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                    <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-1">Amount Paid (₦)</label>
-                        <Input type="number" required min={1} max={settings?.allowOverpayment ? undefined : inv.balanceDue} value={amount} onChange={e => setAmount(e.target.value)} />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-1">Payment Method</label>
-                        <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                            value={method} onChange={e => setMethod(e.target.value)}>
-                            <option value="CASH">Cash</option>
-                            <option value="POS">POS Terminal</option>
-                            <option value="BANK_TRANSFER">Bank Transfer</option>
-                            <option value="WALLET">Wallet</option>
-                        </select>
-                    </div>
-                    {method !== 'WALLET' && (
-                        <div>
-                            <label className="block text-sm font-semibold text-slate-700 mb-1">Discount Amount (Optional ₦)</label>
-                            <p className="text-xs text-slate-500 mb-2">Apply an on-the-spot discount to reduce the balance due.</p>
-                            <Input type="number" min={0} value={discountAmount} onChange={e => setDiscountAmount(e.target.value)} placeholder="0" />
-                        </div>
-                    )}
-                    
-                    <div className="pt-4 flex justify-end gap-2">
-                        <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-                        <Button type="submit" disabled={submitting} className="bg-emerald-600 hover:bg-emerald-700 text-white">
-                            {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CheckCircle2 className="mr-2 h-4 w-4" />}
-                            Record Payment
-                        </Button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
-}
-
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function InvoiceManager() {
     const { terms: metaTerms, sessions: metaSessions } = useFinanceMeta();
@@ -956,14 +861,13 @@ export default function InvoiceManager() {
 
             {printInv && <InvoicePrint inv={printInv} settings={settings} onClose={() => setPrintInv(null)} onSuccess={() => fetchInvoices()} />}
             {payInv && (
-                <RecordPaymentModal 
-                    inv={payInv} 
-                    settings={settings}
-                    onClose={() => setPayInv(null)} 
+                <RecordPaymentModal
+                    inv={payInv}
+                    onClose={() => setPayInv(null)}
                     onSuccess={() => {
                         setPayInv(null);
                         fetchInvoices();
-                    }} 
+                    }}
                 />
             )}
         </>

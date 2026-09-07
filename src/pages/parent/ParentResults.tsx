@@ -8,6 +8,7 @@ import ReportCardPreview from '../../components/report/ReportCardPreview';
 import ReportCard from '../../components/report-blocks/ReportCard';
 import { Card } from '../../components/ui/card';
 import { mobileSafePrint } from '../../lib/printUtils';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 export default function ParentResults() {
     const [activeTab, setActiveTab] = useState<'current'|'legacy'>('current');
     const [childId, setChildId] = useState('');
@@ -414,20 +415,24 @@ export default function ParentResults() {
                         <div className="py-10 mx-auto origin-top transform-gpu print:min-w-0" style={{ zoom: previewZoom }}>
                         {cardData.templateConfig?.blocks ? (
                             <div className="mx-auto w-full max-w-[794px]">
-                                <ReportCard config={{ ...cardData.templateConfig, globalSettings: { schoolSettings: cardData.schoolSettings } }} data={cardData} />
+                                <ErrorBoundary errorMessage={`Failed to render report card for ${cardData.student?.name || 'this student'}.`}>
+                                    <ReportCard config={{ ...cardData.templateConfig, blocks: cardData.templateConfig?.blocks ?? [], design: cardData.templateConfig?.design ?? {}, globalSettings: { schoolSettings: cardData.schoolSettings } }} data={cardData} />
+                                </ErrorBoundary>
                             </div>
                         ) : (
-                            <ReportCardPreview
-                                templateConfig={cardData.templateConfig}
-                                student={cardData.student}
-                                results={cardData.results}
-                                gradingScale={cardData.gradingScale}
-                                comments={cardData.comments}
-                                attendance={cardData.attendance}
-                                school={cardData.schoolSettings || { schoolName: 'School Name' }}
-                                summary={cardData.summary}
-                                annualResults={cardData.annualResults}
-                            />
+                            <ErrorBoundary errorMessage={`Failed to render report card for ${cardData.student?.name || 'this student'}.`}>
+                                <ReportCardPreview
+                                    templateConfig={cardData.templateConfig}
+                                    student={cardData.student}
+                                    results={cardData.results}
+                                    gradingScale={cardData.gradingScale}
+                                    comments={cardData.comments}
+                                    attendance={cardData.attendance}
+                                    school={cardData.schoolSettings || { schoolName: 'School Name' }}
+                                    summary={cardData.summary}
+                                    annualResults={cardData.annualResults}
+                                />
+                            </ErrorBoundary>
                         )}
                     </div>
                 </div>

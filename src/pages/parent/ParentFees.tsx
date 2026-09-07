@@ -42,20 +42,22 @@ const STATUS_CFG: Record<string, { label: string; color: string; bg: string; ico
 
 function fmt(n: number | undefined | null) { return '₦' + (Number(n) || 0).toLocaleString('en-NG'); }
 
-function PaymentModal({ 
-    invoice, 
-    methods, 
-    bankAccounts, 
+function PaymentModal({
+    invoice,
+    methods,
+    bankAccounts,
     policy,
     childrenList = [],
+    showItemizedBreakdown = true,
     onClose,
     onPaymentSuccess
-}: { 
-    invoice: FeeInvoice; 
-    methods: PaymentMethod[]; 
-    bankAccounts: BankAccount[]; 
+}: {
+    invoice: FeeInvoice;
+    methods: PaymentMethod[];
+    bankAccounts: BankAccount[];
     policy: { allowPartialPayment: boolean; allowOverpayment: boolean; allowWalletCheckout?: boolean; allowFamilyWalletSharing?: boolean };
     childrenList?: any[];
+    showItemizedBreakdown?: boolean;
     onClose: () => void;
     onPaymentSuccess?: () => void;
 }) {
@@ -224,6 +226,24 @@ function PaymentModal({
                     <div className="flex justify-between text-sm">
                         <span className="text-gray-500">Student:</span><span className="font-bold">{invoice.name}</span>
                     </div>
+
+                    {/* Read-only itemized breakdown — same data the expanded invoice row
+                        already shows, mirrored here so it's visible while paying too. */}
+                    {showItemizedBreakdown && invoice.items && invoice.items.length > 0 && (
+                        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-1.5">
+                            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Fee Breakdown</p>
+                            {invoice.items.map(item => (
+                                <div key={item.id} className="flex justify-between items-center text-sm">
+                                    <span className="text-gray-600 font-medium">{item.label}</span>
+                                    <span className="text-gray-900 font-bold">{fmt(item.amount)}</span>
+                                </div>
+                            ))}
+                            <div className="flex justify-between items-center text-sm pt-1.5 border-t border-slate-200 mt-1.5">
+                                <span className="text-slate-500 font-bold">Total</span>
+                                <span className="text-gray-900 font-black">{fmt(invoice.totalFee)}</span>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Wallet Notice if available */}
                     {hasWalletCredit && (
@@ -759,13 +779,14 @@ export default function ParentFees() {
 
             <AnimatePresence>
                 {payingInvoice && (
-                    <PaymentModal 
-                        invoice={payingInvoice} 
-                        methods={activeMethods} 
-                        bankAccounts={bankAccounts} 
+                    <PaymentModal
+                        invoice={payingInvoice}
+                        methods={activeMethods}
+                        bankAccounts={bankAccounts}
                         policy={paymentPolicy}
                         childrenList={childrenList}
-                        onClose={() => setPayingInvoice(null)} 
+                        showItemizedBreakdown={settings?.showItemizedBreakdown !== false}
+                        onClose={() => setPayingInvoice(null)}
                         onPaymentSuccess={refreshData}
                     />
                 )}

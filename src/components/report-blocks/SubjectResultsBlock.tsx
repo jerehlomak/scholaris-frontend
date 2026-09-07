@@ -1,5 +1,6 @@
 import React from 'react';
 import { ClipboardList } from 'lucide-react';
+import { getRemarkColor } from './remarkColors';
 
 function ordinal(n: number): string {
     const s = ['TH', 'ST', 'ND', 'RD'];
@@ -10,8 +11,17 @@ function ordinal(n: number): string {
 export default function SubjectResultsBlock({ data, config, design, toggles, globalSettings, masterConfig  }: { data: any, config?: any, design?: any, toggles?: any, globalSettings?: any, masterConfig?: any  }) {
     const title = config?.title || 'Subject results';
     const accentColor = design?.accentColor || config?.accentColor || '#1a7a40';
+    const primaryColor = design?.primaryColor || config?.primaryColor || accentColor;
     const highlightTop = config?.highlightTop !== false;
     const showPassFail = config?.showPassFail === true;
+
+    // Visual variants — see templatePresets.ts "Ledger" / "Bulletin" presets.
+    const isBordered = config?.variant === 'BORDERED';
+    const isNavyHeader = config?.headerStyle === 'NAVY_BAR';
+    const isColoredRemark = config?.remarkStyle === 'COLORED_BADGE';
+    const showTotalRow = config?.showTotalRow === true;
+    const showAverageRow = config?.showAverageRow === true;
+    const tableBorderColor = design?.tableBorderColor || primaryColor;
     const baseShowCols = config?.showCols || { score: true, grade: true, progress: true, remark: true };
     const showCols = { ...baseShowCols };
     
@@ -27,8 +37,14 @@ export default function SubjectResultsBlock({ data, config, design, toggles, glo
     }
     
     const t = toggles || {};
-    
-    // Master Display Toggles take precedence over Template Config
+
+    // Master Display Toggles take precedence over Template Config, same as
+    // every other preset — a school's own settings must control what shows
+    // on every template, "Ledger" included (see PROJECT_BRIEF.md's template
+    // scope note on this). The BORDERED variant's narrower sidebar-paired
+    // width just means it needs to cope with extra columns gracefully
+    // (tighter padding/font) rather than the table hiding columns the
+    // school explicitly asked to see — see the width-aware sizing below.
     const showHighestAvgSubj = t.showHighestAvgSubj ?? config?.highestAverageInSubject ?? true;
     const showLowestAvgSubj = t.showLowestAvgSubj ?? config?.lowestAverageInSubject ?? true;
     const showSubjectClassAverage = t.showSubjectClassAverage ?? config?.subjectClassAverage ?? true;
@@ -125,12 +141,41 @@ export default function SubjectResultsBlock({ data, config, design, toggles, glo
         return gradeScale[gradeScale.length - 1] || { label: 'C', bg: '#fff8e1', fg: '#a06000', remark: 'Average' };
     };
 
-    const layoutDensity = globalSettings?.schoolSettings?.resultConfig?.layoutDensity || 'STANDARD';
+    const schoolLayoutDensity = globalSettings?.schoolSettings?.resultConfig?.layoutDensity || 'STANDARD';
+    // BORDERED (Ledger) sits in a narrower sidebar-paired column and is
+    // meant to be dense by design (the client's own "20 subjects on one
+    // page" reference sheet), so its floor is COMPACT rather than the
+    // school's STANDARD default — a school can still choose COMPACT or
+    // ULTRA_COMPACT for an even tighter fit, this only raises the floor,
+    // it never overrides an explicit tighter choice. This is a spacing
+    // parameter, not a content toggle, so it doesn't touch what the school's
+    // Display Toggles decide is shown — only how tightly it's packed.
+    const layoutDensity = isBordered && schoolLayoutDensity === 'STANDARD' ? 'COMPACT' : schoolLayoutDensity;
     const isUltraCompact = layoutDensity === 'ULTRA_COMPACT';
     const isCompact = layoutDensity === 'COMPACT';
     const padClass = isUltraCompact ? 'py-0.5 px-1' : isCompact ? 'py-1 px-1.5' : 'py-1.5 px-2';
     const textBaseClass = isUltraCompact ? 'text-[9px]' : isCompact ? 'text-[10px]' : 'text-[11px]';
     const textSmallClass = isUltraCompact ? 'text-[8px]' : 'text-[9px]';
+
+    // Border helpers — BORDERED gives every cell a full grid border in the
+    // template's own primary color; the default stays the existing
+    // border-bottom-only look.
+    const cellBorderClass = isBordered ? 'border' : 'border-b';
+    const cellBorderStyle = isBordered ? { borderColor: tableBorderColor } : { borderColor: '#f3f4f6' };
+    const headBorderStyle = isBordered ? { borderColor: tableBorderColor } : { borderColor: '#e5e7eb' };
+    const headCellClass = isNavyHeader
+        ? `text-white ${textSmallClass} font-semibold uppercase tracking-wider ${padClass}`
+        : `${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50`;
+    const headCellStyle = isNavyHeader ? { backgroundColor: primaryColor } : undefined;
+
+    // Column count — used to span the total/average summary rows correctly.
+    const colCount = 1 + assessmentParts.length
+        + (showCols.score ? 1 : 0) + (showSubjectClassAverage ? 1 : 0) + (showHighestAvgSubj ? 1 : 0)
+        + (showLowestAvgSubj ? 1 : 0) + (showSubjectPosition ? 1 : 0) + (showCols.grade ? 1 : 0)
+        + (showCols.progress ? 1 : 0) + (showCols.remark ? 1 : 0);
+
+    const sumPart = (partName: string) => subjects.reduce((acc: number, s: any) => acc + (Number(s.parts[partName]) || 0), 0);
+    const sumScore = subjects.reduce((acc: number, s: any) => acc + (Number(s.score) || 0), 0);
 
     return (
         <div className="mb-4">
@@ -138,58 +183,87 @@ export default function SubjectResultsBlock({ data, config, design, toggles, glo
                 <ClipboardList className="w-3.5 h-3.5" />
                 <span>{title}</span>
             </div>
-            
-            <table className={`w-full ${textBaseClass} border-collapse`} style={{ tableLayout: 'auto' }}>
+
+            <table className={`w-full ${textBaseClass} border-collapse`} style={isBordered ? { tableLayout: 'auto', border: `1px solid ${tableBorderColor}` } : { tableLayout: 'auto' }}>
                 <thead>
                     <tr>
-                        <th className={`text-left ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200`}>Subject</th>
+                        <th className={`text-left ${cellBorderClass} ${headCellClass}`} style={{ ...headBorderStyle, ...headCellStyle }}>Subject</th>
                         {assessmentParts.map((p: any) => (
-                            <th key={p.id} className={`text-center ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200`}>
-                                {p.name} <br/><span className="text-[7px] text-gray-400">({p.weight})</span>
+                            <th key={p.id} className={`text-center ${cellBorderClass} ${headCellClass}`} style={{ ...headBorderStyle, ...headCellStyle }}>
+                                {p.name} <br/><span className={`text-[7px] ${isNavyHeader ? 'text-white/70' : 'text-gray-400'}`}>({p.weight})</span>
                             </th>
                         ))}
-                        {showCols.score && <th className={`text-center ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200`}>Total</th>}
-                        {showSubjectClassAverage && <th className={`text-center ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200`}>Class Avg</th>}
-                        {showHighestAvgSubj && <th className={`text-center ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200`}>High</th>}
-                        {showLowestAvgSubj && <th className={`text-center ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200`}>Low</th>}
-                        {showSubjectPosition && <th className={`text-center ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200`}>Pos</th>}
-                        {showCols.grade && <th className={`text-center ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200`}>Grade</th>}
-                        {showCols.progress && <th className={`text-left ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200 min-w-[60px]`}>Progress</th>}
-                        {showCols.remark && <th className={`text-left ${textSmallClass} font-semibold uppercase tracking-wider text-gray-500 ${padClass} bg-gray-50 border-b border-gray-200`}>Remark</th>}
+                        {showCols.score && <th className={`text-center ${cellBorderClass} ${headCellClass}`} style={{ ...headBorderStyle, ...headCellStyle }}>Total</th>}
+                        {showSubjectClassAverage && <th className={`text-center ${cellBorderClass} ${headCellClass}`} style={{ ...headBorderStyle, ...headCellStyle }}>Class Avg</th>}
+                        {showHighestAvgSubj && <th className={`text-center ${cellBorderClass} ${headCellClass}`} style={{ ...headBorderStyle, ...headCellStyle }}>High</th>}
+                        {showLowestAvgSubj && <th className={`text-center ${cellBorderClass} ${headCellClass}`} style={{ ...headBorderStyle, ...headCellStyle }}>Low</th>}
+                        {showSubjectPosition && <th className={`text-center ${cellBorderClass} ${headCellClass}`} style={{ ...headBorderStyle, ...headCellStyle }}>Pos</th>}
+                        {showCols.grade && <th className={`text-center ${cellBorderClass} ${headCellClass}`} style={{ ...headBorderStyle, ...headCellStyle }}>Grade</th>}
+                        {showCols.progress && <th className={`text-left ${cellBorderClass} ${headCellClass} min-w-[60px]`} style={{ ...headBorderStyle, ...headCellStyle }}>Progress</th>}
+                        {showCols.remark && <th className={`text-left ${cellBorderClass} ${headCellClass}`} style={{ ...headBorderStyle, ...headCellStyle }}>Remark</th>}
                     </tr>
                 </thead>
                 <tbody>
                     {subjects.map((s: any, i: number) => {
                         const g = getGrade(s.score, s.backendGrade, s.remark);
+                        const remarkText = g.remark || s.remark;
+                        const remarkColor = isColoredRemark ? getRemarkColor(remarkText) : null;
                         return (
                             <tr key={i}>
-                                <td className={`${padClass} border-b border-gray-100 font-bold text-gray-800`}>{s.name}</td>
+                                <td className={`${padClass} ${cellBorderClass} font-bold text-gray-800`} style={cellBorderStyle}>{s.name}</td>
                                 {assessmentParts.map((p: any) => (
-                                    <td key={p.id} className={`${padClass} border-b border-gray-100 text-center font-medium text-gray-600`}>
+                                    <td key={p.id} className={`${padClass} ${cellBorderClass} text-center font-medium text-gray-600`} style={cellBorderStyle}>
                                         {s.parts[p.name] !== undefined ? s.parts[p.name] : '-'}
                                     </td>
                                 ))}
-                                {showCols.score && <td className={`${padClass} border-b border-gray-100 text-center font-bold text-[#1E4DA6]`}>{s.score}</td>}
-                                {showSubjectClassAverage && <td className={`${padClass} border-b border-gray-100 text-center text-gray-500`}>{s.avg}</td>}
-                                {showHighestAvgSubj && <td className={`${padClass} border-b border-gray-100 text-center text-emerald-600 font-semibold`}>{s.high}</td>}
-                                {showLowestAvgSubj && <td className={`${padClass} border-b border-gray-100 text-center text-red-500 font-semibold`}>{s.low}</td>}
-                                {showSubjectPosition && <td className={`${padClass} border-b border-gray-100 text-center text-[#1E4DA6] font-semibold`}>{s.pos}</td>}
+                                {showCols.score && <td className={`${padClass} ${cellBorderClass} text-center font-bold text-[#1E4DA6]`} style={cellBorderStyle}>{s.score}</td>}
+                                {showSubjectClassAverage && <td className={`${padClass} ${cellBorderClass} text-center text-gray-500`} style={cellBorderStyle}>{s.avg}</td>}
+                                {showHighestAvgSubj && <td className={`${padClass} ${cellBorderClass} text-center text-emerald-600 font-semibold`} style={cellBorderStyle}>{s.high}</td>}
+                                {showLowestAvgSubj && <td className={`${padClass} ${cellBorderClass} text-center text-red-500 font-semibold`} style={cellBorderStyle}>{s.low}</td>}
+                                {showSubjectPosition && <td className={`${padClass} ${cellBorderClass} text-center text-[#1E4DA6] font-semibold`} style={cellBorderStyle}>{s.pos}</td>}
                                 {showCols.grade && (
-                                    <td className={`${padClass} border-b border-gray-100 text-center`}>
+                                    <td className={`${padClass} ${cellBorderClass} text-center`} style={cellBorderStyle}>
                                         <span className={`inline-block px-1.5 py-0.5 rounded-full ${isUltraCompact ? 'text-[8px]' : 'text-[10px]'} font-bold leading-none`} style={{ background: g.bg, color: g.fg }}>{g.label}</span>
                                     </td>
                                 )}
                                 {showCols.progress && (
-                                    <td className={`${padClass} border-b border-gray-100`}>
+                                    <td className={`${padClass} ${cellBorderClass}`} style={cellBorderStyle}>
                                         <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden mt-0.5">
                                             <div className="h-full rounded-full" style={{ width: `${s.score}%`, backgroundColor: accentColor }}></div>
                                         </div>
                                     </td>
                                 )}
-                                {showCols.remark && <td className={`${padClass} border-b border-gray-100 text-gray-500 ${isUltraCompact ? 'text-[8px]' : 'text-[10px]'}`}>{g.remark || s.remark}</td>}
+                                {showCols.remark && (
+                                    isColoredRemark ? (
+                                        <td className={`${padClass} ${cellBorderClass} ${isUltraCompact ? 'text-[8px]' : 'text-[10px]'} text-center font-semibold`} style={{ ...cellBorderStyle, backgroundColor: remarkColor!.bg, color: remarkColor!.fg }}>
+                                            {remarkText}
+                                        </td>
+                                    ) : (
+                                        <td className={`${padClass} ${cellBorderClass} text-gray-500 ${isUltraCompact ? 'text-[8px]' : 'text-[10px]'}`} style={cellBorderStyle}>{remarkText}</td>
+                                    )
+                                )}
                             </tr>
                         );
                     })}
+                    {showTotalRow && (
+                        <tr>
+                            <td className={`${padClass} ${cellBorderClass} font-bold`} style={{ ...cellBorderStyle, color: primaryColor }}>{config?.totalRowLabel || 'Total'}</td>
+                            {assessmentParts.map((p: any) => (
+                                <td key={p.id} className={`${padClass} ${cellBorderClass} text-center font-bold`} style={{ ...cellBorderStyle, color: primaryColor }}>{sumPart(p.name)}</td>
+                            ))}
+                            {showCols.score && <td className={`${padClass} ${cellBorderClass} text-center font-bold`} style={{ ...cellBorderStyle, color: primaryColor }}>{sumScore}</td>}
+                            {Array.from({ length: colCount - 1 - assessmentParts.length - (showCols.score ? 1 : 0) }).map((_, i) => (
+                                <td key={`totpad-${i}`} className={`${padClass} ${cellBorderClass}`} style={cellBorderStyle} />
+                            ))}
+                        </tr>
+                    )}
+                    {showAverageRow && (
+                        <tr>
+                            <td colSpan={colCount} className={`${padClass} ${cellBorderClass} font-bold`} style={{ ...cellBorderStyle, color: primaryColor, backgroundColor: `${primaryColor}0D` }}>
+                                {config?.averageRowLabel || 'Percentage Average'}: {data?.summary?.average ? `${data.summary.average}%` : '—'}
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>
