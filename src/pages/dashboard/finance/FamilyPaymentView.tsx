@@ -4,6 +4,7 @@ import { Search, Loader2, Users, FileText, CheckCircle2, CreditCard, ChevronRigh
 import { Input } from '../../../components/ui/input';
 import { toast } from 'sonner';
 import RecordPaymentModal from './components/RecordPaymentModal';
+import PayFamilyTotalModal from './components/PayFamilyTotalModal';
 
 export default function FamilyPaymentView() {
     const [families, setFamilies] = useState<any[]>([]);
@@ -13,6 +14,7 @@ export default function FamilyPaymentView() {
     const [profile, setProfile] = useState<any>(null);
     const [loadingProfile, setLoadingProfile] = useState(false);
     const [payInv, setPayInv] = useState<any | null>(null);
+    const [payingTotal, setPayingTotal] = useState(false);
 
     useEffect(() => {
         axios.get('/api/v1/finance-v2/billing/families', { withCredentials: true })
@@ -35,7 +37,10 @@ export default function FamilyPaymentView() {
         fetchFamilyProfile(family.id);
     };
 
-    const filteredFamilies = search.length > 1 
+    const familyTotalOutstanding: number = profile?.children?.reduce((sum: number, child: any) =>
+        sum + (child.invoices?.reduce((s: number, inv: any) => s + (inv.balanceDue > 0 ? inv.balanceDue : 0), 0) || 0), 0) || 0;
+
+    const filteredFamilies = search.length > 1
         ? families.filter(f => 
             f.name?.toLowerCase().includes(search.toLowerCase()) || 
             f.email?.toLowerCase().includes(search.toLowerCase()) ||
@@ -106,14 +111,30 @@ export default function FamilyPaymentView() {
 
             {selectedFamily && (
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div className="p-6 border-b border-slate-100 flex items-center gap-4 bg-slate-50/50">
-                        <div className="h-16 w-16 rounded-2xl bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-2xl">
-                            <Users className="h-8 w-8" />
+                    <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-50/50">
+                        <div className="flex items-center gap-4">
+                            <div className="h-16 w-16 rounded-2xl bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-2xl">
+                                <Users className="h-8 w-8" />
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-slate-900">{selectedFamily.name}</h3>
+                                <p className="text-slate-500 text-sm">{selectedFamily.studentCount} Children</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 className="text-xl font-bold text-slate-900">{selectedFamily.name}</h3>
-                            <p className="text-slate-500 text-sm">{selectedFamily.studentCount} Children</p>
-                        </div>
+                        {familyTotalOutstanding > 0 && (
+                            <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                                <div className="text-right">
+                                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Total Outstanding</p>
+                                    <p className="font-bold text-lg text-red-600">₦{familyTotalOutstanding.toLocaleString()}</p>
+                                </div>
+                                <button
+                                    onClick={() => setPayingTotal(true)}
+                                    className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-colors shadow-sm whitespace-nowrap"
+                                >
+                                    <CreditCard className="h-4 w-4" /> Pay Total
+                                </button>
+                            </div>
+                        )}
                     </div>
 
                     <div className="p-6">
@@ -184,10 +205,20 @@ export default function FamilyPaymentView() {
                 </div>
                 
                 {payInv && (
-                    <RecordPaymentModal 
+                    <RecordPaymentModal
                         inv={payInv}
                         onClose={() => setPayInv(null)}
                         onSuccess={() => { setPayInv(null); fetchFamilyProfile(selectedFamily.id); }}
+                    />
+                )}
+
+                {payingTotal && selectedFamily && (
+                    <PayFamilyTotalModal
+                        parentId={selectedFamily.id}
+                        familyName={selectedFamily.name}
+                        totalOutstanding={familyTotalOutstanding}
+                        onClose={() => setPayingTotal(false)}
+                        onSuccess={() => { setPayingTotal(false); fetchFamilyProfile(selectedFamily.id); }}
                     />
                 )}
             </div>

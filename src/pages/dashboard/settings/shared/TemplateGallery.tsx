@@ -35,16 +35,34 @@ const API = import.meta.env.VITE_API_URL || '/api/v1';
 const PREVIEW_DATA = {
     student: {
         name: 'Doe, John Emmanuel', admissionNo: 'ADM/2025/014', className: 'JSS 2 Gold',
-        classLevel: 'JSS', gender: 'Male', term: 'First Term', academicYear: '2025/2026'
+        classLevel: 'JSS', gender: 'Male', term: 'First Term', academicYear: '2025/2026',
+        classTeacherName: 'Mrs. Adaeze Okafor'
     },
     results: [
-        { subject: { name: 'Mathematics' }, ca1: 15, ca2: 18, exam: 55, totalScore: 88, computedGrade: 'A', computedRemark: 'Excellent', isPassing: true },
-        { subject: { name: 'English Language' }, ca1: 14, ca2: 16, exam: 45, totalScore: 75, computedGrade: 'B', computedRemark: 'Very Good', isPassing: true },
-        { subject: { name: 'Basic Science' }, ca1: 10, ca2: 12, exam: 40, totalScore: 62, computedGrade: 'C', computedRemark: 'Good', isPassing: true }
+        { subject: { name: 'Mathematics' }, scores: { '1st CA': 15, '2nd CA': 18, 'Exam': 55 }, totalScore: 88, computedGrade: 'A', computedRemark: 'Excellent', isPassing: true },
+        { subject: { name: 'English Language' }, scores: { '1st CA': 14, '2nd CA': 16, 'Exam': 45 }, totalScore: 75, computedGrade: 'B', computedRemark: 'V. Good', isPassing: true },
+        { subject: { name: 'Basic Science' }, scores: { '1st CA': 10, '2nd CA': 12, 'Exam': 40 }, totalScore: 62, computedGrade: 'C', computedRemark: 'Good', isPassing: true },
+        { subject: { name: 'Social Studies' }, scores: { '1st CA': 17, '2nd CA': 18, 'Exam': 50 }, totalScore: 85, computedGrade: 'A', computedRemark: 'Excellent', isPassing: true },
+        { subject: { name: 'Computer Studies' }, scores: { '1st CA': 8, '2nd CA': 10, 'Exam': 22 }, totalScore: 40, computedGrade: 'D', computedRemark: 'Fair', isPassing: true },
+        { subject: { name: 'French' }, scores: { '1st CA': 6, '2nd CA': 8, 'Exam': 15 }, totalScore: 29, computedGrade: 'E', computedRemark: 'Weak', isPassing: false }
     ],
-    summary: { totalSubjects: 3, totalScore: 225, average: '75.0', overallPosition: 3, classAverage: '68.4', passMark: 40 },
-    attendance: { present: 58, absent: 2, total: 60 },
-    comments: { teacherComment: 'A focused and consistent learner this term.', principalComment: 'Keep up the good work.' },
+    summary: { totalSubjects: 6, totalScore: 319, average: '68.2', overallPosition: 3, classAverage: '61.4', highestAvg: '92.0', lowestAvg: '38.5', studentsInClass: 24, passMark: 40, nextTermFee: 45000 },
+    attendance: { present: 58, absent: 2, total: 60, opened: 60 },
+    comments: {
+        teacherComment: 'A focused and consistent learner this term.',
+        headComment: 'Very good result, keep it up.',
+        principalComment: 'Keep up the good work.'
+    },
+    gradingScale: {
+        grades: [
+            { grade: 'A', minScore: 80, maxScore: 100, remark: 'Excellent' },
+            { grade: 'B', minScore: 60, maxScore: 79, remark: 'V. Good' },
+            { grade: 'C', minScore: 50, maxScore: 59, remark: 'Good' },
+            { grade: 'D', minScore: 40, maxScore: 49, remark: 'Fair' },
+            { grade: 'E', minScore: 30, maxScore: 39, remark: 'Weak' },
+            { grade: 'F', minScore: 0, maxScore: 29, remark: 'Poor' }
+        ]
+    },
     schoolSettings: { schoolName: 'Sample School', display: {}, signatures: [], resultConfig: {} }
 };
 

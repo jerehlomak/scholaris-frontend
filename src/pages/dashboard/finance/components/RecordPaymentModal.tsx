@@ -15,11 +15,48 @@ export default function RecordPaymentModal({ inv, onClose, onSuccess }: { inv: a
     const [showPrintModal, setShowPrintModal] = useState(false);
     const [settings, setSettings] = useState<any>(null);
 
+    // Itemized breakdown — only editable before any payment has landed on this
+    // invoice (updateInvoice blocks line-item edits once amountPaid > 0), same
+    // rule the invoice editor already enforces.
+    const canEditItems = (inv.amountPaid || 0) === 0 && Array.isArray(inv.items) && inv.items.length > 0;
+    const [itemChecks, setItemChecks] = useState<Record<string, boolean>>(
+        () => Object.fromEntries((inv.items || []).map((i: any) => [i.id, true]))
+    );
+    const [savingItems, setSavingItems] = useState(false);
+    const checkedItems = (inv.items || []).filter((i: any) => itemChecks[i.id]);
+    const checkedTotal = checkedItems.reduce((s: number, i: any) => s + i.amount, 0);
+    const itemsChanged = canEditItems && checkedItems.length !== (inv.items || []).length;
+
     React.useEffect(() => {
         axios.get('/api/v1/finance-v2/settings', { withCredentials: true })
             .then(res => setSettings(res.data.settings))
             .catch(console.error);
     }, []);
+
+    // Persists the unchecked items by dropping them from the invoice (updateInvoice
+    // recomputes subTotal/totalAmount/balanceDue), then continues to the actual
+    // payment amount input with the new balance.
+    const handleApplyItemChanges = async () => {
+        setSavingItems(true);
+        try {
+            const res = await axios.put(`/api/v1/finance-v2/invoices/${inv.id}`, {
+                items: checkedItems.map((i: any) => ({
+                    type: i.type, referenceId: i.referenceId, label: i.label, quantity: i.quantity, unitPrice: i.unitPrice
+                }))
+            }, { withCredentials: true });
+            const updated = res.data.invoice;
+            inv.items = updated.items;
+            inv.balanceDue = updated.balanceDue;
+            inv.totalAmount = updated.totalAmount;
+            setItemChecks(Object.fromEntries(updated.items.map((i: any) => [i.id, true])));
+            setAmount(updated.balanceDue.toString());
+            toast.success('Invoice items updated');
+        } catch (err: any) {
+            toast.error(err.response?.data?.msg || 'Failed to update items');
+        } finally {
+            setSavingItems(false);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -110,6 +147,47 @@ export default function RecordPaymentModal({ inv, onClose, onSuccess }: { inv: a
                         <p className="font-bold text-red-600">₦{inv.balanceDue.toLocaleString()}</p>
                     </div>
                 </div>
+
+                {/* Itemized breakdown — compulsory fees can't be unchecked; optional
+                    items/fees can be dropped before charging (only while unpaid). */}
+                {Array.isArray(inv.items) && inv.items.length > 0 && (
+                    <div className="border-b border-slate-100 px-6 py-4 space-y-2">
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Items</p>
+                        {inv.items.map((item: any) => (
+                            <label key={item.id} className={`flex items-center gap-3 text-sm ${!canEditItems ? 'opacity-70' : ''}`}>
+                                <input
+                                    type="checkbox"
+                                    checked={!!itemChecks[item.id]}
+                                    disabled={!canEditItems || item.isCompulsory}
+                                    onChange={() => setItemChecks(p => ({ ...p, [item.id]: !p[item.id] }))}
+                                    className="h-4 w-4 rounded border-slate-300 accent-[#1E4DA6]"
+                                />
+                                <span className="flex-1 text-slate-700 font-medium">
+                                    {item.label}
+                                    {item.isCompulsory && <span className="ml-1.5 text-[9px] font-bold uppercase text-slate-400">Compulsory</span>}
+                                </span>
+                                <span className="font-bold text-slate-800">₦{item.amount.toLocaleString()}</span>
+                            </label>
+                        ))}
+                        {canEditItems && (
+                            <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                                <span className="text-xs text-slate-500">
+                                    {itemsChanged ? `New total: ₦${checkedTotal.toLocaleString()}` : 'Uncheck an optional item to remove it before charging'}
+                                </span>
+                                {itemsChanged && (
+                                    <Button type="button" size="sm" onClick={handleApplyItemChanges} disabled={savingItems || checkedItems.length === 0}
+                                        className="h-7 px-3 text-xs bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
+                                        {savingItems ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Apply'}
+                                    </Button>
+                                )}
+                            </div>
+                        )}
+                        {!canEditItems && (inv.amountPaid || 0) > 0 && (
+                            <p className="text-[11px] text-slate-400">Items are locked — a payment has already been recorded on this invoice.</p>
+                        )}
+                    </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                     <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-1">Amount Paid (₦)</label>

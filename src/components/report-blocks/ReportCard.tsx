@@ -8,6 +8,8 @@ import NarrativeCommentsBlock from './NarrativeCommentsBlock';
 import RemarksBlock from './RemarksBlock';
 import SignaturesBlock from './SignaturesBlock';
 import DomainRatingsBlock from './DomainRatingsBlock';
+import BorderedStudentInfoBlock from './BorderedStudentInfoBlock';
+import GradingKeyBlock from './GradingKeyBlock';
 
 import CommentHeaderBlock from './CommentHeaderBlock';
 import CommentStudentInfoBlock from './CommentStudentInfoBlock';
@@ -25,6 +27,8 @@ const BLOCK_REGISTRY: Record<string, { component: React.FC<any> }> = {
     RemarksBlock: { component: RemarksBlock },
     SignaturesBlock: { component: SignaturesBlock },
     DomainRatingsBlock: { component: DomainRatingsBlock },
+    BorderedStudentInfoBlock: { component: BorderedStudentInfoBlock },
+    GradingKeyBlock: { component: GradingKeyBlock },
     CommentHeaderBlock: { component: CommentHeaderBlock },
     CommentStudentInfoBlock: { component: CommentStudentInfoBlock },
     CommentSkillsGridBlock: { component: CommentSkillsGridBlock },
@@ -88,7 +92,62 @@ export default function ReportCard({ config, data }: ReportCardProps) {
 
     const visibleBlocks = blocks.filter((b: any) => b.isVisible && isBlockVisible(b.type));
 
-    if (footerLayout === 'MULTI_COLUMN') {
+    // 'SIDEBAR_RIGHT' — the "Ledger" preset: one designated block (normally
+    // SubjectResultsBlock) renders beside a narrow sidebar of other blocks
+    // (Domain Ratings, Grading Key) instead of everything stacking full-width.
+    // This is a structural property of the template itself, so it lives in
+    // `design` (set once per preset) rather than the school-wide
+    // `resultConfig.footerLayout` toggle above, which stays independent.
+    const mainLayout = design.mainLayout || 'STACKED';
+    const sidebarBlockTypes: string[] = design.sidebarBlockTypes || [];
+
+    if (mainLayout === 'SIDEBAR_RIGHT' && sidebarBlockTypes.length > 0) {
+        const pairType = design.sidebarPairBlockType || 'SubjectResultsBlock';
+        const pairIndex = visibleBlocks.findIndex((b: any) => b.type === pairType);
+        const beforePair = pairIndex >= 0 ? visibleBlocks.slice(0, pairIndex) : visibleBlocks;
+        const pairBlock = pairIndex >= 0 ? visibleBlocks[pairIndex] : null;
+        const sidebarBlocks = visibleBlocks.filter((b: any) => sidebarBlockTypes.includes(b.type));
+        const afterBlocks = pairIndex >= 0
+            ? visibleBlocks.slice(pairIndex + 1).filter((b: any) => !sidebarBlockTypes.includes(b.type))
+            : [];
+
+        renderedContent = (
+            <>
+                {beforePair.map(renderBlock)}
+                {pairBlock && (
+                    <div className="flex gap-4 mb-4 items-start">
+                        <div className="flex-[2] min-w-0">{renderBlock(pairBlock)}</div>
+                        <div className="flex-1 min-w-0 flex flex-col gap-3">{sidebarBlocks.map(renderBlock)}</div>
+                    </div>
+                )}
+                {afterBlocks.map(renderBlock)}
+            </>
+        );
+    } else if (mainLayout === 'SUMMARY_ATTENDANCE_PAIR') {
+        // "Bulletin" preset: the Academic Summary and Attendance cards sit
+        // side-by-side as a matching pair (both already support a NAVY_CARD
+        // variant, see AcademicSummaryBlock/AttendanceBlock), independent of
+        // the school-wide footerLayout toggle so the preset's own design
+        // doesn't shift if a school has that set to STACKED elsewhere.
+        const pairIndex = visibleBlocks.findIndex((b: any) => b.type === 'AcademicSummaryBlock' || b.type === 'AttendanceBlock');
+        const before = pairIndex >= 0 ? visibleBlocks.slice(0, pairIndex) : visibleBlocks;
+        const pairBlocks = visibleBlocks.filter((b: any) => b.type === 'AcademicSummaryBlock' || b.type === 'AttendanceBlock');
+        const after = pairIndex >= 0
+            ? visibleBlocks.slice(pairIndex).filter((b: any) => b.type !== 'AcademicSummaryBlock' && b.type !== 'AttendanceBlock')
+            : [];
+
+        renderedContent = (
+            <>
+                {before.map(renderBlock)}
+                {pairBlocks.length > 0 && (
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                        {pairBlocks.map(renderBlock)}
+                    </div>
+                )}
+                {after.map(renderBlock)}
+            </>
+        );
+    } else if (footerLayout === 'MULTI_COLUMN') {
         const topBlocks = visibleBlocks.filter((b: any) => !footerTypes.includes(b.type));
         const footerBlocks = visibleBlocks.filter((b: any) => footerTypes.includes(b.type));
 
@@ -147,6 +206,11 @@ export default function ReportCard({ config, data }: ReportCardProps) {
                 }}
             >
                 {renderedContent}
+                {design.showGeneratedFooter && (
+                    <p className="text-center text-[8px] text-gray-400 italic mt-4">
+                        Generated by Skcooly School Management System — {data?.schoolSettings?.schoolName || data?.school?.name || 'School'}
+                    </p>
+                )}
             </div>
         </div>
     );

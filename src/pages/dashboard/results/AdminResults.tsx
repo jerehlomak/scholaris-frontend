@@ -360,7 +360,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                 const sAdm = studentData?.student?.admissionNo || '';
                 const fileName = `${sName.replace(/\s+/g, '_')}_${sAdm.replace(/\//g, '-')}_Result.pdf`;
                 
-                toast.loading(`Processing ${i + 1}/${cards.length}: ${studentData.student.name}`, { id: 'bulk-zip-progress' });
+                toast.loading(`Processing ${i + 1}/${cards.length}: ${sName}`, { id: 'bulk-zip-progress' });
                 
                 // Use html-to-image to bypass html2canvas oklch parsing errors
                 const imgData = await htmlToImage.toJpeg(card, { quality: 0.95, pixelRatio: 2 });
@@ -848,7 +848,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                         <div className="bg-white rounded-2xl shadow-2xl w-full h-full max-w-5xl max-h-full flex flex-col print:shadow-none print:m-0 print:max-w-none print:h-auto print:rounded-none" onClick={e => e.stopPropagation()}>
                             <div className="flex flex-col gap-4 items-start justify-between p-4 border-b border-gray-200 print:hidden">
                                 <div className="flex gap-4 justify-between items-center w-full">
-                                    <h3 className="font-bold text-gray-900">Report Card — {modal?.student.name}</h3>
+                                    <h3 className="font-bold text-gray-900">Report Card — {modal?.student?.name}</h3>
                                     <Button size="icon" variant="ghost" onClick={() => setModal(null)} className="w-8 h-8"><X className="w-4 h-4" /></Button>
                                 </div>
                                 <div className="flex flex-wrap gap-2 items-center w-full justify-between sm:justify-start">
@@ -858,7 +858,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                         <Button size="icon" variant="ghost" onClick={() => setPreviewZoom(z => Math.min(1.5, z + 0.1))} className="w-6 h-6"><Plus className="w-3 h-3" /></Button>
                                     </div>
                                     <div className="flex gap-2">
-                                        {modal && <Button size="sm" variant="outline" onClick={() => setShareModal({ studentProfileId: modal.student.id, name: modal.student.name })} className="gap-1 text-xs"><Share2 className="w-3.5 h-3.5" />Share</Button>}
+                                        {modal?.student && <Button size="sm" variant="outline" onClick={() => setShareModal({ studentProfileId: modal.student.id, name: modal.student.name })} className="gap-1 text-xs"><Share2 className="w-3.5 h-3.5" />Share</Button>}
                                         <Button size="sm" variant="outline" onClick={handleDownloadSinglePDF} className="gap-1 text-xs bg-white text-[#1E4DA6] border-[#1E4DA6]/30"><Download className="w-3.5 h-3.5" />Download PDF</Button>
                                         <Button size="sm" variant="outline" onClick={handlePrint} className="gap-1 text-xs bg-white"><Printer className="w-3.5 h-3.5" />Print</Button>
                                     </div>
@@ -988,7 +988,18 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                     <div id="bulk-report-cards-printable" className="p-0 sm:p-4 overflow-auto print:overflow-visible print:p-0 flex flex-col items-center bg-gray-50/50 sm:bg-white rounded-b-2xl">
                         {loadingBulkModal ? (
                             <div className="h-48 flex items-center justify-center text-gray-400">Loading report cards...</div>
-                        ) : bulkData && bulkData.map((dataItem, idx) => {
+                        ) : bulkData && bulkData.map((dataItem: any, idx) => {
+                            // The batch endpoint returns a labeled placeholder
+                            // (rather than silently omitting the student) when
+                            // one card fails to load — show that plainly
+                            // instead of feeding garbage into ReportCard.
+                            if (dataItem?.error) {
+                                return (
+                                    <div key={dataItem.studentProfileId || idx} className="w-full max-w-[794px] mx-auto p-4 mb-4 border-2 border-red-200 bg-red-50 rounded-xl text-center text-red-700 text-sm font-semibold">
+                                        {dataItem.message || 'Failed to load this report card.'}
+                                    </div>
+                                );
+                            }
                             const cCfg = dataItem.templateConfig || DEFAULT_CFG;
                             const sSchool = dataItem.schoolSettings ? {
                                 schoolName: dataItem.schoolSettings.schoolName,
@@ -1002,7 +1013,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                             } : { schoolName: 'School Name' };
 
                             return (
-                                <div key={dataItem.student.id} className="bulk-card-item w-full print:break-after-page sm:mb-8" style={{ pageBreakAfter: 'always' }}>
+                                <div key={dataItem.student?.id || idx} className="bulk-card-item w-full print:break-after-page sm:mb-8" style={{ pageBreakAfter: 'always' }}>
                                     {(cCfg.blocks && cCfg.blocks.length > 0) ? (
                                         <div className="print:shadow-none shadow-lg mx-auto w-full max-w-[794px] overflow-x-auto print:w-full print:max-w-none print:m-0 print:overflow-visible origin-top transition-transform" style={{ zoom: previewZoom }}>
                                             <div className="min-w-[794px] print:min-w-0 bg-white">

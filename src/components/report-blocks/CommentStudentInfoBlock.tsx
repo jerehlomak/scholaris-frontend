@@ -4,7 +4,16 @@ export default function CommentStudentInfoBlock({ data, config }: { data: any, c
     const s = data?.student || {};
 
     const studentName = s.firstName || s.lastName ? `${s.firstName || ''} ${s.lastName || ''} ${s.otherNames || ''}`.trim() : s.name || 'N/A';
-    const dob = s.dateOfBirth ? new Date(s.dateOfBirth).toISOString().split('T')[0] : 'N/A';
+    // A truthy-but-unparseable date string (e.g. "14/10/2012") throws
+    // RangeError on .toISOString() rather than producing "Invalid Date" —
+    // wrap it so one bad date crashes this block instead of the whole card.
+    let dob = 'N/A';
+    if (s.dateOfBirth) {
+        try {
+            const parsed = new Date(s.dateOfBirth);
+            if (!isNaN(parsed.getTime())) dob = parsed.toISOString().split('T')[0];
+        } catch { /* leave dob as 'N/A' */ }
+    }
     
     // Attempt to extract height and weight from attendance/health if available
     const height = data?.attendance?.height || '......';

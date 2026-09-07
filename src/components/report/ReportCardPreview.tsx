@@ -198,7 +198,7 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
     comments,
     attendance,
     school,
-    summary,
+    summary = { totalSubjects: 0, totalScore: 0, average: 0, passMark: 40 },
     evaluationData = {},
     annualResults = [],
     isPreview = false,
@@ -206,9 +206,16 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
     forceScoreBased = false,
     commentBasedSettings
 }) => {
+    // Moved above the comment-based branch below — it used to sit further
+    // down (after that branch could already return), so a missing/undefined
+    // `school` crashed on `school.display` before this guard ever ran.
+    if (!student || !school) {
+        return <div className="p-10 text-center text-gray-500 font-dash">Unable to render report card: Missing student or school data.</div>;
+    }
+
     // If it's a comment-based report, render the specialized layout
     if (!forceScoreBased && (isCommentBased || _templateConfig?.design?.id === 'comment-based')) {
-        return <CommentBasedReportCard 
+        return <CommentBasedReportCard
             visibleTypes={visibleTypes}
             templateConfig={_templateConfig as any}
             student={student}
@@ -221,7 +228,7 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
             evaluationData={evaluationData}
             annualResults={annualResults}
             isPreview={isPreview}
-            commentBasedSettings={commentBasedSettings || school.display?.resultConfig?.commentBasedSettings}
+            commentBasedSettings={commentBasedSettings || school?.display?.resultConfig?.commentBasedSettings}
         />;
     }
 
@@ -274,10 +281,6 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
     const resolveBool = (val: boolean | undefined, defaultVal: boolean) => val !== undefined ? val : defaultVal;
 
     const isCumulative = visibleTypes?.includes('CUMULATIVE');
-
-    if (!student || !school) {
-        return <div className="p-10 text-center text-gray-500 font-dash">Unable to render report card: Missing student or school data.</div>;
-    }
 
     const primary = cfg.primaryColor || '#1E4DA6';
     const headerBg = cfg.headerBg || '#1E4DA6';
@@ -464,10 +467,10 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
                     <tbody>
                         {results.map((r, idx) => (
                             <tr key={r.subjectId || idx} style={{ backgroundColor: idx % 2 === 0 ? '#fafafa' : '#fff' }}>
-                                <td style={{ ...tdLeftStyle }}>{r.subject.name}</td>
+                                <td style={{ ...tdLeftStyle }}>{r.subject?.name || 'Unknown'}</td>
                                 {visibleCols.filter(c => !c.computed).map(col => (
                                     <td key={col.id} style={tdStyle}>
-                                        {r.scores[col.key] !== undefined && r.scores[col.key] !== null && r.scores[col.key] !== '' ? r.scores[col.key] : '-'}
+                                        {r.scores?.[col.key] !== undefined && r.scores?.[col.key] !== null && r.scores?.[col.key] !== '' ? r.scores[col.key] : '-'}
                                     </td>
                                 ))}
                                 {visibleCols.find(c => c.key === 'total') && (
@@ -555,8 +558,8 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
                         </thead>
                         <tbody>
                             {annualResults.map((ar: any, idx: number) => (
-                                <tr key={ar.subject.id} style={{ backgroundColor: idx % 2 === 0 ? '#fafafa' : '#fff' }}>
-                                    <td style={tdLeftStyle}>{ar.subject.name}</td>
+                                <tr key={ar.subject?.id || idx} style={{ backgroundColor: idx % 2 === 0 ? '#fafafa' : '#fff' }}>
+                                    <td style={tdLeftStyle}>{ar.subject?.name || 'Unknown'}</td>
                                     {dynamicTermNames.map(termName => {
                                         let val: any = '-';
                                         if (ar.terms && ar.terms[termName] !== undefined && ar.terms[termName] !== null) {

@@ -77,6 +77,14 @@ export default function SingleBilling() {
   const [bulkGenerating, setBulkGenerating] = useState(false);
   const [generatingAll, setGeneratingAll] = useState(false);
 
+  // Bulk "template bill" builder — lets the admin pick which fees apply to
+  // every selected student instead of silently billing every available fee
+  // (the previous behavior when bulk-generate was posted with no fee selection).
+  const [bulkTemplateOpen, setBulkTemplateOpen] = useState(false);
+  const [loadingBulkTemplate, setLoadingBulkTemplate] = useState(false);
+  const [bulkTemplateFees, setBulkTemplateFees] = useState<Fee[]>([]);
+  const [bulkTemplateToggles, setBulkTemplateToggles] = useState<Record<string,boolean>>({});
+
   // Inventory items sold on this invoice (e.g. uniforms, books) — decrements stock once paid
   const [inventoryOptions, setInventoryOptions] = useState<{id:string;name:string;sellingPrice:number;quantityOnHand:number}[]>([]);
   const [invoiceItems, setInvoiceItems] = useState<{inventoryItemId:string;name:string;unitPrice:number;quantity:number}[]>([]);
@@ -174,16 +182,39 @@ export default function SingleBilling() {
     finally { setGenerating(false); }
   };
 
+  // Opens the template-bill builder for the current selection — fetches one
+  // representative student's fee list (all selected students are in the same
+  // class, so class-scoped fees line up) so the admin can pick which fees to
+  // apply to everyone, instead of the backend defaulting to "every available fee".
+  const openBulkTemplate = async () => {
+    if (selected.size===0) return;
+    setBulkTemplateOpen(true);
+    setLoadingBulkTemplate(true);
+    try {
+      const repId = Array.from(selected)[0];
+      const r = await axios.get(`/api/v1/finance-v2/billing/student/${repId}/profile?term=${term}&academicYear=${year}`, {withCredentials:true});
+      const fees: Fee[] = r.data.fees || [];
+      setBulkTemplateFees(fees);
+      const toggles: Record<string,boolean> = {};
+      fees.forEach(f => { toggles[f.id] = true; });
+      setBulkTemplateToggles(toggles);
+    } catch { toast.error('Failed to load fee list'); setBulkTemplateOpen(false); }
+    finally { setLoadingBulkTemplate(false); }
+  };
+  const closeBulkTemplate = () => { setBulkTemplateOpen(false); setBulkTemplateFees([]); setBulkTemplateToggles({}); };
+
   const handleBulkGenerate = async () => {
     if (!selectedClass || selected.size===0) return;
+    const feeDefinitionIds = bulkTemplateFees.filter(f => bulkTemplateToggles[f.id]).map(f => f.id);
+    if (feeDefinitionIds.length === 0) { toast.error('Select at least one fee to bill'); return; }
     setBulkGenerating(true);
     try {
       const r = await axios.post('/api/v1/finance-v2/billing/bulk-generate', {
-        studentIds: Array.from(selected), term, academicYear: year
+        studentIds: Array.from(selected), term, academicYear: year, feeDefinitionIds
       }, {withCredentials:true});
       const {results} = r.data;
       reportGenerationResults(results);
-      setSelected(new Set()); openClass(selectedClass);
+      setSelected(new Set()); closeBulkTemplate(); openClass(selectedClass);
     } catch(e:any) { toast.error(e.response?.data?.msg||'Bulk generation failed'); }
     finally { setBulkGenerating(false); }
   };
@@ -323,7 +354,7 @@ export default function SingleBilling() {
                   <span className="text-sm font-semibold text-slate-600">{selected.size>0?`${selected.size} selected`:'Select all'}</span>
                 </div>
                 {selected.size>0 && (
-                  <button onClick={handleBulkGenerate} disabled={bulkGenerating} className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-4 py-2 text-xs font-bold text-white hover:bg-[#122F69] disabled:opacity-60">
+                  <button onClick={openBulkTemplate} disabled={bulkGenerating} className="flex items-center gap-2 rounded-xl bg-[#173F8C] px-4 py-2 text-xs font-bold text-white hover:bg-[#122F69] disabled:opacity-60">
                     {bulkGenerating?<Loader2 className="h-3 w-3 animate-spin"/>:<Copy className="h-3 w-3"/>} Bulk Generate ({selected.size})
                   </button>
                 )}
@@ -491,6 +522,55 @@ export default function SingleBilling() {
                 </div>
               </div>
             )
+          )}
+
+          {/* ── BULK TEMPLATE BILL MODAL ── */}
+          {bulkTemplateOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+              <div className="w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
+                <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                  <div>
+                    <p className="font-bold text-slate-900">Bulk Generate — {selected.size} student{selected.size===1?'':'s'}</p>
+                    <p className="mono text-[10px] text-slate-400 uppercase tracking-widest">Choose which fees to bill everyone selected</p>
+                  </div>
+                  <button onClick={closeBulkTemplate} className="text-slate-400 hover:text-slate-600"><X className="h-5 w-5"/></button>
+                </div>
+                <div className="max-h-[50vh] overflow-y-auto divide-y divide-slate-50">
+                  {loadingBulkTemplate ? (
+                    <div className="flex justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-[#1E4DA6]"/></div>
+                  ) : bulkTemplateFees.length === 0 ? (
+                    <div className="py-12 text-center text-slate-400"><p className="font-semibold">No fees found for this class/term</p></div>
+                  ) : bulkTemplateFees.map(f => (
+                    <div key={f.id} className={cn("flex items-center gap-4 px-6 py-3", !bulkTemplateToggles[f.id]&&'opacity-40')}>
+                      <button
+                        onClick={()=>!f.isCompulsory&&setBulkTemplateToggles(p=>({...p,[f.id]:!p[f.id]}))}
+                        disabled={f.isCompulsory}
+                        title={f.isCompulsory?'Compulsory fee — always billed':undefined}
+                        className={cn("flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors",
+                          f.isCompulsory?'cursor-not-allowed border-[#1E4DA6] bg-[#1E4DA6]':
+                          bulkTemplateToggles[f.id]?'border-[#1E4DA6] bg-[#1E4DA6]':'border-slate-300')}>
+                        {(f.isCompulsory||bulkTemplateToggles[f.id])&&<Check className="h-3 w-3 text-white"/>}
+                      </button>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold text-slate-800">{f.name}</p>
+                          {f.isCompulsory && <span className="mono rounded-full bg-[#1E4DA6]/5 px-2 py-0.5 text-[9px] font-bold uppercase text-[#1E4DA6]">Compulsory</span>}
+                        </div>
+                        <p className="mono text-[10px] text-slate-400">{f.termScope} · {f.type==='ITEM'?`Qty ${f.quantity||1}`:'Service'}</p>
+                      </div>
+                      <p className="mono font-black text-slate-800">{fmt(f.amount*(f.quantity||1))}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between gap-4 border-t border-slate-100 px-6 py-4">
+                  <p className="mono text-[10px] text-slate-400">Students already invoiced for a fee this term are skipped automatically</p>
+                  <button onClick={handleBulkGenerate} disabled={bulkGenerating||loadingBulkTemplate} className="flex shrink-0 items-center gap-2 rounded-xl bg-[#173F8C] px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-[#1E4DA6]/20 hover:bg-[#122F69] disabled:opacity-60">
+                    {bulkGenerating&&<Loader2 className="h-4 w-4 animate-spin"/>}
+                    {bulkGenerating?'Generating…':'Generate Invoices'}
+                  </button>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>

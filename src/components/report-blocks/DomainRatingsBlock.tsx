@@ -37,6 +37,10 @@ const DEFAULT_AFFECTIVE: DomainItem[] = [
 export default function DomainRatingsBlock({ data, config, design }: { data: any; config?: any; design?: any }) {
     const accentColor = design?.accentColor || config?.accentColor || '#F5B800';
     const primaryColor = design?.primaryColor || config?.primaryColor || '#0B1F4E';
+    // 'STACKED' — one column above the other, for use in a narrow sidebar
+    // (see the "Ledger" preset, where this sits beside the subject table
+    // rather than spanning the full page width like the default side-by-side).
+    const isStacked = config?.layout === 'STACKED';
 
     const psychomotor: DomainItem[] = data?.domainRatings?.psychomotor?.length ? data.domainRatings.psychomotor : DEFAULT_PSYCHOMOTOR;
     const affective: DomainItem[] = data?.domainRatings?.affective?.length ? data.domainRatings.affective : DEFAULT_AFFECTIVE;
@@ -61,13 +65,15 @@ export default function DomainRatingsBlock({ data, config, design }: { data: any
 
     return (
         <div className="mb-4">
-            <div className="flex gap-6">
-                <Column title="Psychomotor Domain" items={psychomotor} />
+            <div className={isStacked ? 'flex flex-col gap-3' : 'flex gap-6'}>
                 <Column title="Affective Domain" items={affective} />
+                <Column title="Psychomotor Domain" items={psychomotor} />
             </div>
-            <p className="text-[8px] text-gray-500 mt-2 italic">
-                Scale: 1 = Poor &nbsp;·&nbsp; 2 = Fair &nbsp;·&nbsp; 3 = Good &nbsp;·&nbsp; 4 = Very Good &nbsp;·&nbsp; 5 = Distinction
-            </p>
+            {!isStacked && (
+                <p className="text-[8px] text-gray-500 mt-2 italic">
+                    Scale: 1 = Poor &nbsp;·&nbsp; 2 = Fair &nbsp;·&nbsp; 3 = Good &nbsp;·&nbsp; 4 = Very Good &nbsp;·&nbsp; 5 = Distinction
+                </p>
+            )}
         </div>
     );
 }

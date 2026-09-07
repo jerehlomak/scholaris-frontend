@@ -483,8 +483,14 @@ export default function ApplyPortal() {
                                     }}
                                 />
 
-                                {/* Signature Block */}
-                                <div className="mt-auto pt-16 flex justify-end">
+                                {/* Signature Block — kept whole rather than split across a
+                                    page break by .print-signature-block below. Alignment and
+                                    style mirror the admin's PrintAdmissionLetter view. */}
+                                <div className={`mt-auto pt-16 flex print-signature-block ${
+                                    (letterTemplate.signature?.align || 'right') === 'left' ? 'justify-start'
+                                    : (letterTemplate.signature?.align || 'right') === 'center' ? 'justify-center'
+                                    : 'justify-end'
+                                }`}>
                                     <div className="text-center w-64">
                                         {letterTemplate.signatureUrl ? (
                                             <img src={letterTemplate.signatureUrl} alt="Signature" className="h-16 object-contain mx-auto mb-2" />
@@ -516,6 +522,10 @@ export default function ApplyPortal() {
                                 top: 0;
                                 width: 100%;
                                 background: white !important;
+                            }
+                            .print-signature-block {
+                                page-break-inside: avoid;
+                                break-inside: avoid;
                             }
                             * { color: black !important; }
                         }

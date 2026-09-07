@@ -32,10 +32,15 @@ export default function AddParent() {
     const isEditMode = location.pathname.includes('/edit/');
 
     const [formData, setFormData] = useState({
+        phone: '',
         fatherName: '', fatherPhone: '', fatherNationalId: '', fatherOccupation: '', fatherEducation: '',
         motherName: '', motherPhone: '', motherNationalId: '', motherOccupation: '', motherEducation: '',
         address: '', occupation: ''
     });
+    // Read-only account fields (set on the User record — by the bulk importer
+    // in most cases) — surfaced here since the account is otherwise invisible
+    // on this form; edit them from the parent's user account settings.
+    const [accountInfo, setAccountInfo] = useState<{ name?: string; email?: string }>({});
     const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
     const [availableStudents, setAvailableStudents] = useState<StudentOption[]>([]);
     const [classes, setClasses] = useState<ClassObj[]>([]);
@@ -75,7 +80,8 @@ export default function AddParent() {
             axios.get(`${API}/parents/${id}`, { withCredentials: true })
                 .then(res => {
                     const p = res.data.parent;
-                    setFormData({ fatherName: p.fatherName || '', fatherPhone: p.fatherPhone || '', fatherNationalId: p.fatherNationalId || '', fatherOccupation: p.fatherOccupation || '', fatherEducation: p.fatherEducation || '', motherName: p.motherName || '', motherPhone: p.motherPhone || '', motherNationalId: p.motherNationalId || '', motherOccupation: p.motherOccupation || '', motherEducation: p.motherEducation || '', address: p.address || '', occupation: p.occupation || '' });
+                    setFormData({ phone: p.phone || '', fatherName: p.fatherName || '', fatherPhone: p.fatherPhone || '', fatherNationalId: p.fatherNationalId || '', fatherOccupation: p.fatherOccupation || '', fatherEducation: p.fatherEducation || '', motherName: p.motherName || '', motherPhone: p.motherPhone || '', motherNationalId: p.motherNationalId || '', motherOccupation: p.motherOccupation || '', motherEducation: p.motherEducation || '', address: p.address || '', occupation: p.occupation || '' });
+                    setAccountInfo({ name: res.data.user?.name || '', email: res.data.user?.email || '' });
                     // Students are linked via userId
                     setSelectedStudentIds((p.students || []).map((s: { userId?: string; id?: string }) => s.userId || s.id || ''));
                 })
@@ -106,9 +112,9 @@ export default function AddParent() {
                 navigate('/dashboard/parents/all');
             } else {
                 const name = formData.fatherName || formData.motherName;
-                const phone = formData.fatherPhone || formData.motherPhone;
+                const phone = formData.phone || formData.fatherPhone || formData.motherPhone;
                 if (!phone) { toast.error('At least one phone number is required'); setIsSubmitting(false); return; }
-                const res = await axios.post(`${API}/parents/add`, { name, phone, ...formData, studentIds: selectedStudentIds }, { withCredentials: true });
+                const res = await axios.post(`${API}/parents/add`, { ...formData, name, phone, studentIds: selectedStudentIds }, { withCredentials: true });
                 toast.success('Parent Profile Created Successfully!');
                 setCreatedCredentials(res.data.credentials);
                 setSubmitted(true);
@@ -139,7 +145,7 @@ export default function AddParent() {
                     <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
                         <button
                             onClick={() => {
-                                setFormData({ fatherName: '', fatherPhone: '', fatherNationalId: '', fatherOccupation: '', fatherEducation: '', motherName: '', motherPhone: '', motherNationalId: '', motherOccupation: '', motherEducation: '', address: '', occupation: '' });
+                                setFormData({ phone: '', fatherName: '', fatherPhone: '', fatherNationalId: '', fatherOccupation: '', fatherEducation: '', motherName: '', motherPhone: '', motherNationalId: '', motherOccupation: '', motherEducation: '', address: '', occupation: '' });
                                 setSelectedStudentIds([]);
                                 setStudentSearch('');
                                 setSelectedClassId('all');
@@ -178,6 +184,26 @@ export default function AddParent() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
+                {/* Account — read-only fields set on the User record (name/email are set
+                    at account creation, including by bulk import) plus the account's
+                    primary phone, which bulk-imported parents have but couldn't be seen
+                    or edited from this form before. */}
+                {isEditMode && (
+                    <SectionCard icon={<Users className="h-4 w-4" />} title="Account" sub="Login identity for this parent's portal account.">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                            <div className="space-y-2">
+                                <label className={labelCls}>Account Name</label>
+                                <input type="text" value={accountInfo.name || ''} disabled className={cn(inputCls, 'bg-slate-50 text-slate-500 cursor-not-allowed')} />
+                            </div>
+                            <div className="space-y-2">
+                                <label className={labelCls}>Login Email</label>
+                                <input type="text" value={accountInfo.email || ''} disabled className={cn(inputCls, 'bg-slate-50 text-slate-500 cursor-not-allowed')} />
+                            </div>
+                            {fieldRow('phone', 'Primary Phone', 'tel')}
+                        </div>
+                    </SectionCard>
+                )}
+
                 {/* Assign Children */}
                 <SectionCard icon={<UserPlus className="h-4 w-4" />} title="Assign Children" sub="Link one or more students to this parent account.">
                     {selectedStudents.length > 0 && (

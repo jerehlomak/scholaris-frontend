@@ -11,6 +11,7 @@ import type { TemplateConfig } from '../../../components/report/ReportCardPrevie
 import ReportCard from '../../../components/report-blocks/ReportCard';
 import { Printer, Eye, X, Plus, Minus } from 'lucide-react';
 import { mobileSafePrint } from '../../../lib/printUtils';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
 
 const DEFAULT_CFG: TemplateConfig = {
     showSchoolLogo: true, showSchoolAddress: true, showStudentPhoto: true,
@@ -394,7 +395,14 @@ export default function ExportResults() {
                         <div id="export-results-printable" className="p-0 pb-24 sm:p-4 overflow-auto print:overflow-visible print:p-0 flex flex-col items-center bg-gray-50/50 sm:bg-white rounded-b-2xl">
                             {loadingPreview ? (
                                 <div className="h-48 flex items-center justify-center text-gray-400">Loading preview data...</div>
-                            ) : previewData && previewData.map((dataItem, idx) => {
+                            ) : previewData && previewData.map((dataItem: any, idx) => {
+                                if (dataItem?.error) {
+                                    return (
+                                        <div key={dataItem.studentProfileId || idx} className="w-full max-w-[794px] mx-auto p-4 mb-4 border-2 border-red-200 bg-red-50 rounded-xl text-center text-red-700 text-sm font-semibold">
+                                            {dataItem.message || 'Failed to load this report card.'}
+                                        </div>
+                                    );
+                                }
                                 const cCfg = dataItem.templateConfig || DEFAULT_CFG;
                                 const sSchool = dataItem.schoolSettings ? {
                                     schoolName: dataItem.schoolSettings.schoolName,
@@ -408,30 +416,34 @@ export default function ExportResults() {
                                 } : { schoolName: 'School Name' };
 
                                 return (
-                                    <div key={dataItem.student.id} className="w-full print:break-after-page sm:mb-8" style={{ pageBreakAfter: 'always' }}>
+                                    <div key={dataItem.student?.id || idx} className="w-full print:break-after-page sm:mb-8" style={{ pageBreakAfter: 'always' }}>
                                         {(cCfg.blocks && cCfg.blocks.length > 0) ? (
                                             <div className="print:shadow-none shadow-lg mx-auto w-full max-w-[794px] overflow-x-auto print:w-full print:max-w-none print:m-0 print:overflow-visible origin-top transition-transform" style={{ zoom: previewZoom }}>
                                                 <div className="min-w-[794px] print:min-w-0 bg-white">
-                                                    <ReportCard config={{ ...cCfg, blocks: cCfg.blocks ?? [], design: cCfg.design ?? {}, gradeScale: cCfg.gradeScale ?? [], studentFields: cCfg.studentFields ?? {}, globalSettings: { schoolSettings: dataItem.schoolSettings } }} data={dataItem} />
+                                                    <ErrorBoundary errorMessage={`Failed to render report card for ${dataItem.student?.name || 'this student'}.`}>
+                                                        <ReportCard config={{ ...cCfg, blocks: cCfg.blocks ?? [], design: cCfg.design ?? {}, gradeScale: cCfg.gradeScale ?? [], studentFields: cCfg.studentFields ?? {}, globalSettings: { schoolSettings: dataItem.schoolSettings } }} data={dataItem} />
+                                                    </ErrorBoundary>
                                                 </div>
                                             </div>
                                         ) : (
                                             <div className="mx-auto w-full max-w-[794px] overflow-x-auto print:w-full print:max-w-none print:m-0 print:overflow-visible origin-top transition-transform" style={{ zoom: previewZoom }}>
                                                 <div className="min-w-[794px] print:min-w-0 bg-white shadow-lg print:shadow-none sm:rounded-none">
-                                                    <ReportCardPreview
-                                                        templateConfig={cCfg}
-                                                        student={dataItem.student}
-                                                        results={dataItem.results}
-                                                        gradingScale={dataItem.gradingScale}
-                                                        comments={dataItem.comments}
-                                                        attendance={dataItem.attendance}
-                                                        school={sSchool}
-                                                        summary={dataItem.summary}
-                                                        annualResults={dataItem.annualResults}
-                                                        isCommentBased={cCfg.resultType === 'COMMENT_BASED'}
-                                                        visibleTypes={['FULL']}
-                                                        forceScoreBased={cCfg.resultType === 'SCORE_BASED'}
-                                                    />
+                                                    <ErrorBoundary errorMessage={`Failed to render report card for ${dataItem.student?.name || 'this student'}.`}>
+                                                        <ReportCardPreview
+                                                            templateConfig={cCfg}
+                                                            student={dataItem.student}
+                                                            results={dataItem.results}
+                                                            gradingScale={dataItem.gradingScale}
+                                                            comments={dataItem.comments}
+                                                            attendance={dataItem.attendance}
+                                                            school={sSchool}
+                                                            summary={dataItem.summary}
+                                                            annualResults={dataItem.annualResults}
+                                                            isCommentBased={cCfg.resultType === 'COMMENT_BASED'}
+                                                            visibleTypes={['FULL']}
+                                                            forceScoreBased={cCfg.resultType === 'SCORE_BASED'}
+                                                        />
+                                                    </ErrorBoundary>
                                                 </div>
                                             </div>
                                         )}

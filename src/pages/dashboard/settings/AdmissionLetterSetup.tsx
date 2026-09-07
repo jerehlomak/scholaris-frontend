@@ -39,6 +39,7 @@ interface LetterTemplate {
     signatoryName: string;
     signatoryTitle: string;
     signatureUrl: string;
+    signature: { align: 'left' | 'center' | 'right' };
 }
 
 const DEFAULT_TEMPLATE: LetterTemplate = {
@@ -47,7 +48,8 @@ const DEFAULT_TEMPLATE: LetterTemplate = {
     showSchoolName: true,
     signatoryName: '',
     signatoryTitle: 'Principal / Director',
-    signatureUrl: ''
+    signatureUrl: '',
+    signature: { align: 'right' }
 };
 
 export function AdmissionLetterSetup() {
@@ -169,6 +171,25 @@ export function AdmissionLetterSetup() {
                             />
                         </div>
                         <div className="md:col-span-2">
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Signature Block Alignment</label>
+                            <div className="flex gap-2">
+                                {(['left', 'center', 'right'] as const).map(align => (
+                                    <button
+                                        key={align}
+                                        type="button"
+                                        onClick={() => setTemplate(p => ({ ...p, signature: { ...p.signature, align } }))}
+                                        className={`px-4 py-1.5 rounded-lg text-sm font-medium border transition-colors capitalize ${
+                                            (template.signature?.align || 'right') === align
+                                                ? 'bg-[#1E4DA6] border-[#1E4DA6] text-white'
+                                                : 'bg-white border-slate-300 text-slate-600 hover:bg-slate-50'
+                                        }`}
+                                    >
+                                        {align}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="md:col-span-2">
                             <label className="block text-sm font-medium text-slate-700 mb-2">Signature Image</label>
                             <div className="flex items-center gap-6">
                                 {template.signatureUrl ? (
@@ -191,6 +212,31 @@ export function AdmissionLetterSetup() {
                                         <input type="file" accept="image/*" className="hidden" onChange={handleSignatureUpload} />
                                     </label>
                                 )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Live preview of just the signature block, reflecting alignment,
+                        signature image and signatory details as they're edited above. */}
+                    <div className="pt-2">
+                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Preview</p>
+                        <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6">
+                            <div className={`flex flex-col ${
+                                (template.signature?.align || 'right') === 'left' ? 'items-start text-left'
+                                : (template.signature?.align || 'right') === 'center' ? 'items-center text-center'
+                                : 'items-end text-right'
+                            }`}>
+                                <div className="w-48">
+                                    {template.signatureUrl ? (
+                                        <img src={template.signatureUrl} alt="Signature" className="h-14 object-contain mb-2 mx-auto" />
+                                    ) : (
+                                        <div className="h-14 border-b border-dashed border-slate-300 mb-2"></div>
+                                    )}
+                                    <div className="border-t-2 border-slate-800 pt-1.5">
+                                        <p className="font-bold text-slate-900 uppercase text-sm tracking-widest">{template.signatoryName || 'Authorized Signatory'}</p>
+                                        <p className="text-slate-500 text-xs font-semibold mt-0.5 uppercase">{template.signatoryTitle || 'Principal'}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

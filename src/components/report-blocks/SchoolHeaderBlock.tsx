@@ -3,7 +3,14 @@ import React from 'react';
 export default function SchoolHeaderBlock({ data, config, design, toggles, globalSettings }: { data: any, config?: any, design?: any, toggles?: any, globalSettings?: any }) {
     const d = data?.schoolSettings || data?.school || {};
     const accentColor = design?.accentColor || config?.accentColor || '#1a7a40';
-    const reportBadge = config?.reportBadge || 'ACADEMIC PROGRESS REPORT';
+    const primaryColorForBanner = design?.primaryColor || config?.primaryColor || accentColor;
+    // `{TERM}` / `{SESSION}` placeholders let a preset's badge read e.g.
+    // "2ND TERM EXAM REPORT SHEET 2023/2024 SESSION" using this student's
+    // actual term/session instead of a generic static label.
+    const rawBadge = config?.reportBadge || 'ACADEMIC PROGRESS REPORT';
+    const reportBadge = rawBadge
+        .replace('{TERM}', (data?.student?.term || '').toUpperCase())
+        .replace('{SESSION}', data?.student?.academicYear || '');
     const showArabicName = toggles?.showArabicName ?? config?.arabicSchoolName ?? true;
     
     const schoolName = d.schoolName || d.name || 'School Name';
@@ -13,6 +20,13 @@ export default function SchoolHeaderBlock({ data, config, design, toggles, globa
     let alignMode = config?.headerLayoutMode || globalSettings?.schoolSettings?.resultConfig?.headerLayoutMode || toggles?.headerLayoutMode || 'LEFT';
     if (alignMode === 'SIDE_BY_SIDE') alignMode = 'LEFT';
     if (alignMode === 'CENTERED') alignMode = 'CENTER';
+
+    // 'PLAIN_TEXT' — the badge/period line renders as plain bold caps text
+    // instead of a colored pill (the "Bulletin" preset's minimal look).
+    const badgeStyle = config?.badgeStyle || 'PILL';
+    // 'THIN' — a single 1px top rule instead of the thick bottom border
+    // (also "Bulletin"); default stays the existing thick bottom border.
+    const borderStyle = config?.borderStyle || 'THICK_BOTTOM';
 
     const Logo = ({ className = '' }) => (
         d.logoUrl ? (
@@ -45,15 +59,46 @@ export default function SchoolHeaderBlock({ data, config, design, toggles, globa
                     Motto: {d.motto}
                 </div>
             )}
-            <div className="inline-block px-3 py-0.5 rounded-[3px] text-[10px] font-bold tracking-wider mt-1 text-white uppercase" style={{ backgroundColor: accentColor }}>
-                {reportBadge}
-            </div>
+            {badgeStyle === 'PLAIN_TEXT' ? (
+                <div className="text-[11px] font-bold tracking-wide mt-1.5 text-gray-800 uppercase">
+                    {reportBadge}
+                </div>
+            ) : (
+                <div className="inline-block px-3 py-0.5 rounded-[3px] text-[10px] font-bold tracking-wider mt-1 text-white uppercase" style={{ backgroundColor: accentColor }}>
+                    {reportBadge}
+                </div>
+            )}
         </div>
     );
 
+    if (alignMode === 'BANNER') {
+        // "Ledger" preset: logo top-left, centered name/motto/address/phone,
+        // then a full-width colored banner bar underneath the whole header
+        // (not a small pill next to the text) carrying the report period.
+        return (
+            <div className="pb-0">
+                <div className="flex items-start gap-4 pb-2">
+                    <Logo />
+                    <div className="flex-1 flex flex-col items-center text-center space-y-0.5">
+                        <div className="text-[20px] font-bold uppercase leading-tight" style={{ color: primaryColorForBanner }}>{schoolName}</div>
+                        {d.motto && <div className="text-[11px] text-gray-600 mt-0.5">MOTTO: {d.motto}</div>}
+                        <div className="text-[11px] text-gray-600">
+                            {d.address ? `Address: ${d.address}` : ''}
+                        </div>
+                        {d.phone && <div className="text-[11px] text-gray-600">Phone No: {d.phone}</div>}
+                    </div>
+                    <div className="w-16 h-16 shrink-0 opacity-0 pointer-events-none" />
+                </div>
+                <div className="text-center text-white font-bold text-[12px] uppercase tracking-wide py-1.5" style={{ backgroundColor: primaryColorForBanner }}>
+                    {reportBadge}
+                </div>
+            </div>
+        );
+    }
+
     if (alignMode === 'CENTER') {
         return (
-            <div className="flex items-center pb-2 border-b-[3px] gap-6" style={{ borderColor: accentColor }}>
+            <div className={`flex items-center gap-6 ${borderStyle === 'THIN' ? 'pt-2 border-t-2' : 'pb-2 border-b-[3px]'}`} style={{ borderColor: accentColor }}>
                 <Logo className="self-start" />
                 <div className="flex-1 flex flex-col items-center space-y-0.5">
                     <ArabicText className="text-center w-full" />

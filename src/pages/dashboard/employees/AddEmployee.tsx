@@ -66,7 +66,7 @@ export default function AddStaff() {
             axios.get(`${API}/teachers/${id}`, { withCredentials: true })
                 .then(res => {
                     const t = res.data.teacher; const u = res.data.user;
-                    setForm({ name: u.name || '', email: u.email || '', phone: t.phone || '', department: t.department || DEPARTMENTS[0], gender: t.gender || 'Male', dateOfBirth: t.dateOfBirth ? t.dateOfBirth.split('T')[0] : '', address: t.address || '', qualification: t.qualification || '', salary: t.salary ? String(t.salary) : '', subjects: t.subjects || '', bankName: t.bankName || '', accountName: t.accountName || '', accountNumber: t.accountNumber || '', staffType: t.staffType || 'TEACHER', employeeId: t.employeeId || '', customRoleId: u.customRoleId || '', canEnterPastScores: t.canEnterPastScores || false });
+                    setForm({ name: u.name || '', email: u.email || '', phone: t.phone || '', department: t.department || DEPARTMENTS[0], gender: t.gender || 'Male', dateOfBirth: t.dateOfBirth ? t.dateOfBirth.split('T')[0] : '', address: t.address || '', qualification: t.qualification || '', salary: t.salary ? String(t.salary) : '', subjects: t.subjectsTaught || '', bankName: t.bankName || '', accountName: t.accountName || '', accountNumber: t.accountNumber || '', staffType: t.staffType || 'TEACHER', employeeId: t.employeeId || '', customRoleId: u.customRoleId || '', canEnterPastScores: t.canEnterPastScores || false });
                     if (t.photoUrl) setPhotoPreview(t.photoUrl);
                 })
                 .catch(() => toast.error('Failed to fetch Staff data'))
@@ -118,7 +118,8 @@ export default function AddStaff() {
             if (form.address) payload.append('address', form.address);
             if (form.qualification) payload.append('qualification', form.qualification);
             if (form.salary) payload.append('salary', form.salary);
-            
+            if (form.subjects) payload.append('subjects', form.subjects);
+
             if (form.bankName) payload.append('bankName', form.bankName);
             if (form.accountName) payload.append('accountName', form.accountName);
             if (form.accountNumber) payload.append('accountNumber', form.accountNumber);
@@ -230,6 +231,11 @@ export default function AddStaff() {
                                 <option value="NON_ACADEMIC">Non-Academic</option>
                                 <option value="ADMINISTRATIVE">Administrative</option>
                                 <option value="OTHER">Other</option>
+                                {/* Not offered for new staff, but bulk-imported staff are stored
+                                    with this value (the schema's own default) — kept selectable
+                                    here so an imported record's type shows correctly on edit
+                                    instead of appearing blank/unselected. */}
+                                {form.staffType === 'TEACHER' && <option value="TEACHER">Teacher</option>}
                             </select>
                         </div>
                         
@@ -276,7 +282,10 @@ export default function AddStaff() {
                             </select>
                         </div>
                         {field('salary', 'Monthly Salary (₦)', 'number', 'e.g. 150000')}
-
+                        <div className="md:col-span-2">
+                            {field('subjects', 'Subjects Taught', 'text', 'e.g. Mathematics, Further Mathematics')}
+                            <p className="text-xs text-slate-400 mt-1">Comma-separated. Shown on the staff profile and prefilled from bulk import.</p>
+                        </div>
                     </div>
                 </SectionCard>
 
