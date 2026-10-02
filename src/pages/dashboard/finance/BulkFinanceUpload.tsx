@@ -34,7 +34,7 @@ export default function BulkFinanceUpload() {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setResults(res.data);
-            toast.success(`Successfully processed ${res.data.summary.created} records.`);
+            toast.success(`Processed ${res.data.summary.created} records${res.data.summary.skipped ? ` (${res.data.summary.skipped} blank rows skipped)` : ''}.`);
             setFile(null);
             
             // Clear file input
@@ -73,7 +73,7 @@ export default function BulkFinanceUpload() {
 
                     <div className="p-5 border-t border-slate-100 bg-slate-50/50">
                         <h2 className="font-bold text-slate-800">2. Download Template</h2>
-                        <p className="text-xs text-slate-500 mt-1 mb-4">Download the correct Excel format to ensure smooth processing.</p>
+                        <p className="text-xs text-slate-500 mt-1 mb-4">The template is pre-filled with your students, one sheet per class. Just type the amounts; rows left blank are skipped.</p>
                         <button onClick={handleDownloadTemplate} className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 font-medium hover:bg-slate-50 transition-colors shadow-sm text-sm">
                             <Download className="w-4 h-4" /> Download {importType === 'billing' ? 'Billing' : 'Payment'} Template
                         </button>
@@ -130,6 +130,12 @@ export default function BulkFinanceUpload() {
                                         <div className="text-xs font-semibold text-emerald-600 uppercase">Success</div>
                                         <div className="text-xl font-bold text-emerald-700">{results.summary.created}</div>
                                     </div>
+                                    {!!results.summary.skipped && (
+                                        <div className="flex-1 bg-slate-50 p-3 rounded-lg border border-slate-200 text-center">
+                                            <div className="text-xs font-semibold text-slate-500 uppercase">Skipped</div>
+                                            <div className="text-xl font-bold text-slate-600">{results.summary.skipped}</div>
+                                        </div>
+                                    )}
                                     <div className="flex-1 bg-red-50 p-3 rounded-lg border border-red-100 text-center">
                                         <div className="text-xs font-semibold text-red-600 uppercase">Failed</div>
                                         <div className="text-xl font-bold text-red-700">{results.summary.failed}</div>
@@ -146,7 +152,7 @@ export default function BulkFinanceUpload() {
                                         <div className="space-y-2">
                                             {results.failed.map((f: any, idx: number) => (
                                                 <div key={idx} className="bg-red-50/50 border border-red-100 rounded-lg p-3 text-sm flex gap-3">
-                                                    <span className="font-mono text-red-400 font-bold shrink-0">Row {f.row}</span>
+                                                    <span className="font-mono text-red-400 font-bold shrink-0">{f.sheet ? `${f.sheet} · ` : ''}Row {f.row}</span>
                                                     <div className="text-red-700">{f.error}</div>
                                                 </div>
                                             ))}

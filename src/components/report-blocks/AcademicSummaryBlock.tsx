@@ -84,11 +84,16 @@ function ordinal(n: number): string {
                 <div className="text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1" style={{ backgroundColor: primaryColor }}>
                     {title}
                 </div>
-                <div className="divide-y" style={{ borderColor: `${primaryColor}25` }}>
+                {/* Two columns of tight rows so the card stays short (~half the height of a single stacked list). */}
+                <div className="grid grid-cols-2">
                     {cards.map((c, i) => (
-                        <div key={i} className="flex items-center justify-between px-2 py-1 text-[10px]">
-                            <span className="text-gray-500">{c.label}:</span>
-                            <span className="font-bold" style={{ color: primaryColor }}>{c.value}</span>
+                        <div
+                            key={i}
+                            className={`flex items-center justify-between gap-1 px-2 py-0.5 text-[8px] leading-tight border-b ${i % 2 === 0 ? 'border-r' : ''}`}
+                            style={{ borderColor: `${primaryColor}25` }}
+                        >
+                            <span className="text-gray-500 truncate">{c.label}:</span>
+                            <span className="font-bold shrink-0" style={{ color: primaryColor }}>{c.value}</span>
                         </div>
                     ))}
                 </div>

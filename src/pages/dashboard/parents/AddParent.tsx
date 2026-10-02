@@ -80,7 +80,18 @@ export default function AddParent() {
             axios.get(`${API}/parents/${id}`, { withCredentials: true })
                 .then(res => {
                     const p = res.data.parent;
-                    setFormData({ phone: p.phone || '', fatherName: p.fatherName || '', fatherPhone: p.fatherPhone || '', fatherNationalId: p.fatherNationalId || '', fatherOccupation: p.fatherOccupation || '', fatherEducation: p.fatherEducation || '', motherName: p.motherName || '', motherPhone: p.motherPhone || '', motherNationalId: p.motherNationalId || '', motherOccupation: p.motherOccupation || '', motherEducation: p.motherEducation || '', address: p.address || '', occupation: p.occupation || '' });
+                    // Bulk-imported parents only carry the account name/phone; fall back to
+                    // those so the form isn't blank when the father/mother fields were never filled.
+                    const accountName = res.data.user?.name || '';
+                    const hasParentNames = !!(p.fatherName || p.motherName);
+                    setFormData({
+                        phone: p.phone || '',
+                        fatherName: p.fatherName || (hasParentNames ? '' : accountName),
+                        fatherPhone: p.fatherPhone || (p.fatherName || !hasParentNames ? p.phone || '' : ''),
+                        fatherNationalId: p.fatherNationalId || '', fatherOccupation: p.fatherOccupation || p.occupation || '', fatherEducation: p.fatherEducation || '',
+                        motherName: p.motherName || '', motherPhone: p.motherPhone || '', motherNationalId: p.motherNationalId || '', motherOccupation: p.motherOccupation || '', motherEducation: p.motherEducation || '',
+                        address: p.address || '', occupation: p.occupation || ''
+                    });
                     setAccountInfo({ name: res.data.user?.name || '', email: res.data.user?.email || '' });
                     // Students are linked via userId
                     setSelectedStudentIds((p.students || []).map((s: { userId?: string; id?: string }) => s.userId || s.id || ''));

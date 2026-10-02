@@ -4,12 +4,13 @@ import axios from 'axios';
 import {
     Menu, Settings,
     LayoutDashboard, BookOpen, Users,
-    ClipboardList, Calendar, FileText, Bell,
+    ClipboardList, Calendar, FileText, NotebookPen,
     ChevronRight, MessageSquare, ClipboardCheck, LayoutTemplate,
-    LogOut, GraduationCap, X, Banknote
-} from 'lucide-react';
+    LogOut, GraduationCap, X, Banknote, CreditCard } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useAuth } from '../../context/AuthContext';
+import { usePendingScan } from '../../pages/attendance/usePendingScan';
+import { TimetableBell } from '../shared/TimetableBell';
 import { ProfileSettingsModal } from '../shared/ProfileSettingsModal';
 import { Badge } from '../ui/badge';
 import { SkcoolyWordmark } from '../shared/SkcoolyWordmark';
@@ -25,6 +26,9 @@ const NAV_GROUPS = [
             { title: 'Assignments', path: '/teacher/assignments', icon: ClipboardList },
             { title: 'Attendance', path: '/teacher/attendance', icon: Calendar, exact: true },
             { title: 'Results', path: '/teacher/results', icon: FileText },
+            { title: 'Timetable', path: '/teacher/timetable', icon: Calendar },
+            { title: 'Lesson Notes', path: '/teacher/lesson-notes', icon: NotebookPen },
+            { title: 'My ID Card', path: '/teacher/id-card', icon: CreditCard },
         ]
     },
     {
@@ -48,7 +52,6 @@ const ROUTE_TITLES: Record<string, string> = {
     '/teacher/results': 'Results',
     '/teacher/lms': 'LMS Hub',
     '/teacher/cbt': 'CBT Manager',
-    '/teacher/cbt/create': 'Create Exam',
     '/teacher/messaging': 'Messaging',
     '/teacher/payroll': 'My Payroll & Payslips',
 };
@@ -236,6 +239,7 @@ export function TeacherLayout() {
     const [profile, setProfile] = useState<any>(null);
     const location = useLocation();
     const { user } = useAuth();
+    usePendingScan();
 
     // Kept exactly as-is — backend logic untouched
     useEffect(() => {
@@ -304,10 +308,7 @@ export function TeacherLayout() {
 
                     <div className="flex items-center gap-2">
                         {/* Notification bell */}
-                        <button className="relative p-2 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors">
-                            <Bell size={18} />
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
-                        </button>
+                        <TimetableBell timetablePath="/teacher/timetable" />
 
                         {/* Divider */}
                         <div className="w-px h-6 bg-slate-200 mx-1" />

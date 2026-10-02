@@ -63,7 +63,7 @@ export function PrintBlankForm({ formType, onClose }: PrintBlankFormProps) {
                         <div key={section.id} className="mb-6 break-inside-avoid">
                             <h3 className="text-base font-black uppercase text-slate-500 mb-4 bg-slate-100 p-2">{section.title}</h3>
                             <div className="grid grid-cols-2 gap-x-6 gap-y-6">
-                                {section.fields.filter((f: FormFieldData) => f.isVisible || f.isPermanent).map((field: FormFieldData) => (
+                                {section.fields.filter((f: FormFieldData) => f.isVisible).map((field: FormFieldData) => (
                                     <div key={field.id} className={field.type === 'Textarea' ? 'col-span-2' : ''}>
                                         <div className="border-b border-black pb-1 min-h-[40px]">
                                             <span className="text-xs font-bold uppercase block mb-6">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { prepareFileForUpload, UPLOAD_LIMITS_MB } from '../../../utils/imageUpload';
 import { Save, ArrowLeft, User, AlertCircle, CheckCircle2, Loader2, Briefcase, Landmark } from 'lucide-react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -76,12 +77,17 @@ export default function AddStaff() {
 
     const set = (field: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setForm(f => ({ ...f, [field]: e.target.value }));
 
-    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            if (file.size > 2 * 1024 * 1024) { toast.error('Photo must be less than 2MB'); return; }
+    const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target;
+        const picked = input.files && input.files[0];
+        if (!picked) return;
+        try {
+            const file = await prepareFileForUpload(picked, { maxMB: UPLOAD_LIMITS_MB.photo, maxDimension: 800 });
             setPhoto(file);
             setPhotoPreview(URL.createObjectURL(file));
+        } catch (err: any) {
+            toast.error(err.message || 'Could not use that photo.');
+            input.value = '';
         }
     };
 
@@ -205,15 +211,15 @@ export default function AddStaff() {
                                 )}
                                 <label className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity text-white text-[10px] font-bold tracking-widest uppercase">
                                     <span className="mb-1">Upload</span>
-                                    <input type="file" accept="image/jpeg, image/png, image/webp" className="hidden" onChange={handlePhotoChange} />
+                                    <input type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
                                 </label>
                             </div>
                             <div className="text-center sm:text-left">
                                 <h3 className="text-sm font-bold text-slate-800">Profile Photo</h3>
-                                <p className="text-xs text-slate-500 mb-3">Optional. Max size 2MB (JPG, PNG, WebP).</p>
+                                <p className="text-xs text-slate-500 mb-3">Optional. Max size 5MB (large photos are resized automatically) (JPG, PNG, WebP).</p>
                                 <label className="cursor-pointer text-xs font-bold text-[#1E4DA6] bg-[#1E4DA6]/5 px-3 py-1.5 rounded-lg border border-[#1E4DA6]/10 hover:bg-[#1E4DA6]/10 transition-colors inline-block">
                                     Browse Files
-                                    <input type="file" accept="image/jpeg, image/png, image/webp" className="hidden" onChange={handlePhotoChange} />
+                                    <input type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
                                 </label>
                             </div>
                         </div>

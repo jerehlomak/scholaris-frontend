@@ -140,7 +140,7 @@ export default function ReportCard({ config, data }: ReportCardProps) {
             <>
                 {before.map(renderBlock)}
                 {pairBlocks.length > 0 && (
-                    <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="grid grid-cols-[2fr_1fr] gap-3 mb-3 items-start">
                         {pairBlocks.map(renderBlock)}
                     </div>
                 )}

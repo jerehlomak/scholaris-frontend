@@ -10,6 +10,7 @@ import {
 import { cn } from '../../lib/utils';
 import { SkcoolyWordmark } from '../shared/SkcoolyWordmark';
 import { useAuth } from '../../context/AuthContext';
+import { TimetableBell } from '../shared/TimetableBell';
 import { ProfileSettingsModal } from '../shared/ProfileSettingsModal';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from '../ui/dropdown-menu';
@@ -31,6 +32,7 @@ const NAV_GROUPS = [
         label: 'Academics & Reports',
         items: [
             { title: 'Academics', path: '/parent/academics', icon: BookOpen },
+            { title: 'Timetable', path: '/parent/timetable', icon: Calendar },
             { title: 'Attendance', path: '/parent/attendance', icon: Calendar },
             { title: 'Results', path: '/parent/results', icon: FileText },
         ]
@@ -390,6 +392,7 @@ export function ParentLayout() {
                     </div>
 
                     <div className="flex items-center gap-2">
+                        <TimetableBell calendar timetablePath="/parent/timetable" />
                         {/* Notification bell */}
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>

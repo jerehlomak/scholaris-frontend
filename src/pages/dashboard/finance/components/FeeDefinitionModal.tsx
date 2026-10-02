@@ -105,7 +105,7 @@ export default function FeeDefinitionModal({ open, onOpenChange, editData, onSuc
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label>Term Scope</Label>
-                            <Select value={formData.termScope} onValueChange={v => setFormData({ ...formData, termScope: v })}>
+                            <Select value={metaTerms.find((t: string) => t.trim().toUpperCase().replace(/[^A-Z0-9]+/g, '_') === String(formData.termScope).toUpperCase()) || formData.termScope} onValueChange={v => setFormData({ ...formData, termScope: v })}>
                                 <SelectTrigger><SelectValue /></SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="ANNUAL">Annual</SelectItem>

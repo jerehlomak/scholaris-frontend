@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { prepareFileForUpload, UPLOAD_LIMITS_MB } from '../../../utils/imageUpload';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -37,9 +38,18 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleDynamicFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setDynamicFiles({ ...dynamicFiles, [e.target.name]: e.target.files[0] });
+    const handleDynamicFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target;
+        const name = input.name;
+        const picked = input.files && input.files[0];
+        if (!picked) return;
+        try {
+            // Photos are resized in the browser so phone-camera pictures never hit the size limit.
+            const ready = await prepareFileForUpload(picked, { maxMB: UPLOAD_LIMITS_MB.document, maxDimension: 1600 });
+            setDynamicFiles(prev => ({ ...prev, [name]: ready }));
+        } catch (err: any) {
+            toast.error(err.message || 'Could not use that file.');
+            input.value = '';
         }
     };
 
@@ -54,8 +64,8 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
             let finalPhone = applicantPhone;
 
             if (sections && sections.length > 0) {
-                let fName = formData['f_firstname'] || formData['firstname'] || formData['first_name'] || formData['fname'] || formData['f_name'] || '';
-                let lName = formData['f_lastname'] || formData['lastname'] || formData['last_name'] || formData['lname'] || formData['l_name'] || '';
+                let fName = formData['f_fname'] || formData['f_firstname'] || formData['firstname'] || formData['first_name'] || formData['fname'] || formData['f_name'] || '';
+                let lName = formData['f_lname'] || formData['f_lastname'] || formData['lastname'] || formData['last_name'] || formData['lname'] || formData['l_name'] || '';
                 if (!finalName || finalName === 'Applicant') {
                     finalName = [fName, lName].filter(Boolean).join(' ') || 'Applicant';
                 }
@@ -190,7 +200,7 @@ export default function ManualApplicationForm({ fixedType }: { fixedType?: 'ADMI
                         <div key={section.id}>
                             <h3 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">{section.title}</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {section.fields.filter((f: FormFieldData) => f.isVisible || f.isPermanent).map((field: FormFieldData) => (
+                                {section.fields.filter((f: FormFieldData) => f.isVisible).map((field: FormFieldData) => (
                                     <div key={field.id} className={field.type === 'Textarea' ? 'md:col-span-2' : ''}>
                                         <label className="block text-sm font-bold text-slate-700 mb-1">
                                             {field.label} {field.isRequired && <span className="text-red-500">*</span>}

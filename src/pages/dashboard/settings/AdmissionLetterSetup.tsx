@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { prepareFileForUpload, fileToDataUrl, UPLOAD_LIMITS_MB } from '../../../utils/imageUpload';
 import { FileText, Loader2, Image as ImageIcon } from 'lucide-react';
 import axios from 'axios';
 import ReactQuill from 'react-quill-new';
@@ -6,6 +7,7 @@ import 'react-quill-new/dist/quill.snow.css';
 import { SettingsShell } from './shared/SettingsShell';
 import { SettingsHero } from './shared/SettingsHero';
 import { SaveButton } from './shared/SaveButton';
+import { LETTER_PLACEHOLDERS } from '../../../utils/letterPlaceholders';
 
 const QUILL_MODULES = {
     toolbar: [
@@ -39,7 +41,7 @@ interface LetterTemplate {
     signatoryName: string;
     signatoryTitle: string;
     signatureUrl: string;
-    signature: { align: 'left' | 'center' | 'right' };
+    signature: { align: 'left' | 'center' | 'right'; height?: number };
 }
 
 const DEFAULT_TEMPLATE: LetterTemplate = {
@@ -49,7 +51,7 @@ const DEFAULT_TEMPLATE: LetterTemplate = {
     signatoryName: '',
     signatoryTitle: 'Principal / Director',
     signatureUrl: '',
-    signature: { align: 'right' }
+    signature: { align: 'right', height: 64 }
 };
 
 export function AdmissionLetterSetup() {
@@ -79,14 +81,19 @@ export function AdmissionLetterSetup() {
         finally { setSaving(false); }
     };
 
-    const handleSignatureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setTemplate(prev => ({ ...prev, signatureUrl: reader.result as string }));
-        };
-        reader.readAsDataURL(file);
+    const handleSignatureUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target;
+        const picked = input.files?.[0];
+        if (!picked) return;
+        try {
+            // Keep transparency so a signature scanned/photographed on white stays clean on the letter.
+            const file = await prepareFileForUpload(picked, { maxMB: UPLOAD_LIMITS_MB.brandImage, maxDimension: 700, keepTransparency: true });
+            const dataUrl = await fileToDataUrl(file);
+            setTemplate(prev => ({ ...prev, signatureUrl: dataUrl }));
+        } catch (err: any) {
+            window.alert(err.message || 'Could not use that image.');
+            input.value = '';
+        }
     };
 
     if (loading) {
@@ -136,7 +143,16 @@ export function AdmissionLetterSetup() {
 
                 <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
                     <h3 className="font-bold text-slate-800">Letter Body</h3>
-                    <p className="text-sm text-slate-500">Draft the main content of the admission letter. This will appear below the header and above the signature. Use <code>{'{ApplicantName}'}</code> to insert the applicant's name dynamically.</p>
+                    <p className="text-sm text-slate-500">Draft the main content of the admission letter. This will appear below the header and above the signature. </p>
+                    <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Available placeholders - click to copy</p>
+                        <div className="flex flex-wrap gap-2">
+                            {LETTER_PLACEHOLDERS.filter(ph => !(ph.token === '{EmploymentNumber}' || ph.token === '{Position}') || false).filter(ph => !(ph.token === '{AdmissionNumber}' || ph.token === '{AdmittedClass}' || ph.token === '{DemotedClass}' || ph.token === '{AppliedClass}') || true).map(ph => (
+                                <button key={ph.token} type="button" title={ph.description} onClick={() => navigator.clipboard?.writeText(ph.token)} className="rounded-lg border border-slate-300 bg-white px-2.5 py-1 font-mono text-xs text-slate-700 hover:border-[#1E4DA6] hover:text-[#1E4DA6]">{ph.token}</button>
+                            ))}
+                        </div>
+                        <p className="mt-2 text-xs text-slate-500">Numbers and classes are filled in from what the admin assigns on the Applications dashboard after approval.</p>
+                    </div>
                     <div className="overflow-hidden rounded-xl border border-slate-200 focus-within:border-[#1E4DA6]/35 focus-within:ring-2 focus-within:ring-[#1E4DA6]/10 transition-all">
                         <ReactQuill
                             theme="snow"
@@ -190,6 +206,18 @@ export function AdmissionLetterSetup() {
                             </div>
                         </div>
                         <div className="md:col-span-2">
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Signature Size <span className="text-slate-400 font-normal">({template.signature?.height ?? 64}px tall)</span></label>
+                            <input
+                                type="range"
+                                min={30}
+                                max={160}
+                                step={2}
+                                value={template.signature?.height ?? 64}
+                                onChange={(e) => setTemplate(p => ({ ...p, signature: { ...p.signature, height: Number(e.target.value) } }))}
+                                className="w-full max-w-sm accent-[#1E4DA6]"
+                            />
+                        </div>
+                        <div className="md:col-span-2">
                             <label className="block text-sm font-medium text-slate-700 mb-2">Signature Image</label>
                             <div className="flex items-center gap-6">
                                 {template.signatureUrl ? (
@@ -228,7 +256,7 @@ export function AdmissionLetterSetup() {
                             }`}>
                                 <div className="w-48">
                                     {template.signatureUrl ? (
-                                        <img src={template.signatureUrl} alt="Signature" className="h-14 object-contain mb-2 mx-auto" />
+                                        <img src={template.signatureUrl} alt="Signature" style={{ height: Math.round((template.signature?.height ?? 64) * 0.875) }} className="object-contain mb-2 mx-auto" />
                                     ) : (
                                         <div className="h-14 border-b border-dashed border-slate-300 mb-2"></div>
                                     )}

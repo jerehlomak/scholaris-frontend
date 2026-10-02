@@ -84,6 +84,12 @@ export default function SingleBilling() {
   const [loadingBulkTemplate, setLoadingBulkTemplate] = useState(false);
   const [bulkTemplateFees, setBulkTemplateFees] = useState<Fee[]>([]);
   const [bulkTemplateToggles, setBulkTemplateToggles] = useState<Record<string,boolean>>({});
+  const [bulkCustomFees, setBulkCustomFees] = useState<{name:string;amount:string}[]>([]);
+
+  // Running total of whatever is currently ticked + custom lines, per student and across everyone selected.
+  const bulkPerStudentTotal =
+    bulkTemplateFees.filter(f => bulkTemplateToggles[f.id]).reduce((sum, f) => sum + f.amount * (f.quantity || 1), 0) +
+    bulkCustomFees.reduce((sum, c) => sum + (Number(c.amount) || 0), 0);
 
   // Inventory items sold on this invoice (e.g. uniforms, books) — decrements stock once paid
   const [inventoryOptions, setInventoryOptions] = useState<{id:string;name:string;sellingPrice:number;quantityOnHand:number}[]>([]);
@@ -201,16 +207,22 @@ export default function SingleBilling() {
     } catch { toast.error('Failed to load fee list'); setBulkTemplateOpen(false); }
     finally { setLoadingBulkTemplate(false); }
   };
-  const closeBulkTemplate = () => { setBulkTemplateOpen(false); setBulkTemplateFees([]); setBulkTemplateToggles({}); };
+  const closeBulkTemplate = () => { setBulkTemplateOpen(false); setBulkTemplateFees([]); setBulkTemplateToggles({}); setBulkCustomFees([]); };
 
   const handleBulkGenerate = async () => {
     if (!selectedClass || selected.size===0) return;
     const feeDefinitionIds = bulkTemplateFees.filter(f => bulkTemplateToggles[f.id]).map(f => f.id);
-    if (feeDefinitionIds.length === 0) { toast.error('Select at least one fee to bill'); return; }
+    const customFees = bulkCustomFees
+      .map(c => ({ name: c.name.trim(), amount: Number(c.amount) || 0 }))
+      .filter(c => c.name && c.amount > 0);
+    if (bulkCustomFees.some(c => (c.name.trim() && !(Number(c.amount) > 0)) || (!c.name.trim() && Number(c.amount) > 0))) {
+      toast.error('Give every custom item both a name and an amount'); return;
+    }
+    if (feeDefinitionIds.length === 0 && customFees.length === 0) { toast.error('Select at least one fee or add a custom item'); return; }
     setBulkGenerating(true);
     try {
       const r = await axios.post('/api/v1/finance-v2/billing/bulk-generate', {
-        studentIds: Array.from(selected), term, academicYear: year, feeDefinitionIds
+        studentIds: Array.from(selected), term, academicYear: year, feeDefinitionIds, customFees
       }, {withCredentials:true});
       const {results} = r.data;
       reportGenerationResults(results);
@@ -538,8 +550,8 @@ export default function SingleBilling() {
                 <div className="max-h-[50vh] overflow-y-auto divide-y divide-slate-50">
                   {loadingBulkTemplate ? (
                     <div className="flex justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-[#1E4DA6]"/></div>
-                  ) : bulkTemplateFees.length === 0 ? (
-                    <div className="py-12 text-center text-slate-400"><p className="font-semibold">No fees found for this class/term</p></div>
+                  ) : bulkTemplateFees.length === 0 && bulkCustomFees.length === 0 ? (
+                    <div className="py-12 text-center text-slate-400"><p className="font-semibold">No fees found for this class/term</p><p className="mt-1 text-xs">Use "Add Custom" below to bill a one-off item.</p></div>
                   ) : bulkTemplateFees.map(f => (
                     <div key={f.id} className={cn("flex items-center gap-4 px-6 py-3", !bulkTemplateToggles[f.id]&&'opacity-40')}>
                       <button
@@ -561,6 +573,28 @@ export default function SingleBilling() {
                       <p className="mono font-black text-slate-800">{fmt(f.amount*(f.quantity||1))}</p>
                     </div>
                   ))}
+                  {bulkCustomFees.map((cf,i)=>(
+                    <div key={i} className="flex items-center gap-2 bg-amber-50/40 px-6 py-3">
+                      <span className="mono rounded-full bg-amber-100 px-2 py-0.5 text-[9px] font-bold uppercase text-amber-700">Custom</span>
+                      <input value={cf.name} onChange={e=>setBulkCustomFees(p=>p.map((x,j)=>j===i?{...x,name:e.target.value}:x))} placeholder="Item name" className="min-w-0 flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm outline-none focus:border-[#1E4DA6]/60"/>
+                      <input type="number" min="0" value={cf.amount} onChange={e=>setBulkCustomFees(p=>p.map((x,j)=>j===i?{...x,amount:e.target.value}:x))} placeholder="Amount" className="w-28 rounded-lg border border-slate-200 px-3 py-1.5 text-sm outline-none focus:border-[#1E4DA6]/60"/>
+                      <button onClick={()=>setBulkCustomFees(p=>p.filter((_,j)=>j!==i))} className="text-slate-400 hover:text-red-500"><Trash2 className="h-4 w-4"/></button>
+                    </div>
+                  ))}
+                </div>
+                {!loadingBulkTemplate && (
+                  <div className="border-t border-slate-100 px-6 py-3">
+                    <button onClick={()=>setBulkCustomFees(p=>[...p,{name:'',amount:''}])} className="flex items-center gap-1.5 text-sm font-semibold text-[#1E4DA6] hover:text-[#122F69]">
+                      <Plus className="h-4 w-4"/>Add Custom
+                    </button>
+                  </div>
+                )}
+                <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50 px-6 py-3">
+                  <div>
+                    <p className="mono text-[10px] font-bold uppercase tracking-widest text-slate-400">Selected total · per student</p>
+                    <p className="mono text-[10px] text-slate-400">× {selected.size} student{selected.size===1?'':'s'} = {fmt(bulkPerStudentTotal*selected.size)}</p>
+                  </div>
+                  <p className="mono text-xl font-black text-[#173F8C]">{fmt(bulkPerStudentTotal)}</p>
                 </div>
                 <div className="flex items-center justify-between gap-4 border-t border-slate-100 px-6 py-4">
                   <p className="mono text-[10px] text-slate-400">Students already invoiced for a fee this term are skipped automatically</p>

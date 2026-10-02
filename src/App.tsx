@@ -1,7 +1,7 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { IdCardGenerate, IdCardDesigner, IdCardSettings, PublicDigitalIdCard, MyIdCard } from './pages/dashboard/id-card';
 
 import { ThemeProvider } from './context/ThemeContext';
-import { CBTProvider } from './context/CBTContext';
 import { AttendanceProvider } from './context/AttendanceContext';
 
 import { Home, Login, GetStarted, PlaceholderPage, ApplyPortal } from './pages'
@@ -22,12 +22,10 @@ import {
   RolePermissions,
   AttendanceCodes,
   CommunicationTemplates,
-  CBTSettings,
   AdmissionFieldsConfig,
   EmploymentFieldsConfig,
   AdmissionLetterSetup,
   EmploymentLetterSetup,
-  IDCardSettings,
   SchoolSetup,
   Sections,
   AcademicSessions,
@@ -42,12 +40,10 @@ import {
 // Students
 import {
   AdmissionForm,
-  StudentIdCards,
   PrintBasicList,
   AllStudents,
   ManageLogin,
-  PromoteStudents,
-  StudentAttendance as StudentPortalAttendance
+  PromoteStudents
 } from './pages/dashboard/students';
 
 // Classes
@@ -92,7 +88,9 @@ import {
 } from './pages/student';
 
 import StudentMessaging from './pages/student/StudentMessaging';
-import StudentCBT from './pages/student/StudentCBT';
+import StudentExams from './pages/cbt/student/StudentExams';
+import ExamRunner from './pages/cbt/student/ExamRunner';
+import CbtHome from './pages/cbt/CbtHome';
 import StudentLMS from './pages/student/StudentLMS';
 
 // Teacher Portal
@@ -102,15 +100,12 @@ import {
   TeacherClasses,
   TeacherSubjects,
   TeacherAssignments,
-  TeacherAttendance,
   TeacherResults,
   TeacherMessaging,
   TeacherPayroll,
 } from './pages/teacher';
 
 // Teacher CBT & LMS
-import CBTManager from './pages/teacher/cbt/CBTManager';
-import CreateExam from './pages/teacher/cbt/CreateExam';
 import TeacherLMS from './pages/teacher/TeacherLMS';
 
 // Parent Portal
@@ -121,8 +116,7 @@ import {
   ParentAcademics,
   ParentResults,
   ParentMessaging,
-  ParentFees,
-  ParentAttendance
+  ParentFees
 } from './pages/parent';
 import PaymentSuccess from './pages/parent/PaymentSuccess';
 import PaymentCancel from './pages/parent/PaymentCancel';
@@ -143,16 +137,22 @@ import LoanManagement from './pages/dashboard/finance/payroll/LoanManagement';
 import PensionTracker from './pages/dashboard/finance/payroll/PensionTracker';
 import PayrollRun from './pages/dashboard/finance/payroll/PayrollRun';
 import PayslipGenerator from './pages/dashboard/finance/payroll/PayslipGenerator';
-import AttendanceDashboard from './pages/dashboard/attendance/AttendanceDashboard';
-import StudentAttendance from './pages/dashboard/attendance/StudentAttendance';
-import StaffAttendance from './pages/dashboard/attendance/StaffAttendance';
-import QRManagement from './pages/dashboard/attendance/QRManagement';
-import AttendanceSettings from './pages/dashboard/attendance/AttendanceSettings';
-import AttendanceReports from './pages/dashboard/attendance/AttendanceReports';
+import AttendanceOverview from './pages/attendance/Overview';
+import { StudentRegister } from './pages/attendance/StudentRegister';
+import { StaffRegister } from './pages/attendance/StaffRegister';
+import QrHub from './pages/attendance/QrHub';
+import AttendanceLogs from './pages/attendance/LogsPage';
+import AttendanceSettings from './pages/attendance/SettingsPage';
+import AttendanceReports from './pages/attendance/ReportsPage';
+import ScanPage from './pages/attendance/ScanPage';
+import TeacherAttendancePage from './pages/attendance/TeacherAttendancePage';
+import ParentAttendancePage from './pages/attendance/ParentAttendancePage';
+import { MyStudentAttendance } from './pages/attendance/MyAttendance';
 import Timetable from './pages/dashboard/Timetable';
+import MyTimetable from './pages/dashboard/timetable/MyTimetable';
+import LessonNotes from './pages/dashboard/lesson-notes/LessonNotes';
 import Homework from './pages/dashboard/Homework';
 import { TeacherAssignments as AdminTeacherAssignments } from './pages/dashboard/academics';
-import AdminCBTOverview from './pages/dashboard/academics/AdminCBTOverview';
 // Admin Results
 import AdminResults from './pages/dashboard/results/AdminResults';
 import RecordScores from './pages/dashboard/results/RecordScores';
@@ -219,7 +219,6 @@ function App() {
   return (
     <ThemeProvider>
       <AttendanceProvider>
-        <CBTProvider>
           <AuthProvider>
             <BranchProvider>
               <SubscriptionProvider>
@@ -231,6 +230,8 @@ function App() {
                       <Route path="/login" element={<Login />} />
                       <Route path="/get-started" element={<GetStarted />} />
                       <Route path="/apply" element={<ApplyPortal />} />
+                      <Route path="/id/:token" element={<PublicDigitalIdCard />} />
+                      <Route path="/attendance/scan" element={<ScanPage />} />
                       <Route path="/schools" element={<PlaceholderPage title="For Schools" />} />
                       <Route path="/teachers" element={<PlaceholderPage title="For Teachers" />} />
                       <Route path="/students" element={<PlaceholderPage title="For Students" />} />
@@ -251,15 +252,17 @@ function App() {
                       <Route element={<ProtectedRoute allowedRoles={['STUDENT']} />}>
                         <Route path="/student" element={<StudentLayout />}>
                           <Route index element={<StudentHome />} />
-                          <Route path="attendance" element={<StudentPortalAttendance />} />
+                          <Route path="attendance" element={<MyStudentAttendance />} />
                           <Route path="payment" element={<Payment />} />
                           <Route path="course" element={<Course />} />
                           <Route path="result" element={<Result />} />
                           <Route path="hostel" element={<Hostel />} />
-                          <Route path="cbt" element={<StudentCBT />} />
-                          <Route path="cbt/take/:id" element={<StudentCBT />} />
+                          <Route path="cbt" element={<StudentExams />} />
+                          <Route path="cbt/take/:id" element={<ExamRunner />} />
                           <Route path="lms" element={<StudentLMS />} />
                           <Route path="messaging" element={<StudentMessaging />} />
+                          <Route path="id-card" element={<MyIdCard />} />
+                          <Route path="timetable" element={<MyTimetable />} />
                         </Route>
                       </Route>
 
@@ -270,12 +273,13 @@ function App() {
                           <Route path="classes" element={<TeacherClasses />} />
                           <Route path="subjects" element={<TeacherSubjects />} />
                           <Route path="assignments" element={<TeacherAssignments />} />
-                          <Route path="attendance" element={<TeacherAttendance />} />
+                          <Route path="attendance" element={<TeacherAttendancePage />} />
                           <Route path="results" element={<TeacherResults />} />
                           <Route path="messaging" element={<TeacherMessaging />} />
-                          <Route path="cbt" element={<CBTManager />} />
-                          <Route path="cbt/create" element={<CreateExam />} />
-                          <Route path="cbt/edit/:id" element={<CreateExam />} />
+                          <Route path="id-card" element={<MyIdCard />} />
+                          <Route path="timetable" element={<MyTimetable />} />
+                          <Route path="lesson-notes" element={<RequirePlan featureKey="Lesson Notes"><LessonNotes /></RequirePlan>} />
+                          <Route path="cbt" element={<CbtHome />} />
                           <Route path="lms" element={<TeacherLMS />} />
                           <Route path="payroll" element={<TeacherPayroll />} />
                         </Route>
@@ -287,12 +291,13 @@ function App() {
                           <Route index element={<ParentHome />} />
                           <Route path="children" element={<ParentChildren />} />
                           <Route path="academics" element={<ParentAcademics />} />
+                          <Route path="timetable" element={<MyTimetable />} />
                           <Route path="apply" element={<ParentApply />} />
                           <Route path="fees" element={<ParentFees />} />
                           <Route path="fees/success" element={<PaymentSuccess />} />
                           <Route path="fees/cancel" element={<PaymentCancel />} />
                           <Route path="results" element={<ParentResults />} />
-                          <Route path="attendance" element={<ParentAttendance />} />
+                          <Route path="attendance" element={<ParentAttendancePage />} />
                           <Route path="cbt" element={<ParentCBT />} />
                           <Route path="lms" element={<ParentLMS />} />
                           <Route path="wallet" element={<ParentWallet />} />
@@ -329,12 +334,19 @@ function App() {
                             <Route path="role-permissions" element={<RequirePlan plan="Pro" featureKey="Restrictions & Security"><RolePermissions /></RequirePlan>} />
                             <Route path="activity-deadlines" element={<RequirePlan plan="Pro" featureKey="Restrictions & Security"><ActivityDeadlines /></RequirePlan>} />
                             <Route path="feature-access" element={<RequirePlan plan="Pro" featureKey="Restrictions & Security"><FeatureAccess /></RequirePlan>} />
-                            <Route path="id-card-setup" element={<RequirePlan plan="Premium" featureKey="ID Card"><IDCardSettings /></RequirePlan>} />
+                            <Route path="id-card-setup" element={<Navigate to="/dashboard/id-card/settings" replace />} />
                             <Route path="admission-form" element={<RequirePlan plan="Premium" featureKey="Admission"><AdmissionFieldsConfig /></RequirePlan>} />
                             <Route path="admission-letter" element={<RequirePlan plan="Premium" featureKey="Admission"><AdmissionLetterSetup /></RequirePlan>} />
                             <Route path="employment-form" element={<RequirePlan plan="Premium" featureKey="Staff"><EmploymentFieldsConfig /></RequirePlan>} />
                             <Route path="employment-letter" element={<RequirePlan plan="Premium" featureKey="Staff"><EmploymentLetterSetup /></RequirePlan>} />
                             <Route path="account-recovery" element={<RequirePlan plan="Pro" featureKey="Restrictions & Security"><AccountRecovery /></RequirePlan>} />
+                          </Route>
+                          {/* ID Card module: generate/print, designer and settings for students and staff */}
+                          <Route path="id-card" element={<RequirePlan plan="Premium" featureKey="ID Card"><Outlet /></RequirePlan>}>
+                            <Route index element={<Navigate to="generate" replace />} />
+                            <Route path="generate" element={<IdCardGenerate />} />
+                            <Route path="design" element={<IdCardDesigner />} />
+                            <Route path="settings" element={<IdCardSettings />} />
                           </Route>
                           {/* Students */}
                           <Route element={<RequirePlan featureKey="Students"><Outlet /></RequirePlan>}>
@@ -345,7 +357,7 @@ function App() {
                               <Route path="add" element={<AdmissionForm />} />
                               <Route path="edit/:id" element={<AdmissionForm />} />
                               <Route path="view/:id" element={<AdmissionForm />} />
-                              <Route path="id-cards" element={<StudentIdCards />} />
+                              <Route path="id-cards" element={<Navigate to="/dashboard/id-card/generate" replace />} />
                               <Route path="print-list" element={<PrintBasicList />} />
                             </Route>
                           </Route>
@@ -394,6 +406,7 @@ function App() {
 
                           {/* Academics (Core) */}
                           <Route path="academics">
+                            <Route path="lesson-notes" element={<RequirePlan featureKey="Lesson Notes"><LessonNotes /></RequirePlan>} />
                             <Route path="assignments" element={<AdminTeacherAssignments />} />
                           </Route>
 
@@ -465,11 +478,12 @@ function App() {
                           {/* Attendance */}
                           <Route element={<RequirePlan featureKey="Attendance"><Outlet /></RequirePlan>}>
                             <Route path="attendance">
-                              <Route index element={<AttendanceDashboard />} />
-                              <Route path="students" element={<StudentAttendance />} />
-                              <Route path="staff" element={<StaffAttendance />} />
-                              <Route path="qr" element={<RequirePlan plan="Pro" featureKey="Attendance"><QRManagement /></RequirePlan>} />
+                              <Route index element={<AttendanceOverview />} />
+                              <Route path="students" element={<div className="mx-auto max-w-6xl p-4 md:p-6"><StudentRegister /></div>} />
+                              <Route path="staff" element={<div className="mx-auto max-w-6xl p-4 md:p-6"><StaffRegister /></div>} />
+                              <Route path="qr" element={<RequirePlan plan="Pro" featureKey="Attendance"><QrHub /></RequirePlan>} />
                               <Route path="reports" element={<AttendanceReports />} />
+                              <Route path="logs" element={<AttendanceLogs />} />
                               <Route path="settings" element={<RequirePlan plan="Pro" featureKey="Attendance"><AttendanceSettings /></RequirePlan>} />
                               <Route path="codes" element={<RequirePlan plan="Pro" featureKey="Attendance"><AttendanceCodes /></RequirePlan>} />
                             </Route>
@@ -478,8 +492,8 @@ function App() {
                           {/* CBT */}
                           <Route element={<RequirePlan featureKey="Exams"><Outlet /></RequirePlan>}>
                             <Route path="cbt">
-                              <Route index element={<AdminCBTOverview />} />
-                              <Route path="policies" element={<RequirePlan plan="Premium" featureKey="Exams"><CBTSettings /></RequirePlan>} />
+                              <Route index element={<CbtHome />} />
+                              <Route path="policies" element={<RequirePlan plan="Premium" featureKey="Exams"><CbtHome initialTab="settings" /></RequirePlan>} />
                             </Route>
                           </Route>
                           <Route path="timetable" element={<RequirePlan plan="Pro" featureKey="Timetable"><Timetable /></RequirePlan>} />
@@ -498,7 +512,6 @@ function App() {
               </SubscriptionProvider>
             </BranchProvider>
           </AuthProvider>
-        </CBTProvider>
       </AttendanceProvider>
     </ThemeProvider >
   )

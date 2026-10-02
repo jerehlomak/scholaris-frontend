@@ -39,10 +39,10 @@ const DEFAULT_GROUPS: FieldGroup[] = [
         id: 'basic', title: 'Basic Identity (Required)', color: 'blue',
         icon: <UserPlus className="h-4 w-4 text-[#1E4DA6]" />,
         fields: [
-            { id: 'f_fname', label: 'First Name', type: 'Text', description: "Student's given name.", isRequired: true, isVisible: true, isPermanent: true },
-            { id: 'f_lname', label: 'Last Name', type: 'Text', description: "Student's family name.", isRequired: true, isVisible: true, isPermanent: true },
-            { id: 'f_dob', label: 'Date of Birth', type: 'Date', description: 'Used to calculate age.', isRequired: true, isVisible: true, isPermanent: true },
-            { id: 'f_gender', label: 'Gender', type: 'Dropdown', description: 'Male/Female identification.', isRequired: true, isVisible: true, isPermanent: true },
+            { id: 'f_fname', label: 'First Name', type: 'Text', description: "Student's given name.", isRequired: true, isVisible: true, isPermanent: false },
+            { id: 'f_lname', label: 'Last Name', type: 'Text', description: "Student's family name.", isRequired: true, isVisible: true, isPermanent: false },
+            { id: 'f_dob', label: 'Date of Birth', type: 'Date', description: 'Used to calculate age.', isRequired: true, isVisible: true, isPermanent: false },
+            { id: 'f_gender', label: 'Gender', type: 'Dropdown', description: 'Male/Female identification.', isRequired: true, isVisible: true, isPermanent: false },
         ]
     },
     {
@@ -155,7 +155,7 @@ export function AdmissionFieldsConfig() {
         axios.get(`${API_BASE}/api/v1/school-settings`, { withCredentials: true })
             .then(res => {
                 const config = res.data?.settings?.admissionFormConfig;
-                if (config && Array.isArray(config)) setGroups(config);
+                if (config && Array.isArray(config)) setGroups(config.map((g: any) => ({ ...g, fields: (g.fields || []).map((fl: any) => ({ ...fl, isPermanent: false })) })));
                 if (res.data?.settings?.parentAdmissionRequiresPin !== undefined) {
                     setParentAdmissionRequiresPin(res.data.settings.parentAdmissionRequiresPin);
                 }

@@ -1,6 +1,6 @@
-import { X, ExternalLink, Check, XCircle, Calendar, Clock, MapPin } from 'lucide-react';
+import { X, ExternalLink, Check, XCircle, Calendar, Clock, MapPin, Hash } from 'lucide-react';
 import { Button } from '../../ui/button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -16,14 +16,34 @@ interface ApplicationDetailsModalProps {
     onUpdateStatus: (id: string, status: string, interviewDetails?: any) => void;
     onPrintApp: () => void;
     onPrintLetter: () => void;
+    onAssign?: (id: string, data: { assignedNumber: string; assignedClass: string }) => Promise<void>;
 }
 
-export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdateStatus, onPrintApp, onPrintLetter }: ApplicationDetailsModalProps) {
+export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdateStatus, onPrintApp, onPrintLetter, onAssign }: ApplicationDetailsModalProps) {
     const [isScheduling, setIsScheduling] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [interviewDate, setInterviewDate] = useState('');
     const [interviewTime, setInterviewTime] = useState('');
     const [interviewLocation, setInterviewLocation] = useState('');
+    const [assignedNumber, setAssignedNumber] = useState('');
+    const [assignedClass, setAssignedClass] = useState('');
+    const [isAssigning, setIsAssigning] = useState(false);
+
+    // Keep the assignment inputs in sync with whichever application is open.
+    useEffect(() => {
+        setAssignedNumber(application?.assignedNumber || '');
+        setAssignedClass(application?.assignedClass || '');
+    }, [application?.id, application?.assignedNumber, application?.assignedClass]);
+
+    const handleAssign = async () => {
+        if (!onAssign) return;
+        setIsAssigning(true);
+        try {
+            await onAssign(application.id, { assignedNumber, assignedClass });
+        } finally {
+            setIsAssigning(false);
+        }
+    };
 
     const handleUpdate = async (status: string, details?: any) => {
         setIsSubmitting(true);
@@ -39,6 +59,10 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdate
 
     // Reset state when modal opens/closes
     if (!application) return null;
+
+    const isEmployment = application.applicationType === 'EMPLOYMENT';
+    const numberLabel = isEmployment ? 'Employment Number' : 'Admission Number';
+    const classLabel = isEmployment ? 'Position / Department' : 'Admitted Class';
 
     const formatKey = (key: string) => {
         let formatted = key.startsWith('f_') ? key.slice(2) : key;
@@ -65,6 +89,10 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdate
                     <div>
                         <h4 className="text-sm font-medium text-gray-500">Applicant Details</h4>
                         <dl className="mt-2 space-y-2">
+                            <div>
+                                <dt className="text-xs text-gray-500">Reference Number</dt>
+                                <dd className="text-sm font-mono font-bold text-gray-900">{application.referenceNumber || 'N/A'}</dd>
+                            </div>
                             <div>
                                 <dt className="text-xs text-gray-500">Full Name</dt>
                                 <dd className="text-sm font-medium text-gray-900">{application.applicantName}</dd>
@@ -104,6 +132,38 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdate
                         </dl>
                     </div>
                 </div>
+
+                {application.status === 'APPROVED' && onAssign && (
+                    <div className="border-t pt-4 mt-2 bg-emerald-50/50 -mx-6 px-6 pb-4">
+                        <h4 className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-2"><Hash className="w-4 h-4" /> Assign {numberLabel} &amp; {classLabel}</h4>
+                        <p className="text-xs text-slate-500 mb-3">The applicant only received a reference number. Assign the official number and placement here, after the interview.</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-xs font-bold text-slate-500 mb-1">{numberLabel}</label>
+                                <input
+                                    type="text"
+                                    value={assignedNumber}
+                                    onChange={(e) => setAssignedNumber(e.target.value)}
+                                    placeholder={isEmployment ? 'e.g. EMP/2026/014' : 'e.g. ADM/2026/0123'}
+                                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-[#1E4DA6]/10 focus:border-[#1E4DA6]/60 outline-none"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-500 mb-1">{classLabel}</label>
+                                <input
+                                    type="text"
+                                    value={assignedClass}
+                                    onChange={(e) => setAssignedClass(e.target.value)}
+                                    placeholder={isEmployment ? 'e.g. Mathematics Teacher' : 'e.g. JSS 1A'}
+                                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-[#1E4DA6]/10 focus:border-[#1E4DA6]/60 outline-none"
+                                />
+                            </div>
+                        </div>
+                        <Button type="button" onClick={handleAssign} disabled={isAssigning} className="mt-3 bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
+                            {isAssigning ? 'Saving...' : 'Save Assignment'}
+                        </Button>
+                    </div>
+                )}
 
                 {isScheduling && (
                     <div className="border-t pt-4 mt-4 bg-slate-50 -mx-6 px-6 pb-4">
@@ -184,9 +244,9 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, onUpdate
                         Close
                     </Button>
                     
-                    {application.status === 'APPROVED' && application.applicationType === 'ADMISSION_APPLICATION' && (
+                    {application.status === 'APPROVED' && (
                         <Button type="button" onClick={onPrintLetter} className="mt-3 w-full sm:mt-0 sm:w-auto bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
-                            Print Admission Letter
+                            Print {isEmployment ? 'Employment' : 'Admission'} Letter
                         </Button>
                     )}
                     

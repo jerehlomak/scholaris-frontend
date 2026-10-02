@@ -200,7 +200,7 @@ export default function TeacherClasses() {
                                                     <CheckCircle2 size={13} /> Mark Attendance
                                                 </Button>
                                             </Link>
-                                            <Link to="/teacher/cbt/create">
+                                            <Link to="/teacher/cbt">
                                                 <Button size="sm" variant="outline" className="text-xs h-8 gap-1.5 border-slate-300">
                                                     <BookOpen size={13} /> Create CBT
                                                 </Button>
