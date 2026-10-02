@@ -26,16 +26,6 @@ interface Student {
     progress: number;
 }
 
-const TIMETABLE: Record<string, { subject: string; time: string }[]> = {
-    Monday: [{ subject: 'Mathematics', time: '8–9 AM' }, { subject: 'English Language', time: '10–11 AM' }, { subject: 'Biology', time: '12–1 PM' }],
-    Tuesday: [{ subject: 'Physics', time: '8–9 AM' }, { subject: 'Chemistry', time: '10–11 AM' }],
-    Wednesday: [{ subject: 'Mathematics', time: '8–9 AM' }, { subject: 'English Language', time: '11–12 PM' }],
-    Thursday: [{ subject: 'Biology', time: '9–10 AM' }, { subject: 'Physics', time: '11–12 PM' }],
-    Friday: [{ subject: 'Chemistry', time: '8–9 AM' }],
-};
-
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-
 export default function ParentAcademics() {
     const [students, setStudents] = useState<Student[]>([]);
     const [selectedStudentId, setSelectedStudentId] = useState('');
@@ -190,24 +180,13 @@ export default function ParentAcademics() {
                 </div>
 
                 {/* Timetable */}
-                <div>
-                    <h3 className="font-bold text-gray-900 mb-4">Weekly Timetable</h3>
-                    <Card className="bg-white border border-slate-200 shadow-sm overflow-hidden">
-                        {DAYS.map((day, i) => (
-                            <div key={day} className={`p-3 ${i < DAYS.length - 1 ? 'border-b border-slate-100' : ''}`}>
-                                <p className="text-xs font-bold text-[#173F8C] uppercase tracking-wider mb-2">{day}</p>
-                                <div className="space-y-1">
-                                    {(TIMETABLE[day] || []).map((cls: { subject: string, time: string }) => (
-                                        <div key={cls.subject} className="flex items-center justify-between text-xs text-slate-700 bg-slate-50 rounded-lg px-2.5 py-1.5">
-                                            <span className="font-semibold">{cls.subject}</span>
-                                            <span className="text-slate-500">{cls.time}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </Card>
-                </div>
+                <Link to="/parent/timetable" className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-sm hover:border-[#1E4DA6]/40">
+                    <div>
+                        <h3 className="font-bold text-gray-900">Weekly Timetable</h3>
+                        <p className="text-xs text-slate-500">See your children's class timetables, exam schedules and set reminders.</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-300" />
+                </Link>
             </div>
         </div>
     );

@@ -31,7 +31,7 @@ export default function AttendanceBlock({ data, config, design  }: { data: any, 
                 </div>
                 <div className="divide-y" style={{ borderColor: `${primaryColor}25` }}>
                     {rows.map((r, i) => (
-                        <div key={i} className="flex items-center justify-between px-2 py-1 text-[10px]">
+                        <div key={i} className="flex items-center justify-between px-2 py-0.5 text-[8px] leading-tight">
                             <span className="text-gray-500">{r.label}:</span>
                             <span className="font-bold" style={{ color: primaryColor }}>{r.value}</span>
                         </div>

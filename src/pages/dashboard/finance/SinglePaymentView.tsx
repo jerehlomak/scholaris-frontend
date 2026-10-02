@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Search, Loader2, User, FileText, CheckCircle2, CreditCard, ChevronRight } from 'lucide-react';
 import { Input } from '../../../components/ui/input';
@@ -9,6 +9,8 @@ export default function SinglePaymentView() {
     const [students, setStudents] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [classFilter, setClassFilter] = useState('ALL');
+    const [sortBy, setSortBy] = useState<'name' | 'class' | 'admission' | 'family'>('name');
     const [selectedStudent, setSelectedStudent] = useState<any>(null);
     const [invoices, setInvoices] = useState<any[]>([]);
     const [loadingInvoices, setLoadingInvoices] = useState(false);
@@ -35,12 +37,33 @@ export default function SinglePaymentView() {
         fetchInvoices(student.id);
     };
 
-    const filteredStudents = search.length > 1 
-        ? students.filter(s => 
-            s.user?.name?.toLowerCase().includes(search.toLowerCase()) || 
-            s.admissionNo?.toLowerCase().includes(search.toLowerCase())
-          ).slice(0, 5)
-        : [];
+    const classOf = (s: any) => s.classArm?.name || s.classLevel || 'No Class';
+    const familyOf = (s: any) => s.parent?.user?.name || s.parent?.fatherName || s.parent?.motherName || '';
+
+    const classOptions = useMemo(
+        () => Array.from(new Set(students.map(classOf))).sort((x, y) => x.localeCompare(y, undefined, { numeric: true })),
+        [students]
+    );
+
+    // Search matches student name, admission no., class, and the family (parent/guardian
+    // names, phone, parent ID) so the right payer can be found however the school knows them.
+    const filteredStudents = useMemo(() => {
+        const q = search.trim().toLowerCase();
+        if (!q && classFilter === 'ALL') return [];
+        const matches = students.filter(s => {
+            if (classFilter !== 'ALL' && classOf(s) !== classFilter) return false;
+            if (!q) return true;
+            const haystack = [
+                s.user?.name, s.admissionNo, classOf(s),
+                s.parent?.user?.name, s.parent?.fatherName, s.parent?.motherName,
+                s.parent?.phone, s.parent?.fatherPhone, s.parent?.motherPhone, s.parent?.parentId
+            ].filter(Boolean).join(' ').toLowerCase();
+            return q.split(/s+/).every(term => haystack.includes(term));
+        });
+        const key = (s: any) => sortBy === 'class' ? classOf(s) : sortBy === 'admission' ? (s.admissionNo || '') : sortBy === 'family' ? familyOf(s) : (s.user?.name || '');
+        return matches.sort((x, y) => key(x).localeCompare(key(y), undefined, { numeric: true, sensitivity: 'base' }) || (x.user?.name || '').localeCompare(y.user?.name || ''));
+    }, [students, search, classFilter, sortBy]);
+    const showResults = search.trim().length > 0 || classFilter !== 'ALL';
 
     return (
         <>
@@ -73,15 +96,15 @@ export default function SinglePaymentView() {
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                     <Input 
-                        placeholder="Search student by name or admission number..." 
+                        placeholder="Search by student, admission no., class, or family / parent name..." 
                         className="pl-10 h-12 text-base rounded-xl bg-slate-50 border-transparent focus:bg-white focus:border-indigo-500 transition-colors"
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                     />
                     
-                    {search.length > 1 && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-10">
-                            {filteredStudents.length > 0 ? filteredStudents.map(s => (
+                    {showResults && (
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden overflow-y-auto max-h-96 z-10">
+                            {filteredStudents.length > 0 ? filteredStudents.slice(0, 50).map(s => (
                                 <button
                                     key={s.id}
                                     onClick={() => handleSelectStudent(s)}
@@ -92,7 +115,7 @@ export default function SinglePaymentView() {
                                     </div>
                                     <div>
                                         <p className="font-semibold text-slate-800">{s.user?.name}</p>
-                                        <p className="text-xs text-slate-500">{s.admissionNo} • {s.classArm?.name || s.classLevel || 'No Class'}</p>
+                                        <p className="text-xs text-slate-500">{s.admissionNo} • {classOf(s)}{familyOf(s) ? ` • Family: ${familyOf(s)}` : ''}</p>
                                     </div>
                                 </button>
                             )) : (
@@ -100,6 +123,24 @@ export default function SinglePaymentView() {
                             )}
                         </div>
                     )}
+                </div>
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                    <label className="flex flex-1 items-center gap-2 text-xs font-semibold text-slate-500">
+                        Class
+                        <select value={classFilter} onChange={e => setClassFilter(e.target.value)} className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 outline-none focus:border-indigo-500">
+                            <option value="ALL">All classes</option>
+                            {classOptions.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
+                    </label>
+                    <label className="flex flex-1 items-center gap-2 text-xs font-semibold text-slate-500">
+                        Sort by
+                        <select value={sortBy} onChange={e => setSortBy(e.target.value as typeof sortBy)} className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 outline-none focus:border-indigo-500">
+                            <option value="name">Student name</option>
+                            <option value="class">Class</option>
+                            <option value="admission">Admission number</option>
+                            <option value="family">Family / parent name</option>
+                        </select>
+                    </label>
                 </div>
             </div>
 

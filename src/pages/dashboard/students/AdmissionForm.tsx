@@ -1,4 +1,5 @@
 import { Input } from '../../../components/ui/input';
+import { prepareFileForUpload, fileToDataUrl, UPLOAD_LIMITS_MB } from '../../../utils/imageUpload';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
 import {
     Download, RotateCcw, Check, ArrowLeft, Loader2, User, Info, FileText, Printer, AlertCircle
@@ -413,13 +414,19 @@ export function AdmissionForm() {
                         <div>
                             <label className={labelCls}>Picture</label>
                             <div className={cn('relative', disabled && 'opacity-60 pointer-events-none')}>
-                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" disabled={disabled} onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) {
+                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" disabled={disabled} onChange={async (e) => {
+                                    const input = e.target;
+                                    const picked = input.files?.[0];
+                                    if (!picked) return;
+                                    try {
+                                        // Resized in the browser: the picture is stored with the student record,
+                                        // so a raw phone photo (5-10MB) would otherwise fail or bloat the database.
+                                        const file = await prepareFileForUpload(picked, { maxMB: UPLOAD_LIMITS_MB.photo, maxDimension: 600 });
                                         setFileName(file.name);
-                                        const reader = new FileReader();
-                                        reader.onloadend = () => setProfilePicture(reader.result as string);
-                                        reader.readAsDataURL(file);
+                                        setProfilePicture(await fileToDataUrl(file));
+                                    } catch (err: any) {
+                                        toast.error(err.message || 'Could not use that picture.');
+                                        input.value = '';
                                     }
                                 }} />
                                 <div className="rounded-xl border border-slate-200 h-12 flex items-center px-1 bg-white shadow-sm overflow-hidden">

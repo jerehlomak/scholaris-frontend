@@ -10,6 +10,7 @@ import {
 import { cn } from '../../lib/utils';
 import { SkcoolyWordmark } from '../shared/SkcoolyWordmark';
 import { useAuth } from '../../context/AuthContext';
+import { TimetableBell } from '../shared/TimetableBell';
 import { ProfileSettingsModal } from '../shared/ProfileSettingsModal';
 import { Badge } from '../ui/badge';
 
@@ -24,6 +25,8 @@ const NAV_GROUPS = [
             { title: 'CBT Assessments', path: '/student/cbt', icon: FileText },
             { title: 'Results', path: '/student/result', icon: GraduationCap },
             { title: 'ID & Attendance', path: '/student/attendance', icon: QrCode, exact: true },
+            { title: 'Timetable', path: '/student/timetable', icon: Calendar },
+            { title: 'My ID Card', path: '/student/id-card', icon: CreditCard },
         ]
     },
     {
@@ -246,6 +249,7 @@ export function StudentLayout() {
                     </div>
 
                     <div className="flex items-center gap-3 sm:gap-4">
+                        <TimetableBell timetablePath="/student/timetable" />
                         {/* Profile Clickable Area */}
                         <div
                             onClick={() => setProfileModalOpen(true)}

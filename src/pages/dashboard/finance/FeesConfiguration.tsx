@@ -7,7 +7,8 @@ import { Plus, Pencil, Trash2, X, ChevronRight, Search, Loader2, Package, Wrench
 import { cn } from '../../../lib/utils';
 
 type FeeType = 'FEE' | 'ITEM';
-type TermScope = 'ANNUAL' | 'FIRST_TERM' | 'SECOND_TERM' | 'THIRD_TERM';
+type TermScope = string;
+const normTerm = (v?: string) => (v || '').trim().toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 type ScopeChoice = 'WHOLE_SCHOOL' | 'CLASS';
 
 interface Fee {
@@ -184,7 +185,7 @@ export default function FeesConfiguration() {
                   <tbody className="divide-y divide-slate-50">
                     <AnimatePresence mode="popLayout">
                       {displayed.map((f, i) => {
-                        const termLabel = TERMS.find(t => t.value === f.termScope)?.label || f.termScope;
+                        const termLabel = TERMS.find(t => normTerm(t.value) === normTerm(f.termScope))?.label || f.termScope;
                         const classLabel = f.scope === 'WHOLE_SCHOOL' ? 'All Classes' : (f.classIds && f.classIds.length > 0 ? f.classIds.map(id => classes.find(c => c.id === id)?.name).filter(Boolean).join(', ') || 'Specific Class' : 'Specific Class');
                         return (
                           <motion.tr key={f.id} layout initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }} transition={{ duration:0.2, delay: i*0.02 }} className="group hover:bg-slate-50/60 transition-colors">
@@ -347,7 +348,7 @@ export default function FeesConfiguration() {
                   <label className="mono mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400">Term Assignment <span className="text-rose-500">*</span></label>
                   <div className="grid grid-cols-2 gap-1 rounded-xl border border-slate-200 bg-slate-50 p-1">
                     {TERMS.map(t => (
-                      <button key={t.value} onClick={() => setForm(p => ({...p, termScope: t.value}))} className={seg(form.termScope === t.value)}>{t.label}</button>
+                      <button key={t.value} onClick={() => setForm(p => ({...p, termScope: t.value}))} className={seg(normTerm(form.termScope) === normTerm(t.value))}>{t.label}</button>
                     ))}
                   </div>
                 </div>

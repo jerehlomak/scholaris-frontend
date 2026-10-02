@@ -299,10 +299,10 @@ export function TeacherHome() {
                             {schedule && schedule.length > 0 ? (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                     {schedule.map((cls: any, i: number) => (
-                                        <div key={i} className="p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors">
-                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1E4DA6] mb-1">{cls.time}</p>
+                                        <div key={i} className={`p-3 rounded-xl border transition-colors ${cls.current ? 'border-[#1E4DA6] bg-blue-50 ring-1 ring-[#1E4DA6]' : cls.done ? 'border-slate-200 bg-slate-50 opacity-60' : 'border-slate-200 bg-slate-50 hover:bg-slate-100'}`}>
+                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1E4DA6] mb-1">{cls.time}{cls.current && <span className="ml-2 rounded bg-[#1E4DA6] px-1.5 py-0.5 text-[9px] text-white">NOW</span>}</p>
                                             <p className="text-sm font-bold text-slate-800 leading-tight">{cls.subject}</p>
-                                            <p className="text-xs text-slate-500 mt-0.5">{cls.class} · Room {cls.room}</p>
+                                            <p className="text-xs text-slate-500 mt-0.5">{[cls.class, cls.room && `Room ${cls.room}`].filter(Boolean).join(' · ')}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -379,14 +379,16 @@ export function TeacherHome() {
                                             <td className="px-5 py-3 text-slate-500">{s.class}</td>
                                             <td className="px-5 py-3">
                                                 <Badge className={
-                                                    parseInt(s.attendance) >= 80
-                                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-50'
-                                                        : 'bg-red-50 text-red-700 border border-red-200 hover:bg-red-50'
+                                                    s.attendance == null
+                                                        ? 'bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-50'
+                                                        : s.attendance >= 80
+                                                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-50'
+                                                            : 'bg-red-50 text-red-700 border border-red-200 hover:bg-red-50'
                                                 }>
-                                                    {s.attendance}%
+                                                    {s.attendance == null ? '—' : s.attendance + '%'}
                                                 </Badge>
                                             </td>
-                                            <td className="px-5 py-3 text-right font-semibold text-slate-800">{s.grade}</td>
+                                            <td className="px-5 py-3 text-right font-semibold text-slate-800">{s.grade ?? '—'}</td>
                                         </tr>
                                     )) : (
                                         <tr>
@@ -414,13 +416,15 @@ export function TeacherHome() {
                                     </div>
                                     <div className="flex flex-col items-end gap-1">
                                         <Badge className={
-                                            parseInt(s.attendance) >= 80
-                                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-50 text-[10px]'
-                                                : 'bg-red-50 text-red-700 border border-red-200 hover:bg-red-50 text-[10px]'
+                                            s.attendance == null
+                                                ? 'bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-50 text-[10px]'
+                                                : s.attendance >= 80
+                                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-50 text-[10px]'
+                                                    : 'bg-red-50 text-red-700 border border-red-200 hover:bg-red-50 text-[10px]'
                                         }>
-                                            {s.attendance}%
+                                            {s.attendance == null ? '—' : s.attendance + '%'}
                                         </Badge>
-                                        <span className="text-xs font-bold text-slate-700">{s.grade}</span>
+                                        <span className="text-xs font-bold text-slate-700">{s.grade ?? '—'}</span>
                                     </div>
                                 </div>
                             )) : (

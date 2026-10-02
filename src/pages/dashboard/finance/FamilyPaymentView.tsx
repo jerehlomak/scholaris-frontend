@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Search, Loader2, Users, FileText, CheckCircle2, CreditCard, ChevronRight } from 'lucide-react';
 import { Input } from '../../../components/ui/input';
@@ -10,6 +10,7 @@ export default function FamilyPaymentView() {
     const [families, setFamilies] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [sortBy, setSortBy] = useState<'name' | 'outstanding' | 'children'>('name');
     const [selectedFamily, setSelectedFamily] = useState<any>(null);
     const [profile, setProfile] = useState<any>(null);
     const [loadingProfile, setLoadingProfile] = useState(false);
@@ -40,13 +41,25 @@ export default function FamilyPaymentView() {
     const familyTotalOutstanding: number = profile?.children?.reduce((sum: number, child: any) =>
         sum + (child.invoices?.reduce((s: number, inv: any) => s + (inv.balanceDue > 0 ? inv.balanceDue : 0), 0) || 0), 0) || 0;
 
-    const filteredFamilies = search.length > 1
-        ? families.filter(f => 
-            f.name?.toLowerCase().includes(search.toLowerCase()) || 
-            f.email?.toLowerCase().includes(search.toLowerCase()) ||
-            f.phone?.includes(search)
-          ).slice(0, 5)
-        : [];
+    // Matches family/parent name, email, phone, parent ID and the children's names or
+    // admission numbers, from the first character typed.
+    const filteredFamilies = useMemo(() => {
+        const q = search.trim().toLowerCase();
+        if (!q) return [];
+        const matches = families.filter(f => {
+            const haystack = [
+                f.name, f.email, f.phone, f.parentId,
+                ...(Array.isArray(f.children) ? f.children.flatMap((c: any) => [c.name, c.admissionNo]) : []),
+                ...(Array.isArray(f.studentNames) ? f.studentNames : [])
+            ].filter(Boolean).join(' ').toLowerCase();
+            return q.split(/\s+/).every(term => haystack.includes(term));
+        });
+        const num = (v: any) => Number(v) || 0;
+        return matches.sort((x, y) =>
+            sortBy === 'outstanding' ? num(y.outstanding ?? y.balanceDue) - num(x.outstanding ?? x.balanceDue)
+            : sortBy === 'children' ? num(y.studentCount) - num(x.studentCount)
+            : (x.name || '').localeCompare(y.name || '', undefined, { sensitivity: 'base' }));
+    }, [families, search, sortBy]);
 
     return (
         <>
@@ -76,18 +89,26 @@ export default function FamilyPaymentView() {
             </div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <div className="mb-4 flex items-center gap-2 text-xs font-semibold text-slate-500">
+                    Sort results by
+                    <select value={sortBy} onChange={e => setSortBy(e.target.value as typeof sortBy)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 outline-none focus:border-indigo-500">
+                        <option value="name">Family name</option>
+                        <option value="outstanding">Highest outstanding</option>
+                        <option value="children">Most children</option>
+                    </select>
+                </div>
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                     <Input 
-                        placeholder="Search family by name, email or phone..." 
+                        placeholder="Search family by parent name, phone, email or child name..." 
                         className="pl-10 h-12 text-base rounded-xl bg-slate-50 border-transparent focus:bg-white focus:border-indigo-500 transition-colors"
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                     />
                     
-                    {search.length > 1 && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-10">
-                            {filteredFamilies.length > 0 ? filteredFamilies.map(f => (
+                    {search.trim().length > 0 && (
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden overflow-y-auto max-h-96 z-10">
+                            {filteredFamilies.length > 0 ? filteredFamilies.slice(0, 50).map(f => (
                                 <button
                                     key={f.id}
                                     onClick={() => handleSelectFamily(f)}

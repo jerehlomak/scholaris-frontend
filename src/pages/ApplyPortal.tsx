@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { prepareFileForUpload, UPLOAD_LIMITS_MB } from '../utils/imageUpload';
 import { UploadCloud } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -6,6 +7,7 @@ import { toast } from 'sonner';
 import { Button } from '../components/ui/button';
 import { Header } from '../components/home/Header';
 import { Footer } from '../components/home/Footer';
+import { applicantDisplayName, fillLetterPlaceholders, signatureHeightPx } from '../utils/letterPlaceholders';
 
 export default function ApplyPortal() {
     const navigate = useNavigate();
@@ -21,6 +23,11 @@ export default function ApplyPortal() {
     const [applicationStatus, setApplicationStatus] = useState<any>(null);
     const [letterTemplate, setLetterTemplate] = useState<any>(null);
     const [showPrintView, setShowPrintView] = useState(false);
+
+    // Shown straight after submission: only a reference number (the real admission /
+    // employment number is assigned by the school later) plus a printable copy.
+    const [submittedApp, setSubmittedApp] = useState<any>(null);
+    const [showSubmissionPrint, setShowSubmissionPrint] = useState(false);
 
     // Step 2 State
     const [formData, setFormData] = useState<any>({}); // For dynamic form inputs
@@ -61,8 +68,8 @@ export default function ApplyPortal() {
             let finalApplicantPhone = '';
 
             if (formConfig && Array.isArray(formConfig) && formConfig.length > 0) {
-                let fName = formData['f_firstname'] || formData['firstname'] || formData['first_name'] || formData['fname'] || formData['f_name'] || '';
-                let lName = formData['f_lastname'] || formData['lastname'] || formData['last_name'] || formData['lname'] || formData['l_name'] || '';
+                let fName = formData['f_fname'] || formData['f_firstname'] || formData['firstname'] || formData['first_name'] || formData['fname'] || formData['f_name'] || '';
+                let lName = formData['f_lname'] || formData['f_lastname'] || formData['lastname'] || formData['last_name'] || formData['lname'] || formData['l_name'] || '';
                 finalApplicantName = [fName, lName].filter(Boolean).join(' ') || 'Applicant';
                 finalApplicantEmail = formData['f_email'] || formData['email'] || formData['email_address'] || formData['f_parent_email'] || '';
                 finalApplicantPhone = formData['f_phone'] || formData['phone'] || formData['phone_number'] || formData['f_parent_phone'] || '';
@@ -93,12 +100,13 @@ export default function ApplyPortal() {
                 }
             });
 
-            await axios.post('/api/v1/applications/submit', formDataObj, {
+            const res = await axios.post('/api/v1/applications/submit', formDataObj, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
             toast.success('Application submitted successfully!');
-            navigate('/');
+            setSubmittedApp(res.data.application || { referenceNumber: res.data.referenceNumber, applicantName: finalApplicantName, formData, applicationType });
+            setStep(4);
         } catch (error: any) {
             toast.error(error.response?.data?.msg || error.response?.data?.message || 'Failed to submit application.');
         } finally {
@@ -110,9 +118,18 @@ export default function ApplyPortal() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleDynamicFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setDynamicFiles({ ...dynamicFiles, [e.target.name]: e.target.files[0] });
+    const handleDynamicFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target;
+        const name = input.name;
+        const picked = input.files && input.files[0];
+        if (!picked) return;
+        try {
+            // Photos are resized in the browser so phone-camera pictures never hit the size limit.
+            const ready = await prepareFileForUpload(picked, { maxMB: UPLOAD_LIMITS_MB.document, maxDimension: 1600 });
+            setDynamicFiles(prev => ({ ...prev, [name]: ready }));
+        } catch (err: any) {
+            toast.error(err.message || 'Could not use that file.');
+            input.value = '';
         }
     };
 
@@ -127,7 +144,7 @@ export default function ApplyPortal() {
                         Application Portal
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        {step === 1 ? 'Enter your application PIN to begin.' : step === 2 ? `Applying to ${schoolInfo?.name}` : `Application Status for ${schoolInfo?.name}`}
+                        {step === 1 ? 'Enter your application PIN to begin.' : step === 2 ? `Applying to ${schoolInfo?.name}` : step === 4 ? `Application received by ${schoolInfo?.name}` : `Application Status for ${schoolInfo?.name}`}
                     </p>
                 </div>
 
@@ -204,7 +221,7 @@ export default function ApplyPortal() {
                                                 <div key={group.id} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                                                     <h4 className="font-bold text-gray-800 mb-4 uppercase tracking-wider text-xs border-b pb-2">{group.title}</h4>
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                        {group.fields.filter((f: any) => f.isVisible || f.isPermanent).map((field: any) => (
+                                                        {group.fields.filter((f: any) => f.isVisible).map((field: any) => (
                                                             <div key={field.id} className={field.type === 'Textarea' ? 'md:col-span-2' : ''}>
                                                                 <label className="block text-sm font-medium text-gray-700">
                                                                     {field.label} {field.isRequired ? '*' : ''}
@@ -399,6 +416,29 @@ export default function ApplyPortal() {
                                     Back to Home
                                 </Button>
                             </div>
+                        ) : step === 4 ? (
+                            <div className="space-y-6 text-center py-6">
+                                {schoolInfo?.logoUrl && (
+                                    <div className="flex justify-center mb-2">
+                                        <img src={schoolInfo.logoUrl} alt={schoolInfo.name} className="h-16 object-contain" />
+                                    </div>
+                                )}
+                                <div className="p-6 bg-emerald-50 rounded-xl border border-emerald-200">
+                                    <h3 className="text-xl font-bold text-emerald-800 mb-1">Application submitted</h3>
+                                    <p className="text-sm text-emerald-700 mb-5">Keep your reference number safe. Your {applicationType === 'EMPLOYMENT' ? 'employment' : 'admission'} number and details will be issued by the school after review.</p>
+                                    <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">Reference Number</p>
+                                    <p className="mt-1 font-mono text-3xl font-black tracking-widest text-[#15316B] select-all">{submittedApp?.referenceNumber || '—'}</p>
+                                </div>
+                                <p className="text-xs text-gray-500">Use your PIN with "Check Status" to follow the progress of this application.</p>
+                                <div className="flex flex-col sm:flex-row gap-3">
+                                    <Button type="button" onClick={() => setShowSubmissionPrint(true)} className="flex-1 bg-[#1E4DA6] hover:bg-[#173F8C] text-white">
+                                        Print Application
+                                    </Button>
+                                    <Button type="button" variant="outline" onClick={() => navigate('/')} className="flex-1">
+                                        Back to Home
+                                    </Button>
+                                </div>
+                            </div>
                         ) : null}
                     </div>
                 </div>
@@ -458,29 +498,7 @@ export default function ApplyPortal() {
                                 {/* Body (Rich Text) */}
                                 <div 
                                     className="prose max-w-none text-slate-800 leading-relaxed mb-16 font-serif text-[15px]"
-                                    dangerouslySetInnerHTML={{ 
-                                        __html: letterTemplate.body?.replace(/\{ApplicantName\}/gi, `<strong>${(() => {
-                                            let name = applicationStatus?.applicantName;
-                                            if (!name || name === 'Applicant') {
-                                                const d = applicationStatus?.formData || {};
-                                                let fName = d['f_firstname'] || d['firstname'] || d['first_name'] || d['fname'] || d['f_name'] || '';
-                                                let lName = d['f_lastname'] || d['lastname'] || d['last_name'] || d['lname'] || d['l_name'] || '';
-                                                let extracted = [fName, lName].filter(Boolean).join(' ');
-                                                if (extracted) return extracted;
-                                            }
-                                            return name || 'Applicant';
-                                        })()}</strong>`).replace(/Dear(\s|&nbsp;)Candidate,?/gi, `Dear <strong>${(() => {
-                                            let name = applicationStatus?.applicantName;
-                                            if (!name || name === 'Applicant') {
-                                                const d = applicationStatus?.formData || {};
-                                                let fName = d['f_firstname'] || d['firstname'] || d['first_name'] || d['fname'] || d['f_name'] || '';
-                                                let lName = d['f_lastname'] || d['lastname'] || d['last_name'] || d['lname'] || d['l_name'] || '';
-                                                let extracted = [fName, lName].filter(Boolean).join(' ');
-                                                if (extracted) return extracted;
-                                            }
-                                            return name || 'Applicant';
-                                        })()}</strong>,`) || '' 
-                                    }}
+                                    dangerouslySetInnerHTML={{ __html: fillLetterPlaceholders(letterTemplate.body || '', applicationStatus) }}
                                 />
 
                                 {/* Signature Block — kept whole rather than split across a
@@ -493,9 +511,9 @@ export default function ApplyPortal() {
                                 }`}>
                                     <div className="text-center w-64">
                                         {letterTemplate.signatureUrl ? (
-                                            <img src={letterTemplate.signatureUrl} alt="Signature" className="h-16 object-contain mx-auto mb-2" />
+                                            <img src={letterTemplate.signatureUrl} alt="Signature" style={{ height: signatureHeightPx(letterTemplate) }} className="object-contain mx-auto mb-2" />
                                         ) : (
-                                            <div className="h-16 border-b border-dashed border-slate-300 mb-2 mx-4"></div>
+                                            <div style={{ height: signatureHeightPx(letterTemplate) }} className="border-b border-dashed border-slate-300 mb-2 mx-4"></div>
                                         )}
                                         <div className="border-t-2 border-slate-800 pt-2 mx-2">
                                             <p className="font-bold text-slate-900 uppercase text-sm tracking-widest">{letterTemplate.signatoryName || 'Authorized Signatory'}</p>
@@ -527,6 +545,62 @@ export default function ApplyPortal() {
                                 page-break-inside: avoid;
                                 break-inside: avoid;
                             }
+                            * { color: black !important; }
+                        }
+                    `}</style>
+                </div>
+            )}
+
+            {/* Printable copy of the submitted application (available immediately, no status check needed) */}
+            {showSubmissionPrint && submittedApp && (
+                <div className="fixed inset-0 z-[200] bg-slate-500/75 flex items-start justify-center overflow-y-auto print:static print:bg-white print:p-0 print:overflow-visible text-black">
+                    <div className="bg-white mx-auto relative print:shadow-none shadow-2xl w-full max-w-4xl my-10 print:my-0" id="print-submission-container">
+                        <div className="absolute top-4 right-4 flex gap-2 print:hidden z-10">
+                            <Button onClick={() => window.print()} className="bg-[#1E4DA6] hover:bg-[#173F8C] text-white border-0 font-bold shadow-sm">Print / Save PDF</Button>
+                            <Button onClick={() => setShowSubmissionPrint(false)} variant="destructive" className="font-bold">Close</Button>
+                        </div>
+                        <div className="p-12 print:p-[15mm] box-border">
+                            <div className="flex items-center justify-between pb-5 mb-6 border-b-[3px] border-[#1E4DA6]">
+                                <div className="w-24">
+                                    {schoolInfo?.logoUrl && <img src={schoolInfo.logoUrl} alt={schoolInfo.name} className="h-20 object-contain object-left" />}
+                                </div>
+                                <div className="text-right">
+                                    <h1 className="text-2xl font-black text-[#1E4DA6] uppercase tracking-wider">{schoolInfo?.name}</h1>
+                                    <p className="text-xs font-semibold uppercase tracking-widest text-slate-600">{applicationType === 'EMPLOYMENT' ? 'Employment' : 'Admission'} Application Copy</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start justify-between gap-6 mb-6">
+                                <div>
+                                    <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">Reference Number</p>
+                                    <p className="font-mono text-2xl font-black tracking-widest">{submittedApp.referenceNumber}</p>
+                                    <p className="text-xs text-slate-500 mt-1">Applicant: <strong>{applicantDisplayName(submittedApp)}</strong></p>
+                                    <p className="text-xs text-slate-500">Submitted: {new Date(submittedApp.createdAt || Date.now()).toLocaleString()}</p>
+                                </div>
+                                {submittedApp.passportUrl && <img src={submittedApp.passportUrl} alt="Passport" className="h-28 w-24 object-cover border border-slate-300" />}
+                            </div>
+                            {(Array.isArray(formConfig) && formConfig.length > 0
+                                ? formConfig.map((g: any) => ({ id: g.id, title: g.title, rows: (g.fields || []).filter((f: any) => f.isVisible && f.type !== 'Image').map((f: any) => [f.label, submittedApp.formData?.[f.id]]) }))
+                                : [{ id: 'all', title: 'Application Details', rows: Object.entries(submittedApp.formData || {}) }]
+                            ).filter((g: any) => g.rows.some(([, v]: any) => v !== undefined && v !== '')).map((g: any) => (
+                                <div key={g.id} className="mb-5 break-inside-avoid">
+                                    <h4 className="font-bold uppercase tracking-wider text-xs border-b border-slate-300 pb-1 mb-2">{g.title}</h4>
+                                    <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                                        {g.rows.filter(([, v]: any) => v !== undefined && v !== '').map(([label, value]: any, i: number) => (
+                                            <div key={i}><span className="text-slate-500">{label}: </span><span className="font-semibold">{String(value)}</span></div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                            <p className="mt-8 text-xs text-slate-500">This is an acknowledgement of submission only. It is not an offer of {applicationType === 'EMPLOYMENT' ? 'employment' : 'admission'}.</p>
+                        </div>
+                    </div>
+                    <style>{`
+                        @media print {
+                            @page { size: A4 portrait; margin: 0; }
+                            body { visibility: hidden; margin: 0; padding: 0; background: white; }
+                            .print\\:hidden { display: none !important; }
+                            #print-submission-container, #print-submission-container * { visibility: visible; }
+                            #print-submission-container { position: absolute; left: 0; top: 0; width: 100%; background: white !important; }
                             * { color: black !important; }
                         }
                     `}</style>

@@ -29,6 +29,9 @@ interface Application {
     birthCertificateUrl?: string;
     otherCertificatesUrl?: string;
     pin: { pinCode: string; serialNumber: string; };
+    referenceNumber?: string;
+    assignedNumber?: string | null;
+    assignedClass?: string | null;
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -87,6 +90,18 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
             setIsModalOpen(false);
         } catch (e) {
             toast.error('Failed to update application status');
+        }
+    };
+
+    const handleAssign = async (id: string, data: { assignedNumber: string; assignedClass: string }) => {
+        try {
+            const res = await axios.put(`/api/v1/applications/school/${id}/assign`, data, { withCredentials: true });
+            toast.success('Assignment saved');
+            setSelectedApp(prev => (prev && prev.id === id ? { ...prev, ...res.data.application } : prev));
+            mutate();
+        } catch (e: any) {
+            toast.error(e.response?.data?.msg || 'Failed to save assignment');
+            throw e;
         }
     };
 
@@ -338,6 +353,7 @@ export default function ApplicationList({ fixedType }: { fixedType?: 'ADMISSION_
                     onClose={() => { setIsModalOpen(false); setSelectedApp(null); }}
                     application={selectedApp}
                     onUpdateStatus={handleUpdateStatus}
+                    onAssign={handleAssign}
                     onPrintApp={() => { setIsModalOpen(false); setIsPrintingApp(true); }}
                     onPrintLetter={() => { setIsModalOpen(false); setIsPrintingLetter(true); }}
                 />

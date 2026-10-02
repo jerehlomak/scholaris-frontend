@@ -38,10 +38,10 @@ const DEFAULT_GROUPS: FieldGroup[] = [
         id: 'basic', title: 'Basic Identity (Required)', color: 'blue',
         icon: null,
         fields: [
-            { id: 'f_fname', label: 'First Name', type: 'Text', description: "Candidate's given name.", isRequired: true, isVisible: true, isPermanent: true },
-            { id: 'f_lname', label: 'Last Name', type: 'Text', description: "Candidate's family name.", isRequired: true, isVisible: true, isPermanent: true },
-            { id: 'f_dob', label: 'Date of Birth', type: 'Date', description: 'Used to verify age.', isRequired: true, isVisible: true, isPermanent: true },
-            { id: 'f_gender', label: 'Gender', type: 'Dropdown', description: 'Male/Female identification.', isRequired: true, isVisible: true, isPermanent: true },
+            { id: 'f_fname', label: 'First Name', type: 'Text', description: "Candidate's given name.", isRequired: true, isVisible: true, isPermanent: false },
+            { id: 'f_lname', label: 'Last Name', type: 'Text', description: "Candidate's family name.", isRequired: true, isVisible: true, isPermanent: false },
+            { id: 'f_dob', label: 'Date of Birth', type: 'Date', description: 'Used to verify age.', isRequired: true, isVisible: true, isPermanent: false },
+            { id: 'f_gender', label: 'Gender', type: 'Dropdown', description: 'Male/Female identification.', isRequired: true, isVisible: true, isPermanent: false },
         ]
     },
     {
@@ -144,7 +144,7 @@ export function EmploymentFieldsConfig() {
         axios.get(`${API_BASE}/api/v1/school-settings`, { withCredentials: true })
             .then(res => {
                 const config = res.data?.settings?.employmentFormConfig;
-                if (config && Array.isArray(config)) setGroups(config);
+                if (config && Array.isArray(config)) setGroups(config.map((g: any) => ({ ...g, fields: (g.fields || []).map((fl: any) => ({ ...fl, isPermanent: false })) })));
             })
             .catch(err => toast.error('Failed to load form config'))
             .finally(() => setLoading(false));

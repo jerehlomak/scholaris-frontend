@@ -2,6 +2,7 @@ import { useAuth } from '../../../context/AuthContext';
 import useSWR from 'swr';
 import { fetcher } from '../../../utils/fetcher';
 import { Loader2, Printer } from 'lucide-react';
+import { fillLetterPlaceholders, signatureHeightPx } from '../../../utils/letterPlaceholders';
 
 interface PrintAdmissionLetterProps {
     application: any;
@@ -14,7 +15,9 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
     
     if (isLoading) return <div className="fixed inset-0 z-[200] bg-white flex items-center justify-center"><Loader2 className="animate-spin text-[#1E4DA6] h-8 w-8" /></div>;
 
-    const template = data?.settings?.admissionLetterTemplate || {
+    const isEmployment = application?.applicationType === 'EMPLOYMENT';
+    const letterLabel = isEmployment ? 'Employment Letter' : 'Admission Letter';
+    const template = (isEmployment ? data?.settings?.employmentLetterTemplate : data?.settings?.admissionLetterTemplate) || {
         body: '<p>Dear {ApplicantName},</p><p>Congratulations! We are pleased to offer you admission to our institution.</p>',
         showLogo: true,
         showSchoolName: true,
@@ -28,13 +31,14 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
     const schoolName = (user as any)?.schoolName || (user as any)?.school?.name || (user as any)?.schoolDetails?.name || 'School Name';
     const logoUrl = (user as any)?.school?.logoUrl || (user as any)?.schoolDetails?.logoUrl;
     
-    const letterBody = template.body.replace(/{ApplicantName}/gi, application.applicantName || 'Applicant');
+    const letterBody = fillLetterPlaceholders(template.body, application);
+    const sigHeight = signatureHeightPx(template);
 
     return (
         <div className="fixed inset-0 z-[200] bg-white overflow-y-auto print:relative print:overflow-visible text-black flex flex-col">
             <div className="print:hidden sticky top-0 z-[210] flex items-center justify-between p-4 bg-slate-900 text-white shadow-md">
                 <div>
-                    <h2 className="text-lg font-bold tracking-widest">Print Admission Letter</h2>
+                    <h2 className="text-lg font-bold tracking-widest">Print {letterLabel}</h2>
                 </div>
                 <div className="flex gap-4">
                     <button onClick={() => { window.print(); onClose(); }} className="px-6 py-2 bg-[#1E4DA6] hover:bg-[#173F8C] text-white font-bold rounded-lg transition-colors shadow-sm flex items-center">
@@ -57,7 +61,7 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
                         {template.showSchoolName && (
                             <h1 className="text-3xl font-black text-[#000080] uppercase tracking-wider">{schoolName}</h1>
                         )}
-                        <h2 className="text-xl font-bold mt-2 text-slate-800 tracking-widest uppercase">Admission Letter</h2>
+                        <h2 className="text-xl font-bold mt-2 text-slate-800 tracking-widest uppercase">{letterLabel}</h2>
                     </div>
                     <div className="h-20 w-20 shrink-0"></div>
                 </div>
@@ -73,9 +77,9 @@ export function PrintAdmissionLetter({ application, onClose }: PrintAdmissionLet
                 <div className={`mt-16 pt-8 flex flex-col ${signatureAlignClass} print-signature-block`}>
                     <div className="w-64">
                         {template.signatureUrl ? (
-                            <img src={template.signatureUrl} alt="Signature" className="h-16 object-contain mb-2 mx-auto" />
+                            <img src={template.signatureUrl} alt="Signature" style={{ height: sigHeight }} className="object-contain mb-2 mx-auto" />
                         ) : (
-                            <div className="h-16 border-b border-dashed border-slate-300 mb-2"></div>
+                            <div style={{ height: sigHeight }} className="border-b border-dashed border-slate-300 mb-2"></div>
                         )}
                         <div className="border-t-2 border-slate-800 pt-2">
                             <div className="font-bold text-lg text-slate-800">{template.signatoryName || 'Authorized Signatory'}</div>

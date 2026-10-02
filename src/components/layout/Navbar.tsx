@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Menu, Bell, User, Apple, Play, Zap, LogOut, Settings, X } from 'lucide-react';
 import { Button } from '../ui/button';
+import { TimetableBell } from '../shared/TimetableBell';
 import { Separator } from '../ui/separator';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -193,6 +194,7 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                     {/* Bell with badge — unrestricted admins only; a staff member with a
                         custom role sees only what their role grants, and notifications
                         aren't (yet) part of the granted-menu model */}
+                    {isUnrestrictedAdmin && <TimetableBell calendar timetablePath="/dashboard/timetable" />}
                     {isUnrestrictedAdmin && (
                     <div className="relative" ref={notifRef}>
                         <Button variant="ghost" size="icon" className={iconBtn} onClick={() => setShowNotifications(!showNotifications)}>

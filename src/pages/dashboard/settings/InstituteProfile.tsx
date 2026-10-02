@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { prepareFileForUpload, fileToDataUrl, UPLOAD_LIMITS_MB } from '../../../utils/imageUpload';
 import { Building2, Upload, Phone, Mail, MapPin, Hash, Loader2 } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -38,16 +39,18 @@ export function InstituteProfile() {
 
     const handleChange = (field: string, value: string) => setForm(prev => ({ ...prev, [field]: value }));
 
-    const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const b64 = reader.result as string;
-                setLogoPreview(b64);
-                handleChange('logoUrl', b64);
-            };
-            reader.readAsDataURL(file);
+    const handleLogoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target;
+        const picked = input.files?.[0];
+        if (!picked) return;
+        try {
+            const file = await prepareFileForUpload(picked, { maxMB: UPLOAD_LIMITS_MB.brandImage, maxDimension: 512, keepTransparency: true });
+            const b64 = await fileToDataUrl(file);
+            setLogoPreview(b64);
+            handleChange('logoUrl', b64);
+        } catch (err: any) {
+            toast.error(err.message || 'Could not use that logo.');
+            input.value = '';
         }
     };
 

@@ -34,6 +34,13 @@ interface AdminStats {
     totalTeachers: number;
     totalParents: number;
     totalClasses: number;
+    studentsAddedThisYear?: number;
+    enrollmentTrend?: { month: string; Students: number; Staff: number }[];
+    absentStudentCount?: number;
+    absentStudents?: { name: string; meta: string }[];
+    staffPresentCount?: number;
+    staffAbsentCount?: number;
+    presentStaff?: { name: string; meta: string }[];
 }
 
 // ─── Animated Counter Hook ────────────────────────────────────────────────────
@@ -116,24 +123,12 @@ function KpiColumn({ title, value, subtitle, icon: Icon, accent, delay, loading 
 }
 
 // ─── Enrollment Chart ─────────────────────────────────────────────────────────
-// Note: sample trend data (matches what this panel shipped with) — wiring
-// this to a real /api/v1/dashboard/enrollment-trend endpoint is a data task,
-// not a visual one; left as-is for this redesign pass. Dual Y-axis is a real
-// fix though: students (~800-1300) and staff (~38-47) live on completely
+// Trend data comes from /api/v1/dashboard/me (cumulative headcount per month this
+// year). Dual Y-axis is deliberate: students (~800-1300) and staff (~38-47) live on completely
 // different scales, so plotting both against one axis would visually imply
 // a comparison that doesn't exist.
-const TREND_DATA = [
-    { month: 'Jan', Students: 820, Staff: 38 },
-    { month: 'Feb', Students: 940, Staff: 40 },
-    { month: 'Mar', Students: 880, Staff: 41 },
-    { month: 'Apr', Students: 1050, Staff: 43 },
-    { month: 'May', Students: 1100, Staff: 44 },
-    { month: 'Jun', Students: 1200, Staff: 45 },
-    { month: 'Jul', Students: 1240, Staff: 46 },
-    { month: 'Aug', Students: 1284, Staff: 47 },
-];
 
-function EnrollmentChart() {
+function EnrollmentChart({ data: TREND_DATA }: { data: { month: string; Students: number; Staff: number }[] }) {
     return (
         <div className="h-64 -ml-2">
             <ResponsiveContainer width="100%" height="100%">
@@ -303,17 +298,11 @@ export default function DashboardHome() {
         weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
     });
 
-    const absentStudents = [
-        { name: 'Aisha Bello', meta: 'JSS 3A', variant: 'absent' as const },
-        { name: 'David Okafor', meta: 'SS 2B', variant: 'absent' as const },
-        { name: 'Chioma Eze', meta: 'JSS 1C', variant: 'absent' as const },
-    ];
-
-    const presentStaff = [
-        { name: 'Mr. Ibrahim', meta: 'Mathematics', variant: 'present' as const },
-        { name: 'Mrs. Adeyemi', meta: 'English Language', variant: 'present' as const },
-        { name: 'Dr. Okonkwo', meta: 'Sciences', variant: 'present' as const },
-    ];
+    const absentStudents = stats?.absentStudents || [];
+    const presentStaff = stats?.presentStaff || [];
+    const staffPresent = stats?.staffPresentCount ?? 0;
+    const staffTotal = stats?.totalTeachers ?? 0;
+    const staffRate = staffTotal > 0 ? Math.round((staffPresent / staffTotal) * 1000) / 10 : 0;
 
     return (
         <div className="flex flex-col w-full min-h-screen bg-[#FBF9F5]">
@@ -352,7 +341,7 @@ export default function DashboardHome() {
                         <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-slate-200">
                             <PermissionGate permissions={['std_view']}>
                                 <KpiColumn
-                                    title="Total Students" value={stats?.totalStudents} subtitle="+12% from last term"
+                                    title="Total Students" value={stats?.totalStudents} subtitle={stats?.studentsAddedThisYear ? `+${stats.studentsAddedThisYear} enrolled this year` : 'Active students'}
                                     icon={GraduationCap} accent={NAVY}
                                     delay={50} loading={loading}
                                 />
@@ -389,7 +378,7 @@ export default function DashboardHome() {
                         <SectionHeading action={<span className="text-xs font-semibold text-slate-400">This year</span>}>
                             Enrollment Growth
                         </SectionHeading>
-                        <EnrollmentChart />
+                        <EnrollmentChart data={stats?.enrollmentTrend || []} />
                     </SectionPanel>
 
                     <SectionPanel delay={350}>
@@ -440,8 +429,11 @@ export default function DashboardHome() {
                             Absent Students
                         </SectionHeading>
                         <div className="flex flex-col">
+                            {absentStudents.length === 0 && (
+                                <p className="py-6 text-center text-sm text-slate-400">No absences recorded today.</p>
+                            )}
                             {absentStudents.map(s => (
-                                <AttendeeRow key={s.name} name={s.name} meta={s.meta} variant="absent" />
+                                <AttendeeRow key={s.name + s.meta} name={s.name} meta={s.meta} variant="absent" />
                             ))}
                         </div>
                         <button className="w-full mt-4 py-2.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-sm font-semibold text-slate-700 transition-colors">
@@ -450,19 +442,22 @@ export default function DashboardHome() {
                     </SectionPanel>
 
                     <SectionPanel delay={450}>
-                        <SectionHeading action={<span className="text-xs font-semibold text-slate-400 tabular-nums">24 / 27</span>}>
+                        <SectionHeading action={<span className="text-xs font-semibold text-slate-400 tabular-nums">{staffPresent} / {staffTotal}</span>}>
                             Present Staff
                         </SectionHeading>
                         <div className="flex items-center gap-5 pb-4 mb-1 border-b border-slate-100">
-                            <AttendanceRing percent={88.9} />
+                            <AttendanceRing percent={staffRate} />
                             <div>
                                 <div className="text-sm font-semibold text-slate-800">Attendance rate today</div>
-                                <div className="text-xs text-slate-500 mt-1">3 staff currently absent</div>
+                                <div className="text-xs text-slate-500 mt-1">{stats?.staffAbsentCount ?? 0} staff not yet signed in</div>
                             </div>
                         </div>
                         <div className="flex flex-col">
+                            {presentStaff.length === 0 && (
+                                <p className="py-6 text-center text-sm text-slate-400">No staff have signed in yet today.</p>
+                            )}
                             {presentStaff.map(s => (
-                                <AttendeeRow key={s.name} name={s.name} meta={s.meta} variant="present" />
+                                <AttendeeRow key={s.name + s.meta} name={s.name} meta={s.meta} variant="present" />
                             ))}
                         </div>
                     </SectionPanel>

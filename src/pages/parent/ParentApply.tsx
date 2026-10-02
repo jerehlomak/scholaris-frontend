@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { prepareFileForUpload, UPLOAD_LIMITS_MB } from '../../utils/imageUpload';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -113,9 +114,18 @@ export default function ParentApply() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleDynamicFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setDynamicFiles({ ...dynamicFiles, [e.target.name]: e.target.files[0] });
+    const handleDynamicFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target;
+        const name = input.name;
+        const picked = input.files && input.files[0];
+        if (!picked) return;
+        try {
+            // Photos are resized in the browser so phone-camera pictures never hit the size limit.
+            const ready = await prepareFileForUpload(picked, { maxMB: UPLOAD_LIMITS_MB.document, maxDimension: 1600 });
+            setDynamicFiles(prev => ({ ...prev, [name]: ready }));
+        } catch (err: any) {
+            toast.error(err.message || 'Could not use that file.');
+            input.value = '';
         }
     };
 

@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Navbar } from './Navbar';
+import { usePendingScan } from '../../pages/attendance/usePendingScan';
 
 export function DashboardLayout() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
     const location = useLocation();
+    usePendingScan();
 
     // Close sidebar on mobile when route changes
     useEffect(() => {
