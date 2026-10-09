@@ -19,7 +19,7 @@ interface FormState {
     staffType: string; employeeId: string; customRoleId: string; canEnterPastScores: boolean;
 }
 const BLANK: FormState = {
-    name: '', email: '', phone: '', department: DEPARTMENTS[0],
+    name: '', email: '', phone: '', department: '',
     gender: 'Male', dateOfBirth: '', address: '', qualification: '',
     salary: '', subjects: '', bankName: '', accountName: '', accountNumber: '', staffType: 'ACADEMIC', employeeId: '', customRoleId: '', canEnterPastScores: false
 };
@@ -67,7 +67,7 @@ export default function AddStaff() {
             axios.get(`${API}/teachers/${id}`, { withCredentials: true })
                 .then(res => {
                     const t = res.data.teacher; const u = res.data.user;
-                    setForm({ name: u.name || '', email: u.email || '', phone: t.phone || '', department: t.department || DEPARTMENTS[0], gender: t.gender || 'Male', dateOfBirth: t.dateOfBirth ? t.dateOfBirth.split('T')[0] : '', address: t.address || '', qualification: t.qualification || '', salary: t.salary ? String(t.salary) : '', subjects: t.subjectsTaught || '', bankName: t.bankName || '', accountName: t.accountName || '', accountNumber: t.accountNumber || '', staffType: t.staffType || 'TEACHER', employeeId: t.employeeId || '', customRoleId: u.customRoleId || '', canEnterPastScores: t.canEnterPastScores || false });
+                    setForm({ name: u.name || '', email: u.email || '', phone: t.phone || '', department: t.department || '', gender: t.gender || 'Male', dateOfBirth: t.dateOfBirth ? t.dateOfBirth.split('T')[0] : '', address: t.address || '', qualification: t.qualification || '', salary: t.salary ? String(t.salary) : '', subjects: t.subjectsTaught || '', bankName: t.bankName || '', accountName: t.accountName || '', accountNumber: t.accountNumber || '', staffType: t.staffType || 'TEACHER', employeeId: t.employeeId || '', customRoleId: u.customRoleId || '', canEnterPastScores: t.canEnterPastScores || false });
                     if (t.photoUrl) setPhotoPreview(t.photoUrl);
                 })
                 .catch(() => toast.error('Failed to fetch Staff data'))
@@ -100,7 +100,6 @@ export default function AddStaff() {
     const validate = () => {
         const errs: typeof errors = {};
         if (!form.name.trim()) errs.name = 'Full name is required';
-        if (!form.department.trim()) errs.department = 'Department is required';
         setErrors(errs);
         return Object.keys(errs).length === 0;
     };
@@ -282,8 +281,9 @@ export default function AddStaff() {
                 <SectionCard icon={<Briefcase className="h-4 w-4" />} title="Role & Employment" sub="Department and salary structure">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label className={labelCls}>Department *</label>
+                            <label className={labelCls}>Department</label>
                             <select value={form.department} onChange={set('department')} className={inputCls}>
+                                <option value="">Not specified</option>
                                 {DEPARTMENTS.map(d => <option key={d}>{d}</option>)}
                             </select>
                         </div>

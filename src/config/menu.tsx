@@ -92,9 +92,9 @@ export const menuItems: MenuItem[] = [
         children: [
             { title: 'Score Entry', path: '/dashboard/results/record', permissions: ['acd_manage'] },
             { title: 'Broadsheet & Print', path: '/dashboard/results/admin', permissions: ['acd_view'], formTeacherOnly: true },
-            { title: 'Export ZIPs', path: '/dashboard/results/export', roles: ['ADMIN', 'SCHOOL_SUPER_ADMIN', 'SCHOOL_ADMIN'] },
-            { title: 'Legacy Results', path: '/dashboard/results/legacy', roles: ['ADMIN', 'SCHOOL_SUPER_ADMIN', 'SCHOOL_ADMIN'] },
-            { title: 'Result Settings', path: '/dashboard/results/settings', roles: ['ADMIN', 'SCHOOL_SUPER_ADMIN'] },
+            { title: 'Export ZIPs', path: '/dashboard/results/export' },
+            { title: 'Legacy Results', path: '/dashboard/results/legacy' },
+            { title: 'Result Settings', path: '/dashboard/results/settings' },
         ]
     },
     {
@@ -230,11 +230,11 @@ export const menuItems: MenuItem[] = [
             { title: 'Dashboard', path: '/dashboard/attendance' },
             { title: 'Student Attendance', path: '/dashboard/attendance/students' },
             { title: 'Staff Attendance', path: '/dashboard/attendance/staff' },
-            { title: 'Custom Attendance', path: '/dashboard/attendance/codes', roles: ['ADMIN', 'SCHOOL_SUPER_ADMIN', 'SCHOOL_ADMIN'] },
-            { title: 'QR Management', path: '/dashboard/attendance/qr', roles: ['ADMIN', 'SCHOOL_SUPER_ADMIN', 'SCHOOL_ADMIN'] },
+            { title: 'Custom Attendance', path: '/dashboard/attendance/codes' },
+            { title: 'QR Management', path: '/dashboard/attendance/qr' },
             { title: 'Reports', path: '/dashboard/attendance/reports' },
-            { title: 'Activity Log', path: '/dashboard/attendance/logs', roles: ['ADMIN', 'SCHOOL_SUPER_ADMIN', 'SCHOOL_ADMIN'] },
-            { title: 'Settings', path: '/dashboard/attendance/settings', roles: ['ADMIN', 'SCHOOL_SUPER_ADMIN', 'SCHOOL_ADMIN'] },
+            { title: 'Activity Log', path: '/dashboard/attendance/logs' },
+            { title: 'Settings', path: '/dashboard/attendance/settings' },
         ]
     },
     { title: 'Timetable', icon: Calendar, path: '/dashboard/timetable', featureKey: 'Timetable' },
