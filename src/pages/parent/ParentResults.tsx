@@ -431,6 +431,7 @@ export default function ParentResults() {
                                     school={cardData.schoolSettings || { schoolName: 'School Name' }}
                                     summary={cardData.summary}
                                     annualResults={cardData.annualResults}
+                                    traits={cardData.traits}
                                 />
                             </ErrorBoundary>
                         )}

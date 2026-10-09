@@ -25,7 +25,8 @@ import { Check, Loader2, Star, Trash2, X, Palette, LayoutGrid } from 'lucide-rea
 import { Button } from '../../../../components/ui/button';
 import { Card } from '../../../../components/ui/card';
 import ReportCard from '../../../../components/report-blocks/ReportCard';
-import { TEMPLATE_PRESETS, OPTIONAL_BLOCKS, recolorConfig, type TemplatePreset } from '../../../../components/report-blocks/templatePresets';
+import ReportCardPreview from '../../../../components/report/ReportCardPreview';
+import { TEMPLATE_PRESETS, OPTIONAL_BLOCKS, LEGACY_TOGGLES, recolorConfig, type TemplatePreset } from '../../../../components/report-blocks/templatePresets';
 
 const API = import.meta.env.VITE_API_URL || '/api/v1';
 
@@ -66,6 +67,17 @@ const PREVIEW_DATA = {
     schoolSettings: { schoolName: 'Sample School', display: {}, signatures: [], resultConfig: {} }
 };
 
+// Sample trait setup + ratings, shaped like the report card API's
+// `schoolSettings.traitConfiguration` and `traits`, so the Classic preview shows its trait card.
+const PREVIEW_TRAIT_CONFIG = [
+    { domain: 'Affective', traits: ['Punctuality', 'Neatness', 'Politeness', 'Honesty'], ratingScale: [{ rating: 'A', description: 'Excellent' }, { rating: 'B', description: 'Good' }, { rating: 'C', description: 'Fair' }] },
+    { domain: 'Psychomotor', traits: ['Handwriting', 'Sports', 'Music'], ratingScale: [{ rating: 'A', description: 'Excellent' }, { rating: 'B', description: 'Good' }, { rating: 'C', description: 'Fair' }] }
+];
+const PREVIEW_TRAITS = [
+    { domain: 'Affective', ratings: { Punctuality: 'A', Neatness: 'B', Politeness: 'A', Honesty: 'A' } },
+    { domain: 'Psychomotor', ratings: { Handwriting: 'B', Sports: 'A', Music: 'B' } }
+];
+
 const HEADER_ALIGNMENTS = [
     { value: 'LEFT', label: 'Left-aligned' },
     { value: 'CENTER', label: 'Centered' },
@@ -80,6 +92,31 @@ function previewConfig(config: TemplatePreset['config']) {
     return { ...config, gradeScale: [], studentFields: {} };
 }
 
+/**
+ * Renders a preset the same way the result pages do: block templates through
+ * ReportCard, the Classic (no-blocks) layout through ReportCardPreview.
+ */
+function PresetPreview({ config }: { config: TemplatePreset['config'] }) {
+    if (config.blocks) return <ReportCard config={previewConfig(config) as any} data={PREVIEW_DATA} />;
+    const d = PREVIEW_DATA;
+    return (
+        <ReportCardPreview
+            templateConfig={config as any}
+            student={{ id: 'preview', ...d.student, teacherName: d.student.classTeacherName }}
+            results={d.results as any}
+            gradingScale={{
+                grades: d.gradingScale.grades.map(g => ({ id: g.grade, ...g, status: g.minScore >= d.summary.passMark ? 'PASS' as const : 'FAIL' as const })),
+                passMark: d.summary.passMark
+            }}
+            comments={d.comments}
+            attendance={{ total: d.attendance.total, present: d.attendance.present, absent: d.attendance.absent, late: 0 }}
+            school={{ schoolName: 'Sample School', address: '123 School Lane, Lagos', phone: '08033750455', signatures: [], display: {}, traitConfiguration: PREVIEW_TRAIT_CONFIG }}
+            traits={PREVIEW_TRAITS}
+            summary={d.summary as any}
+        />
+    );
+}
+
 /* ── CUSTOMIZE MODAL ────────────────────────────────────── */
 function CustomizeModal({ preset, defaultName, onCancel, onApply, applying }: {
     preset: TemplatePreset;
@@ -91,8 +128,9 @@ function CustomizeModal({ preset, defaultName, onCancel, onApply, applying }: {
     const [primary, setPrimary] = useState(preset.config.design.primaryColor);
     const [accent, setAccent] = useState(preset.config.design.accentColor);
     const [hidden, setHidden] = useState<Set<string>>(new Set());
+    const isLegacy = !preset.config.blocks;
     const [headerAlign, setHeaderAlign] = useState(
-        preset.config.blocks.find(b => b.type === 'SchoolHeaderBlock')?.props?.headerLayoutMode || 'LEFT'
+        preset.config.blocks?.find(b => b.type === 'SchoolHeaderBlock')?.props?.headerLayoutMode || 'LEFT'
     );
 
     const toggleBlock = (id: string) => {
@@ -105,6 +143,12 @@ function CustomizeModal({ preset, defaultName, onCancel, onApply, applying }: {
 
     const buildConfig = (): TemplatePreset['config'] => {
         const recolored = recolorConfig(preset.config, primary, accent);
+        if (!recolored.blocks) {
+            // Classic: switching a section off clears its legacy flag(s).
+            const next: TemplatePreset['config'] = { ...recolored };
+            LEGACY_TOGGLES.forEach(t => { if (hidden.has(t.id)) t.keys.forEach(k => { next[k] = false; }); });
+            return next;
+        }
         return {
             ...recolored,
             blocks: recolored.blocks.map(b => ({
@@ -157,20 +201,25 @@ function CustomizeModal({ preset, defaultName, onCancel, onApply, applying }: {
                             <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600 uppercase tracking-wide mb-3">
                                 <LayoutGrid className="w-3.5 h-3.5" /> Structure
                             </div>
-                            <label className="text-[11px] font-semibold text-slate-500 block mb-1">Header alignment</label>
-                            <select
-                                value={headerAlign}
-                                onChange={e => setHeaderAlign(e.target.value)}
-                                className="w-full h-9 rounded-lg border border-slate-200 px-2 text-sm font-semibold mb-4"
-                            >
-                                {HEADER_ALIGNMENTS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                            </select>
+                            {!isLegacy && (
+                                <>
+                                    <label className="text-[11px] font-semibold text-slate-500 block mb-1">Header alignment</label>
+                                    <select
+                                        value={headerAlign}
+                                        onChange={e => setHeaderAlign(e.target.value)}
+                                        className="w-full h-9 rounded-lg border border-slate-200 px-2 text-sm font-semibold mb-4"
+                                    >
+                                        {HEADER_ALIGNMENTS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                                    </select>
+                                </>
+                            )}
 
                             <label className="text-[11px] font-semibold text-slate-500 block mb-1.5">Sections to include</label>
                             <div className="space-y-1.5">
-                                {OPTIONAL_BLOCKS.map(block => {
-                                    const inThisPreset = preset.config.blocks.some(b => b.id === block.id);
-                                    if (!inThisPreset) return null;
+                                {(isLegacy
+                                    ? LEGACY_TOGGLES.map(t => ({ id: t.id, label: t.label }))
+                                    : OPTIONAL_BLOCKS.filter(block => preset.config.blocks!.some(b => b.id === block.id))
+                                ).map(block => {
                                     const isOn = !hidden.has(block.id);
                                     return (
                                         <label key={block.id} className="flex items-center gap-2 p-2 rounded-lg border border-slate-100 hover:bg-slate-50 cursor-pointer">
@@ -186,7 +235,7 @@ function CustomizeModal({ preset, defaultName, onCancel, onApply, applying }: {
                     {/* Live preview */}
                     <div className="p-5 overflow-y-auto bg-slate-50 flex items-start justify-center">
                         <div style={{ transform: 'scale(0.42)', transformOrigin: 'top center', width: '794px' }}>
-                            <ReportCard config={previewConfig(liveConfig)} data={PREVIEW_DATA} />
+                            <PresetPreview config={liveConfig} />
                         </div>
                     </div>
                 </div>
@@ -283,7 +332,7 @@ export function TemplateGallery({ resultType = 'SCORE_BASED' }: { resultType?: s
                     <Card key={preset.id} className="overflow-hidden flex flex-col border-slate-200">
                         <div className="relative bg-slate-100 h-56 overflow-hidden flex items-start justify-center border-b border-slate-200">
                             <div style={{ transform: 'scale(0.28)', transformOrigin: 'top center', width: '794px', pointerEvents: 'none' }}>
-                                <ReportCard config={previewConfig(preset.config)} data={PREVIEW_DATA} />
+                                <PresetPreview config={preset.config} />
                             </div>
                             <span className="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full bg-[#0B1F4E] text-white">
                                 {preset.tag}

@@ -276,6 +276,7 @@ export default function Result() {
                                         school={cardData.schoolSettings || { schoolName: 'School Name' }}
                                         summary={cardData.summary}
                                         annualResults={cardData.annualResults}
+                                        traits={cardData.traits}
                                     />
                                 </ErrorBoundary>
                             )}
