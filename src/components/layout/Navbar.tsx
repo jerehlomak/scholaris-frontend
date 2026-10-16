@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Menu, Bell, User, Apple, Play, Zap, LogOut, Settings, X } from 'lucide-react';
 import { Button } from '../ui/button';
-import { TimetableBell } from '../shared/TimetableBell';
 import { Separator } from '../ui/separator';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -46,6 +45,10 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
     const [showNotifications, setShowNotifications] = useState(false);
     const [notifications, setNotifications] = useState<any[]>([]);
     const [unreadCount, setUnreadCount] = useState(0);
+    // Timetable alerts (class / exam reminders) share the one bell with system notifications.
+    const [alerts, setAlerts] = useState<any[]>([]);
+    const [alertUnread, setAlertUnread] = useState(0);
+    const totalUnread = unreadCount + alertUnread;
     const [mounted, setMounted] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const notifRef = useRef<HTMLDivElement>(null);
@@ -59,6 +62,11 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                 const res = await axios.get('/api/v1/notifications', { withCredentials: true });
                 setNotifications(res.data.notifications || []);
                 setUnreadCount(res.data.unreadCount || 0);
+            } catch (err) {}
+            try {
+                const tt = await axios.get('/api/v1/timetable/inbox', { withCredentials: true });
+                setAlerts(tt.data.notifications || []);
+                setAlertUnread(tt.data.unreadCount || 0);
             } catch (err) {}
         };
         fetchNotifs();
@@ -194,14 +202,13 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                     {/* Bell with badge — unrestricted admins only; a staff member with a
                         custom role sees only what their role grants, and notifications
                         aren't (yet) part of the granted-menu model */}
-                    {isUnrestrictedAdmin && <TimetableBell calendar timetablePath="/dashboard/timetable" />}
                     {isUnrestrictedAdmin && (
                     <div className="relative" ref={notifRef}>
                         <Button variant="ghost" size="icon" className={iconBtn} onClick={() => setShowNotifications(!showNotifications)}>
                             <Bell className="h-4.5 w-4.5 fill-current" />
-                            {unreadCount > 0 && (
+                            {totalUnread > 0 && (
                                 <span className="absolute right-1.5 top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-rose-500 font-mono text-[8px] font-bold text-white shadow">
-                                    {unreadCount}
+                                    {totalUnread > 9 ? '9+' : totalUnread}
                                 </span>
                             )}
                         </Button>
@@ -218,13 +225,18 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                 >
                                     <div className="flex items-center justify-between px-3 py-2 border-b border-slate-100 mb-2">
                                         <h3 className="text-sm font-bold text-slate-800">Notifications</h3>
-                                        {unreadCount > 0 && (
+                                        {totalUnread > 0 && (
                                             <button 
                                                 onClick={async () => {
                                                     try {
                                                         await axios.post('/api/v1/notifications/mark-all-read', {}, { withCredentials: true });
                                                         setUnreadCount(0);
                                                         setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+                                                    } catch {}
+                                                    try {
+                                                        await axios.post('/api/v1/timetable/inbox/read-all', {}, { withCredentials: true });
+                                                        setAlertUnread(0);
+                                                        setAlerts(prev => prev.map(n => ({ ...n, isRead: true })));
                                                     } catch {}
                                                 }}
                                                 className="text-[10px] font-semibold text-[#15316B] hover:text-[#0E2450]"
@@ -234,7 +246,29 @@ export function Navbar({ toggleSidebar }: NavbarProps) {
                                         )}
                                     </div>
                                     <div className="max-h-[300px] overflow-y-auto space-y-1">
-                                        {notifications.length === 0 ? (
+                                        {alerts.length > 0 && (
+                                            <>
+                                                <p className="px-3 pt-1 text-[9px] font-bold uppercase tracking-wider text-slate-400">Timetable alerts</p>
+                                                {alerts.slice(0, 5).map((n) => (
+                                                    <button
+                                                        key={n.id}
+                                                        onClick={() => { setShowNotifications(false); navigate('/dashboard/timetable'); }}
+                                                        className={cn('w-full text-left p-3 rounded-xl transition-colors hover:bg-slate-50', !n.isRead ? 'bg-[#F5B800]/8' : 'bg-transparent')}
+                                                    >
+                                                        <div className="flex gap-3">
+                                                            <div className={cn('mt-0.5 h-2 w-2 rounded-full flex-shrink-0', !n.isRead ? 'bg-[#F5B800]' : 'bg-transparent')} />
+                                                            <div>
+                                                                <p className="text-[11px] font-bold text-slate-800">{n.title}</p>
+                                                                <p className="text-[10px] text-slate-500 leading-tight mt-0.5">{n.message}</p>
+                                                                <p className="text-[9px] text-slate-400 mt-1">{new Date(n.createdAt).toLocaleString([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</p>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                ))}
+                                                {notifications.length > 0 && <p className="px-3 pt-2 text-[9px] font-bold uppercase tracking-wider text-slate-400">Notifications</p>}
+                                            </>
+                                        )}
+                                        {notifications.length === 0 && alerts.length === 0 ? (
                                             <div className="px-3 py-6 text-center text-sm text-slate-500">No notifications yet.</div>
                                         ) : (
                                             notifications.map((notif) => (

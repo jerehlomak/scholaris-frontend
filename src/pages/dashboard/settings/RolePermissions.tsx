@@ -37,6 +37,7 @@ export function RolePermissions() {
     // Locally-edited set of granted permission IDs for the active role.
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
     const [saved, setSaved] = useState(false);
+    const [saving, setSaving] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const selectRole = (role: Role) => {
@@ -127,7 +128,8 @@ export function RolePermissions() {
     };
 
     const handleSave = async () => {
-        if (!activeRole || activeRole.isSystemDefault) return;
+        if (!activeRole || activeRole.isSystemDefault || saving) return;
+        setSaving(true);
         try {
             const permissionIds = Array.from(selectedIds);
             const res = await axios.put(`/api/v1/roles/${activeRole.id}`,
@@ -140,6 +142,8 @@ export function RolePermissions() {
             setTimeout(() => setSaved(false), 3000);
         } catch (e: any) {
             toast.error(e.response?.data?.msg || 'Failed to save changes');
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -278,7 +282,7 @@ export function RolePermissions() {
 
                             {!activeRole.isSystemDefault && totalCatalogCount > 0 && (
                                 <div className="border-t border-slate-100 pt-6">
-                                    <SaveButton onClick={handleSave} saved={saved} saveLabel="Save Access Rules" savedLabel="Permissions Saved!" />
+                                    <SaveButton onClick={handleSave} saved={saved} saving={saving} saveLabel="Save Access Rules" savedLabel="Permissions Saved!" />
                                 </div>
                             )}
                         </div>
