@@ -175,7 +175,9 @@ export default function ReceiptPrintModal({ tx, settings, onClose, onSuccess }: 
                             const headerMode = settings?.financeModuleToggles?.display?.headerLayoutMode || 'CLASSIC_LEFT';
                             const showLogo = settings?.financeModuleToggles?.display?.showSchoolLogo !== false && (settings?.logoUrl || tx.student?.school?.logoUrl);
                             const logoSrc = settings?.logoUrl || tx.student?.school?.logoUrl;
-                            const schoolName = tx.student?.school?.name || settings?.schoolName || 'School Receipt';
+                            // Skip the generic 'School' placeholder some callers pass, so the real school name wins.
+                            const realName = (n?: string) => (n && n !== 'School' && n !== 'My School' ? n : '');
+                            const schoolName = realName(settings?.schoolName) || realName(receipt?.metadata?.schoolName) || realName(tx.student?.school?.name) || 'School Receipt';
 
                             if (format === 'POS') {
                                 return (
@@ -230,8 +232,8 @@ export default function ReceiptPrintModal({ tx, settings, onClose, onSuccess }: 
                             <div className="meta">
                                 <div className="meta-block">
                                     <p className="meta-label">Received From</p>
-                                    <p className="meta-val">{tx.student?.user?.name}</p>
-                                    <p className="meta-sub">Adm No: {tx.student?.admissionNo}</p>
+                                    <p className="meta-val">{tx.student?.user?.name || tx.student?.name}</p>
+                                    {tx.student?.admissionNo && <p className="meta-sub">Adm No: {tx.student.admissionNo}</p>}
                                     {settings?.financeModuleToggles?.display?.showParentInfo !== false && tx.student?.parent?.user && (
                                         <p className="meta-sub">Parent: {tx.student.parent.user.name}</p>
                                     )}

@@ -248,40 +248,69 @@ export function IdCardGenerate() {
                     No registered {label} found{search ? ' for that search' : ''}.
                 </div>
             ) : (
-                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-                    <table className="w-full text-sm">
-                        <thead className="bg-slate-50 text-left text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                            <tr><th className="px-4 py-3">{audience === 'STUDENT' ? 'Class' : 'Group'}</th><th className="px-4 py-3">{label}</th><th className="px-4 py-3">Cards</th><th className="px-4 py-3 text-right">Actions</th></tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100">
-                            {groups.map(g => {
-                                const missing = missingFor(g);
-                                return (
-                                    <tr key={g.key} className={cn(open?.key === g.key && 'bg-[#1E4DA6]/5')}>
-                                        <td className="px-4 py-3 font-bold text-slate-800">{g.title}</td>
-                                        <td className="px-4 py-3 text-slate-600">{g.people.length}</td>
-                                        <td className="px-4 py-3">
-                                            {missing === 0
-                                                ? <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">All generated</span>
-                                                : <span className="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700">{missing} to generate</span>}
-                                        </td>
-                                        <td className="px-4 py-3">
-                                            <div className="flex flex-wrap justify-end gap-2">
-                                                {missing > 0 && (
-                                                    <button disabled={!!busy} onClick={() => generate({ classId: g.classId }, g.key)} className="flex items-center gap-1.5 rounded-lg bg-[#173F8C] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#122F69] disabled:opacity-50">
-                                                        {busy === g.key ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />} Generate
-                                                    </button>
-                                                )}
-                                                <button onClick={() => openGroup(g)} className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-50"><Eye className="h-3.5 w-3.5" /> Preview</button>
-                                                <button disabled={!!progress || missing === g.people.length} onClick={() => printGroups([g])} className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40"><Printer className="h-3.5 w-3.5" /> Print / PDF</button>
+                (() => {
+                    const statusBadge = (missing: number) => missing === 0
+                        ? <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">All generated</span>
+                        : <span className="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700">{missing} to generate</span>;
+                    const actionButtons = (g: typeof groups[number], missing: number) => (
+                        <>
+                            {missing > 0 && (
+                                <button disabled={!!busy} onClick={() => generate({ classId: g.classId }, g.key)} className="flex items-center justify-center gap-1.5 rounded-lg bg-[#173F8C] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#122F69] disabled:opacity-50">
+                                    {busy === g.key ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />} Generate
+                                </button>
+                            )}
+                            <button onClick={() => openGroup(g)} className="flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-50"><Eye className="h-3.5 w-3.5" /> Preview</button>
+                            <button disabled={!!progress || missing === g.people.length} onClick={() => printGroups([g])} className="flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40"><Printer className="h-3.5 w-3.5" /> Print / PDF</button>
+                        </>
+                    );
+                    return (
+                        <>
+                            {/* Mobile: one card per class so the actions never get clipped */}
+                            <div className="flex flex-col gap-3 md:hidden">
+                                {groups.map(g => {
+                                    const missing = missingFor(g);
+                                    return (
+                                        <div key={g.key} className={cn('rounded-2xl border border-slate-200 bg-white p-4', open?.key === g.key && 'border-[#1E4DA6]/40 bg-[#1E4DA6]/5')}>
+                                            <div className="flex items-start justify-between gap-3">
+                                                <div className="min-w-0">
+                                                    <p className="truncate font-bold text-slate-800">{g.title}</p>
+                                                    <p className="mt-0.5 text-xs font-semibold text-slate-500">{g.people.length} {label}</p>
+                                                </div>
+                                                {statusBadge(missing)}
                                             </div>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+                                            <div className="mt-3 grid grid-cols-2 gap-2 [&>button:first-child:nth-last-child(3)]:col-span-2">
+                                                {actionButtons(g, missing)}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="hidden overflow-hidden rounded-2xl border border-slate-200 bg-white md:block">
+                                <table className="w-full text-sm">
+                                    <thead className="bg-slate-50 text-left text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                                        <tr><th className="px-4 py-3">{audience === 'STUDENT' ? 'Class' : 'Group'}</th><th className="px-4 py-3">{label}</th><th className="px-4 py-3">Cards</th><th className="px-4 py-3 text-right">Actions</th></tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-100">
+                                        {groups.map(g => {
+                                            const missing = missingFor(g);
+                                            return (
+                                                <tr key={g.key} className={cn(open?.key === g.key && 'bg-[#1E4DA6]/5')}>
+                                                    <td className="px-4 py-3 font-bold text-slate-800">{g.title}</td>
+                                                    <td className="px-4 py-3 text-slate-600">{g.people.length}</td>
+                                                    <td className="px-4 py-3">{statusBadge(missing)}</td>
+                                                    <td className="px-4 py-3">
+                                                        <div className="flex flex-wrap justify-end gap-2">{actionButtons(g, missing)}</div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    );
+                })()
             )}
 
             {open && config && (

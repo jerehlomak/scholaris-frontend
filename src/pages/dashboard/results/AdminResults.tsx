@@ -30,10 +30,12 @@ interface ReportCardData {
     summary: { totalSubjects: number; totalScore: number; average: string; overallPosition?: number; classAverage?: string; passMark: number; cumulativeAverage?: string };
     attendance?: { total: number; present: number; absent: number; late: number };
     comments?: { teacherComment?: string; headComment?: string; principalComment?: string; nextTermBegins?: string };
+    traits?: any[];
     templateConfig: TemplateConfig | null;
     schoolSettings: {
         schoolName: string; logoUrl?: string; address?: string; phone?: string; tagline?: string;
         resultShowBorder?: boolean; resultShowSignature?: boolean; resultShowNextTermFees?: boolean;
+        traitConfiguration?: any[];
     } | null;
     gradingScale: { grades: GradeRule[]; passMark: number };
 }
@@ -887,9 +889,10 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                                             gradingScale={modal.gradingScale}
                                                             comments={modal.comments}
                                                             attendance={modal.attendance}
-                                                            school={modal.schoolSettings ? { schoolName: modal.schoolSettings.schoolName, logoUrl: modal.schoolSettings.logoUrl, address: modal.schoolSettings.address, phone: modal.schoolSettings.phone, tagline: modal.schoolSettings.tagline, resultShowBorder: modal.schoolSettings.resultShowBorder, resultShowSignature: modal.schoolSettings.resultShowSignature, resultShowNextTermFees: modal.schoolSettings.resultShowNextTermFees } : { schoolName: 'School Name' }}
+                                                            school={modal.schoolSettings ? { schoolName: modal.schoolSettings.schoolName, logoUrl: modal.schoolSettings.logoUrl, address: modal.schoolSettings.address, phone: modal.schoolSettings.phone, tagline: modal.schoolSettings.tagline, resultShowBorder: modal.schoolSettings.resultShowBorder, resultShowSignature: modal.schoolSettings.resultShowSignature, resultShowNextTermFees: modal.schoolSettings.resultShowNextTermFees, traitConfiguration: modal.schoolSettings.traitConfiguration } : { schoolName: 'School Name' }}
                                                             summary={modal.summary}
                                                             annualResults={modal.annualResults}
+                                                            traits={modal.traits}
                                                             isCommentBased={resultMode === 'COMMENT_BASED'}
                                                             visibleTypes={[resultPrintType]}
                                                             forceScoreBased={resultMode === 'SCORE_BASED'}
@@ -1010,6 +1013,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                 resultShowBorder: dataItem.schoolSettings.resultShowBorder ?? true,
                                 resultShowSignature: dataItem.schoolSettings.resultShowSignature ?? true,
                                 resultShowNextTermFees: dataItem.schoolSettings.resultShowNextTermFees ?? false,
+                                traitConfiguration: dataItem.schoolSettings.traitConfiguration,
                             } : { schoolName: 'School Name' };
 
                             return (
@@ -1036,6 +1040,7 @@ export default function AdminResults({ defaultTab = 'CARDS', isTeacherDashboard 
                                                         school={sSchool}
                                                         summary={dataItem.summary}
                                                         annualResults={dataItem.annualResults}
+                                                        traits={dataItem.traits}
                                                         isCommentBased={resultMode === 'COMMENT_BASED'}
                                                         visibleTypes={[resultPrintType]}
                                                         forceScoreBased={resultMode === 'SCORE_BASED'}

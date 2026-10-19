@@ -37,6 +37,10 @@ export interface TemplateConfig {
     // Existing fields remain unchanged
     // Added optional fields for backward compatibility with AdminResults and other components
     blocks?: any[];
+    /** Derive score columns from the result data (Classic gallery preset). */
+    autoColumns?: boolean;
+    /** Show the Trait Ratings card beside Summary/Attendance (Classic gallery preset). */
+    showTraitRatings?: boolean;
     design?: any;
     gradeScale?: any[];
     studentFields?: any;
@@ -129,6 +133,7 @@ export interface ReportComments {
 
 export interface SchoolInfo {
     signatures?: any[];
+    traitConfiguration?: any[];
     display?: any;
     schoolName: string;
     tagline?: string | null;
@@ -165,6 +170,8 @@ export interface ReportCardPreviewProps {
     school: SchoolInfo;
     summary: ReportSummary;
     evaluationData?: Record<string, Record<string, string>>;
+    /** The student's saved trait ratings for the term ([{ domain, ratings }]). */
+    traits?: any[];
     annualResults?: any[];
     isPreview?: boolean;
     isCommentBased?: boolean;
@@ -173,6 +180,45 @@ export interface ReportCardPreviewProps {
 }
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
+interface TraitGroup {
+    group: string;
+    items: { label: string; score: string }[];
+    scale: { rating: string; description?: string }[];
+}
+
+// Same source the block-based TraitRatingsBlock reads: the school's trait setup
+// plus this student's saved ratings. No setup => no card (never placeholder scores).
+function buildTraitGroups(traitConfiguration: any[] | undefined, traits: any[] | undefined): TraitGroup[] {
+    if (!Array.isArray(traitConfiguration) || traitConfiguration.length === 0) return [];
+    return traitConfiguration.map((tc: any) => {
+        const record = (traits || []).find((t: any) => t.domain === tc.domain);
+        let ratings: Record<string, any> = {};
+        if (record?.ratings) {
+            if (typeof record.ratings === 'string') {
+                try { ratings = JSON.parse(record.ratings) || {}; } catch { ratings = {}; }
+            } else {
+                ratings = record.ratings;
+            }
+        }
+        return {
+            group: tc.domain,
+            items: (Array.isArray(tc.traits) ? tc.traits : []).map((label: string) => ({ label, score: String(ratings[label] || '-') })),
+            scale: Array.isArray(tc.ratingScale) ? tc.ratingScale : [],
+        };
+    }).filter((g: TraitGroup) => g.items.length > 0);
+}
+
+function deriveScoreColumns(results: SubjectResult[]): SubjectColumn[] {
+    const keys: string[] = [];
+    results.forEach(r => Object.keys(r.scores || {}).forEach(k => { if (!keys.includes(k)) keys.push(k); }));
+    return [
+        ...keys.map(k => ({ id: `auto-${k}`, key: k, name: k, show: true })),
+        { id: 'auto-total', key: 'total', name: 'Total', show: true, computed: true },
+        { id: 'auto-grade', key: 'grade', name: 'Grade', show: true, computed: true },
+        { id: 'auto-remark', key: 'remark', name: 'Remark', show: true, computed: true },
+    ];
+}
+
 function ordinal(n: number): string {
     const s = ['TH', 'ST', 'ND', 'RD'];
     const v = n % 100;
@@ -200,6 +246,7 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
     school,
     summary = { totalSubjects: 0, totalScore: 0, average: 0, passMark: 40 },
     evaluationData = {},
+    traits,
     annualResults = [],
     isPreview = false,
     isCommentBased = false,
@@ -288,7 +335,10 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
     const showSignature = school.resultShowSignature ?? true;
     const borderColor = cfg.tableBorderColor || '#d1d5db';
     const fontFamily = cfg.fontFamily === 'sans' ? 'Arial, sans-serif' : cfg.fontFamily === 'mono' ? 'Courier New, monospace' : 'Georgia, Times New Roman, serif';
-    const visibleCols = (cfg.subjectColumns || []).filter(c => c.show);
+    // `autoColumns` (the "Classic" gallery preset) builds the score columns from
+    // the scores actually present, since a fixed preset can't know each school's
+    // assessment names. Templates without it keep using their saved columns.
+    const visibleCols = (cfg.autoColumns ? deriveScoreColumns(results) : (cfg.subjectColumns || [])).filter(c => c.show);
 
     const borderStyle = showBorder ? `1px solid ${borderColor}` : 'none';
 
@@ -337,6 +387,8 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
 
     const finalShowClassPosition = resolveBool(cfg.showClassPosition ?? cfg.showOverallPosition, true) && resolveBool(school.display?.showClassPosition, true);
     const finalShowSubjectPosition = resolveBool(cfg.showSubjectPosition, false) && resolveBool(school.display?.showSubjectPosition, true);
+    const traitGroups = resolveBool(cfg.showTraitRatings, false) ? buildTraitGroups(school.traitConfiguration, traits) : [];
+    const traitScale = traitGroups.find(g => g.scale.length > 0)?.scale || [];
 
     return (
         <div
@@ -621,6 +673,30 @@ export const ReportCardPreview: React.FC<ReportCardPreviewProps> = ({
                                 ) : null}
                             </tbody>
                         </table>
+                    </div>
+                )}
+
+                {/* Trait Ratings — beside Summary & Attendance */}
+                {traitGroups.length > 0 && (
+                    <div style={{ flex: 1, minWidth: 140, border: borderStyle, borderRadius: 4, overflow: 'hidden' }}>
+                        <div style={{ backgroundColor: primary, color: '#fff', fontWeight: 700, fontSize: '10px', padding: '3px 8px', textTransform: 'uppercase' }}>Trait Ratings</div>
+                        <div style={{ display: 'flex' }}>
+                            {traitGroups.map((g, gi) => (
+                                <div key={g.group} style={{ flex: 1, minWidth: 0, borderLeft: gi > 0 ? borderStyle : undefined }}>
+                                    <div style={{ fontSize: '8px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5, padding: '2px 8px', color: primary, backgroundColor: '#e8edf8' }}>{g.group}</div>
+                                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                        <tbody>
+                                            {g.items.map(item => <InfoRow key={item.label} label={item.label} value={item.score} />)}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ))}
+                        </div>
+                        {traitScale.length > 0 && (
+                            <div style={{ padding: '3px 8px', fontSize: '8px', color: '#666', borderTop: '1px solid #eee' }}>
+                                {traitScale.map(s => `${s.rating}${s.description ? `=${s.description}` : ''}`).join(', ')}
+                            </div>
+                        )}
                     </div>
                 )}
 

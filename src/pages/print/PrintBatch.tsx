@@ -200,6 +200,7 @@ export default function PrintBatch() {
                                     school={studentData.schoolSettings}
                                     summary={studentData.summary}
                                     annualResults={studentData.annualResults}
+                                    traits={studentData.traits}
                                     isCommentBased={isCommentBased}
                                 />
                             )}

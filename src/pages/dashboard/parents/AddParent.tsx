@@ -124,7 +124,6 @@ export default function AddParent() {
             } else {
                 const name = formData.fatherName || formData.motherName;
                 const phone = formData.phone || formData.fatherPhone || formData.motherPhone;
-                if (!phone) { toast.error('At least one phone number is required'); setIsSubmitting(false); return; }
                 const res = await axios.post(`${API}/parents/add`, { ...formData, name, phone, studentIds: selectedStudentIds }, { withCredentials: true });
                 toast.success('Parent Profile Created Successfully!');
                 setCreatedCredentials(res.data.credentials);

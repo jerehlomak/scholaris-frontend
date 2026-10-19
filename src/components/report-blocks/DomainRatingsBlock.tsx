@@ -1,49 +1,54 @@
 import React from 'react';
 
 /**
- * DomainRatingsBlock — the two-column "Psychomotor Domain / Affective Domain"
- * numeric (1–5) rating grid common on Nigerian primary/junior-secondary
- * report cards (Handwriting, Punctuality, Neatness, etc.), distinct from
- * CommentSkillsGridBlock which renders a different shape entirely (an
- * early-years skills checklist with letter ratings and its own hardcoded
- * pastel palette) — reusing that block here would have shown the wrong
- * content. This one is purpose-built to match the reference format and
- * stays in the school's own primary/accent colors instead of a fixed
- * palette.
+ * DomainRatingsBlock — the "Affective / Psychomotor" rating grid on the report card.
  *
- * Pulls from `data.domainRatings` if a school ever wires real per-student
- * ratings in; falls back to representative sample categories/scores so the
- * template gallery preview and any school that hasn't configured real data
- * yet still renders something sensible.
+ * Renders the school's own trait setup (Result Settings → traits) with THIS student's
+ * saved ratings (entered via Record Scores → Enter Trait Ratings): one column per
+ * configured domain, showing the rating the teacher actually entered ('-' if none yet).
+ * Reads the same fields the report card API returns for every renderer:
+ *   data.schoolSettings.traitConfiguration  — [{ domain, traits[], ratingScale[] }]
+ *   data.traits                             — [{ domain, ratings: { [trait]: rating } }]
+ * No trait setup => nothing is rendered (never placeholder scores).
  */
-interface DomainItem { label: string; score: number | string }
+interface DomainItem { label: string; score: string }
+interface DomainGroup { title: string; items: DomainItem[]; scale: { rating: string; description?: string }[] }
 
-const DEFAULT_PSYCHOMOTOR: DomainItem[] = [
-    { label: 'Handwriting', score: 4 },
-    { label: 'Verbal Fluency', score: 4 },
-    { label: 'Club & Society', score: 3 },
-    { label: 'Sports', score: 4 },
-    { label: 'Musical Skill', score: 3 },
-];
+function parseRatings(raw: any): Record<string, any> {
+    if (!raw) return {};
+    if (typeof raw === 'string') {
+        try { return JSON.parse(raw) || {}; } catch { return {}; }
+    }
+    return raw;
+}
 
-const DEFAULT_AFFECTIVE: DomainItem[] = [
-    { label: 'Punctuality', score: 5 },
-    { label: 'Neatness', score: 4 },
-    { label: 'Politeness', score: 5 },
-    { label: 'Initiative', score: 4 },
-    { label: 'Health', score: 4 },
-];
+function buildGroups(data: any): DomainGroup[] {
+    const configs: any[] = data?.schoolSettings?.traitConfiguration;
+    if (!Array.isArray(configs) || configs.length === 0) return [];
+    const saved: any[] = Array.isArray(data?.traits) ? data.traits : [];
+    return configs
+        .map((tc: any) => {
+            const ratings = parseRatings(saved.find((t: any) => t.domain === tc.domain)?.ratings);
+            return {
+                title: tc.domain,
+                items: (Array.isArray(tc.traits) ? tc.traits : []).map((label: string) => ({ label, score: String(ratings[label] || '-') })),
+                scale: Array.isArray(tc.ratingScale) ? tc.ratingScale : [],
+            };
+        })
+        .filter((g: DomainGroup) => g.items.length > 0);
+}
 
 export default function DomainRatingsBlock({ data, config, design }: { data: any; config?: any; design?: any }) {
     const accentColor = design?.accentColor || config?.accentColor || '#F5B800';
     const primaryColor = design?.primaryColor || config?.primaryColor || '#0B1F4E';
     // 'STACKED' — one column above the other, for use in a narrow sidebar
-    // (see the "Ledger" preset, where this sits beside the subject table
-    // rather than spanning the full page width like the default side-by-side).
+    // (see the "Ledger" preset, where this sits beside the subject table).
     const isStacked = config?.layout === 'STACKED';
 
-    const psychomotor: DomainItem[] = data?.domainRatings?.psychomotor?.length ? data.domainRatings.psychomotor : DEFAULT_PSYCHOMOTOR;
-    const affective: DomainItem[] = data?.domainRatings?.affective?.length ? data.domainRatings.affective : DEFAULT_AFFECTIVE;
+    const groups = buildGroups(data);
+    if (groups.length === 0) return null;
+
+    const scale = groups.find(g => g.scale.length > 0)?.scale || [];
 
     const Column = ({ title, items }: { title: string; items: DomainItem[] }) => (
         <div className="flex-1">
@@ -54,7 +59,7 @@ export default function DomainRatingsBlock({ data, config, design }: { data: any
                 {items.map((item, i) => (
                     <div key={item.label} className={`flex items-center justify-between px-2 py-1 ${i % 2 === 1 ? 'bg-gray-50' : 'bg-white'}`}>
                         <span className="text-[10px] text-gray-700">{item.label}</span>
-                        <span className="w-5 h-5 flex items-center justify-center rounded text-[10px] font-bold text-white shrink-0" style={{ backgroundColor: primaryColor }}>
+                        <span className="min-w-[1.25rem] h-5 px-1 flex items-center justify-center rounded text-[10px] font-bold text-white shrink-0" style={{ backgroundColor: primaryColor }}>
                             {item.score}
                         </span>
                     </div>
@@ -66,12 +71,11 @@ export default function DomainRatingsBlock({ data, config, design }: { data: any
     return (
         <div className="mb-4">
             <div className={isStacked ? 'flex flex-col gap-3' : 'flex gap-6'}>
-                <Column title="Affective Domain" items={affective} />
-                <Column title="Psychomotor Domain" items={psychomotor} />
+                {groups.map(g => <Column key={g.title} title={g.title} items={g.items} />)}
             </div>
-            {!isStacked && (
+            {!isStacked && scale.length > 0 && (
                 <p className="text-[8px] text-gray-500 mt-2 italic">
-                    Scale: 1 = Poor &nbsp;·&nbsp; 2 = Fair &nbsp;·&nbsp; 3 = Good &nbsp;·&nbsp; 4 = Very Good &nbsp;·&nbsp; 5 = Distinction
+                    Scale: {scale.map(s => `${s.rating}${s.description ? ' = ' + s.description : ''}`).join('  ·  ')}
                 </p>
             )}
         </div>

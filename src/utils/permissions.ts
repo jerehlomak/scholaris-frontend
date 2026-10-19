@@ -54,7 +54,9 @@ export function filterMenuTree<T extends MenuNode>(items: T[], ctx: MenuFilterCo
                 result.push({ ...item, children: filteredChildren });
             }
         } else if (item.path) {
-            if (ctx.hasPermission(derivePermissionKey(item.path))) {
+            // '/' is the Log out action, not a page: it has no Permission row and must
+            // stay visible to every role (deriving its key gives '', which nothing holds).
+            if (item.path === '/' || ctx.hasPermission(derivePermissionKey(item.path))) {
                 result.push(item);
             }
         } else {

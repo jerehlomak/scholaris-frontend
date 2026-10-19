@@ -331,12 +331,11 @@ export default function RecordScores({ isTeacherDashboard }: { isTeacherDashboar
     setCurrentPage(1);
     
     try {
-        let dummySubject = subjects[0]?.id;
-        if (!dummySubject) {
-            toast.error("No subjects assigned to this class. Cannot fetch roster.");
-            return;
-        }
-        const rosterRes = await axios.get(`${API}/assessments/scores?classId=${selectedClass.id}&subjectId=${dummySubject}&term=${encodeURIComponent(term)}&academicYear=${encodeURIComponent(year)}`, { withCredentials: true }).catch(() => ({ data: { students: [], category: 'ALL' } }));
+        // Dedicated class roster: not narrowed by any subject's category/elective rules.
+        const rosterRes = await axios.get(`${API}/results/traits/roster?classId=${selectedClass.id}&term=${encodeURIComponent(term)}&academicYear=${encodeURIComponent(year)}`, { withCredentials: true }).catch((e) => {
+          toast.error(e.response?.data?.msg || 'Failed to load students for trait entry');
+          return { data: { students: [], category: 'ALL' } };
+        });
         const classCategory = rosterRes.data.category || 'ALL';
         
         const configRes = await axios.get(`${API}/results/traits/config?category=${encodeURIComponent(classCategory)}`, { withCredentials: true }).catch(() => ({ data: { configs: [] } }));

@@ -33,11 +33,40 @@ export interface TemplatePreset {
     description: string;
     /** Small stylistic tag shown on the gallery card. */
     tag: string;
+    /**
+     * 'blocks' (default) renders through ReportCard. 'legacy' is the original
+     * config-driven layout drawn by ReportCardPreview — it must have NO `blocks`
+     * key, because every result page picks its renderer by `config.blocks`.
+     */
+    kind?: 'blocks' | 'legacy';
     config: {
-        blocks: { id: string; type: string; isVisible: boolean; props?: Record<string, any> }[];
+        blocks?: { id: string; type: string; isVisible: boolean; props?: Record<string, any> }[];
         design: Record<string, any>;
+        [legacyKey: string]: any;
     };
 }
+
+/**
+ * The "Classic" layout: ReportCardPreview's built-in design (Academic
+ * Performance table, Summary + Attendance cards, Remarks & Signatures, Grading
+ * Key). `autoColumns` makes it read each school's own assessment names from the
+ * results instead of needing columns defined by hand.
+ */
+const CLASSIC_CONFIG: TemplatePreset['config'] = {
+    legacyLayout: true,
+    autoColumns: true,
+    showSchoolLogo: true, showSchoolAddress: true, showStudentPhoto: true,
+    showAdmissionNo: true, showClass: true, showSession: true, showTerm: true, showAge: false, showGender: true, showTeacherName: false,
+    showClassAverage: true, showSubjectPosition: false, showOverallPosition: true, showClassPosition: true,
+    showGradingKey: true, showAttendance: true, showEvaluation: true, showTraitRatings: true,
+    showTeacherComment: true, showHeadComment: true, showPrincipalComment: true, showNextTerm: false, showPromotedTo: false,
+    reportTitle: 'End of Term Academic Report',
+    formTeacherTitle: 'Form Teacher', headTeacherTitle: 'Head Teacher', principalTitle: 'Principal', principalName: '',
+    primaryColor: NAVY, headerBg: NAVY, accentColor: GOLD,
+    fontFamily: 'serif', tableBorderColor: '#d1d5db', pageMargin: '10mm', logoPosition: 'left', headerStyle: 'standard',
+    subjectColumns: [], evaluationSections: [],
+    design: { primaryColor: NAVY, accentColor: GOLD },
+};
 
 export const TEMPLATE_PRESETS: TemplatePreset[] = [
     {
@@ -215,10 +244,31 @@ export const TEMPLATE_PRESETS: TemplatePreset[] = [
                 showGeneratedFooter: true
             }
         }
+    },
+    {
+        id: 'classic',
+        name: 'Classic',
+        kind: 'legacy',
+        description: 'The original report card layout: Academic Performance table with Grand Total and Percentage Average, Summary and Attendance cards, a Remarks & Signatures band and a Grading Key — with a passport photo slot.',
+        tag: 'Original',
+        config: CLASSIC_CONFIG
     }
 ];
 
 export const getPresetById = (id: string) => TEMPLATE_PRESETS.find(p => p.id === id);
+
+/**
+ * Sections a school can switch off on the Classic layout. Each maps to the
+ * legacy config flag(s) ReportCardPreview reads.
+ */
+export const LEGACY_TOGGLES: { id: string; label: string; keys: string[] }[] = [
+    { id: 'photo', label: 'Passport photo', keys: ['showStudentPhoto'] },
+    { id: 'classAvg', label: 'Class average column', keys: ['showClassAverage'] },
+    { id: 'attendance', label: 'Attendance summary', keys: ['showAttendance'] },
+    { id: 'traits', label: 'Trait ratings', keys: ['showTraitRatings'] },
+    { id: 'remarks', label: 'Remarks & signatures', keys: ['showTeacherComment', 'showHeadComment', 'showPrincipalComment'] },
+    { id: 'gradingKey', label: 'Grading key', keys: ['showGradingKey'] },
+];
 
 /**
  * Optional blocks a school can toggle off per template — Header, Student
@@ -248,6 +298,17 @@ export const recolorConfig = (
     const origPrimary = config.design.primaryColor;
     const origAccent = config.design.accentColor;
     const swap = (v: any) => (v === origPrimary ? newPrimary : v === origAccent ? newAccent : v);
+
+    // Legacy (Classic) layout: no blocks — just its own color fields.
+    if (!config.blocks) {
+        return {
+            ...config,
+            primaryColor: newPrimary,
+            headerBg: newPrimary,
+            accentColor: newAccent,
+            design: { ...config.design, primaryColor: newPrimary, accentColor: newAccent }
+        };
+    }
 
     return {
         blocks: config.blocks.map(b => ({

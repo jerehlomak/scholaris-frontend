@@ -413,6 +413,7 @@ export default function ExportResults() {
                                     resultShowBorder: dataItem.schoolSettings.resultShowBorder ?? true,
                                     resultShowSignature: dataItem.schoolSettings.resultShowSignature ?? true,
                                     resultShowNextTermFees: dataItem.schoolSettings.resultShowNextTermFees ?? false,
+                                    traitConfiguration: dataItem.schoolSettings.traitConfiguration,
                                 } : { schoolName: 'School Name' };
 
                                 return (
@@ -439,6 +440,7 @@ export default function ExportResults() {
                                                             school={sSchool}
                                                             summary={dataItem.summary}
                                                             annualResults={dataItem.annualResults}
+                                                            traits={dataItem.traits}
                                                             isCommentBased={cCfg.resultType === 'COMMENT_BASED'}
                                                             visibleTypes={['FULL']}
                                                             forceScoreBased={cCfg.resultType === 'SCORE_BASED'}
